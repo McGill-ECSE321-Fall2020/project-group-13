@@ -5,7 +5,7 @@
       <contents xmi:type="ecore:EAnnotation" xmi:id="_oozxUQUVEeuLIOtIfVSwpg" source="codegen">
         <details xmi:id="_oozxUgUVEeuLIOtIfVSwpg" key="codegenDirectory" value="/ecse321-group13/src"/>
         <details xmi:id="_opQdQAUVEeuLIOtIfVSwpg" key="observedFolders" value="/ecse321-group13/src"/>
-        <details xmi:id="_Jg8SsAUbEeuLIOtIfVSwpg" key="AssociatedSourceCode" value="/ecse321-group13/src/OnlineArtViewingSystem.java;3684660770/1;/ecse321-group13/src/ArtGallery.java;1154651102/1;/ecse321-group13/src/User.java;3756017377/1;/ecse321-group13/src/UserRole.java;4196948184/1;/ecse321-group13/src/Admin.java;514596320/1;/ecse321-group13/src/Artist.java;4011890089/1;/ecse321-group13/src/Profile.java;478934942/1;/ecse321-group13/src/Artwork.java;1153199205/1;/ecse321-group13/src/Customer.java;1868419346/1;/ecse321-group13/src/Order.java;4097691548/1;/ecse321-group13/src/ShipmentStatus.java;2649509099/1;/ecse321-group13/src/OrderStatus.java;1012478101/1;/ecse321-group13/src/Payment.java;1682131339/1;/ecse321-group13/src/Shipment.java;3120734328/1;/ecse321-group13/src/Address.java;1684689235/1;/ecse321-group13/src/ArtworkStatus.java;1688903582/1;/ecse321-group13/src/ShipmentMethod.java;4221044760/1;"/>
+        <details xmi:id="_Jg8SsAUbEeuLIOtIfVSwpg" key="AssociatedSourceCode" value="/ecse321-group13/src/OnlineArtViewingSystem.java;3684660770/1;/ecse321-group13/src/ArtGallery.java;1154651102/1;/ecse321-group13/src/User.java;3756017377/1;/ecse321-group13/src/UserRole.java;4196948184/1;/ecse321-group13/src/Admin.java;514596320/1;/ecse321-group13/src/Artist.java;4011890089/1;/ecse321-group13/src/Profile.java;478934942/1;/ecse321-group13/src/Artwork.java;703063684/1;/ecse321-group13/src/Customer.java;1868419346/1;/ecse321-group13/src/Order.java;4097691548/1;/ecse321-group13/src/ShipmentStatus.java;2649509099/1;/ecse321-group13/src/OrderStatus.java;1012478101/1;/ecse321-group13/src/Payment.java;1682131339/1;/ecse321-group13/src/Shipment.java;2135357572/1;/ecse321-group13/src/Address.java;1684689235/1;/ecse321-group13/src/ArtworkStatus.java;1688903582/1;/ecse321-group13/src/ShipmentMethod.java;4221044760/1;"/>
       </contents>
     </eAnnotations>
     <elementImport xmi:id="_vtqUIAUVEeuLIOtIfVSwpg">
@@ -39,6 +39,9 @@
       <packagedElement xmi:type="uml:Package" xmi:id="_f6QeEAUbEeuLIOtIfVSwpg" name="sql">
         <packagedElement xmi:type="uml:DataType" xmi:id="_f6qtwAUbEeuLIOtIfVSwpg" name="Date"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_f69BoQUbEeuLIOtIfVSwpg" name="Time"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_s8_0QAUeEeuIIZ7C7k2DOQ" name="util">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_tA6D4AUeEeuIIZ7C7k2DOQ" name="Set"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_qr_KAAUVEeuLIOtIfVSwpg" name="OnlineArtViewingSystem">
@@ -156,7 +159,7 @@
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_r1KtswUXEeuLIOtIfVSwpg"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_r1KttAUXEeuLIOtIfVSwpg" value="*"/>
       </ownedAttribute>
-      <ownedAttribute xmi:id="_1A0k8AUXEeuLIOtIfVSwpg" name="artworkStatus" type="_17CxgAUXEeuLIOtIfVSwpg"/>
+      <ownedAttribute xmi:id="__pehgAUeEeuIIZ7C7k2DOQ" name="artworkStatus" type="_17CxgAUXEeuLIOtIfVSwpg"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_L3hh0AUWEeuLIOtIfVSwpg" name="Customer">
       <generalization xmi:id="_csNxkAUXEeuLIOtIfVSwpg" general="_yA6JIAUVEeuLIOtIfVSwpg"/>
@@ -174,7 +177,6 @@
       </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_MmC0sAUWEeuLIOtIfVSwpg" name="Order">
-      <ownedAttribute xmi:id="_Px2pYAUWEeuLIOtIfVSwpg" name="orderStatus" type="_nBsNEAUWEeuLIOtIfVSwpg"/>
       <ownedAttribute xmi:id="_p7NX4AUWEeuLIOtIfVSwpg" name="totalAmount">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
       </ownedAttribute>
@@ -194,8 +196,8 @@
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_r1KtsAUXEeuLIOtIfVSwpg"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_r1KtsQUXEeuLIOtIfVSwpg" value="*"/>
       </ownedAttribute>
+      <ownedAttribute xmi:id="_ML4SIAUfEeuIIZ7C7k2DOQ" name="orderStatus" type="_nBsNEAUWEeuLIOtIfVSwpg"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:DataType" xmi:id="_Px33gAUWEeuLIOtIfVSwpg" name="OrderStatus"/>
     <packagedElement xmi:type="uml:Enumeration" xmi:id="_Xa76oAUWEeuLIOtIfVSwpg" name="ShipmentStatus"/>
     <packagedElement xmi:type="uml:Enumeration" xmi:id="_nBsNEAUWEeuLIOtIfVSwpg" name="OrderStatus"/>
     <packagedElement xmi:type="uml:Class" xmi:id="_zIPIIAUWEeuLIOtIfVSwpg" name="Payment">
@@ -215,8 +217,8 @@
       </ownedAttribute>
       <ownedAttribute xmi:id="_f71ycAUbEeuLIOtIfVSwpg" name="estimatedDateOfArrival" visibility="private" type="_f6qtwAUbEeuLIOtIfVSwpg"/>
       <ownedAttribute xmi:id="_f72ZgQUbEeuLIOtIfVSwpg" name="estimatedTimeOfArrival" visibility="private" type="_f69BoQUbEeuLIOtIfVSwpg" association="_f77SAAUbEeuLIOtIfVSwpg"/>
-      <ownedAttribute xmi:id="_GT2PIAUcEeuLIOtIfVSwpg" name="shipmentStatus" type="_Xa76oAUWEeuLIOtIfVSwpg"/>
-      <ownedAttribute xmi:id="_JbfVgAUcEeuLIOtIfVSwpg" name="shipmentMethod" type="_BqLuoAUXEeuLIOtIfVSwpg"/>
+      <ownedAttribute xmi:id="_E50ZwAUfEeuIIZ7C7k2DOQ" name="shipmentInfo" type="_Xa76oAUWEeuLIOtIfVSwpg"/>
+      <ownedAttribute xmi:id="_H2qlYAUfEeuIIZ7C7k2DOQ" name="shipmentMethod" type="_BqLuoAUXEeuLIOtIfVSwpg"/>
     </packagedElement>
     <packagedElement xmi:type="uml:DataType" xmi:id="_6wy08QUWEeuLIOtIfVSwpg" name="shipmentMethod"/>
     <packagedElement xmi:type="uml:DataType" xmi:id="_8fvqEAUWEeuLIOtIfVSwpg" name="Date"/>
@@ -252,7 +254,6 @@
     <packagedElement xmi:type="uml:Association" xmi:id="_r1KGoAUXEeuLIOtIfVSwpg" name="" memberEnd="_r1KGoQUXEeuLIOtIfVSwpg _r1KtsgUXEeuLIOtIfVSwpg"/>
     <packagedElement xmi:type="uml:Association" xmi:id="_tcNkAAUXEeuLIOtIfVSwpg" name="" memberEnd="_tcOLEAUXEeuLIOtIfVSwpg _tcOyIQUXEeuLIOtIfVSwpg"/>
     <packagedElement xmi:type="uml:Association" xmi:id="_t-ZrEAUXEeuLIOtIfVSwpg" name="" memberEnd="_t-aSIAUXEeuLIOtIfVSwpg _t-bgQQUXEeuLIOtIfVSwpg"/>
-    <packagedElement xmi:type="uml:DataType" xmi:id="_1A1MAAUXEeuLIOtIfVSwpg" name="ArtworkStatus"/>
     <packagedElement xmi:type="uml:Enumeration" xmi:id="_17CxgAUXEeuLIOtIfVSwpg" name="ArtworkStatus"/>
     <packagedElement xmi:type="uml:Association" xmi:id="_IzawQAUZEeuLIOtIfVSwpg" name="" memberEnd="_IzdMgAUZEeuLIOtIfVSwpg _IzfBsgUZEeuLIOtIfVSwpg"/>
     <packagedElement xmi:type="uml:Package" xmi:id="_f6RFIAUbEeuLIOtIfVSwpg" name="javax">
@@ -260,6 +261,9 @@
         <packagedElement xmi:type="uml:Class" xmi:id="_f7KdAQUbEeuLIOtIfVSwpg" name="Entity"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_f7WqQQUbEeuLIOtIfVSwpg" name="ManyToOne"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_f7jekAUbEeuLIOtIfVSwpg" name="OneToOne"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_tBKikQUeEeuIIZ7C7k2DOQ" name="CascadeType"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_tBaaMQUeEeuIIZ7C7k2DOQ" name="OneToMany"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_tBvxYAUeEeuIIZ7C7k2DOQ" name="ManyToMany"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="_f77SAAUbEeuLIOtIfVSwpg" name="" memberEnd="_f77SAQUbEeuLIOtIfVSwpg _f72ZgQUbEeuLIOtIfVSwpg">
@@ -282,11 +286,9 @@
   <UMLLabProfile:TargetLanguage xmi:id="_oo8UMAUVEeuLIOtIfVSwpg" base_Package="_oYrqoAUVEeuLIOtIfVSwpg">
     <languageName>java</languageName>
   </UMLLabProfile:TargetLanguage>
-  <UMLLabProfile:UnresolvedElement xmi:id="_Px4ekAUWEeuLIOtIfVSwpg" base_Element="_Px33gAUWEeuLIOtIfVSwpg"/>
   <UMLLabProfile:UnresolvedElement xmi:id="_6w2fUAUWEeuLIOtIfVSwpg" base_Element="_6wy08QUWEeuLIOtIfVSwpg"/>
   <UMLLabProfile:UnresolvedElement xmi:id="_8fwRIAUWEeuLIOtIfVSwpg" base_Element="_8fvqEAUWEeuLIOtIfVSwpg"/>
   <UMLLabProfile:UnresolvedElement xmi:id="_96GvQAUWEeuLIOtIfVSwpg" base_Element="_96GIMAUWEeuLIOtIfVSwpg"/>
-  <UMLLabProfile:UnresolvedElement xmi:id="_1A1zEAUXEeuLIOtIfVSwpg" base_Element="_1A1MAAUXEeuLIOtIfVSwpg"/>
   <Persistency:JPA1StyledElement xmi:id="_fNbCsAUaEeuLIOtIfVSwpg" base_Element="_1ULbQAUWEeuLIOtIfVSwpg"/>
   <UMLLabProfile:Reference xmi:id="_f69BoAUbEeuLIOtIfVSwpg" base_Element="_f6qtwAUbEeuLIOtIfVSwpg"/>
   <UMLLabProfile:Reference xmi:id="_f7KdAAUbEeuLIOtIfVSwpg" base_Element="_f69BoQUbEeuLIOtIfVSwpg"/>
@@ -298,4 +300,19 @@
   <UMLLabProfile:Reference xmi:id="_f8G4MAUbEeuLIOtIfVSwpg" base_Element="_f77SAAUbEeuLIOtIfVSwpg"/>
   <UMLLabProfile:UnresolvedElement xmi:id="_JbnRUAUcEeuLIOtIfVSwpg" base_Element="_Jbf8kAUcEeuLIOtIfVSwpg"/>
   <Persistency:JPA1StyledElement xmi:id="_SqifAAUcEeuLIOtIfVSwpg" base_Element="_oYrqoAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-C9IAUeEeuIIZ7C7k2DOQ" base_Element="_6bESAAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-DkMAUeEeuIIZ7C7k2DOQ" base_Element="_7GHaIAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-ELQAUeEeuIIZ7C7k2DOQ" base_Element="_8XIWEAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-EyUAUeEeuIIZ7C7k2DOQ" base_Element="_-IPuYAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-EyUQUeEeuIIZ7C7k2DOQ" base_Element="_-04x8AUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-EyUgUeEeuIIZ7C7k2DOQ" base_Element="__Wj7oAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-FZYAUeEeuIIZ7C7k2DOQ" base_Element="_ABwNsAUWEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-MuIAUeEeuIIZ7C7k2DOQ" base_Element="_p7NX4AUWEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-N8QAUeEeuIIZ7C7k2DOQ" base_Element="_wF7qMAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-OjUAUeEeuIIZ7C7k2DOQ" base_Element="_w6abIAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:StyledElement xmi:id="_s-PKYAUeEeuIIZ7C7k2DOQ" base_Element="_xk6wsAUVEeuLIOtIfVSwpg"/>
+  <UMLLabProfile:Reference xmi:id="_tBKikAUeEeuIIZ7C7k2DOQ" base_Element="_tA6D4AUeEeuIIZ7C7k2DOQ"/>
+  <UMLLabProfile:Reference xmi:id="_tBaaMAUeEeuIIZ7C7k2DOQ" base_Element="_tBKikQUeEeuIIZ7C7k2DOQ"/>
+  <UMLLabProfile:Reference xmi:id="_tBvKUAUeEeuIIZ7C7k2DOQ" base_Element="_tBaaMQUeEeuIIZ7C7k2DOQ"/>
+  <UMLLabProfile:Reference xmi:id="_tCA3IAUeEeuIIZ7C7k2DOQ" base_Element="_tBvxYAUeEeuIIZ7C7k2DOQ"/>
 </xmi:XMI>
