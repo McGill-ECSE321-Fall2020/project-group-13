@@ -1,2 +1,0 @@
-application/GalleryApp.java
- application.GalleryApp
