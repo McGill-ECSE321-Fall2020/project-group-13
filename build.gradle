@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    testImplementation "junit:junit:4.12"
+}
+
+task compile(type: JavaCompile) {
+  classpath = sourceSets.main.compileClasspath
+  classpath += sourceSets.test.runtimeClasspath
+  sourceSets.test.java.outputDir = file('build/bin')
+  sourceSets.main.java.outputDir = file('build/bin')
+}
+/*
+ * specifying sourceSets is not necessary in this case, since
+ * we are applying the default folder structure assumed by Gradle
+ */
+sourceSets {
+  main {
+    java { srcDir 'src/main/java' }
+  }
+  test {
+    java { srcDir 'src/test/java'}
+  }
+}
+
+mainClassName='application.GalleryApp'
+
+jar {
+  destinationDir=file('distributable')
+  manifest {
+    // It is smart to reuse the name of the main class variable instead of hardcoding it
+    attributes "Main-Class": "$mainClassName"
+  }
+}
