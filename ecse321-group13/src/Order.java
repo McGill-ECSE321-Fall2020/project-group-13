@@ -16,6 +16,15 @@ this.orderStatus = value;
 public OrderStatus getOrderStatus() {
 return this.orderStatus;
     }
+private String orderID;
+
+public void setOrderID(String value) {
+this.orderID = value;
+    }
+public String getOrderID() {
+return this.orderID;
+    }
+
 private double totalAmount;
 
 public void setTotalAmount(double value) {
@@ -24,15 +33,15 @@ this.totalAmount = value;
 public double getTotalAmount() {
 return this.totalAmount;
     }
-private Customer customer;
+private Customer customer1;
 
 @ManyToOne(optional=false)
-public Customer getCustomer() {
-   return this.customer;
+public Customer getCustomer1() {
+   return this.customer1;
 }
 
-public void setCustomer(Customer customer) {
-   this.customer = customer;
+public void setCustomer1(Customer customer) {
+   this.customer1 = customer;
 }
 
 private Payment payment;

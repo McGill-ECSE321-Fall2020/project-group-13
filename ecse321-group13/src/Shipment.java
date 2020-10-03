@@ -23,6 +23,14 @@ this.shipmentMethod = value;
 public ShipmentMethod getShipmentMethod() {
 return this.shipmentMethod;
     }
+private String shipmentID;
+
+public void setShipmentID(String value) {
+this.shipmentID = value;
+    }
+public String getShipmentID() {
+return this.shipmentID;
+    }
   private Date estimatedDateOfArrival;
   private Time estimatedTimeOfArrival;
 private Order order;

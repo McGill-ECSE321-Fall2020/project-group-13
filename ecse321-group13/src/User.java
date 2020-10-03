@@ -1,5 +1,4 @@
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
@@ -30,20 +29,17 @@ this.email = value;
 public String getEmail() {
 return this.email;
     }
-private OnlineArtViewingSystem onlineArtViewingSystem;
+private String profilePictureURL;
 
-@ManyToOne(optional=false)
-public OnlineArtViewingSystem getOnlineArtViewingSystem() {
-   return this.onlineArtViewingSystem;
-}
-
-public void setOnlineArtViewingSystem(OnlineArtViewingSystem onlineArtViewingSystem) {
-   this.onlineArtViewingSystem = onlineArtViewingSystem;
-}
-
+public void setProfilePictureURL(String value) {
+this.profilePictureURL = value;
+    }
+public String getProfilePictureURL() {
+return this.profilePictureURL;
+    }
 private Set<UserRole> userRole;
 
-@OneToMany(mappedBy="user", cascade={CascadeType.ALL})
+@OneToMany(mappedBy="user1", cascade={CascadeType.ALL})
 public Set<UserRole> getUserRole() {
    return this.userRole;
 }

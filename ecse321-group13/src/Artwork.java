@@ -5,14 +5,25 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Artwork{
-private ArtworkStatus artworkStatus;
+private boolean artworkSold;
    
-   public void setArtworkStatus(ArtworkStatus value) {
-this.artworkStatus = value;
+   public void setArtworkSold(boolean value) {
+this.artworkSold = value;
     }
-public ArtworkStatus getArtworkStatus() {
-return this.artworkStatus;
+public boolean isArtworkSold() {
+return this.artworkSold;
     }
+private Artist artist;
+
+@ManyToOne(optional=false)
+public Artist getArtist() {
+   return this.artist;
+}
+
+public void setArtist(Artist artist) {
+   this.artist = artist;
+}
+
 private String description;
    
    public void setDescription(String value) {
@@ -69,27 +80,6 @@ this.imageUrl = value;
 public String getImageUrl() {
 return this.imageUrl;
     }
-private ArtGallery artGallery;
-
-@ManyToOne(optional=false)
-public ArtGallery getArtGallery() {
-   return this.artGallery;
-}
-
-public void setArtGallery(ArtGallery artGallery) {
-   this.artGallery = artGallery;
-}
-
-private Set<Profile> profile;
-
-@ManyToMany(mappedBy="artwork")
-public Set<Profile> getProfile() {
-   return this.profile;
-}
-
-public void setProfile(Set<Profile> profiles) {
-   this.profile = profiles;
-}
 
 private Set<Order> order;
 

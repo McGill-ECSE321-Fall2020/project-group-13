@@ -6,15 +6,26 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Customer extends UserRole{
-private Set<Order> order;
+private Set<Order> order1;
 
-@OneToMany(mappedBy="customer", cascade={CascadeType.ALL})
-public Set<Order> getOrder() {
-   return this.order;
+@OneToMany
+public Set<Order> getOrder1() {
+   return this.order1;
 }
 
-public void setOrder(Set<Order> orders) {
-   this.order = orders;
+public void setOrder1(Set<Order> order1s) {
+   this.order1 = order1s;
+}
+
+private Set<Order> order2;
+
+@OneToMany(mappedBy="customer1", cascade={CascadeType.ALL})
+public Set<Order> getOrder2() {
+   return this.order2;
+}
+
+public void setOrder2(Set<Order> orders) {
+   this.order2 = orders;
 }
 
 private Set<Address> address;
@@ -28,15 +39,15 @@ public void setAddress(Set<Address> addresss) {
    this.address = addresss;
 }
 
-private Order order1;
+private Order shoppingCart;
 
 @OneToOne(optional=false)
-public Order getOrder1() {
-   return this.order1;
+public Order getShoppingCart() {
+   return this.shoppingCart;
 }
 
-public void setOrder1(Order order1) {
-   this.order1 = order1;
+public void setShoppingCart(Order order1) {
+   this.shoppingCart = order1;
 }
 
 }
