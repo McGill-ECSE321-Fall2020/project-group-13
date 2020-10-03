@@ -7,13 +7,13 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Shipment{
-private ShipmentStatus shipmentStatus;
+private ShipmentStatus shipmentInfo;
    
-   public void setShipmentStatus(ShipmentStatus value) {
-this.shipmentStatus = value;
+   public void setShipmentInfo(ShipmentStatus value) {
+this.shipmentInfo = value;
     }
-public ShipmentStatus getShipmentStatus() {
-return this.shipmentStatus;
+public ShipmentStatus getShipmentInfo() {
+return this.shipmentInfo;
     }
 private ShipmentMethod shipmentMethod;
 

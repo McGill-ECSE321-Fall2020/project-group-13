@@ -5,6 +5,14 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Artwork{
+private ArtworkStatus artworkStatus;
+   
+   public void setArtworkStatus(ArtworkStatus value) {
+this.artworkStatus = value;
+    }
+public ArtworkStatus getArtworkStatus() {
+return this.artworkStatus;
+    }
 private String description;
    
    public void setDescription(String value) {
@@ -93,13 +101,4 @@ public Set<Order> getOrder() {
 public void setOrder(Set<Order> orders) {
    this.order = orders;
 }
-
-private ArtworkStatus artworkStatus;
-
-public void setArtworkStatus(ArtworkStatus value) {
-this.artworkStatus = value;
-    }
-public ArtworkStatus getArtworkStatus() {
-return this.artworkStatus;
-       }
    }
