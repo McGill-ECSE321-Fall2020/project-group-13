@@ -115,10 +115,6 @@
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j3qEkgUXEeuLIOtIfVSwpg" value="1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j3qroAUXEeuLIOtIfVSwpg" value="1"/>
       </ownedAttribute>
-      <ownedAttribute xmi:id="_zf1VgwUmEeuIIZ7C7k2DOQ" name="order1" type="_MmC0sAUWEeuLIOtIfVSwpg" association="_zf0ucAUmEeuIIZ7C7k2DOQ">
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zf18kAUmEeuIIZ7C7k2DOQ"/>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zf18kQUmEeuIIZ7C7k2DOQ" value="*"/>
-      </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_MmC0sAUWEeuLIOtIfVSwpg" name="Order">
       <ownedAttribute xmi:id="_p7NX4AUWEeuLIOtIfVSwpg" name="totalAmount">
@@ -262,9 +258,6 @@
     </packagedElement>
     <packagedElement xmi:type="uml:DataType" xmi:id="_Jbf8kAUcEeuLIOtIfVSwpg" name="ShipmentMethod"/>
     <packagedElement xmi:type="uml:Association" xmi:id="_UzBmwAUiEeuIIZ7C7k2DOQ" name="" memberEnd="_UzCN0AUiEeuIIZ7C7k2DOQ _UzEqEQUiEeuIIZ7C7k2DOQ"/>
-    <packagedElement xmi:type="uml:Association" xmi:id="_zf0ucAUmEeuIIZ7C7k2DOQ" name="" memberEnd="_zf1VgAUmEeuIIZ7C7k2DOQ _zf1VgwUmEeuIIZ7C7k2DOQ">
-      <ownedEnd xmi:id="_zf1VgAUmEeuIIZ7C7k2DOQ" name="" type="_L3hh0AUWEeuLIOtIfVSwpg" association="_zf0ucAUmEeuIIZ7C7k2DOQ"/>
-    </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_x5mlQAUrEeuIIZ7C7k2DOQ" name="User">
       <ownedAttribute xmi:id="_z2a3QAUrEeuIIZ7C7k2DOQ" name="username">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
