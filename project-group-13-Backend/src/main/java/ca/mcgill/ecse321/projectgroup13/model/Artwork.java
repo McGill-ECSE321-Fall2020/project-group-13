@@ -1,4 +1,6 @@
+package ca.mcgill.ecse321.projectgroup13.model;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Set;
 import javax.persistence.ManyToMany;
@@ -13,16 +15,6 @@ this.artworkSold = value;
 public boolean isArtworkSold() {
 return this.artworkSold;
     }
-private Artist artist;
-
-@ManyToOne(optional=false)
-public Artist getArtist() {
-   return this.artist;
-}
-
-public void setArtist(Artist artist) {
-   this.artist = artist;
-}
 
 private String description;
    
@@ -32,6 +24,7 @@ this.description = value;
 public String getDescription() {
 return this.description;
     }
+@Id
 private String title;
 
 public void setTitle(String value) {
@@ -81,14 +74,6 @@ public String getImageUrl() {
 return this.imageUrl;
     }
 
-private Set<Order> order;
 
-@ManyToMany(mappedBy="artwork")
-public Set<Order> getOrder() {
-   return this.order;
-}
 
-public void setOrder(Set<Order> orders) {
-   this.order = orders;
-}
    }
