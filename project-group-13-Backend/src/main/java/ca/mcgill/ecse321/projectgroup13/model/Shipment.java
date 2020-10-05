@@ -1,3 +1,5 @@
+package ca.mcgill.ecse321.projectgroup13.model;
+
 import java.sql.Date;
 import java.sql.Time;
 
