@@ -1,12 +1,42 @@
-package ca.mcgill.ecse321.projectgroup13.model;
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.util.Set;
 import javax.persistence.ManyToMany;
 
 @Entity
 public class Artwork{
+private Set<User> artist;
+
+@ManyToMany
+public Set<User> getArtist() {
+   return this.artist;
+}
+
+public void setArtist(Set<User> artists) {
+   this.artist = artists;
+}
+
+private String artworkID;
+
+public void setArtworkID(String value) {
+this.artworkID = value;
+    }
+@Id
+public String getArtworkID() {
+return this.artworkID;
+    }
+private Order order;
+
+@ManyToOne
+public Order getOrder() {
+   return this.order;
+}
+
+public void setOrder(Order order) {
+   this.order = order;
+}
+
 private boolean artworkSold;
    
    public void setArtworkSold(boolean value) {
@@ -24,7 +54,6 @@ this.description = value;
 public String getDescription() {
 return this.description;
     }
-@Id
 private String title;
 
 public void setTitle(String value) {
@@ -74,6 +103,14 @@ public String getImageUrl() {
 return this.imageUrl;
     }
 
+private Set<Order> cart;
 
+@ManyToMany(mappedBy="artwork")
+public Set<Order> getCart() {
+   return this.cart;
+}
 
+public void setCart(Set<Order> orders) {
+   this.cart = orders;
+}
    }
