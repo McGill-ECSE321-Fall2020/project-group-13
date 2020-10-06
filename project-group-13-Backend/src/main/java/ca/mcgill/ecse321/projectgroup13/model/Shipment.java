@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -25,11 +26,13 @@ this.shipmentMethodIsDelivery = value;
 public boolean isShipmentMethodIsDelivery() {
 return this.shipmentMethodIsDelivery;
     }
+
 private String shipmentID;
 
 public void setShipmentID(String value) {
 this.shipmentID = value;
     }
+@Id
 public String getShipmentID() {
 return this.shipmentID;
     }
