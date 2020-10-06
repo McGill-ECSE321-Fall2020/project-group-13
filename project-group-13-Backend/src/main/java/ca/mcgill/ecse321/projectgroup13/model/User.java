@@ -1,13 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
-import javax.persistence.ManyToMany;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
+import javax.persistence.*;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name="users")
@@ -47,10 +41,9 @@ public void setOrder1(Set<Order> order1s) {
 
 private String username;
    
-   public void setUsername(String value) {
+public void setUsername(String value) {
 this.username = value;
     }
-   
 @Id
 public String getUsername() {
 return this.username;
