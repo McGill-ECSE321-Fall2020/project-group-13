@@ -1,7 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.doa;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.dao.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
