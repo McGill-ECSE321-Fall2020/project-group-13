@@ -35,14 +35,10 @@ public class persistenceTester {
     	
    
         Artwork artwork = new Artwork();
-        System.out.println("TESTED BABY1");
         artwork.setArtworkSold(true);
-    
         artwork.setTitle("beauty");
         artwork.setArtworkID("cesar_baby");
-        System.out.println("TESTED BABY1.5");
         artworkRepository.saveAndFlush(artwork);
-        System.out.println("TESTED BABY2");
         return artwork;
     }
 
@@ -50,11 +46,9 @@ public class persistenceTester {
     @Test
     public void testPersistAndLoadUser() {
         //parameters for users
-    	System.out.println("TESTED BABY");
     	createArtwork();
         Artwork artwork = artworkRepository.findArtworkByArtworkID("cesar_baby");
         //asserts if everything can be retrieved from database
-       
         assertEquals(artwork.isArtworkSold(), true);
        
         
