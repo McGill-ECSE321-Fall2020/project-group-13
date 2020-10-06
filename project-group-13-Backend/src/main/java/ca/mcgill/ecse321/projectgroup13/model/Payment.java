@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.projectgroup13.model;
 import java.sql.Time;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -68,6 +69,8 @@ private String paymentID;
 public void setPaymentID(String value) {
 this.paymentID = value;
     }
+
+@Id
 public String getPaymentID() {
 return this.paymentID;
     }

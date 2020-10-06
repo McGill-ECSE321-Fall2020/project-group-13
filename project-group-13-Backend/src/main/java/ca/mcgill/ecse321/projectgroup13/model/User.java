@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.projectgroup13.model;
 
 import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
@@ -46,6 +48,8 @@ private String username;
    public void setUsername(String value) {
 this.username = value;
     }
+   
+@Id
 public String getUsername() {
 return this.username;
     }
