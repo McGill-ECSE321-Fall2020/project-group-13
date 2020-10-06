@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ArtworkRepository extends JpaRepository<Artwork, Long>{
 
     Artwork findArtworkByTitle(String title);
-
+    Artwork findArtworkByArtworkID(String artworkID);
 
 }
