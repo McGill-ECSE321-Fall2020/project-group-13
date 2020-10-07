@@ -38,7 +38,7 @@ public class persistenceTester {
         artwork.setArtworkSold(true);
         artwork.setTitle("beauty");
         artwork.setArtworkID("cesar_baby");
-        artworkRepository.saveAndFlush(artwork);
+        artworkRepository.save(artwork);
         return artwork;
     }
 
