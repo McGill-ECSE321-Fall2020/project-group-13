@@ -38,11 +38,13 @@ implementation 'org.hibernate:hibernate-core:5.4.22.Final'
 	//JUNIT 5.0 implemented here, runtime 
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
-	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.2.2.RELEASE'
-	compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.2.2.RELEASE'
-	compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.9.RELEASE'
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.9.RELEASE'
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    
+	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.2.2.RELEASE'
+	
+	compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.2.2.RELEASE'
+	
 
 
 }
