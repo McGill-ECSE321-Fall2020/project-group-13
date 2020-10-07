@@ -59,7 +59,7 @@ public class TestAddressPersistance {
         address.setAddressID(ID);
         addressRepository.save(address);
         
-        Address addressPersisted = addressRepository.findOrderByOrderID(ID);
+        Address addressPersisted = addressRepository.findAddressByAddressID(ID);
         //asserts if everything can be retrieved from database
         assertEquals(address.equals(addressPersisted), true);
     }

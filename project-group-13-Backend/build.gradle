@@ -28,6 +28,7 @@ dependencies {
 implementation 'org.springframework.boot:spring-boot-starter-web'
 implementation 'org.hibernate:hibernate-core:5.4.22.Final'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'junit:junit:4.12'
 	
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
