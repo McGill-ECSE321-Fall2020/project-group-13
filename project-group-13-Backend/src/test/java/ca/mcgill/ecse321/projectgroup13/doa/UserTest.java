@@ -63,7 +63,6 @@ public class UserTest {
     	addrs.add(address);
     	user2.setAddress(addrs);
     	addressRepository.save(address);
-    	userRepository.save(user2);
         //END OF ADDED CODE
     	
     //    userRepository.save(user);
