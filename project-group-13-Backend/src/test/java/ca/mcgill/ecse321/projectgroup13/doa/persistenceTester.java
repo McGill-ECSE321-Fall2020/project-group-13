@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.projectgroup13.doa;
 import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
-import ca.mcgill.ecse321.projectgroup13.model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,13 +32,11 @@ public class persistenceTester {
 
 
     public Artwork createArtwork() {
-    	
-   
         Artwork artwork = new Artwork();
         artwork.setArtworkSold(true);
         artwork.setTitle("beauty");
         artwork.setArtworkID("cesar_baby");
-        artworkRepository.saveAndFlush(artwork);
+        artworkRepository.save(artwork);
         return artwork;
     }
 
@@ -52,26 +48,7 @@ public class persistenceTester {
         Artwork artwork = artworkRepository.findArtworkByArtworkID("cesar_baby");
         //asserts if everything can be retrieved from database
         assertEquals(artwork.isArtworkSold(), true);
-       
         
-    }
-
-    @Test
-    public void testPersistAndLoadUser() {
-
-        String username = "TestUser";
-        // First example for object save/load
-        User user = new User();
-        // First example for attribute save/load
-        user.setUsername(username);
-        userRepository.save(user);
-
-        user = null;
-
-        user = userRepository.findUserByUsername(username);
-        assertNotNull(user);
-        assertEquals(username, user.getUsername());
-
     }
     
 
