@@ -96,6 +96,8 @@ public Set<Artwork> getArtwork() {
 public void setArtwork(Set<Artwork> artworks) {
    this.artwork = artworks;
 }
+
+
 @Override
 public int hashCode() {
 	final int prime = 31;
@@ -157,7 +159,5 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
-
-
 
 }
