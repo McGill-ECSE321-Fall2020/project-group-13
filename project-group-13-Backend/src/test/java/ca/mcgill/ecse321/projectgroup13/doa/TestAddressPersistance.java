@@ -43,47 +43,70 @@ public class TestAddressPersistance {
 
     @Test
     public void testPersistAndLoadAddress() {
-        //parameters for address
+    	
+    	//need instances of these classes
 	    Address address = new Address();
+	    User user = new User();
+	    Cart cart = new Cart();
+	    
+	    
+	    //parameters for address
 	    String city = "city";
 	    String country = "country";
 	    String postalCode = "postalCode";
 	    String province = "province";
 	    String street1 = "street1";
 	    String street2 = "street2";
-	    User user = new User();
-	    	user.setUsername("TestUser17");
-	    Cart cart = new Cart();
-	    	cart.setCartID("tempCart555");
-	    System.out.println("1");
-	    cart.setUser(user);
-	    user.setCart(cart);
-	    System.out.println("2");
+	    String addressID = "TESTaddressID";
 	    
+	    
+	    //parameters for user
+	    String username = "testUser20";
+	    String password = "passW0rd";
+	    String email = "me@home.com";
+	    String profilePicURL = "//yes.com/img.jpg";
+	    
+	    
+	    //parameters for cart
+	    String cartID = "TESTcartID";
+	    double totalCost = 100.1;
+	    
+	    //set address parameters
 	    address.setCity(city);
 	    address.setCountry(country);
 	    address.setPostalCode(postalCode);
 	    address.setProvince(province);
 	    address.setStreetAddress1(street1);
 	    address.setStreetAddress2(street2);
+	    address.setAddressID(addressID);
 	    address.setUser(user);
-	    System.out.println("3");
 	    
-	    userRepository.save(user);
-	    cartRepository.save(cart);
-	    System.out.println("4");
+	    //set user parameters
+	    user.setUsername(username);
+	    user.setPassword(password);
+	    user.setEmail(email);
+	    user.setProfilePictureURL(profilePicURL);
+	    user.setCart(cart);
+	    
+	    //set cart parameters
+	    cart.setCartID(cartID);
+	    cart.setTotalCost(totalCost);
+	    cart.setUser(user);
 	    
 	    
 	    
 	    System.out.println("1");
-        String ID = Integer.toString(address.hashCode());
-        address.setAddressID(ID);
-        System.out.println("2");
-        addressRepository.save(address);
+	    userRepository.save(user);
+	    System.out.println("2");
+	    cartRepository.save(cart);
+	    System.out.println("3");
+	    addressRepository.save(address);
+	    System.out.println("4");
+
         
         
-        System.out.println("3");
-        Address addressPersisted = addressRepository.findAddressByAddressID(ID);
+        Address addressPersisted = addressRepository.findAddressByAddressID(addressID);
+        System.out.println("5");
         //asserts if everything can be retrieved from database
         System.out.println(user);
         //System.out.println(addressPersisted.getUser());

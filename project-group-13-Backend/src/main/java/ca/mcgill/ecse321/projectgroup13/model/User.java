@@ -8,7 +8,7 @@ import java.util.Set;
 public class User{
 private Cart cart;
 
-@OneToOne(mappedBy="user", optional=false)
+@OneToOne(mappedBy="user", cascade={CascadeType.ALL})
 public Cart getCart() {
    return this.cart;
 }

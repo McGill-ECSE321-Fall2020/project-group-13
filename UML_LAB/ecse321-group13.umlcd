@@ -253,11 +253,11 @@
       <visibility xmi:id="_AUh9ZQnEEeuRkIIv065dJw" label="+"/>
       <cardinality xmi:id="_AUh9ZAnEEeuRkIIv065dJw" label="1" max="1" min="1"/>
     </sourceRole>
-    <targetRole xmi:id="_AUhWVAnEEeuRkIIv065dJw" aggregationKind="NONE" name="cart" navigable="true">
+    <targetRole xmi:id="_AUhWVAnEEeuRkIIv065dJw" name="cart" navigable="true">
       <modelElement href="ecse321-group13-old.uml#_EuE8EAm6EeuRkIIv065dJw"/>
       <visualProperties xmi:id="_AXyswAnEEeuRkIIv065dJw" position="6.0,-41.0"/>
       <visibility xmi:id="_AUikcQnEEeuRkIIv065dJw" label="+"/>
-      <cardinality xmi:id="_AUikcAnEEeuRkIIv065dJw" label="1" max="1" min="1"/>
+      <cardinality xmi:id="_AUikcAnEEeuRkIIv065dJw" label="0..1" max="1"/>
     </targetRole>
   </edges>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_VtK70AUXEeuLIOtIfVSwpg" name="Address" associationsIn="_i7wdAAUXEeuLIOtIfVSwpg _Zch8kAdTEeuNT_9npWWHbA">
@@ -451,7 +451,7 @@
     <attributes xmi:id="_w2HDYAnKEeuRkIIv065dJw" name="cart">
       <modelElement href="ecse321-group13-old.uml#_EuE8EAm6EeuRkIIv065dJw"/>
       <visibility xmi:id="_w2HDYQnKEeuRkIIv065dJw" label="+"/>
-      <cardinality xmi:id="_w2HDYgnKEeuRkIIv065dJw" label="1" max="1" min="1"/>
+      <cardinality xmi:id="_w2HDYgnKEeuRkIIv065dJw" label="0..1" max="1"/>
       <type xmi:id="_w2HDYwnKEeuRkIIv065dJw" name="Cart">
         <modelElement href="ecse321-group13-old.uml#_EtRq0Am6EeuRkIIv065dJw"/>
       </type>

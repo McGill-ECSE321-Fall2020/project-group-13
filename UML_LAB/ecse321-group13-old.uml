@@ -5,7 +5,7 @@
       <contents xmi:type="ecore:EAnnotation" xmi:id="_oozxUQUVEeuLIOtIfVSwpg" source="codegen">
         <details xmi:id="_oozxUgUVEeuLIOtIfVSwpg" key="codegenDirectory" value="/ecse321-group13/src"/>
         <details xmi:id="_opQdQAUVEeuLIOtIfVSwpg" key="observedFolders" value="/ecse321-group13/src"/>
-        <details xmi:id="_Jg8SsAUbEeuLIOtIfVSwpg" key="AssociatedSourceCode" value="/ecse321-group13/src/Artwork.java;94698675/1;/ecse321-group13/src/Order.java;1757356647/1;/ecse321-group13/src/ShipmentStatus.java;1167075129/1;/ecse321-group13/src/OrderStatus.java;789315824/1;/ecse321-group13/src/Payment.java;2706213374/1;/ecse321-group13/src/Shipment.java;3042380657/1;/ecse321-group13/src/Address.java;2320940242/1;/ecse321-group13/src/User.java;1497906189/1;/ecse321-group13/src/Cart.java;3318694618/1;"/>
+        <details xmi:id="_Jg8SsAUbEeuLIOtIfVSwpg" key="AssociatedSourceCode" value="/ecse321-group13/src/Artwork.java;94698675/1;/ecse321-group13/src/Order.java;1757356647/1;/ecse321-group13/src/ShipmentStatus.java;1167075129/1;/ecse321-group13/src/OrderStatus.java;789315824/1;/ecse321-group13/src/Payment.java;2706213374/1;/ecse321-group13/src/Shipment.java;3042380657/1;/ecse321-group13/src/Address.java;2320940242/1;/ecse321-group13/src/User.java;3130240435/1;/ecse321-group13/src/Cart.java;3318694618/1;"/>
       </contents>
     </eAnnotations>
     <elementImport xmi:id="_vtqUIAUVEeuLIOtIfVSwpg">
@@ -242,8 +242,8 @@
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tdzmoQdgEeuNT_9npWWHbA"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tdzmogdgEeuNT_9npWWHbA" value="*"/>
       </ownedAttribute>
-      <ownedAttribute xmi:id="_EuE8EAm6EeuRkIIv065dJw" name="cart" type="_EtRq0Am6EeuRkIIv065dJw" association="_EuE8EQm6EeuRkIIv065dJw">
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_U9BEUAnEEeuRkIIv065dJw" value="1"/>
+      <ownedAttribute xmi:id="_EuE8EAm6EeuRkIIv065dJw" name="cart" type="_EtRq0Am6EeuRkIIv065dJw" aggregation="composite" association="_EuE8EQm6EeuRkIIv065dJw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_U9BEUAnEEeuRkIIv065dJw"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_U9BEUQnEEeuRkIIv065dJw" value="1"/>
       </ownedAttribute>
     </packagedElement>
