@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.doa;
+
 import ca.mcgill.ecse321.projectgroup13.dao.AddressRepository;
+import ca.mcgill.ecse321.projectgroup13.dao.CartRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.User;
@@ -23,10 +25,12 @@ import static org.junit.Assert.assertEquals;
 public class UserTest {
     @Autowired
     private UserRepository userRepository;
-//Remove this
-   @Autowired
-   private AddressRepository addressRepository;
- //Remove ends here
+    //Remove this
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private CartRepository cartRepository;
+    //Remove ends here
 
     // this is to clear database prior to every run
     @BeforeEach
@@ -40,37 +44,35 @@ public class UserTest {
     public void testPersistAndLoadUser() {
         System.out.println("test1");
         String username = "TestUser";
-        String username2 = "TestUser2";
+        String cartID = "123";
+
         // First example for object save/load
         User user = new User();
-        User user2 = new User();
-        
-        // First example for attribute save/load
         user.setUsername(username);
-        user2.setUsername(username2);
-        userRepository.save(user2);
-        //ADDED CODE INCLUDING COMMENT
-        Address address = new Address();
-    	address.setCity("Montreal");
-    	address.setCountry("Canada");
-    	
-    	address.setStreetAddress1("3302 St-Catherine");
-    	address.setAddressID("3732St-Catherine");
-    	address.setUser(user2);
-    	Set<Address> addrs= new HashSet<>();
-    	//creating a hashset
-    	addrs.add(address);
-    	user2.setAddress(addrs);
-    	addressRepository.save(address);
-        //END OF ADDED CODE
-    	
-        //userRepository.save(user);
-        
-        user = null;
-        user2 = null;
+        userRepository.save(user);
 
-       // user = userRepository.findUserByUsername(username);
-        user2 = userRepository.findUserByUsername(username2);
+
+        Address address = new Address();
+        address.setCity("Montreal");
+        address.setCountry("Canada");
+        address.setStreetAddress1("3302 St-Catherine");
+        address.setAddressID("3732St-Catherine");
+        address.setUser(user);
+        Set<Address> addrs= new HashSet<>();
+        addrs.add(address);
+        user.setAddress(addrs);
+        addressRepository.save(address);
+
+        //END OF ADDED CODE
+
+        //userRepository.save(user);
+
+        user = null;
+        //cart = null;
+
+        // user = userRepository.findUserByUsername(username);
+        user = userRepository.findUserByUsername(username);
+        //cart = cartRepository.findCartByCartID(cartID);
 //        assertNotNull(user);
 //        assertNotNull(user2);
 //        assertEquals(username, user.getUsername());
