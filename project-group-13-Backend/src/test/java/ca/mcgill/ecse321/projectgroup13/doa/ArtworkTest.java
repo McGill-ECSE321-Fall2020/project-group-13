@@ -52,6 +52,7 @@ public class ArtworkTest {
     	address.setAddressID("3732St-Catherine");
     	User artist = new User();
     	artist.setUsername("Julius Cesar Arnouk");
+    	
     	artist.setEmail("JCesar@RussianBrides.com");
     	Set<Address> addresss = new HashSet<>();
     	addresss.add(address);
@@ -74,7 +75,6 @@ public class ArtworkTest {
     	artworkRepository.save(artwork);
     	artwork.setArtist(artists);
     	userRepository.save(artist);
-    	
     	
     	
     }
