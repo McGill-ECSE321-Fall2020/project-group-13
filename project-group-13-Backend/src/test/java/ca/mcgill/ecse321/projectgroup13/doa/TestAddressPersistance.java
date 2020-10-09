@@ -33,8 +33,8 @@ public class TestAddressPersistance {
     private CartRepository cartRepository;
     
     // this is to clear database prior to every run
-    @BeforeEach
-    @AfterEach
+    //@BeforeEach
+    //@AfterEach
     public void clearDatabase() {
     	addressRepository.deleteAll();
     	userRepository.deleteAll();

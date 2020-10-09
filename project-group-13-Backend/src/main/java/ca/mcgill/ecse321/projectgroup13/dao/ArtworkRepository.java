@@ -12,5 +12,6 @@ public interface ArtworkRepository extends CrudRepository<Artwork, Long>{
     Artwork findArtworkByTitle(String title);
     Artwork findArtworkByArtworkID(String artworkID);
     Artwork findArtworkByArtist(User Artist);
+    //Set<Artwork> findArtworkByArtistUsername(Set<String> artistsID);
 
 }
