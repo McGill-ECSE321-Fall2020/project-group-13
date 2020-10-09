@@ -126,18 +126,18 @@ public boolean equals(Object obj) {
 			return false;
 	} else if (!payment.equals(other.payment))
 		return false;
-	if (shipment == null) {
-		if (other.shipment != null)
-			return false;
-	} else if (!shipment.equals(other.shipment))
-		return false;
+//	if (shipment == null) {
+//		if (other.shipment != null)
+//			return false;
+//	} else if (!shipment.equals(other.shipment))
+//		return false;
 	if (Double.doubleToLongBits(totalAmount) != Double.doubleToLongBits(other.totalAmount))
 		return false;
-	if (user == null) {
-		if (other.user != null)
-			return false;
-	} else if (!user.equals(other.user))
-		return false;
+//	if (user == null) {
+//		if (other.user != null)
+//			return false;
+//	} else if (!user.equals(other.user))
+//		return false;
 	return true;
 }
 

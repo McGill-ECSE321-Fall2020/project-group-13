@@ -109,11 +109,11 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	User other = (User) obj;
-	if (address == null) {
-		if (other.address != null)
-			return false;
-	} else if (!address.equals(other.address))
-		return false;
+//	if (address == null) {
+//		if (other.address != null)
+//			return false;
+//	} else if (!address.equals(other.address))
+//		return false;
 	if (artwork == null) {
 		if (other.artwork != null)
 			return false;
@@ -151,4 +151,13 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
+
+@Override
+public String toString() {
+	return "User [cart=" + cart + ", artwork=" + artwork + ", address=" + address + ", order=" + order + ", username="
+			+ username + ", password=" + password + ", email=" + email + ", profilePictureURL=" + profilePictureURL
+			+ "]";
+}
+
+
 }

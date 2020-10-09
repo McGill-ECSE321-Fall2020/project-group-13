@@ -81,11 +81,11 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	Shipment other = (Shipment) obj;
-	if (address == null) {
-		if (other.address != null)
-			return false;
-	} else if (!address.equals(other.address))
-		return false;
+//	if (address == null) {
+//		if (other.address != null)
+//			return false;
+//	} else if (!address.equals(other.address))
+//		return false;
 	if (estimatedDateOfArrival == null) {
 		if (other.estimatedDateOfArrival != null)
 			return false;

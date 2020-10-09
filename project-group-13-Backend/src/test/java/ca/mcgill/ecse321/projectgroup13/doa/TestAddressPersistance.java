@@ -43,7 +43,6 @@ public class TestAddressPersistance {
 
     @Test
     public void testPersistAndLoadAddress() {
-    	
     	//need instances of these classes
 	    Address address = new Address();
 	    User user = new User();
@@ -65,8 +64,12 @@ public class TestAddressPersistance {
 	    String password = "passW0rd";
 	    String email = "me@home.com";
 	    String profilePicURL = "//yes.com/img.jpg";
-	    
-	    
+	    Set<Address> addrs= new HashSet<>();
+	    	addrs.add(address);
+	    Set<Artwork> artworks= new HashSet<>();
+	    Set<Order> orders= new HashSet<>();
+	    	
+	    	
 	    //parameters for cart
 	    String cartID = "TESTcartID";
 	    double totalCost = 100.1;
@@ -81,36 +84,32 @@ public class TestAddressPersistance {
 	    address.setAddressID(addressID);
 	    address.setUser(user);
 	    
+	    
 	    //set user parameters
 	    user.setUsername(username);
 	    user.setPassword(password);
 	    user.setEmail(email);
 	    user.setProfilePictureURL(profilePicURL);
 	    user.setCart(cart);
+	    user.setAddress(addrs);
+	    user.setOrder(orders);
+	    user.setArtwork(artworks);
+	    
 	    
 	    //set cart parameters
 	    cart.setCartID(cartID);
 	    cart.setTotalCost(totalCost);
 	    cart.setUser(user);
 	    
-	    
-	    
-	    System.out.println("1");
-	    userRepository.save(user);
-	    System.out.println("2");
-	    cartRepository.save(cart);
-	    System.out.println("3");
-	    addressRepository.save(address);
-	    System.out.println("4");
+	    //save instances to database
+	    user = userRepository.save(user);
+	    cart = cartRepository.save(cart);
+	    address = addressRepository.save(address);
 
-        
-        
+        //restore address instance from database
         Address addressPersisted = addressRepository.findAddressByAddressID(addressID);
-        System.out.println("5");
-        //asserts if everything can be retrieved from database
-        System.out.println(user);
-        //System.out.println(addressPersisted.getUser());
-        assertEquals(true, user.equals(addressPersisted.getUser()));
-        //assertEquals(true, address.equals(addressPersisted));
+
+        //assert if instance retrieved from database equals the original
+        assertEquals(true, address.equals(addressPersisted));
     }
 }

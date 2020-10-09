@@ -78,11 +78,11 @@ public boolean equals(Object obj) {
 		return false;
 	if (Double.doubleToLongBits(totalCost) != Double.doubleToLongBits(other.totalCost))
 		return false;
-	if (user == null) {
-		if (other.user != null)
-			return false;
-	} else if (!user.equals(other.user))
-		return false;
+//	if (user == null) {
+//		if (other.user != null)
+//			return false;
+//	} else if (!user.equals(other.user))
+//		return false;
 	return true;
 }
 

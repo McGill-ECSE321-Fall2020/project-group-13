@@ -139,11 +139,11 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	Artwork other = (Artwork) obj;
-	if (artist == null) {
-		if (other.artist != null)
-			return false;
-	} else if (!artist.equals(other.artist))
-		return false;
+//	if (artist == null) {
+//		if (other.artist != null)
+//			return false;
+//	} else if (!artist.equals(other.artist))
+//		return false;
 	if (artworkID == null) {
 		if (other.artworkID != null)
 			return false;
@@ -183,11 +183,11 @@ public boolean equals(Object obj) {
 			return false;
 	} else if (!medium.equals(other.medium))
 		return false;
-	if (order == null) {
-		if (other.order != null)
-			return false;
-	} else if (!order.equals(other.order))
-		return false;
+//	if (order == null) {
+//		if (other.order != null)
+//			return false;
+//	} else if (!order.equals(other.order))
+//		return false;
 	if (title == null) {
 		if (other.title != null)
 			return false;
