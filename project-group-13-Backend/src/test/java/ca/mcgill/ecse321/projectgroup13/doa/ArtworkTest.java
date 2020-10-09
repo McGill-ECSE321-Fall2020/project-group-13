@@ -32,7 +32,11 @@ public class ArtworkTest {
     @BeforeEach
     @AfterEach
     public void clearDatabase() {
-        artworkRepository.deleteAll();
+    	addressRepository.deleteAll();
+    	artworkRepository.deleteAll();
+    	userRepository.deleteAll();
+    	
+        
     }
     
     
@@ -44,19 +48,21 @@ public class ArtworkTest {
     public void initializeDatabase() {
     	//    Artwork<---User-->Address
     	//create address
-    	Address address = new Address();
-    	address.setCity("Montreal");
-    	address.setCountry("Canada");
-
-    	address.setStreetAddress1("3302 St-Catherine");
-    	address.setAddressID("3732St-Catherine");
+    	
     	User artist = new User();
     	artist.setUsername("Julius Cesar Arnouk");
-    	
     	artist.setEmail("JCesar@RussianBrides.com");
+    	userRepository.save(artist);
+    	
+    	Address address = new Address();
+    	address.setUser(artist);
+    	address.setCity("Montreal");
+    	address.setCountry("Canada");
+    	address.setStreetAddress1("3302 St-Catherine");
+    	address.setAddressID("3732St-Catherine");
     	Set<Address> addresss = new HashSet<>();
     	addresss.add(address);
-    	artist.setAddress(addresss);
+    	
     	//create Artwork
     	Artwork artwork = new Artwork();
     	artwork.setTitle("Beauty");
@@ -65,26 +71,34 @@ public class ArtworkTest {
     	
     	
     	Set<User> artists = new HashSet<User>();
-    	address.setUser(artist);
-    	System.out.println("The error is at add artist to artists");
-    	//here it is buddy
-   
-    	//artists.add(artist);
+    	Set<Artwork> artworks = new HashSet<Artwork>();
+
+    	
+    	
+    	artists.add(artist);
+    	artworks.add(artwork);
     	System.out.println("ERROR DETECTOR PASSED");
     	addressRepository.save(address);
-    	artworkRepository.save(artwork);
+    	
     	artwork.setArtist(artists);
+    	artist.setArtwork(artworks);
+    	artworkRepository.save(artwork);
     	userRepository.save(artist);
     	
     	
     }
     
-    //Navigate associations to the Artwork's artist's city 
+
     @Test
-    public void findArtistCityTest() {
+    public void artworkTest() {
     	initializeDatabase();
-    	//Artwork artwork = artworkRepository.findArtworkByArtist("Julius Cesar Arnouk");
-    	//assertEquals(artwork.getTitle(),"Beauty");
+    	//System.out.println(userRepository.findUserByUsername("Julius Cesar Arnouk"));
+    	User artist = userRepository.findUserByUsername("Julius Cesar Arnouk");
+    	Artwork artwork = artworkRepository.findArtworkByArtist(artist); //test search using foreign keys
+    	assertNotNull(artwork); // test reference of object
+    	assertEquals(artwork.getTitle(),"Beauty"); // test attribute of object
+    	assertEquals("Beauty",artist.getArtwork().iterator().next().getArtworkID()); //test navigating association of object
+    	
     	
     	
     }
