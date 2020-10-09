@@ -19,6 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration
+
+/**
+ *  The TestArt class implements JUnit for reading and writing addresses to the database
+ *  and also tests navigating the associations of artwork
+ *
+ */
+
 public class TestCart {
 
     @Autowired
@@ -29,12 +36,25 @@ public class TestCart {
     // this is to clear database prior to every run
     @BeforeEach
     @AfterEach
+    
+    /**
+     *  Deletes all information from cartRepository and
+     *  userRepository
+     */
+    
     public void clearDatabase() {
     	userRepository.deleteAll();
     	cartRepository.deleteAll();
     }
 
     @Test
+    
+    /**
+     * Initialize database creates instances of user and cart
+     * populates them with test information, saves them to the database
+     * and tests that they were successfully saved. 
+     */
+    
     public void testPersistAndLoadAddress() {
     	//need instances of these classes
 	    User user = new User();
