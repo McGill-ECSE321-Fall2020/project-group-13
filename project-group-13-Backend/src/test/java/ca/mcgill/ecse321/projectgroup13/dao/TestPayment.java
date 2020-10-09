@@ -1,8 +1,5 @@
-package ca.mcgill.ecse321.projectgroup13.doa;
+package ca.mcgill.ecse321.projectgroup13.dao;
 
-import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
-import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
-import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.Payment;
 import ca.mcgill.ecse321.projectgroup13.model.User;

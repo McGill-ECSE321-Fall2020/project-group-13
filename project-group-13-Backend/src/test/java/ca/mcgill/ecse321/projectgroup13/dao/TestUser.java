@@ -1,15 +1,8 @@
-package ca.mcgill.ecse321.projectgroup13.doa;
+package ca.mcgill.ecse321.projectgroup13.dao;
 
-import ca.mcgill.ecse321.projectgroup13.dao.AddressRepository;
-import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
-import ca.mcgill.ecse321.projectgroup13.dao.CartRepository;
-import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
-import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-
-import java.util.Iterator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @ContextConfiguration
 
-public class UserTest {
+public class TestUser {
     @Autowired
     private UserRepository userRepository;
     //Remove this
@@ -52,40 +44,6 @@ public class UserTest {
         cartRepository.deleteAll();
         userRepository.deleteAll();
     }
-    
-//    public void initDatabase() {
-//    	System.out.println("test1");
-//        String username = "TestUser";
-//        String cartID = "123";
-//
-//        // First example for object save/load
-//        User user = new User();
-//        user.setUsername(username);
-//       // userRepository.save(user);
-//        //create address
-////        Address address = new Address();
-////        address.setCity("Montreal");
-////        address.setCountry("Canada");
-////        address.setStreetAddress1("3302 St-Catherine");
-////        address.setAddressID("3732St-Catherine");
-////        address.setUser(user);
-////        Set<Address> addrs= new HashSet<>();
-////        addrs.add(address);
-////        user.setAddress(addrs);
-////        addressRepository.save(address);
-//        
-//        
-//        
-//        //create some art
-//        
-////        //create the cart
-//        Cart cart = new Cart();
-//        cart.setCartID(cartID);
-//        cart.setUser(user);
-//        user.setCart(cart);
-//        userRepository.save(user);
-//        cartRepository.save(cart);
-//    }
     
     public void initDatabase() {
     	//    Artwork<---User-->Address
@@ -141,7 +99,5 @@ public class UserTest {
     	assertEquals(querryUser.getUsername(),"Julius Cesar Arnouk");
     	
     }
-    
-   
     
 }

@@ -1,9 +1,5 @@
-package ca.mcgill.ecse321.projectgroup13.doa;
+package ca.mcgill.ecse321.projectgroup13.dao;
 
-import ca.mcgill.ecse321.projectgroup13.dao.AddressRepository;
-import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
-import ca.mcgill.ecse321.projectgroup13.dao.ShipmentRepository;
-import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
