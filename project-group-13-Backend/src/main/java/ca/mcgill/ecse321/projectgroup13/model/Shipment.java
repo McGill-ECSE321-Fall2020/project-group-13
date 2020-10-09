@@ -1,12 +1,10 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
-import java.sql.Date;
-import java.sql.Time;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import java.sql.Date;
+import java.sql.Time;
 
 @Entity
 public class Shipment{
@@ -59,7 +57,25 @@ public Address getAddress() {
 public void setAddress(Address address) {
    this.address = address;
 }
-@Override
+
+
+	public void setEstimatedDateOfArrival(Date estimatedDateOfArrival) {
+		this.estimatedDateOfArrival = estimatedDateOfArrival;
+	}
+
+	public void setEstimatedTimeOfArrival(Time estimatedTimeOfArrival) {
+		this.estimatedTimeOfArrival = estimatedTimeOfArrival;
+	}
+
+	public Date getEstimatedDateOfArrival() {
+		return estimatedDateOfArrival;
+	}
+
+	public Time getEstimatedTimeOfArrival() {
+		return estimatedTimeOfArrival;
+	}
+
+	@Override
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,10 +38,9 @@ class TestPayment {
 		
 	}
 	@Test
-	public void testOrderPayment() {
+	public void persistAndLoadPayment() {
 		String orderID = "456";
 		double totalAmount = 11.5;
-		Date date = Date.valueOf("2020-02-02");
 		String paymentID = "123";
 		User user = new User();
 		user.setUsername("David");
@@ -58,7 +56,7 @@ class TestPayment {
 		orderRepository.save(order);
 
 		Payment payment = new Payment();
-		payment.setPaymentID("myID");
+		payment.setPaymentID(paymentID);
 		payment.setOrder(order);
 		paymentRepository.save(payment);
 
