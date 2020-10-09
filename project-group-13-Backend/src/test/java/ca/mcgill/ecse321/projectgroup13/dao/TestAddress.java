@@ -18,6 +18,14 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration
+
+/**
+ *  The TestAddress class implements JUnit for reading and writing addresses to the database
+ *  and also tests existence of relationships between address, user and cart
+ *
+ */
+
+
 public class TestAddress {
     
     @Autowired
@@ -30,6 +38,12 @@ public class TestAddress {
     // this is to clear database prior to every run
     @BeforeEach
     @AfterEach
+    
+    /**
+     *  clearDatabase() deletes all information from addressRepository, cartRepository and
+     *  userRepository
+     */
+    
     public void clearDatabase() {
     	addressRepository.deleteAll();
     	cartRepository.deleteAll();
