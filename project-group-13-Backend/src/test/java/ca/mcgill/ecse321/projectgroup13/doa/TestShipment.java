@@ -40,9 +40,9 @@ public class TestShipment {
     @AfterEach
     public void clearDatabase() {
         shipmentRepository.deleteAll();
-        userRepository.deleteAll();
         orderRepository.deleteAll();
         addressRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test

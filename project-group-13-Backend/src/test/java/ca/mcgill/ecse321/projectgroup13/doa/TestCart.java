@@ -87,4 +87,6 @@ public class TestCart {
         //assert if instance retrieved from database equals the original
         assertEquals(true, cart.equals(cartPersisted));
     }
+    
+    
 }

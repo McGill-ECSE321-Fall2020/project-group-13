@@ -37,8 +37,8 @@ public class TestAddressPersistance {
     //@AfterEach
     public void clearDatabase() {
     	addressRepository.deleteAll();
-    	userRepository.deleteAll();
     	cartRepository.deleteAll();
+    	userRepository.deleteAll();
     }
 
     @Test
