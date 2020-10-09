@@ -40,7 +40,7 @@ public class TestAddress {
     @AfterEach
     
     /**
-     *  clearDatabase() deletes all information from addressRepository, cartRepository and
+     *  TestAddress.clearDatabase() deletes all information from addressRepository, cartRepository and
      *  userRepository
      */
     
@@ -51,6 +51,13 @@ public class TestAddress {
     }
 
     @Test
+    
+    /**
+     * TestAddress.testPersistAndLoadAddress creates instances of address, user and cart
+     * populates them with test information, saves them to the database and then checks that 
+     * they were saved to the database properly.
+     */
+    
     public void testPersistAndLoadAddress() {
     	//need instances of these classes
 	    Address address = new Address();
