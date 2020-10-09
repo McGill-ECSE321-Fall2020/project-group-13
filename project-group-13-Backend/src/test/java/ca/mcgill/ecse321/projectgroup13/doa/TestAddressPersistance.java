@@ -29,7 +29,8 @@ public class TestAddressPersistance {
     private AddressRepository addressRepository;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private CartRepository cartRepository;
     
     // this is to clear database prior to every run
     @BeforeEach
@@ -37,6 +38,7 @@ public class TestAddressPersistance {
     public void clearDatabase() {
     	addressRepository.deleteAll();
     	userRepository.deleteAll();
+    	cartRepository.deleteAll();
     }
 
     @Test
@@ -65,6 +67,9 @@ public class TestAddressPersistance {
 	    address.setStreetAddress2(street2);
 	    address.setUser(user);
 	    System.out.println("3");
+	    
+	    cartRepository.save(cart);
+	    System.out.println("4");
 	    
 	    userRepository.save(user);
 	    

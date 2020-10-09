@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CartRepository extends CrudRepository<Cart, Long>{
 	
-	List<Artwork> findArtworkbyCartID(String CartID);
-    User findUserByCartID(String cartID);
+	List<Cart> findCartbyArtwork(Artwork artwork);
+    Cart findCartByUser(User user);
     
 }
