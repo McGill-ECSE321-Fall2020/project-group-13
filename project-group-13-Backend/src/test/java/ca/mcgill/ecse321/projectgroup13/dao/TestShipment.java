@@ -21,6 +21,10 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration
 public class TestShipment {
 
+    /**
+     * test Class for Shipment
+     */
+
     @Autowired
     private ShipmentRepository shipmentRepository;
     @Autowired
@@ -40,6 +44,10 @@ public class TestShipment {
         addressRepository.deleteAll();
         userRepository.deleteAll();
     }
+
+    /**
+     * Testing for Shipment Persistence
+     */
 
     @Test
     public void testPersistAndLoadShipment() {

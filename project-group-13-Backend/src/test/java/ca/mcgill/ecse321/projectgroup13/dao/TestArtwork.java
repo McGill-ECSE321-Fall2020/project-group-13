@@ -84,9 +84,8 @@ public class TestArtwork {
     	
     	
     }
-    
 
-    @Test
+	@Test
     public void artworkTest() {
     	initializeDatabase();
     	//System.out.println(userRepository.findUserByUsername("Julius Cesar Arnouk"));
