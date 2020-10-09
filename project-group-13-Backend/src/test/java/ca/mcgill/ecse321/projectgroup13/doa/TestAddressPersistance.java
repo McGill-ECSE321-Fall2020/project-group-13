@@ -101,7 +101,7 @@ public class TestAddressPersistance {
 	    cart.setTotalCost(totalCost);
 	    cart.setUser(user);
 	    
-	    //save instances to database
+	    //save instances to database 
 	    user = userRepository.save(user);
 	    cart = cartRepository.save(cart);
 	    address = addressRepository.save(address);
