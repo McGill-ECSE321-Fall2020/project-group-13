@@ -3,7 +3,6 @@ import ca.mcgill.ecse321.projectgroup13.dao.AddressRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,11 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -40,6 +38,7 @@ public class UserTest {
 
     @Test
     public void testPersistAndLoadUser() {
+        System.out.println("test1");
         String username = "TestUser";
         String username2 = "TestUser2";
         // First example for object save/load
@@ -65,9 +64,8 @@ public class UserTest {
     	addressRepository.save(address);
         //END OF ADDED CODE
     	
-    //    userRepository.save(user);
-       
-
+        //userRepository.save(user);
+        
         user = null;
         user2 = null;
 

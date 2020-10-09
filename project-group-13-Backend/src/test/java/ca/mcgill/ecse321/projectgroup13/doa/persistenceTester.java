@@ -49,6 +49,7 @@ public class persistenceTester {
         //asserts if everything can be retrieved from database
         assertEquals(artwork.isArtworkSold(), true);
         
+
     }
     
 
