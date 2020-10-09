@@ -44,37 +44,40 @@ public class ArtworkTest {
     public void initializeDatabase() {
     	//    Artwork<---User-->Address
     	//create address
-    	Address address = new Address();
-    	address.setCity("Montreal");
-    	address.setCountry("Canada");
-
-    	address.setStreetAddress1("3302 St-Catherine");
-    	address.setAddressID("3732St-Catherine");
-    	User artist = new User();
-    	artist.setUsername("Julius Cesar Arnouk");
     	
+    	//first create User
+    	User artist = new User();
     	artist.setEmail("JCesar@RussianBrides.com");
-    	Set<Address> addresss = new HashSet<>();
-    	addresss.add(address);
-    	artist.setAddress(addresss);
-    	//create Artwork
+    	artist.setUsername("Julius Cesar Arnouk");
+    	userRepository.save(artist);
+    	//create Artwork and associate it with User
+    	
     	Artwork artwork = new Artwork();
     	artwork.setTitle("Beauty");
     	artwork.setArtworkID("Beauty");
-    	
-    	
-    	
     	Set<User> artists = new HashSet<User>();
+    	
+    	
+    	//create Address and associate it with User
+    	Address address = new Address();
+    	address.setCity("Montreal");
+    	address.setCountry("Canada");
+    	address.setStreetAddress1("3302 St-Catherine");
+    	address.setAddressID("3732St-Catherine");
     	address.setUser(artist);
-    	System.out.println("The error is at add artist to artists");
-    	//here it is buddy
+    	
+    	
+    		//create hashset
+    	Set<Address> addresss = new HashSet<>();
+    	addresss.add(address);
+    	artist.setAddress(addresss);
+   
    
     	//artists.add(artist);
-    	System.out.println("ERROR DETECTOR PASSED");
     	addressRepository.save(address);
     	artworkRepository.save(artwork);
     	artwork.setArtist(artists);
-    	userRepository.save(artist);
+    	
     	
     	
     }
@@ -83,7 +86,9 @@ public class ArtworkTest {
     @Test
     public void findArtistCityTest() {
     	initializeDatabase();
-    	//Artwork artwork = artworkRepository.findArtworkByArtist("Julius Cesar Arnouk");
+    	Set<String> artists = new HashSet<>();
+    	artists.add("Julius Cesar Arnouk");
+    	//Set<Artwork> artwork = artworkRepository.findArtworkByArtist(artists);
     	//assertEquals(artwork.getTitle(),"Beauty");
     	
     	

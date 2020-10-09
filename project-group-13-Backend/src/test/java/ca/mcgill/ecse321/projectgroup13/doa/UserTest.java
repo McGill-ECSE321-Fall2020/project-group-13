@@ -4,7 +4,10 @@ import ca.mcgill.ecse321.projectgroup13.dao.AddressRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.CartRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
+import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.User;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -34,15 +37,14 @@ public class UserTest {
 
     // this is to clear database prior to every run
     @BeforeEach
-    //@AfterEach
+    @AfterEach
     public void clearDatabase() {
         userRepository.deleteAll();
         addressRepository.deleteAll();
     }
-
-    @Test
-    public void testPersistAndLoadUser() {
-        System.out.println("test1");
+    
+    public void initDatabase() {
+    	System.out.println("test1");
         String username = "TestUser";
         String cartID = "123";
 
@@ -50,8 +52,7 @@ public class UserTest {
         User user = new User();
         user.setUsername(username);
         userRepository.save(user);
-
-
+        //create address
         Address address = new Address();
         address.setCity("Montreal");
         address.setCountry("Canada");
@@ -62,24 +63,26 @@ public class UserTest {
         addrs.add(address);
         user.setAddress(addrs);
         addressRepository.save(address);
-
-        //END OF ADDED CODE
-
-        //userRepository.save(user);
-
-        user = null;
-        //cart = null;
-
-        // user = userRepository.findUserByUsername(username);
-        user = userRepository.findUserByUsername(username);
-        //cart = cartRepository.findCartByCartID(cartID);
-//        assertNotNull(user);
-//        assertNotNull(user2);
-//        assertEquals(username, user.getUsername());
-//        assertEquals(username2, user2.getUsername());
-//      
-        address=null;
-        Address theFkingAddress = addressRepository.findAddressByAddressID("3732St-Catherine");
-        assertEquals(theFkingAddress.getCity(),"Montreal");
+        //create the cart
+        Cart cart = new Cart();
+        cart.setCartID(cartID);
+        cart.setUser(user);
+        cartRepository.save(cart);
     }
+    
+    @Test
+    public void testPersistAndLoadUser() {
+    	initDatabase();
+    	Cart cart = cartRepository.findCartByCartID("123");
+    	// DELETE THIS CODE
+    	User usertest = userRepository.findUserByUsername("TestUser");
+    	System.out.println("WHAT THE FUCK:");
+    	System.out.println(usertest.getCart().getCartID());
+    	//STOP DELETE
+        User user = userRepository.findUserByCart(cart); 
+        assertEquals(user.getUsername(),"TestUser");
+    }
+    
+   
+    
 }
