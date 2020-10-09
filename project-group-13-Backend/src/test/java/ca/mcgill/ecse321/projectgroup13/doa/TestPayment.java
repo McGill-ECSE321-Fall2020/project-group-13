@@ -36,7 +36,8 @@ class TestPayment {
 	public void clearDatabase() {
 		// First, we clear registrations to avoid exceptions due to inconsistencies
 		paymentRepository.deleteAll();
-		
+		orderRepository.deleteAll();
+		userRepository.deleteAll();
 	}
 	@Test
 	public void testOrderPayment() {
