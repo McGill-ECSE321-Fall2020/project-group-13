@@ -51,22 +51,24 @@ public class UserTest {
         // First example for object save/load
         User user = new User();
         user.setUsername(username);
-        userRepository.save(user);
+       // userRepository.save(user);
         //create address
-        Address address = new Address();
-        address.setCity("Montreal");
-        address.setCountry("Canada");
-        address.setStreetAddress1("3302 St-Catherine");
-        address.setAddressID("3732St-Catherine");
-        address.setUser(user);
-        Set<Address> addrs= new HashSet<>();
-        addrs.add(address);
-        user.setAddress(addrs);
-        addressRepository.save(address);
-        //create the cart
+//        Address address = new Address();
+//        address.setCity("Montreal");
+//        address.setCountry("Canada");
+//        address.setStreetAddress1("3302 St-Catherine");
+//        address.setAddressID("3732St-Catherine");
+//        address.setUser(user);
+//        Set<Address> addrs= new HashSet<>();
+//        addrs.add(address);
+//        user.setAddress(addrs);
+//        addressRepository.save(address);
+//        //create the cart
         Cart cart = new Cart();
         cart.setCartID(cartID);
         cart.setUser(user);
+        user.setCart(cart);
+        userRepository.save(user);
         cartRepository.save(cart);
     }
     
@@ -74,12 +76,9 @@ public class UserTest {
     public void testPersistAndLoadUser() {
     	initDatabase();
     	Cart cart = cartRepository.findCartByCartID("123");
-    	// DELETE THIS CODE
-    	User usertest = userRepository.findUserByUsername("TestUser");
-    	System.out.println("WHAT THE FUCK:");
-    	System.out.println(usertest.getCart().getCartID());
-    	//STOP DELETE
+    	
         User user = userRepository.findUserByCart(cart); 
+        
         assertEquals(user.getUsername(),"TestUser");
     }
     
