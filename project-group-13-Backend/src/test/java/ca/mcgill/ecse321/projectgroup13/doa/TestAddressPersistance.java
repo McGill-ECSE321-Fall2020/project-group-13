@@ -26,12 +26,16 @@ public class TestAddressPersistance {
     
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private UserRepository userRepository;
 
+    
     // this is to clear database prior to every run
     @BeforeEach
     @AfterEach
     public void clearDatabase() {
-        addressRepository.deleteAll();
+    	//addressRepository.deleteAll();
+    	//userRepository.deleteAll();
     }
 
     @Test
@@ -45,8 +49,9 @@ public class TestAddressPersistance {
 	    String street1 = "street1";
 	    String street2 = "street2";
 	    User user = new User();
-	    	user.setUsername("Test User");
-	    	
+	    	user.setUsername("TestUser17");
+	    
+	    
 	    address.setCity(city);
 	    address.setCountry(country);
 	    address.setPostalCode(postalCode);
@@ -54,13 +59,20 @@ public class TestAddressPersistance {
 	    address.setStreetAddress1(street1);
 	    address.setStreetAddress2(street2);
 	    address.setUser(user);
-
+	    
+	    userRepository.save(user);
+	    
+	    System.out.println("1");
         String ID = Integer.toString(address.hashCode());
         address.setAddressID(ID);
+        System.out.println("2");
         addressRepository.save(address);
-        
+        System.out.println("3");
         Address addressPersisted = addressRepository.findAddressByAddressID(ID);
         //asserts if everything can be retrieved from database
-        assertEquals(address.equals(addressPersisted), true);
+        System.out.println(user);
+        //System.out.println(addressPersisted.getUser());
+        assertEquals(true, user.equals(addressPersisted.getUser()));
+        //assertEquals(true, address.equals(addressPersisted));
     }
 }

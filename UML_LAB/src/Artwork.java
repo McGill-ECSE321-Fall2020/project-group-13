@@ -6,6 +6,14 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Artwork{
+private boolean isOnPremise;
+   
+   public void setIsOnPremise(boolean value) {
+this.isOnPremise = value;
+    }
+public boolean isIsOnPremise() {
+return this.isOnPremise;
+    }
 private Set<User> artist;
 
 @ManyToMany
@@ -102,15 +110,4 @@ this.imageUrl = value;
 public String getImageUrl() {
 return this.imageUrl;
     }
-
-private Set<Order> cart;
-
-@ManyToMany(mappedBy="artwork")
-public Set<Order> getCart() {
-   return this.cart;
-}
-
-public void setCart(Set<Order> orders) {
-   this.cart = orders;
-}
    }

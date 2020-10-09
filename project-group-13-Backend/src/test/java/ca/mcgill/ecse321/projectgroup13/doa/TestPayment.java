@@ -50,7 +50,7 @@ class TestPayment {
 		//creating a hashset
 		orders.add(order);
 
-		user.setOrder1(orders);
+		user.setOrder(orders);
 		order.setUser(user);
 		orderRepository.save(order);
 
