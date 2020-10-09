@@ -69,9 +69,6 @@ public class ArtworkTest {
     	artwork.setArtworkID("Beauty");
     	Set<User> artists = new HashSet<User>();
     	
-    	
-    	
-    	Set<User> artists = new HashSet<User>();
     	Set<Artwork> artworks = new HashSet<Artwork>();
 
     	
