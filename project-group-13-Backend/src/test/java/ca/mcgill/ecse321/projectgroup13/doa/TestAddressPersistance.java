@@ -3,6 +3,7 @@ import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.dao.*;
 
 import org.junit.jupiter.api.Test;
+import org.apache.tomcat.util.buf.CharsetCache;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
@@ -50,7 +51,11 @@ public class TestAddressPersistance {
 	    String street2 = "street2";
 	    User user = new User();
 	    	user.setUsername("TestUser17");
-	    
+	    Cart cart = new Cart();
+	    System.out.println("1");
+	    cart.setUser(user);
+	    user.setCart(cart);
+	    System.out.println("2");
 	    
 	    address.setCity(city);
 	    address.setCountry(country);
@@ -59,6 +64,7 @@ public class TestAddressPersistance {
 	    address.setStreetAddress1(street1);
 	    address.setStreetAddress2(street2);
 	    address.setUser(user);
+	    System.out.println("3");
 	    
 	    userRepository.save(user);
 	    
@@ -67,6 +73,8 @@ public class TestAddressPersistance {
         address.setAddressID(ID);
         System.out.println("2");
         addressRepository.save(address);
+        
+        
         System.out.println("3");
         Address addressPersisted = addressRepository.findAddressByAddressID(ID);
         //asserts if everything can be retrieved from database
