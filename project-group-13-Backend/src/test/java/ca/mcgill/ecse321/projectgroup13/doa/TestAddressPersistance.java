@@ -54,6 +54,7 @@ public class TestAddressPersistance {
 	    User user = new User();
 	    	user.setUsername("TestUser17");
 	    Cart cart = new Cart();
+	    	cart.setCartID("tempCart555");
 	    System.out.println("1");
 	    cart.setUser(user);
 	    user.setCart(cart);
@@ -68,10 +69,11 @@ public class TestAddressPersistance {
 	    address.setUser(user);
 	    System.out.println("3");
 	    
+	    userRepository.save(user);
 	    cartRepository.save(cart);
 	    System.out.println("4");
 	    
-	    userRepository.save(user);
+	    
 	    
 	    System.out.println("1");
         String ID = Integer.toString(address.hashCode());
