@@ -1,9 +1,8 @@
 package ca.mcgill.ecse321.projectgroup13.dao;
 import ca.mcgill.ecse321.projectgroup13.model.*;
-
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,12 +13,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration
-public class TestOrder {
+public class
+TestOrder {
 
     @Autowired
     private UserRepository userRepository;

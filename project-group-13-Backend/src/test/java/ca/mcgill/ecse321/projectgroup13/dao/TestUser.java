@@ -41,7 +41,6 @@ public class TestUser {
     public void clearDatabase() {
         addressRepository.deleteAll();
         artworkRepository.deleteAll();
-        cartRepository.deleteAll();
         userRepository.deleteAll();
     }
     
