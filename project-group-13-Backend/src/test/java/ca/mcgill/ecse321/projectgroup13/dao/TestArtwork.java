@@ -20,6 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration
+
+/**
+ *  The TestArt class implements JUnit for reading and writing addresses to the database
+ *  and also tests navigating the associations of artwork
+ *
+ */
+
 public class TestArtwork {
     @Autowired
     private ArtworkRepository artworkRepository;
@@ -30,6 +37,12 @@ public class TestArtwork {
     // this is to clear database prior to every run
     @BeforeEach
     @AfterEach
+    
+    /**
+     *  Deletes all information from addressRepository, artoworkRepository and
+     *  userRepository
+     */
+    
     public void clearDatabase() {
     	addressRepository.deleteAll();
     	artworkRepository.deleteAll();
@@ -40,9 +53,10 @@ public class TestArtwork {
     
     
     
-    //read and write 
-    
-    //Here we populate the database
+    /**
+     * Initialize database creates instances of address, user and art
+     * populates them with test information, saves them to the database
+     */
     
     public void initializeDatabase() {
     	//    Artwork<---User-->Address
@@ -84,6 +98,11 @@ public class TestArtwork {
     	
     	
     }
+    
+    /**
+     * Tests that the artwork was successfully persisted to database, has the
+     * same attributes and the same associations as the saved artwork
+     */
 
 	@Test
     public void artworkTest() {
