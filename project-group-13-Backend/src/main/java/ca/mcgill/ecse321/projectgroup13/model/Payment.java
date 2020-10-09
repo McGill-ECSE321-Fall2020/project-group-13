@@ -94,7 +94,7 @@ public int hashCode() {
 	result = prime * result + cvv;
 	result = prime * result + ((expirationDate == null) ? 0 : expirationDate.hashCode());
 	result = prime * result + ((nameOnCard == null) ? 0 : nameOnCard.hashCode());
-	result = prime * result + ((order == null) ? 0 : order.hashCode());
+	//result = prime * result + ((order == null) ? 0 : order.hashCode());
 	result = prime * result + ((paymentDate == null) ? 0 : paymentDate.hashCode());
 	result = prime * result + ((paymentID == null) ? 0 : paymentID.hashCode());
 	result = prime * result + ((paymentTime == null) ? 0 : paymentTime.hashCode());

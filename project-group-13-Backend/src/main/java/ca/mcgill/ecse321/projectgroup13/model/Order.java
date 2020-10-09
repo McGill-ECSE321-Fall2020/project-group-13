@@ -93,11 +93,11 @@ public int hashCode() {
 	result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
 	result = prime * result + ((orderStatus == null) ? 0 : orderStatus.hashCode());
 	result = prime * result + ((payment == null) ? 0 : payment.hashCode());
-	result = prime * result + ((shipment == null) ? 0 : shipment.hashCode());
+	//result = prime * result + ((shipment == null) ? 0 : shipment.hashCode());
 	long temp;
 	temp = Double.doubleToLongBits(totalAmount);
 	result = prime * result + (int) (temp ^ (temp >>> 32));
-	result = prime * result + ((user == null) ? 0 : user.hashCode());
+	//result = prime * result + ((user == null) ? 0 : user.hashCode());
 	return result;
 }
 @Override

@@ -63,7 +63,7 @@ public void setAddress(Address address) {
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((address == null) ? 0 : address.hashCode());
+	//result = prime * result + ((address == null) ? 0 : address.hashCode());
 	result = prime * result + ((estimatedDateOfArrival == null) ? 0 : estimatedDateOfArrival.hashCode());
 	result = prime * result + ((estimatedTimeOfArrival == null) ? 0 : estimatedTimeOfArrival.hashCode());
 	result = prime * result + ((order == null) ? 0 : order.hashCode());

@@ -48,8 +48,6 @@ public class persistenceTester {
         Artwork artwork = artworkRepository.findArtworkByArtworkID("cesar_baby");
         //asserts if everything can be retrieved from database
         assertEquals(artwork.isArtworkSold(), true);
-        
-
     }
     
 

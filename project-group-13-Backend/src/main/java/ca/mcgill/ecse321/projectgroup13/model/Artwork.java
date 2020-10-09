@@ -116,7 +116,7 @@ return this.imageUrl;
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((artist == null) ? 0 : artist.hashCode());
+	//result = prime * result + ((artist == null) ? 0 : artist.hashCode());
 	result = prime * result + ((artworkID == null) ? 0 : artworkID.hashCode());
 	result = prime * result + (artworkSold ? 1231 : 1237);
 	result = prime * result + ((collection == null) ? 0 : collection.hashCode());
@@ -126,7 +126,7 @@ public int hashCode() {
 	result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
 	result = prime * result + (isOnPremise ? 1231 : 1237);
 	result = prime * result + ((medium == null) ? 0 : medium.hashCode());
-	result = prime * result + ((order == null) ? 0 : order.hashCode());
+	//result = prime * result + ((order == null) ? 0 : order.hashCode());
 	result = prime * result + ((title == null) ? 0 : title.hashCode());
 	return result;
 }

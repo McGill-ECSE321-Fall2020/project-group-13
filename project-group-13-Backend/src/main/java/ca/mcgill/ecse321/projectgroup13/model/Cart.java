@@ -54,7 +54,7 @@ public int hashCode() {
 	long temp;
 	temp = Double.doubleToLongBits(totalCost);
 	result = prime * result + (int) (temp ^ (temp >>> 32));
-	result = prime * result + ((user == null) ? 0 : user.hashCode());
+	//result = prime * result + ((user == null) ? 0 : user.hashCode());
 	return result;
 }
 @Override

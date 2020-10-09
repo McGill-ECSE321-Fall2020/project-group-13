@@ -89,7 +89,7 @@ return this.profilePictureURL;
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((address == null) ? 0 : address.hashCode());
+	//result = prime * result + ((address == null) ? 0 : address.hashCode());
 	result = prime * result + ((artwork == null) ? 0 : artwork.hashCode());
 	result = prime * result + ((cart == null) ? 0 : cart.hashCode());
 	result = prime * result + ((email == null) ? 0 : email.hashCode());
