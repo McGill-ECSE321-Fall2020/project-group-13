@@ -2,7 +2,7 @@
 
 ## Welcome! 
 ShareArt is an online artwork buy-and-sell platform targeted at local artists and people interested in buying local art. 
-<br><br> Simply stated, the application is available on both a website and an Android app, and it will allow artists create profiles and to upload works of art, while allowing prospective art collectors to browse them, add them to their shopping carts, and to place orders for those works of art. 
+<br><br> Simply stated, the application is available as both a website and an Android app. It will allow artists to create profiles and to upload works of art, while allowing prospective art collectors to browse them, add them to their shopping carts, and order them. 
 <br><br> The database is hosted on Heroku. The development team is made up of the following people:
 * Matthias Arabian
 * Cesar Arnouk
