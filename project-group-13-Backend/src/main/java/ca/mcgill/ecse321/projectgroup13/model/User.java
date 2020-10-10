@@ -6,6 +6,26 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 public class User{
+private Cart cart;
+
+@OneToOne(mappedBy="user", cascade={CascadeType.ALL})
+public Cart getCart() {
+   return this.cart;
+}
+
+public void setCart(Cart cart) {
+   this.cart = cart;
+}
+
+private String bio;
+
+public void setBio(String value) {
+this.bio = value;
+    }
+public String getBio() {
+return this.bio;
+    }
+
 private Set<Artwork> artwork;
 
 @ManyToMany(mappedBy="artist")
@@ -28,22 +48,23 @@ public void setAddress(Set<Address> addresss) {
    this.address = addresss;
 }
 
-private Set<Order> order1;
+private Set<Order> order;
 
 @OneToMany(mappedBy="user", cascade={CascadeType.ALL})
-public Set<Order> getOrder1() {
-   return this.order1;
+public Set<Order> getOrder() {
+   return this.order;
 }
 
-public void setOrder1(Set<Order> order1s) {
-   this.order1 = order1s;
+public void setOrder(Set<Order> order1s) {
+   this.order = order1s;
 }
 
 private String username;
    
-public void setUsername(String value) {
+   public void setUsername(String value) {
 this.username = value;
     }
+   
 @Id
 public String getUsername() {
 return this.username;
@@ -73,14 +94,17 @@ public String getProfilePictureURL() {
 return this.profilePictureURL;
     }
 
+
+
 @Override
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((address == null) ? 0 : address.hashCode());
 	result = prime * result + ((artwork == null) ? 0 : artwork.hashCode());
+	result = prime * result + ((bio == null) ? 0 : bio.hashCode());
+	result = prime * result + ((cart == null) ? 0 : cart.hashCode());
 	result = prime * result + ((email == null) ? 0 : email.hashCode());
-	result = prime * result + ((order1 == null) ? 0 : order1.hashCode());
+	result = prime * result + ((order == null) ? 0 : order.hashCode());
 	result = prime * result + ((password == null) ? 0 : password.hashCode());
 	result = prime * result + ((profilePictureURL == null) ? 0 : profilePictureURL.hashCode());
 	result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -96,25 +120,30 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	User other = (User) obj;
-	if (address == null) {
-		if (other.address != null)
-			return false;
-	} else if (!address.equals(other.address))
-		return false;
 	if (artwork == null) {
 		if (other.artwork != null)
 			return false;
 	} else if (!artwork.equals(other.artwork))
+		return false;
+	if (bio == null) {
+		if (other.bio != null)
+			return false;
+	} else if (!bio.equals(other.bio))
+		return false;
+	if (cart == null) {
+		if (other.cart != null)
+			return false;
+	} else if (!cart.equals(other.cart))
 		return false;
 	if (email == null) {
 		if (other.email != null)
 			return false;
 	} else if (!email.equals(other.email))
 		return false;
-	if (order1 == null) {
-		if (other.order1 != null)
+	if (order == null) {
+		if (other.order != null)
 			return false;
-	} else if (!order1.equals(other.order1))
+	} else if (!order.equals(other.order))
 		return false;
 	if (password == null) {
 		if (other.password != null)
@@ -133,6 +162,5 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
-
 
 }

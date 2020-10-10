@@ -9,23 +9,23 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Order{
-private OrderStatus status;
+private OrderStatus orderStatus;
    
-   public void setStatus(OrderStatus value) {
-this.status = value;
+   public void setOrderStatus(OrderStatus value) {
+this.orderStatus = value;
     }
-public OrderStatus getStatus() {
-return this.status;
+public OrderStatus getOrderStatus() {
+return this.orderStatus;
     }
-private Set<Artwork> artwork1;
+private Set<Artwork> artwork;
 
 @OneToMany(mappedBy="order")
-public Set<Artwork> getArtwork1() {
-   return this.artwork1;
+public Set<Artwork> getArtwork() {
+   return this.artwork;
 }
 
-public void setArtwork1(Set<Artwork> artwork1s) {
-   this.artwork1 = artwork1s;
+public void setArtwork(Set<Artwork> artwork1s) {
+   this.artwork = artwork1s;
 }
 
 private User user;
@@ -79,17 +79,6 @@ public Set<Shipment> getShipment() {
 
 public void setShipment(Set<Shipment> shipments) {
    this.shipment = shipments;
-}
-
-private Set<Artwork> artwork;
-
-@ManyToMany
-public Set<Artwork> getArtwork() {
-   return this.artwork;
-}
-
-public void setArtwork(Set<Artwork> artworks) {
-   this.artwork = artworks;
 }
 
 }

@@ -14,23 +14,23 @@ import javax.persistence.ManyToMany;
 @Entity
 @Table(name="orders")
 public class Order{
-private OrderStatus status;
+private OrderStatus orderStatus;
    
-   public void setStatus(OrderStatus value) {
-this.status = value;
+   public void setOrderStatus(OrderStatus value) {
+this.orderStatus = value;
     }
-public OrderStatus getStatus() {
-return this.status;
+public OrderStatus getOrderStatus() {
+return this.orderStatus;
     }
-private Set<Artwork> artwork1;
+private Set<Artwork> artwork;
 
 @OneToMany(mappedBy="order")
-public Set<Artwork> getArtwork1() {
-   return this.artwork1;
+public Set<Artwork> getArtwork() {
+   return this.artwork;
 }
 
-public void setArtwork1(Set<Artwork> artwork1s) {
-   this.artwork1 = artwork1s;
+public void setArtwork(Set<Artwork> artwork1s) {
+   this.artwork = artwork1s;
 }
 
 private User user;
@@ -85,33 +85,19 @@ public Set<Shipment> getShipment() {
 public void setShipment(Set<Shipment> shipments) {
    this.shipment = shipments;
 }
-
-private Set<Artwork> artwork;
-
-@ManyToMany
-public Set<Artwork> getArtwork() {
-   return this.artwork;
-}
-
-public void setArtwork(Set<Artwork> artworks) {
-   this.artwork = artworks;
-}
-
-
 @Override
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + ((artwork == null) ? 0 : artwork.hashCode());
-	result = prime * result + ((artwork1 == null) ? 0 : artwork1.hashCode());
 	result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
+	result = prime * result + ((orderStatus == null) ? 0 : orderStatus.hashCode());
 	result = prime * result + ((payment == null) ? 0 : payment.hashCode());
-	result = prime * result + ((shipment == null) ? 0 : shipment.hashCode());
-	result = prime * result + ((status == null) ? 0 : status.hashCode());
+	//result = prime * result + ((shipment == null) ? 0 : shipment.hashCode());
 	long temp;
 	temp = Double.doubleToLongBits(totalAmount);
 	result = prime * result + (int) (temp ^ (temp >>> 32));
-	result = prime * result + ((user == null) ? 0 : user.hashCode());
+	//result = prime * result + ((user == null) ? 0 : user.hashCode());
 	return result;
 }
 @Override
@@ -128,35 +114,30 @@ public boolean equals(Object obj) {
 			return false;
 	} else if (!artwork.equals(other.artwork))
 		return false;
-	if (artwork1 == null) {
-		if (other.artwork1 != null)
-			return false;
-	} else if (!artwork1.equals(other.artwork1))
-		return false;
 	if (orderID == null) {
 		if (other.orderID != null)
 			return false;
 	} else if (!orderID.equals(other.orderID))
+		return false;
+	if (orderStatus != other.orderStatus)
 		return false;
 	if (payment == null) {
 		if (other.payment != null)
 			return false;
 	} else if (!payment.equals(other.payment))
 		return false;
-	if (shipment == null) {
-		if (other.shipment != null)
-			return false;
-	} else if (!shipment.equals(other.shipment))
-		return false;
-	if (status != other.status)
-		return false;
+//	if (shipment == null) {
+//		if (other.shipment != null)
+//			return false;
+//	} else if (!shipment.equals(other.shipment))
+//		return false;
 	if (Double.doubleToLongBits(totalAmount) != Double.doubleToLongBits(other.totalAmount))
 		return false;
-	if (user == null) {
-		if (other.user != null)
-			return false;
-	} else if (!user.equals(other.user))
-		return false;
+//	if (user == null) {
+//		if (other.user != null)
+//			return false;
+//	} else if (!user.equals(other.user))
+//		return false;
 	return true;
 }
 

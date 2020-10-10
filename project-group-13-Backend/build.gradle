@@ -1,4 +1,3 @@
-//apply plugins
 plugins {
 	id 'org.springframework.boot' version '2.3.4.RELEASE'
 	
@@ -28,10 +27,9 @@ dependencies {
 implementation 'org.springframework.boot:spring-boot-starter-web'
 implementation 'org.hibernate:hibernate-core:5.4.22.Final'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'junit:junit:4.12'
-	
-	runtimeOnly 'org.postgresql:postgresql'
+    implementation 'junit:junit:4.12'
 
+    runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -40,13 +38,11 @@ implementation 'org.hibernate:hibernate-core:5.4.22.Final'
 	//JUNIT 5.0 implemented here, runtime 
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
-    compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.9.RELEASE'
-	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-    
 	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.2.2.RELEASE'
-	
 	compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.2.2.RELEASE'
-	
+	compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.9.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
 
 }
@@ -66,4 +62,3 @@ jar {
     attributes "Main-Class": "ca.mcgill.ecse321.projectgroup13.ProjectGroup13Application"
   }
 }
-

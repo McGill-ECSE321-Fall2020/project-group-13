@@ -1,3 +1,4 @@
+import javax.persistence.OneToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
 import java.util.Set;
@@ -6,6 +7,25 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class User{
+private Cart cart;
+
+@OneToOne(mappedBy="user", cascade={CascadeType.ALL})
+public Cart getCart() {
+   return this.cart;
+}
+
+public void setCart(Cart cart) {
+   this.cart = cart;
+}
+
+private String bio;
+
+public void setBio(String value) {
+this.bio = value;
+    }
+public String getBio() {
+return this.bio;
+    }
 private Set<Artwork> artwork;
 
 @ManyToMany(mappedBy="artist")
@@ -28,15 +48,15 @@ public void setAddress(Set<Address> addresss) {
    this.address = addresss;
 }
 
-private Set<Order> order1;
+private Set<Order> order;
 
 @OneToMany(mappedBy="user", cascade={CascadeType.ALL})
-public Set<Order> getOrder1() {
-   return this.order1;
+public Set<Order> getOrder() {
+   return this.order;
 }
 
-public void setOrder1(Set<Order> order1s) {
-   this.order1 = order1s;
+public void setOrder(Set<Order> order1s) {
+   this.order = order1s;
 }
 
 private String username;

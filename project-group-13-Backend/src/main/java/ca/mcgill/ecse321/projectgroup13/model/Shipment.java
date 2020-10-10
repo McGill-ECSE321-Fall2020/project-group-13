@@ -1,12 +1,10 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
-import java.sql.Date;
-import java.sql.Time;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import java.sql.Date;
+import java.sql.Time;
 
 @Entity
 public class Shipment{
@@ -59,11 +57,29 @@ public Address getAddress() {
 public void setAddress(Address address) {
    this.address = address;
 }
-@Override
+
+
+	public void setEstimatedDateOfArrival(Date estimatedDateOfArrival) {
+		this.estimatedDateOfArrival = estimatedDateOfArrival;
+	}
+
+	public void setEstimatedTimeOfArrival(Time estimatedTimeOfArrival) {
+		this.estimatedTimeOfArrival = estimatedTimeOfArrival;
+	}
+
+	public Date getEstimatedDateOfArrival() {
+		return estimatedDateOfArrival;
+	}
+
+	public Time getEstimatedTimeOfArrival() {
+		return estimatedTimeOfArrival;
+	}
+
+	@Override
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((address == null) ? 0 : address.hashCode());
+	//result = prime * result + ((address == null) ? 0 : address.hashCode());
 	result = prime * result + ((estimatedDateOfArrival == null) ? 0 : estimatedDateOfArrival.hashCode());
 	result = prime * result + ((estimatedTimeOfArrival == null) ? 0 : estimatedTimeOfArrival.hashCode());
 	result = prime * result + ((order == null) ? 0 : order.hashCode());
@@ -81,11 +97,11 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	Shipment other = (Shipment) obj;
-	if (address == null) {
-		if (other.address != null)
-			return false;
-	} else if (!address.equals(other.address))
-		return false;
+//	if (address == null) {
+//		if (other.address != null)
+//			return false;
+//	} else if (!address.equals(other.address))
+//		return false;
 	if (estimatedDateOfArrival == null) {
 		if (other.estimatedDateOfArrival != null)
 			return false;
