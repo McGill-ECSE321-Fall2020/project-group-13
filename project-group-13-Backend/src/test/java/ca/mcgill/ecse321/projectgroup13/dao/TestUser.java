@@ -43,14 +43,15 @@ public class TestUser {
     
 
     // this is to clear database prior to every run
-    @BeforeEach
-    @AfterEach
+   
     
     /**
      *  Deletes all information from addressRepository, artoworkRepository and
      *  userRepository
      */
     
+    @BeforeEach
+    @AfterEach
     public void clearDatabase() {
         addressRepository.deleteAll();
         artworkRepository.deleteAll();
@@ -101,15 +102,13 @@ public class TestUser {
     	
     	
     }
-    
-    @Test
+   
     
     /**
      * Tests that the user was successfully persisted to database, has the
      * same attributes and the same associations as the saved user
      */
-
-    
+    @Test
     public void testPersistAndLoadUser() {
     	initDatabase();
     	//get artwork beauty from repo

@@ -33,7 +33,12 @@ TestOrder {
     private CartRepository cartRepository;
     @Autowired
     private OrderRepository orderRepository;
-    // this is to clear database prior to every run
+    
+    /**
+     *  Deletes all information from cartRepository and
+     *  userRepository
+     */
+ 
     @BeforeEach
     @AfterEach
     public void clearDatabase() {
@@ -42,7 +47,7 @@ TestOrder {
     	orderRepository.deleteAll();
     }
 
-    @Test
+  
     
     /**
      * Creates instances of address, order and cart
@@ -50,6 +55,7 @@ TestOrder {
      * the order was saved to the database properly.
      */
     
+    @Test
     public void testPersistAndLoadAddress() {
     	//need instances of these classes
 	    User user = new User();

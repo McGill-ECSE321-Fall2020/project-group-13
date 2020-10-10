@@ -35,14 +35,14 @@ public class TestArtwork {
     @Autowired
     private AddressRepository addressRepository;
     // this is to clear database prior to every run
-    @BeforeEach
-    @AfterEach
-    
+       
     /**
      *  Deletes all information from addressRepository, artoworkRepository and
      *  userRepository
      */
     
+    @BeforeEach
+    @AfterEach
     public void clearDatabase() {
     	addressRepository.deleteAll();
     	artworkRepository.deleteAll();

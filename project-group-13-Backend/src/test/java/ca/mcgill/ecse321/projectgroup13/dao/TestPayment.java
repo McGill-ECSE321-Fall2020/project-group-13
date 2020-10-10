@@ -34,21 +34,21 @@ class TestPayment {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@BeforeEach
-	@AfterEach
+	
 	
 	 /**
      *  Deletes all information from paymentRepository, orderRepository and
      *  userRepository
      */
 	
+	@BeforeEach
+	@AfterEach
 	public void clearDatabase() {
 		// First, we clear registrations to avoid exceptions due to inconsistencies
 		paymentRepository.deleteAll();
 		orderRepository.deleteAll();
 		userRepository.deleteAll();
 	}
-	@Test
 	
 	/**
       * Creates instances of order, user and payment
@@ -56,6 +56,7 @@ class TestPayment {
       * and then tests whether payment was successfully saved
       */
 	
+	@Test
 	public void persistAndLoadPayment() {
 		String orderID = "456";
 		double totalAmount = 11.5;

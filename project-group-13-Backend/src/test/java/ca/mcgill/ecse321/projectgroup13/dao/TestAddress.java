@@ -25,7 +25,6 @@ import static org.junit.Assert.assertEquals;
  *
  */
 
-
 public class TestAddress {
     
     @Autowired
@@ -35,28 +34,30 @@ public class TestAddress {
     @Autowired
     private CartRepository cartRepository;
     
-    @BeforeEach
-    @AfterEach
+    
     
     /**
-     *  TestAddress.clearDatabase() deletes all information from addressRepository, cartRepository and
-     *  userRepository
+     * Deletes all information from addressRepository, cartRepository and
+     * userRepository
      */
     
+    @BeforeEach
+    @AfterEach
     public void clearDatabase() {
     	addressRepository.deleteAll();
     	cartRepository.deleteAll();
     	userRepository.deleteAll();
     }
 
-    @Test
+    
     
     /**
-     * TestAddress.testPersistAndLoadAddress creates instances of address, user and cart
+     * Creates instances of address, user and cart
      * populates them with test information, saves them to the database and then checks that 
      * they were saved to the database properly.
      */
     
+    @Test
     public void testPersistAndLoadAddress() {
     	//need instances of these classes
 	    Address address = new Address();

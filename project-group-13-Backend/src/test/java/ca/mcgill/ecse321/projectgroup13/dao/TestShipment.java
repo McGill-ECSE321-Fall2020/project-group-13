@@ -19,13 +19,14 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration
-public class TestShipment {
 
-	/**
-	 *  The TestShipment class implements JUnit for reading and writing artwork to the database
-	 *  and also tests navigating the associations of artwork
-	 *
-	 */
+/**
+ *  The TestShipment class implements JUnit for reading and writing artwork to the database
+ *  and also tests navigating the associations of artwork
+ *
+ */
+
+public class TestShipment {
 
     @Autowired
     private ShipmentRepository shipmentRepository;
@@ -38,14 +39,14 @@ public class TestShipment {
 
 
     // this is to clear database prior to every run
-    @BeforeEach
-    @AfterEach
-    
+  
     /**
      *  Deletes all information from shipementRepository, orderRepository, addressRepository and
      *  userRepository
      */
     
+    @BeforeEach
+    @AfterEach
     public void clearDatabase() {
         shipmentRepository.deleteAll();
         orderRepository.deleteAll();
@@ -53,7 +54,6 @@ public class TestShipment {
         userRepository.deleteAll();
     }
 
-    @Test
     
     /**
      * Creates instances of shipment, order, address and user
@@ -61,6 +61,7 @@ public class TestShipment {
      * And tests that shipment was successfully persisted to the database
      */
     
+    @Test
     public void testPersistAndLoadShipment() {
 
         //need instances of these classes
