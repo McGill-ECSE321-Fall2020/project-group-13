@@ -19,7 +19,7 @@ Project Wiki: [Sprint 1 Project Report](https://github.com/McGill-ECSE321-Fall20
 | Matthias Arabian | Software Developer | 29    |
 | Cesar Arnouk     | Backend Lead       | 28    |
 | David Deng       |  Testing Lead      | 24    |
-| Jake Pogharian   | Project Manager    | 33    |
+| Jake Pogharian   | Project Manager    | 31    |
 | Ibrahim Taseer   | Documentation Lead | 25    |
 
   
