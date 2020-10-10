@@ -35,7 +35,6 @@ public class TestAddress {
     @Autowired
     private CartRepository cartRepository;
     
-    // this is to clear database prior to every run
     @BeforeEach
     @AfterEach
     

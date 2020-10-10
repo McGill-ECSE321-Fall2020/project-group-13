@@ -22,6 +22,13 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @ContextConfiguration
 
+
+/**
+ *  The TestUser class implements JUnit for reading and writing artwork to the database
+ *  and also tests navigating the associations of artwork
+ *
+ */
+
 public class TestUser {
     @Autowired
     private UserRepository userRepository;
@@ -38,11 +45,23 @@ public class TestUser {
     // this is to clear database prior to every run
     @BeforeEach
     @AfterEach
+    
+    /**
+     *  Deletes all information from addressRepository, artoworkRepository and
+     *  userRepository
+     */
+    
     public void clearDatabase() {
         addressRepository.deleteAll();
         artworkRepository.deleteAll();
         userRepository.deleteAll();
     }
+    
+    
+    /**
+     * Creates instances of address, user and art
+     * populates them with test information, saves them to the database
+     */
     
     public void initDatabase() {
     	//    Artwork<---User-->Address
@@ -84,6 +103,13 @@ public class TestUser {
     }
     
     @Test
+    
+    /**
+     * Tests that the user was successfully persisted to database, has the
+     * same attributes and the same associations as the saved user
+     */
+
+    
     public void testPersistAndLoadUser() {
     	initDatabase();
     	//get artwork beauty from repo

@@ -21,9 +21,11 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration
 public class TestShipment {
 
-    /**
-     * test Class for Shipment
-     */
+	/**
+	 *  The TestShipment class implements JUnit for reading and writing artwork to the database
+	 *  and also tests navigating the associations of artwork
+	 *
+	 */
 
     @Autowired
     private ShipmentRepository shipmentRepository;
@@ -38,6 +40,12 @@ public class TestShipment {
     // this is to clear database prior to every run
     @BeforeEach
     @AfterEach
+    
+    /**
+     *  Deletes all information from shipementRepository, orderRepository, addressRepository and
+     *  userRepository
+     */
+    
     public void clearDatabase() {
         shipmentRepository.deleteAll();
         orderRepository.deleteAll();
@@ -45,11 +53,14 @@ public class TestShipment {
         userRepository.deleteAll();
     }
 
-    /**
-     * Testing for Shipment Persistence
-     */
-
     @Test
+    
+    /**
+     * Creates instances of shipment, order, address and user
+     * populates them with test information, saves them to the database
+     * And tests that shipment was successfully persisted to the database
+     */
+    
     public void testPersistAndLoadShipment() {
 
         //need instances of these classes

@@ -18,6 +18,13 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @ContextConfiguration
 public class
+
+/**
+ *  The TestOrder class implements JUnit for reading and writing orders to the database
+ *
+ */
+
+
 TestOrder {
 
     @Autowired
@@ -36,6 +43,13 @@ TestOrder {
     }
 
     @Test
+    
+    /**
+     * Creates instances of address, order and cart
+     * populates them with test information, saves them to the database and then checks that 
+     * the order was saved to the database properly.
+     */
+    
     public void testPersistAndLoadAddress() {
     	//need instances of these classes
 	    User user = new User();

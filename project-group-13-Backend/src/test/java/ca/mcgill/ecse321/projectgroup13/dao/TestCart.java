@@ -21,8 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ContextConfiguration
 
 /**
- *  The TestArt class implements JUnit for reading and writing addresses to the database
- *  and also tests navigating the associations of artwork
+ *  The TestArt class implements JUnit for reading and writing carts to the database
  *
  */
 

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ContextConfiguration
 
 /**
- *  The TestArt class implements JUnit for reading and writing addresses to the database
+ *  The TestArtwork class implements JUnit for reading and writing artwork to the database
  *  and also tests navigating the associations of artwork
  *
  */
@@ -52,9 +52,8 @@ public class TestArtwork {
     }
     
     
-    
     /**
-     * Initialize database creates instances of address, user and art
+     * Creates instances of address, user and art
      * populates them with test information, saves them to the database
      */
     

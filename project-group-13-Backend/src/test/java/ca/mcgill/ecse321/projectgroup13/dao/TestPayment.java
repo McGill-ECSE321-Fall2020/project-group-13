@@ -19,6 +19,13 @@ import static org.junit.Assert.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+
+/**
+ *  The TestPayment class implements JUnit for reading and writing payments to the database
+ *  
+ */
+
+
 class TestPayment {
 	@Autowired
 	private PaymentRepository paymentRepository;
@@ -29,6 +36,12 @@ class TestPayment {
 	
 	@BeforeEach
 	@AfterEach
+	
+	 /**
+     *  Deletes all information from paymentRepository, orderRepository and
+     *  userRepository
+     */
+	
 	public void clearDatabase() {
 		// First, we clear registrations to avoid exceptions due to inconsistencies
 		paymentRepository.deleteAll();
@@ -36,6 +49,13 @@ class TestPayment {
 		userRepository.deleteAll();
 	}
 	@Test
+	
+	/**
+      * Creates instances of order, user and payment
+      * populates them with test information, saves them to the database
+      * and then tests whether payment was successfully saved
+      */
+	
 	public void persistAndLoadPayment() {
 		String orderID = "456";
 		double totalAmount = 11.5;
