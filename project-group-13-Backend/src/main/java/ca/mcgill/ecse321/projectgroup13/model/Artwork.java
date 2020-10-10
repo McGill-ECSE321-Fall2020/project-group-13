@@ -46,7 +46,14 @@ public Order getOrder() {
 public void setOrder(Order order) {
    this.order = order;
 }
+private double worth;
 
+public void setWorth(double value) {
+this.worth = value;
+    }
+public double getWorth() {
+return this.worth;
+    }
 private boolean artworkSold;
    
    public void setArtworkSold(boolean value) {
@@ -112,11 +119,12 @@ this.imageUrl = value;
 public String getImageUrl() {
 return this.imageUrl;
     }
+
+
 @Override
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	//result = prime * result + ((artist == null) ? 0 : artist.hashCode());
 	result = prime * result + ((artworkID == null) ? 0 : artworkID.hashCode());
 	result = prime * result + (artworkSold ? 1231 : 1237);
 	result = prime * result + ((collection == null) ? 0 : collection.hashCode());
@@ -126,8 +134,10 @@ public int hashCode() {
 	result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
 	result = prime * result + (isOnPremise ? 1231 : 1237);
 	result = prime * result + ((medium == null) ? 0 : medium.hashCode());
-	//result = prime * result + ((order == null) ? 0 : order.hashCode());
 	result = prime * result + ((title == null) ? 0 : title.hashCode());
+	long temp;
+	temp = Double.doubleToLongBits(worth);
+	result = prime * result + (int) (temp ^ (temp >>> 32));
 	return result;
 }
 @Override
@@ -139,11 +149,6 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	Artwork other = (Artwork) obj;
-//	if (artist == null) {
-//		if (other.artist != null)
-//			return false;
-//	} else if (!artist.equals(other.artist))
-//		return false;
 	if (artworkID == null) {
 		if (other.artworkID != null)
 			return false;
@@ -183,18 +188,13 @@ public boolean equals(Object obj) {
 			return false;
 	} else if (!medium.equals(other.medium))
 		return false;
-//	if (order == null) {
-//		if (other.order != null)
-//			return false;
-//	} else if (!order.equals(other.order))
-//		return false;
 	if (title == null) {
 		if (other.title != null)
 			return false;
 	} else if (!title.equals(other.title))
 		return false;
+	if (Double.doubleToLongBits(worth) != Double.doubleToLongBits(other.worth))
+		return false;
 	return true;
 }
-
-
 }

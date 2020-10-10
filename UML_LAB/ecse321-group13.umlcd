@@ -516,6 +516,12 @@
       <stereotypes xmi:id="_7nPu4QnDEeuRkIIv065dJw" name="Temporal"/>
       <stereotypes xmi:id="_7nauAAnDEeuRkIIv065dJw" name="StyledElement"/>
       <stereotypes xmi:id="_7nbVEAnDEeuRkIIv065dJw" name="Temporal"/>
+      <stereotypes xmi:id="_qJfBAAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qJfoEAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qJhdQAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qJlHoAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qKK9gAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qKLkkAqTEeuTwoUan5Fe1g" name="Temporal"/>
       <visibility xmi:id="_ZkV2IQUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_ZkV2IgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_ZkV2IwUhEeuIIZ7C7k2DOQ" name="Date">
@@ -535,6 +541,12 @@
       <stereotypes xmi:id="_7nTZQQnDEeuRkIIv065dJw" name="Temporal"/>
       <stereotypes xmi:id="_7nb8IAnDEeuRkIIv065dJw" name="StyledElement"/>
       <stereotypes xmi:id="_7nb8IQnDEeuRkIIv065dJw" name="Temporal"/>
+      <stereotypes xmi:id="_qJmVwAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qJm80AqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qJqnMAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qJr1UAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qKMysAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qKNZwAqTEeuTwoUan5Fe1g" name="Temporal"/>
       <visibility xmi:id="_ag6MEQUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_ag6MEgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_ag6MEwUhEeuIIZ7C7k2DOQ" name="Time">
@@ -565,6 +577,12 @@
       <stereotypes xmi:id="_7nV1gQnDEeuRkIIv065dJw" name="Temporal"/>
       <stereotypes xmi:id="_7ncjMAnDEeuRkIIv065dJw" name="StyledElement"/>
       <stereotypes xmi:id="_7ndKQAnDEeuRkIIv065dJw" name="Temporal"/>
+      <stereotypes xmi:id="_qJtqgAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qJvfsAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qJ1mUAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qJ2NYAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qKOn4AqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qKPO8AqTEeuTwoUan5Fe1g" name="Temporal"/>
       <visibility xmi:id="_hKH7wQUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_hKH7wgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_hKH7wwUhEeuIIZ7C7k2DOQ" name="Date">
@@ -697,6 +715,12 @@
       <stereotypes xmi:id="_7nN5sQnDEeuRkIIv065dJw" name="Temporal"/>
       <stereotypes xmi:id="_7ngNkAnDEeuRkIIv065dJw" name="LegacyStyledElement"/>
       <stereotypes xmi:id="_7ngNkQnDEeuRkIIv065dJw" name="Temporal"/>
+      <stereotypes xmi:id="_qJRloAqTEeuTwoUan5Fe1g" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_qJVQAAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qJbWoAqTEeuTwoUan5Fe1g" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_qJb9sAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qKS5UAqTEeuTwoUan5Fe1g" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_qKTgYAqTEeuTwoUan5Fe1g" name="Temporal"/>
       <visibility xmi:id="_f8mAZwUbEeuLIOtIfVSwpg" label="-"/>
       <cardinality xmi:id="_f8mAaAUbEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
       <type xmi:id="_f8mAaQUbEeuLIOtIfVSwpg" name="Time">
@@ -975,6 +999,14 @@
       <cardinality xmi:id="_ajx0UgnLEeuRkIIv065dJw" label="1" max="1" min="1"/>
       <type xmi:id="_ajx0UwnLEeuRkIIv065dJw" name="boolean">
         <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_wgsasAqTEeuTwoUan5Fe1g" name="worth">
+      <modelElement href="ecse321-group13-old.uml#_wgYRoAqTEeuTwoUan5Fe1g"/>
+      <visibility xmi:id="_wgsasQqTEeuTwoUan5Fe1g" label="+"/>
+      <cardinality xmi:id="_wgtBwAqTEeuTwoUan5Fe1g" label="1" max="1" min="1"/>
+      <type xmi:id="_wgtBwQqTEeuTwoUan5Fe1g" name="double">
+        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
       </type>
     </attributes>
   </nodes>

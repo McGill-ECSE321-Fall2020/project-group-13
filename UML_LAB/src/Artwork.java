@@ -14,6 +14,14 @@ this.isOnPremise = value;
 public boolean isIsOnPremise() {
 return this.isOnPremise;
     }
+private double worth;
+
+public void setWorth(double value) {
+this.worth = value;
+    }
+public double getWorth() {
+return this.worth;
+    }
 private Set<User> artist;
 
 @ManyToMany
