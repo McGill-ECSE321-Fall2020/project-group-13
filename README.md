@@ -14,13 +14,12 @@ Project Wiki: [Sprint 1 Project Report](https://github.com/McGill-ECSE321-Fall20
   
 ## Overview Tables
 ### Deliverable 1
-| Name             | Role | Hours |
-|------------------|------|-------|
-| Matthias Arabian |      |       |
-| Cesar Arnouk     |      |       |
-| David Deng       |      |       |
-| Jake Pogharian   |      |       |
-| Ibrahim Taseer   |      |       |
-
+| Name             | Role               | Hours |
+|------------------|--------------------|-------|
+| Matthias Arabian | Software Developer | 29    |
+| Cesar Arnouk     | Backend Lead       | 28    |
+| David Deng       |  Testing Lead      | 24    |
+| Jake Pogharian   | Project Manager    | 33    |
+| Ibrahim Taseer   | Documentation Lead | 25    |
 
   
