@@ -18,6 +18,14 @@ public void setCart(Cart cart) {
    this.cart = cart;
 }
 
+private String bio;
+
+public void setBio(String value) {
+this.bio = value;
+    }
+public String getBio() {
+return this.bio;
+    }
 private Set<Artwork> artwork;
 
 @ManyToMany(mappedBy="artist")

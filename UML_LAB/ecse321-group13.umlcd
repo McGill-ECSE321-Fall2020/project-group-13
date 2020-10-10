@@ -373,90 +373,6 @@
       <modelElement href="ecse321-group13-old.uml#_l62N4AUjEeuIIZ7C7k2DOQ"/>
     </literals>
   </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_x5nMUAUrEeuIIZ7C7k2DOQ" name="User" associationsOut="_c3GQ4AdREeuNT_9npWWHbA _Zch8kAdTEeuNT_9npWWHbA _td1b0AdgEeuNT_9npWWHbA _AUgvQAnEEeuRkIIv065dJw">
-    <modelElement href="ecse321-group13-old.uml#_x5mlQAUrEeuIIZ7C7k2DOQ"/>
-    <visualProperties xmi:id="_x5nMUQUrEeuIIZ7C7k2DOQ" position="442.0,123.0" size="-1.0,-1.0"/>
-    <visibility xmi:id="_x5nMUgUrEeuIIZ7C7k2DOQ" label="+"/>
-    <attributes xmi:id="_z2beUAUrEeuIIZ7C7k2DOQ" name="username">
-      <modelElement href="ecse321-group13-old.uml#_z2a3QAUrEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHMCcAdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzczgAdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <stereotypes xmi:id="_ajrusAdPEeuNT_9npWWHbA" name="PrimaryKey">
-        <modelElement href="ecse321-group13-old.uml#_ajpScAdPEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_z2beUQUrEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_z2beUgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_z2beUwUrEeuIIZ7C7k2DOQ" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_1iVmgAUrEeuIIZ7C7k2DOQ" name="password">
-      <modelElement href="ecse321-group13-old.uml#_1iU_cAUrEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHMCcQdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzczgQdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_1iVmgQUrEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_1iVmggUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_1iVmgwUrEeuIIZ7C7k2DOQ" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_2DrZAAUrEeuIIZ7C7k2DOQ" name="email">
-      <modelElement href="ecse321-group13-old.uml#_2Dqx8AUrEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHMCcgdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzczggdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_2DrZAQUrEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_2DrZAgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_2DrZAwUrEeuIIZ7C7k2DOQ" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_3cyhAAUrEeuIIZ7C7k2DOQ" name="profilePictureURL">
-      <modelElement href="ecse321-group13-old.uml#_3cx58AUrEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHMpgAdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzczgwdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_3cyhAQUrEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_3cyhAgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_3cyhAwUrEeuIIZ7C7k2DOQ" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_c3HfAAdREeuNT_9npWWHbA" name="artwork">
-      <modelElement href="ecse321-group13-old.uml#_c3D0ogdREeuNT_9npWWHbA"/>
-      <visibility xmi:id="_c3HfAQdREeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_c3HfAgdREeuNT_9npWWHbA" label="*" max="-1"/>
-      <type xmi:id="_c3HfAwdREeuNT_9npWWHbA" name="Artwork">
-        <modelElement href="ecse321-group13-old.uml#_4I2-0AUVEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_Zck_4AdTEeuNT_9npWWHbA" name="address">
-      <modelElement href="ecse321-group13-old.uml#_ZcdrIQdTEeuNT_9npWWHbA"/>
-      <visibility xmi:id="_Zck_4QdTEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_Zck_4gdTEeuNT_9npWWHbA" label="*" max="-1"/>
-      <type xmi:id="_Zck_4wdTEeuNT_9npWWHbA" name="Address">
-        <modelElement href="ecse321-group13-old.uml#_VtKUwAUXEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_td3RAAdgEeuNT_9npWWHbA" name="order">
-      <modelElement href="ecse321-group13-old.uml#_tdzmoAdgEeuNT_9npWWHbA"/>
-      <visibility xmi:id="_td3RAQdgEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_td3RAgdgEeuNT_9npWWHbA" label="*" max="-1"/>
-      <type xmi:id="_td3RAwdgEeuNT_9npWWHbA" name="Order">
-        <modelElement href="ecse321-group13-old.uml#_MmC0sAUWEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_w2HDYAnKEeuRkIIv065dJw" name="cart">
-      <modelElement href="ecse321-group13-old.uml#_EuE8EAm6EeuRkIIv065dJw"/>
-      <visibility xmi:id="_w2HDYQnKEeuRkIIv065dJw" label="+"/>
-      <cardinality xmi:id="_w2HDYgnKEeuRkIIv065dJw" label="0..1" max="1"/>
-      <type xmi:id="_w2HDYwnKEeuRkIIv065dJw" name="Cart">
-        <modelElement href="ecse321-group13-old.uml#_EtRq0Am6EeuRkIIv065dJw"/>
-      </type>
-    </attributes>
-  </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:EnumerationVisual" xmi:id="_nBs0IAUWEeuLIOtIfVSwpg" name="OrderStatus">
     <modelElement href="ecse321-group13-old.uml#_nBsNEAUWEeuLIOtIfVSwpg"/>
     <visualProperties xmi:id="_nBs0IQUWEeuLIOtIfVSwpg" position="164.0,277.0" size="-1.0,-1.0"/>
@@ -1007,6 +923,98 @@
       <cardinality xmi:id="_wgtBwAqTEeuTwoUan5Fe1g" label="1" max="1" min="1"/>
       <type xmi:id="_wgtBwQqTEeuTwoUan5Fe1g" name="double">
         <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+      </type>
+    </attributes>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_x5nMUAUrEeuIIZ7C7k2DOQ" name="User" associationsOut="_c3GQ4AdREeuNT_9npWWHbA _Zch8kAdTEeuNT_9npWWHbA _td1b0AdgEeuNT_9npWWHbA _AUgvQAnEEeuRkIIv065dJw">
+    <modelElement href="ecse321-group13-old.uml#_x5mlQAUrEeuIIZ7C7k2DOQ"/>
+    <visualProperties xmi:id="_x5nMUQUrEeuIIZ7C7k2DOQ" position="442.0,123.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_x5nMUgUrEeuIIZ7C7k2DOQ" label="+"/>
+    <attributes xmi:id="_z2beUAUrEeuIIZ7C7k2DOQ" name="username">
+      <modelElement href="ecse321-group13-old.uml#_z2a3QAUrEeuIIZ7C7k2DOQ"/>
+      <stereotypes xmi:id="_cHMCcAdHEeuNT_9npWWHbA" name="StyledElement">
+        <modelElement href="ecse321-group13-old.uml#_VzczgAdHEeuNT_9npWWHbA"/>
+      </stereotypes>
+      <stereotypes xmi:id="_ajrusAdPEeuNT_9npWWHbA" name="PrimaryKey">
+        <modelElement href="ecse321-group13-old.uml#_ajpScAdPEeuNT_9npWWHbA"/>
+      </stereotypes>
+      <visibility xmi:id="_z2beUQUrEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_z2beUgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_z2beUwUrEeuIIZ7C7k2DOQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_1iVmgAUrEeuIIZ7C7k2DOQ" name="password">
+      <modelElement href="ecse321-group13-old.uml#_1iU_cAUrEeuIIZ7C7k2DOQ"/>
+      <stereotypes xmi:id="_cHMCcQdHEeuNT_9npWWHbA" name="StyledElement">
+        <modelElement href="ecse321-group13-old.uml#_VzczgQdHEeuNT_9npWWHbA"/>
+      </stereotypes>
+      <visibility xmi:id="_1iVmgQUrEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_1iVmggUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_1iVmgwUrEeuIIZ7C7k2DOQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_2DrZAAUrEeuIIZ7C7k2DOQ" name="email">
+      <modelElement href="ecse321-group13-old.uml#_2Dqx8AUrEeuIIZ7C7k2DOQ"/>
+      <stereotypes xmi:id="_cHMCcgdHEeuNT_9npWWHbA" name="StyledElement">
+        <modelElement href="ecse321-group13-old.uml#_VzczggdHEeuNT_9npWWHbA"/>
+      </stereotypes>
+      <visibility xmi:id="_2DrZAQUrEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_2DrZAgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_2DrZAwUrEeuIIZ7C7k2DOQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_3cyhAAUrEeuIIZ7C7k2DOQ" name="profilePictureURL">
+      <modelElement href="ecse321-group13-old.uml#_3cx58AUrEeuIIZ7C7k2DOQ"/>
+      <stereotypes xmi:id="_cHMpgAdHEeuNT_9npWWHbA" name="StyledElement">
+        <modelElement href="ecse321-group13-old.uml#_VzczgwdHEeuNT_9npWWHbA"/>
+      </stereotypes>
+      <visibility xmi:id="_3cyhAQUrEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_3cyhAgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_3cyhAwUrEeuIIZ7C7k2DOQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_c3HfAAdREeuNT_9npWWHbA" name="artwork">
+      <modelElement href="ecse321-group13-old.uml#_c3D0ogdREeuNT_9npWWHbA"/>
+      <visibility xmi:id="_c3HfAQdREeuNT_9npWWHbA" label="+"/>
+      <cardinality xmi:id="_c3HfAgdREeuNT_9npWWHbA" label="*" max="-1"/>
+      <type xmi:id="_c3HfAwdREeuNT_9npWWHbA" name="Artwork">
+        <modelElement href="ecse321-group13-old.uml#_4I2-0AUVEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_Zck_4AdTEeuNT_9npWWHbA" name="address">
+      <modelElement href="ecse321-group13-old.uml#_ZcdrIQdTEeuNT_9npWWHbA"/>
+      <visibility xmi:id="_Zck_4QdTEeuNT_9npWWHbA" label="+"/>
+      <cardinality xmi:id="_Zck_4gdTEeuNT_9npWWHbA" label="*" max="-1"/>
+      <type xmi:id="_Zck_4wdTEeuNT_9npWWHbA" name="Address">
+        <modelElement href="ecse321-group13-old.uml#_VtKUwAUXEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_td3RAAdgEeuNT_9npWWHbA" name="order">
+      <modelElement href="ecse321-group13-old.uml#_tdzmoAdgEeuNT_9npWWHbA"/>
+      <visibility xmi:id="_td3RAQdgEeuNT_9npWWHbA" label="+"/>
+      <cardinality xmi:id="_td3RAgdgEeuNT_9npWWHbA" label="*" max="-1"/>
+      <type xmi:id="_td3RAwdgEeuNT_9npWWHbA" name="Order">
+        <modelElement href="ecse321-group13-old.uml#_MmC0sAUWEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_w2HDYAnKEeuRkIIv065dJw" name="cart">
+      <modelElement href="ecse321-group13-old.uml#_EuE8EAm6EeuRkIIv065dJw"/>
+      <visibility xmi:id="_w2HDYQnKEeuRkIIv065dJw" label="+"/>
+      <cardinality xmi:id="_w2HDYgnKEeuRkIIv065dJw" label="0..1" max="1"/>
+      <type xmi:id="_w2HDYwnKEeuRkIIv065dJw" name="Cart">
+        <modelElement href="ecse321-group13-old.uml#_EtRq0Am6EeuRkIIv065dJw"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_cJ8N4AqcEeuTwoUan5Fe1g" name="bio">
+      <modelElement href="ecse321-group13-old.uml#_cJ6YsAqcEeuTwoUan5Fe1g"/>
+      <visibility xmi:id="_cJ8N4QqcEeuTwoUan5Fe1g" label="+"/>
+      <cardinality xmi:id="_cJ8N4gqcEeuTwoUan5Fe1g" label="1" max="1" min="1"/>
+      <type xmi:id="_cJ8N4wqcEeuTwoUan5Fe1g" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </type>
     </attributes>
   </nodes>

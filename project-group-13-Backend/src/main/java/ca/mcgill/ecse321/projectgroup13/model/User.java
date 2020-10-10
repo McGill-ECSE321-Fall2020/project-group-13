@@ -17,6 +17,15 @@ public void setCart(Cart cart) {
    this.cart = cart;
 }
 
+private String bio;
+
+public void setBio(String value) {
+this.bio = value;
+    }
+public String getBio() {
+return this.bio;
+    }
+
 private Set<Artwork> artwork;
 
 @ManyToMany(mappedBy="artist")
@@ -85,12 +94,14 @@ public String getProfilePictureURL() {
 return this.profilePictureURL;
     }
 
+
+
 @Override
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	//result = prime * result + ((address == null) ? 0 : address.hashCode());
 	result = prime * result + ((artwork == null) ? 0 : artwork.hashCode());
+	result = prime * result + ((bio == null) ? 0 : bio.hashCode());
 	result = prime * result + ((cart == null) ? 0 : cart.hashCode());
 	result = prime * result + ((email == null) ? 0 : email.hashCode());
 	result = prime * result + ((order == null) ? 0 : order.hashCode());
@@ -109,15 +120,15 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	User other = (User) obj;
-//	if (address == null) {
-//		if (other.address != null)
-//			return false;
-//	} else if (!address.equals(other.address))
-//		return false;
 	if (artwork == null) {
 		if (other.artwork != null)
 			return false;
 	} else if (!artwork.equals(other.artwork))
+		return false;
+	if (bio == null) {
+		if (other.bio != null)
+			return false;
+	} else if (!bio.equals(other.bio))
 		return false;
 	if (cart == null) {
 		if (other.cart != null)
@@ -151,13 +162,5 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
-
-@Override
-public String toString() {
-	return "User [cart=" + cart + ", artwork=" + artwork + ", address=" + address + ", order=" + order + ", username="
-			+ username + ", password=" + password + ", email=" + email + ", profilePictureURL=" + profilePictureURL
-			+ "]";
-}
-
 
 }
