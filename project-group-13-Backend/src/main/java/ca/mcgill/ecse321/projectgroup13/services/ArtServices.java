@@ -11,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.projectgroup13.model.*;
+
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +35,65 @@ public class ArtServices {
     //IMPORT REPOSITORIES ---> private UserRepository userRepository;
     @Autowired
     private ArtworkRepository artworkRepository;
+    @Autowired
+    private PaymentRepository paymentRepo;
+    @Autowired
+    private OrderRepository orderRepo;
+    
+    private double commissionRate = 0.05;
+   
+    @Transactional
+	public Payment createPayment(double totalAmount, Date paymentDate,Time paymentTime,double cardNumber, Date expirationDate, String nameOnCard, int cvv,
+			String paymentID, Order order) {
+		Payment payment = new Payment();
+		payment.setTotalAmount(totalAmount);
+		payment.setPaymentDate(paymentDate);
+		payment.setPaymentTime(paymentTime);
+		payment.setCardNumber(cardNumber);
+		payment.setExpirationDate(expirationDate);
+		payment.setNameOnCard(nameOnCard);
+		payment.setCvv(cvv);
+		payment.setPaymentID(paymentID);
+		payment.setOrder(order);
+		
+		paymentRepo.save(payment);
+		return payment;
+	}
+
+	@Transactional
+	public int calculateGalleryCommissionAfter(Date date) {
+		int result = 0;
+		List<Payment> paymentList = paymentRepo.findByPaymentDateAfter(date);
+		for(Payment payment : paymentList) {
+			result += payment.getTotalAmount()*commissionRate;
+		}
+		return result;
+	}
+	@Transactional
+	public List<Payment> getPaymentsForCustomer(User user){
+		List<Payment> result = new ArrayList<Payment>();
+		for (Order order:orderRepo.findOrderByUser(user)) {
+			result.add(order.getPayment());
+		}
+		return result;
+	}
+	@Transactional
+	public List<Payment> getPaymentsForArtist(User user){
+		List<Payment> result = new ArrayList<Payment>();
+		for (Artwork art:artworkRepository.findByArtist(user)) {
+			if(art.getOrder()!=null && art.getOrder().getPayment()!=null) {
+				result.add(art.getOrder().getPayment());
+			}
+			
+		}
+		return result;
+	}
+	
+
+	@Transactional
+	public List<Payment> getAllPayments() {
+		return toList(paymentRepo.findAll());
+	}
     // DECLARE 
 
     //get necessary data from the existing repositories 
