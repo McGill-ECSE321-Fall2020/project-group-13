@@ -18,22 +18,19 @@ public class PaymentDto {
 	private int cvv;
 	private String paymentID;
 	private Order order;
+	
 	public PaymentDto() {
 		
 	}
-	public PaymentDto(double totalAmount, Date paymentDate,Time paymentTime,double cardNumber, Date expirationDate, String nameOnCard, int cvv,
-			String paymentID, Order order) {
-		this.totalAmount = totalAmount;
-		this.paymentDate = paymentDate;
-		this.paymentTime = paymentTime;
+	public PaymentDto(double cardNumber, Date expirationDate, String nameOnCard, int cvv,
+			Order order) {
 		this.cardNumber = cardNumber;
 		this.expirationDate = expirationDate;
 		this.nameOnCard = nameOnCard;
 		this.cvv = cvv;
-		this.paymentID = paymentID;
 		this.order = order;
-		
 	}
+	
 	public void setTotalAmount(double value) {
 	this.totalAmount = value;
 	    }

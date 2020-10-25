@@ -43,17 +43,16 @@ public class ArtServices {
     private double commissionRate = 0.05;
    
     @Transactional
-	public Payment createPayment(double totalAmount, Date paymentDate,Time paymentTime,double cardNumber, Date expirationDate, String nameOnCard, int cvv,
-			String paymentID, Order order) {
+	public Payment createPayment(double cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) {
 		Payment payment = new Payment();
-		payment.setTotalAmount(totalAmount);
-		payment.setPaymentDate(paymentDate);
-		payment.setPaymentTime(paymentTime);
+		payment.setTotalAmount(order.getTotalAmount());
+		payment.setPaymentDate(new Date(System.currentTimeMillis()));
+		payment.setPaymentTime(new Time(System.currentTimeMillis()));
 		payment.setCardNumber(cardNumber);
 		payment.setExpirationDate(expirationDate);
 		payment.setNameOnCard(nameOnCard);
 		payment.setCvv(cvv);
-		payment.setPaymentID(paymentID);
+		payment.setPaymentID(nameOnCard+payment.getPaymentDate().toString()+payment.getPaymentTime().toString());
 		payment.setOrder(order);
 		
 		paymentRepo.save(payment);
@@ -87,6 +86,11 @@ public class ArtServices {
 			
 		}
 		return result;
+	}
+	@Transactional
+	public Payment getPayment(String paymentID) {
+		Payment payment = paymentRepo.findPaymentByPaymentID(paymentID);
+		return payment;
 	}
 	
 
