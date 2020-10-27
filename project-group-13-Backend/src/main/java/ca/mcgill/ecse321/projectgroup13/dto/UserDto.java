@@ -72,9 +72,9 @@ public class UserDto{
     }
 
 
-//    public void setUsername(String value) {
-//        this.username = value;
-//    }
+    public void setUsername(String value) {
+        this.username = value;
+   }
 
     public String getUsername() {
         return this.username;
@@ -84,9 +84,9 @@ public class UserDto{
         this.password = value;
     }
 
-//    public String getPassword() {
-//        return this.password;
-//    }
+    public String getPassword() {
+        return this.password;
+    }
 
     public void setEmail(String value) {
         this.email = value;
