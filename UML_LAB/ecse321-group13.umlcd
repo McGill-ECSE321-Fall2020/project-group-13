@@ -587,7 +587,7 @@
         <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
       </type>
     </attributes>
-    <attributes xmi:id="_OCU9ABgQEeuUA40cN2Mckg" name="shipmentStatus">
+    <attributes xmi:id="_OCU9ABgQEeuUA40cN2Mckg" name="shipmentInfo">
       <modelElement href="ecse321-group13-old.uml#_OCTu4BgQEeuUA40cN2Mckg"/>
       <visualProperties xmi:id="_iOZNsRgQEeuUA40cN2Mckg"/>
       <visibility xmi:id="_OCU9ARgQEeuUA40cN2Mckg" label="+"/>

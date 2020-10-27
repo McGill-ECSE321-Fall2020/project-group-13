@@ -166,7 +166,7 @@
       <ownedAttribute xmi:id="_ptZVQAdOEeuNT_9npWWHbA" name="shipmentMethodIsDelivery">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
       </ownedAttribute>
-      <ownedAttribute xmi:id="_OCTu4BgQEeuUA40cN2Mckg" name="shipmentStatus" type="_Xa76oAUWEeuLIOtIfVSwpg"/>
+      <ownedAttribute xmi:id="_OCTu4BgQEeuUA40cN2Mckg" name="shipmentInfo" type="_Xa76oAUWEeuLIOtIfVSwpg"/>
       <ownedAttribute xmi:id="_fddXIBgQEeuUA40cN2Mckg" name="estimatedTimeOfArrival" type="_W68jgBgQEeuUA40cN2Mckg"/>
     </packagedElement>
     <packagedElement xmi:type="uml:DataType" xmi:id="_6wy08QUWEeuLIOtIfVSwpg" name="shipmentMethod"/>
