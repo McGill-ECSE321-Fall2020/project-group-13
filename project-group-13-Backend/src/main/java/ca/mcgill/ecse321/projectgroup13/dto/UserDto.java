@@ -19,14 +19,13 @@ public class UserDto{
 
     }
 
-    public UserDto(CartDto cart, Set<ArtworkDto> artwork, String bio, Set<AddressDto> address, Set<OrderDto> order, String username, String password, String email, String profilePictureURL) {
+    public UserDto(CartDto cart, Set<ArtworkDto> artwork, String bio, Set<AddressDto> address, Set<OrderDto> order, String username, String email, String profilePictureURL) {
         this.cart = cart;
         this.artwork = artwork;
         this.bio = bio;
         this.address = address;
         this.order = order;
         this.username = username;
-        this.password = password;
         this.email = email;
         this.profilePictureURL = profilePictureURL;
     }
