@@ -18,8 +18,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
+import ca.mcgill.ecse321.projectgroup13.services.exception.*;
+import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
+//import org.passay.CharacterRule;
+//import org.passay.EnglishCharacterData;
+//import org.passay.LengthRule;
+//import org.passay.PasswordData;
+//import org.passay.PasswordValidator;
+//import org.passay.Rule;
+//import org.passay.RuleResult;
+//import org.passay.WhitespaceRule;
 @Service
 
 /**
@@ -37,11 +45,11 @@ public class UserService {
     @Autowired
     private CartRepository cartRepository;
 
-	public static UserDTO userToDto(User user) {
-		UserDTO userDto = new UserDTO();
+	public static UserDto userToDto(User user) {
+		UserDto userDto = new UserDto();
 		userDto.setEmail(user.getEmail());
-		userDto.setUsername(user.getUserName());
-        userDto.setUserType(user.getUserType());
+		userDto.setUsername(user.getUsername());
+        //userDto.setUserType(user.getUserType());
 		return userDto;
 	}
 
@@ -50,7 +58,7 @@ public class UserService {
      * 
      */
 
-    public UserDTO createUser(UserDTO user) throws RegistrationException {
+    public UserDto createUser(UserDto user) throws RegistrationException {
         //must verify that no other user is associated with the same email
         if(userRepository.findUserByEmail(user.getEmail()) != null) throw new RegistrationException("Email already in use");
         //make sure Username is unique
@@ -60,24 +68,25 @@ public class UserService {
         if(!password.matches(".*\\d.*") || !password.matches(".*[a-Z].*")) throw new  RegistrationException("invalid password entered, contain number and letter");
         
         //ALL CONDITIONS HAVE PASSED
-        User newUser = new initializeUser(user);
+        User newUser = initializeUser(user);
 
 
         userRepository.save(newUser);
         cartRepository.save(newUser.getCart());
-        return userToDto(user1);
+        return userToDto(newUser);
     }
 
-    public boolean deleteUser(String username) throws RegistrationException {
-        User user = userRepository.findUserByUsername(username);
-        if(user==null) throw new RegistrationException("User does not exist");
-    }
+//    public boolean deleteUser(String username) throws RegistrationException {
+//        User user = userRepository.findUserByUsername(username);
+//        if(user==null) throw new RegistrationException("User does not exist");
+//    }
 
     //To reset user password
     public String resetPassword(String username) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
         if(user == null) throw new RegistrationException("No user found");
-        String tmpPassword = randomPassword();
+        //String tmpPassword = randomPassword();  //MUST COMPLETE IMPLEMENTATION
+        String tmpPassword = "Mister1";
         user.setPassword(tmpPassword);
         return tmpPassword;
     }
@@ -85,24 +94,25 @@ public class UserService {
 
     //HELPER METHODS BELOW
     //must test this not sure if it works
-    private String randomPassword(){
-        
-        PasswordGenerator generator = new PasswordGenerator();
-        CharacterData digit = EnglishCharacterData.Digit;
-        CharacterData upperCaseChars= EnglishCharacterData.UpperCase, lowerCaseChars = EnglishCharacterData.UpperCase;
-        
-        //set first rule
-        lowerCaseRule.setNumberOfCharacters(4);
-        upperCaseRule.setNumberOfCharacters(2);
-        digit.setNumberOfCharacters(3);
-        String password = generator.generatePassword(10, upperCaseRule, lowerCaseRule, digitRule);
-
-
-    
-    }
+//    private String randomPassword(){
+//        
+//        PasswordGenerator generator = new PasswordGenerator();
+//        CharacterData digit = EnglishCharacterData.Digit;
+//        CharacterData upperCaseChars= EnglishCharacterData.UpperCase, lowerCaseChars = EnglishCharacterData.UpperCase;
+//        
+//        //set first rule
+//        lowerCaseRule.setNumberOfCharacters(4);
+//        upperCaseRule.setNumberOfCharacters(2);
+//        digit.setNumberOfCharacters(3);
+//        String password = generator.generatePassword(10, upperCaseRule, lowerCaseRule, digitRule);
+//
+//
+//    
+//    }
 
     //must fix maybe?
-    private User initializeUser(UserDTO user) {
+    //helper
+    private static User initializeUser(UserDto user) {
         User newUser = new User();
         //set parameters of user
         newUser.setUsername(user.getUsername());
