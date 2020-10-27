@@ -7,6 +7,14 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class User{
+private boolean isAdmin;
+   
+   public void setIsAdmin(boolean value) {
+this.isAdmin = value;
+    }
+public boolean isIsAdmin() {
+return this.isAdmin;
+    }
 private Cart cart;
 
 @OneToOne(mappedBy="user", cascade={CascadeType.ALL})

@@ -59,72 +59,6 @@
       <cardinality xmi:id="_i7wdCAUXEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
     </targetRole>
   </edges>
-  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_f8q44AUbEeuLIOtIfVSwpg" source="_1UMCUAUWEeuLIOtIfVSwpg">
-    <modelElement href="ecse321-group13-old.uml#_f77SAAUbEeuLIOtIfVSwpg"/>
-    <stereotypes xmi:id="_f8q44QUbEeuLIOtIfVSwpg" name="Reference">
-      <modelElement href="ecse321-group13-old.uml#_f8G4MAUbEeuLIOtIfVSwpg"/>
-    </stereotypes>
-    <nameVisual xmi:id="_f8q44gUbEeuLIOtIfVSwpg" text=""/>
-    <sourceRole xmi:id="_f8q44wUbEeuLIOtIfVSwpg" aggregationKind="NONE" name="">
-      <modelElement href="ecse321-group13-old.uml#_f77SAQUbEeuLIOtIfVSwpg"/>
-      <visibility xmi:id="_f8q45AUbEeuLIOtIfVSwpg" label="+"/>
-      <cardinality xmi:id="_f8q45QUbEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
-    </sourceRole>
-    <targetRole xmi:id="_f8q45gUbEeuLIOtIfVSwpg" aggregationKind="NONE" name="estimatedTimeOfArrival" navigable="true">
-      <modelElement href="ecse321-group13-old.uml#_f72ZgQUbEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_f89MwAUbEeuLIOtIfVSwpg" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_9Rs5MAUbEeuLIOtIfVSwpg" name="LegacyStyledElement">
-        <modelElement href="ecse321-group13-old.uml#_f73AkAUbEeuLIOtIfVSwpg"/>
-      </stereotypes>
-      <stereotypes xmi:id="_zDtCsAdhEeuNT_9npWWHbA" name="Temporal">
-        <modelElement href="ecse321-group13-old.uml#_zDr0kAdhEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_f8q45wUbEeuLIOtIfVSwpg" label="-"/>
-      <cardinality xmi:id="_f8q46AUbEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
-    </targetRole>
-  </edges>
-  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_cHI_IAdHEeuNT_9npWWHbA" target="_zIQ9UAUWEeuLIOtIfVSwpg">
-    <modelElement href="ecse321-group13-old.uml#_VzsEEAdHEeuNT_9npWWHbA"/>
-    <nameVisual xmi:id="_cHPs0AdHEeuNT_9npWWHbA" text=""/>
-    <sourceRole xmi:id="_cHPs0QdHEeuNT_9npWWHbA" aggregationKind="NONE" name="paymentDate" navigable="true">
-      <modelElement href="ecse321-group13-old.uml#_ZkUoAAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHuN8AdHEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_ei4V4AdUEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzaXQQdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <stereotypes xmi:id="_0ZRugAdhEeuNT_9npWWHbA" name="Temporal">
-        <modelElement href="ecse321-group13-old.uml#_0ZRHcAdhEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_cHSwIQdHEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_cHSwIAdHEeuNT_9npWWHbA" label="1" max="1" min="1"/>
-    </sourceRole>
-    <targetRole xmi:id="_cHPs0gdHEeuNT_9npWWHbA" aggregationKind="NONE" name="">
-      <modelElement href="ecse321-group13-old.uml#_VzsEEQdHEeuNT_9npWWHbA"/>
-      <visibility xmi:id="_cHSwJAdHEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_cHSwIwdHEeuNT_9npWWHbA" label="1" max="1" min="1"/>
-    </targetRole>
-  </edges>
-  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_cHI_IQdHEeuNT_9npWWHbA" target="_zIQ9UAUWEeuLIOtIfVSwpg">
-    <modelElement href="ecse321-group13-old.uml#_VzsrIAdHEeuNT_9npWWHbA"/>
-    <nameVisual xmi:id="_cHPs0wdHEeuNT_9npWWHbA" text=""/>
-    <sourceRole xmi:id="_cHQT4AdHEeuNT_9npWWHbA" aggregationKind="NONE" name="paymentTime" navigable="true">
-      <modelElement href="ecse321-group13-old.uml#_ag5lAAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHu1AAdHEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_ei5kAAdUEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_Vza-UAdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <stereotypes xmi:id="_0y2FEAdhEeuNT_9npWWHbA" name="Temporal">
-        <modelElement href="ecse321-group13-old.uml#_0y1eAAdhEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_cHTXMQdHEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_cHTXMAdHEeuNT_9npWWHbA" label="1" max="1" min="1"/>
-    </sourceRole>
-    <targetRole xmi:id="_cHQT4QdHEeuNT_9npWWHbA" aggregationKind="NONE" name="">
-      <modelElement href="ecse321-group13-old.uml#_VzsrIQdHEeuNT_9npWWHbA"/>
-      <visibility xmi:id="_cHTXNAdHEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_cHTXMwdHEeuNT_9npWWHbA" label="1" max="1" min="1"/>
-    </targetRole>
-  </edges>
   <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_cHI_IgdHEeuNT_9npWWHbA" target="_zIQ9UAUWEeuLIOtIfVSwpg">
     <modelElement href="ecse321-group13-old.uml#_VztSMAdHEeuNT_9npWWHbA"/>
     <nameVisual xmi:id="_cHQT4gdHEeuNT_9npWWHbA" text=""/>
@@ -192,9 +126,9 @@
     </nameVisual>
     <sourceRole xmi:id="_kszrEwdgEeuNT_9npWWHbA" aggregationKind="NONE" name="artwork" navigable="true">
       <modelElement href="ecse321-group13-old.uml#_ksvZoAdgEeuNT_9npWWHbA"/>
-      <visualProperties xmi:id="_ku_cYQdgEeuNT_9npWWHbA" position="-5.0,18.0"/>
+      <visualProperties xmi:id="_ku_cYQdgEeuNT_9npWWHbA" position="-3.0,22.0"/>
       <visibility xmi:id="_kszrFAdgEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_kszrFQdgEeuNT_9npWWHbA" label="*" max="-1"/>
+      <cardinality xmi:id="_kszrFQdgEeuNT_9npWWHbA" label="1..*" max="-1" min="1"/>
     </sourceRole>
     <targetRole xmi:id="_kszrFgdgEeuNT_9npWWHbA" aggregationKind="NONE" name="order" navigable="true">
       <modelElement href="ecse321-group13-old.uml#_kswAsgdgEeuNT_9npWWHbA"/>
@@ -266,9 +200,6 @@
     <visibility xmi:id="_VtK70gUXEeuLIOtIfVSwpg" label="+"/>
     <attributes xmi:id="_rlaO4AUhEeuIIZ7C7k2DOQ" name="streetAddress1">
       <modelElement href="ecse321-group13-old.uml#_rlZAwAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cG8x4AdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzU3sAdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_rlaO4QUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_rlaO4gUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_rlaO4wUhEeuIIZ7C7k2DOQ" name="String">
@@ -277,9 +208,6 @@
     </attributes>
     <attributes xmi:id="_sP1E4AUhEeuIIZ7C7k2DOQ" name="city">
       <modelElement href="ecse321-group13-old.uml#_sP0d0AUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cG8x4QdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzVewAdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_sP1E4QUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_sP1E4gUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_sP1E4wUhEeuIIZ7C7k2DOQ" name="String">
@@ -288,9 +216,6 @@
     </attributes>
     <attributes xmi:id="_tDpHcAUhEeuIIZ7C7k2DOQ" name="province">
       <modelElement href="ecse321-group13-old.uml#_tDmrMAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cG9Y8AdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzWF0AdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_tDpHcQUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_tDpHcgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_tDpHcwUhEeuIIZ7C7k2DOQ" name="String">
@@ -299,9 +224,6 @@
     </attributes>
     <attributes xmi:id="_tt-d4AUhEeuIIZ7C7k2DOQ" name="country">
       <modelElement href="ecse321-group13-old.uml#_tt9PwAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cG9Y8QdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzWF0QdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_tt-d4QUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_tt-d4gUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_tt-d4wUhEeuIIZ7C7k2DOQ" name="String">
@@ -310,9 +232,6 @@
     </attributes>
     <attributes xmi:id="_vSwqYAUhEeuIIZ7C7k2DOQ" name="postalCode">
       <modelElement href="ecse321-group13-old.uml#_vSvcQAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cG-AAAdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzWF0gdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_vSwqYQUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_vSwqYgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_vSwqYwUhEeuIIZ7C7k2DOQ" name="String">
@@ -321,9 +240,6 @@
     </attributes>
     <attributes xmi:id="_4A_l0AUhEeuIIZ7C7k2DOQ" name="streetAddress2">
       <modelElement href="ecse321-group13-old.uml#_4A-XsAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cG-AAQdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzWF0wdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_4A_l0QUhEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_4A_l0gUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_4A_l0wUhEeuIIZ7C7k2DOQ" name="String">
@@ -396,355 +312,6 @@
       <modelElement href="ecse321-group13-old.uml#_fkHVUgUjEeuIIZ7C7k2DOQ"/>
     </literals>
   </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_zIQ9UAUWEeuLIOtIfVSwpg" name="Payment" associationsIn="_UcIKsAUXEeuLIOtIfVSwpg _cHI_IAdHEeuNT_9npWWHbA _cHI_IQdHEeuNT_9npWWHbA _cHI_IgdHEeuNT_9npWWHbA">
-    <modelElement href="ecse321-group13-old.uml#_zIPIIAUWEeuLIOtIfVSwpg"/>
-    <visualProperties xmi:id="_zIQ9UQUWEeuLIOtIfVSwpg" position="1166.0,37.0" size="-1.0,-1.0"/>
-    <visibility xmi:id="_zIQ9UgUWEeuLIOtIfVSwpg" label="+"/>
-    <attributes xmi:id="_UcJY0AUXEeuLIOtIfVSwpg" name="order">
-      <modelElement href="ecse321-group13-old.uml#_UcFucAUXEeuLIOtIfVSwpg"/>
-      <visibility xmi:id="_UcJY0QUXEeuLIOtIfVSwpg" label="+"/>
-      <cardinality xmi:id="_UcJY0gUXEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
-      <type xmi:id="_UcJY0wUXEeuLIOtIfVSwpg" name="Order">
-        <modelElement href="ecse321-group13-old.uml#_MmC0sAUWEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_QF-eQAUhEeuIIZ7C7k2DOQ" name="totalAmount">
-      <modelElement href="ecse321-group13-old.uml#_QF93MAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHJmMAdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzaXQAdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_QF-eQQUhEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_QF-eQgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_QF-eQwUhEeuIIZ7C7k2DOQ" name="double">
-        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_ZkV2IAUhEeuIIZ7C7k2DOQ" name="paymentDate">
-      <modelElement href="ecse321-group13-old.uml#_ZkUoAAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_ejgoAAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_ejhPEAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_ejqZAAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_0ZRugQdhEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_0ZSVkAdhEeuNT_9npWWHbA" name="Temporal"/>
-      <stereotypes xmi:id="_7nPH0AnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7nPH0QnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_7nPu4AnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7nPu4QnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_7nauAAnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7nbVEAnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_qJfBAAqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qJfoEAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <stereotypes xmi:id="_qJhdQAqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qJlHoAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <stereotypes xmi:id="_qKK9gAqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qKLkkAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <visibility xmi:id="_ZkV2IQUhEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_ZkV2IgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_ZkV2IwUhEeuIIZ7C7k2DOQ" name="Date">
-        <modelElement href="ecse321-group13-old.uml#_f6qtwAUbEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_ag6MEAUhEeuIIZ7C7k2DOQ" name="paymentTime">
-      <modelElement href="ecse321-group13-old.uml#_ag5lAAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_ejh2IAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_ejidMAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_ejsOMAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_0y2FEQdhEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_0y2sIAdhEeuNT_9npWWHbA" name="Temporal"/>
-      <stereotypes xmi:id="_7nQV8AnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7nQ9AAnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_7nTZQAnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7nTZQQnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_7nb8IAnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7nb8IQnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_qJmVwAqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qJm80AqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <stereotypes xmi:id="_qJqnMAqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qJr1UAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <stereotypes xmi:id="_qKMysAqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qKNZwAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <visibility xmi:id="_ag6MEQUhEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_ag6MEgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_ag6MEwUhEeuIIZ7C7k2DOQ" name="Time">
-        <modelElement href="ecse321-group13-old.uml#_f69BoQUbEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_buQwAAUhEeuIIZ7C7k2DOQ" name="cardNumber">
-      <modelElement href="ecse321-group13-old.uml#_buPh4AUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHK0UQdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_Vza-UQdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_buQwAQUhEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_buQwAgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_buQwAwUhEeuIIZ7C7k2DOQ" name="double">
-        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_hKH7wAUhEeuIIZ7C7k2DOQ" name="expirationDate">
-      <modelElement href="ecse321-group13-old.uml#_hKHUsAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_ejjEQAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_ejjrUAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_ejtcUAdUEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_2dSNoQdhEeuNT_9npWWHbA" name="StyledElement"/>
-      <stereotypes xmi:id="_2dS0sAdhEeuNT_9npWWHbA" name="Temporal"/>
-      <stereotypes xmi:id="_7nUnYAnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7nUnYQnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_7nV1gAnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7nV1gQnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_7ncjMAnDEeuRkIIv065dJw" name="StyledElement"/>
-      <stereotypes xmi:id="_7ndKQAnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_qJtqgAqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qJvfsAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <stereotypes xmi:id="_qJ1mUAqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qJ2NYAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <stereotypes xmi:id="_qKOn4AqTEeuTwoUan5Fe1g" name="StyledElement"/>
-      <stereotypes xmi:id="_qKPO8AqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <visibility xmi:id="_hKH7wQUhEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_hKH7wgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_hKH7wwUhEeuIIZ7C7k2DOQ" name="Date">
-        <modelElement href="ecse321-group13-old.uml#_f6qtwAUbEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_idXsUAUhEeuIIZ7C7k2DOQ" name="nameOnCard">
-      <modelElement href="ecse321-group13-old.uml#_idUpAAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHLbYAdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzblYQdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_idXsUQUhEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_idXsUgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_idXsUwUhEeuIIZ7C7k2DOQ" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_kkGvUAUhEeuIIZ7C7k2DOQ" name="cvv">
-      <modelElement href="ecse321-group13-old.uml#_kkFhMAUhEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHLbYQdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzblYgdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_kkGvUQUhEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_kkGvUgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_kkGvUwUhEeuIIZ7C7k2DOQ" name="int">
-        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_IqOXAAUkEeuIIZ7C7k2DOQ" name="paymentID">
-      <modelElement href="ecse321-group13-old.uml#_IqNv8AUkEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHLbYgdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzcMcAdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <stereotypes xmi:id="_LirbYAdUEeuNT_9npWWHbA" name="PrimaryKey">
-        <modelElement href="ecse321-group13-old.uml#_Liq0UAdUEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_IqOXAQUkEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_IqOXAgUkEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_IqOXAwUkEeuIIZ7C7k2DOQ" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-  </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_1UMCUAUWEeuLIOtIfVSwpg" name="Shipment" associationsIn="_VHOWIAUXEeuLIOtIfVSwpg" associationsOut="_i7wdAAUXEeuLIOtIfVSwpg _f8q44AUbEeuLIOtIfVSwpg">
-    <modelElement href="ecse321-group13-old.uml#_1ULbQAUWEeuLIOtIfVSwpg"/>
-    <visualProperties xmi:id="_1UMCUQUWEeuLIOtIfVSwpg" position="660.0,588.0" size="314.0,-1.0"/>
-    <stereotypes xmi:id="_fNbpwAUaEeuLIOtIfVSwpg" name="JPA1StyledElement">
-      <modelElement href="ecse321-group13-old.uml#_fNbCsAUaEeuLIOtIfVSwpg"/>
-    </stereotypes>
-    <visibility xmi:id="_1UMCUgUWEeuLIOtIfVSwpg" label="+"/>
-    <attributes xmi:id="_VHPkQAUXEeuLIOtIfVSwpg" name="order">
-      <modelElement href="ecse321-group13-old.uml#_VHLS0QUXEeuLIOtIfVSwpg"/>
-      <visibility xmi:id="_VHPkQQUXEeuLIOtIfVSwpg" label="+"/>
-      <cardinality xmi:id="_VHPkQgUXEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
-      <type xmi:id="_VHPkQwUXEeuLIOtIfVSwpg" name="Order">
-        <modelElement href="ecse321-group13-old.uml#_MmC0sAUWEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_i7xEEAUXEeuLIOtIfVSwpg" name="address">
-      <modelElement href="ecse321-group13-old.uml#_i7uAwAUXEeuLIOtIfVSwpg"/>
-      <visibility xmi:id="_i7xEEQUXEeuLIOtIfVSwpg" label="+"/>
-      <cardinality xmi:id="_i7xrIAUXEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
-      <type xmi:id="_i7xrIQUXEeuLIOtIfVSwpg" name="Address">
-        <modelElement href="ecse321-group13-old.uml#_VtKUwAUXEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_f8mAYAUbEeuLIOtIfVSwpg" name="estimatedDateOfArrival">
-      <modelElement href="ecse321-group13-old.uml#_f71ycAUbEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_f8mAYQUbEeuLIOtIfVSwpg" name="LegacyStyledElement">
-        <modelElement href="ecse321-group13-old.uml#_f72ZgAUbEeuLIOtIfVSwpg"/>
-      </stereotypes>
-      <stereotypes xmi:id="_yKdGgAdhEeuNT_9npWWHbA" name="Temporal">
-        <modelElement href="ecse321-group13-old.uml#_yKcfcAdhEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_f8mAYgUbEeuLIOtIfVSwpg" label="-"/>
-      <cardinality xmi:id="_f8mAYwUbEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
-      <type xmi:id="_WIOdwAdUEeuNT_9npWWHbA" name="Date">
-        <modelElement href="ecse321-group13-old.uml#_f6qtwAUbEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_f8mAZQUbEeuLIOtIfVSwpg" name="estimatedTimeOfArrival">
-      <modelElement href="ecse321-group13-old.uml#_f72ZgQUbEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_9SMBYAUbEeuLIOtIfVSwpg" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_9SNPgAUbEeuLIOtIfVSwpg" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_9Sp7cAUbEeuLIOtIfVSwpg" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_b7bbkAUcEeu798DQD8h-Dw" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_b7g7IAUcEeu798DQD8h-Dw" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_b77K0AUcEeu798DQD8h-Dw" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_nAVokAUeEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_nAZS8AUeEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_nArm0AUeEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_owVCsAUiEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_owW34AUiEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_owbwYAUiEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_A31YwAUkEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_A32m4AUkEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_A35qMAUkEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_QW19EAUnEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_QW2kIAUnEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_QXA8MAUnEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_FXUCgAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_FXVQoAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_FXg20AUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_PkeaEAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_PkfoMAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_PkmV4AUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_VhOsYAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_VhQhkAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_Vhcu0AUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_xNTK0AUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_xNVnEAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_xNbGoAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_4evYIAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_4ewmQAUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_4e2s4AUpEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_JLNqkAUsEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_JLO4sAUsEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_JLTKIAUsEeuIIZ7C7k2DOQ" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_cHdvQAdHEeuNT_9npWWHbA" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_cHgLgAdHEeuNT_9npWWHbA" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_cHngQAdHEeuNT_9npWWHbA" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_ejbIcAdUEeuNT_9npWWHbA" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_ejeLwAdUEeuNT_9npWWHbA" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_ejy74AdUEeuNT_9npWWHbA" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_zDuQ0AdhEeuNT_9npWWHbA" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_zDve8AdhEeuNT_9npWWHbA" name="Temporal"/>
-      <stereotypes xmi:id="_7nMrkAnDEeuRkIIv065dJw" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_7nMrkQnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_7nN5sAnDEeuRkIIv065dJw" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_7nN5sQnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_7ngNkAnDEeuRkIIv065dJw" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_7ngNkQnDEeuRkIIv065dJw" name="Temporal"/>
-      <stereotypes xmi:id="_qJRloAqTEeuTwoUan5Fe1g" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_qJVQAAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <stereotypes xmi:id="_qJbWoAqTEeuTwoUan5Fe1g" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_qJb9sAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <stereotypes xmi:id="_qKS5UAqTEeuTwoUan5Fe1g" name="LegacyStyledElement"/>
-      <stereotypes xmi:id="_qKTgYAqTEeuTwoUan5Fe1g" name="Temporal"/>
-      <visibility xmi:id="_f8mAZwUbEeuLIOtIfVSwpg" label="-"/>
-      <cardinality xmi:id="_f8mAaAUbEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
-      <type xmi:id="_f8mAaQUbEeuLIOtIfVSwpg" name="Time">
-        <modelElement href="ecse321-group13-old.uml#_f69BoQUbEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_Gr9TgAUkEeuIIZ7C7k2DOQ" name="shipmentID">
-      <modelElement href="ecse321-group13-old.uml#_Gr7eUAUkEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHEtsgdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzZwMgdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <stereotypes xmi:id="_EEo8gAdUEeuNT_9npWWHbA" name="PrimaryKey">
-        <modelElement href="ecse321-group13-old.uml#_EEnuYAdUEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_Gr9TgQUkEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_Gr9TggUkEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_Gr9TgwUkEeuIIZ7C7k2DOQ" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_ptajYAdOEeuNT_9npWWHbA" name="shipmentMethodIsDelivery">
-      <modelElement href="ecse321-group13-old.uml#_ptZVQAdOEeuNT_9npWWHbA"/>
-      <stereotypes xmi:id="_7nFW0QnDEeuRkIIv065dJw" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_FmWA0Am6EeuRkIIv065dJw"/>
-      </stereotypes>
-      <visibility xmi:id="_ptajYQdOEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_ptajYgdOEeuNT_9npWWHbA" label="1" max="1" min="1"/>
-      <type xmi:id="_1PcmsAdPEeuNT_9npWWHbA" name="boolean">
-        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_F2_gYAnEEeuRkIIv065dJw" name="shipmentInfo">
-      <modelElement href="ecse321-group13-old.uml#_F2-SQAnEEeuRkIIv065dJw"/>
-      <visibility xmi:id="_F2_gYQnEEeuRkIIv065dJw" label="+"/>
-      <cardinality xmi:id="_F2_gYgnEEeuRkIIv065dJw" label="1" max="1" min="1"/>
-      <type xmi:id="_F2_gYwnEEeuRkIIv065dJw" name="ShipmentStatus">
-        <modelElement href="ecse321-group13-old.uml#_Xa76oAUWEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-  </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_MmDbwAUWEeuLIOtIfVSwpg" name="Order" associationsIn="_kszrEAdgEeuNT_9npWWHbA _td1b0AdgEeuNT_9npWWHbA" associationsOut="_UcIKsAUXEeuLIOtIfVSwpg _VHOWIAUXEeuLIOtIfVSwpg">
-    <modelElement href="ecse321-group13-old.uml#_MmC0sAUWEeuLIOtIfVSwpg"/>
-    <visualProperties xmi:id="_MmDbwQUWEeuLIOtIfVSwpg" position="999.0,467.0" size="-1.0,-1.0"/>
-    <visibility xmi:id="_MmDbwgUWEeuLIOtIfVSwpg" label="+"/>
-    <attributes xmi:id="_p7N-8AUWEeuLIOtIfVSwpg" name="totalAmount">
-      <modelElement href="ecse321-group13-old.uml#_p7NX4AUWEeuLIOtIfVSwpg"/>
-      <visualProperties xmi:id="_VMlP4QUaEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_tGS6MAUeEeuIIZ7C7k2DOQ" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_s-MuIAUeEeuIIZ7C7k2DOQ"/>
-      </stereotypes>
-      <visibility xmi:id="_p7N-8QUWEeuLIOtIfVSwpg" label="+"/>
-      <cardinality xmi:id="_p7N-8gUWEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
-      <type xmi:id="_p7N-8wUWEeuLIOtIfVSwpg" name="double">
-        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_UcL1EAUXEeuLIOtIfVSwpg" name="payment">
-      <modelElement href="ecse321-group13-old.uml#_UcFucwUXEeuLIOtIfVSwpg"/>
-      <visibility xmi:id="_UcL1EQUXEeuLIOtIfVSwpg" label="+"/>
-      <cardinality xmi:id="_UcL1EgUXEeuLIOtIfVSwpg" label="0..1" max="1"/>
-      <type xmi:id="_UcL1EwUXEeuLIOtIfVSwpg" name="Payment">
-        <modelElement href="ecse321-group13-old.uml#_zIPIIAUWEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_VHQyYAUXEeuLIOtIfVSwpg" name="shipment">
-      <modelElement href="ecse321-group13-old.uml#_VHL54QUXEeuLIOtIfVSwpg"/>
-      <visibility xmi:id="_VHQyYQUXEeuLIOtIfVSwpg" label="+"/>
-      <cardinality xmi:id="_VHQyYgUXEeuLIOtIfVSwpg" label="*" max="-1"/>
-      <type xmi:id="_VHQyYwUXEeuLIOtIfVSwpg" name="Shipment">
-        <modelElement href="ecse321-group13-old.uml#_1ULbQAUWEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_HsdHMAUkEeuIIZ7C7k2DOQ" name="orderID">
-      <modelElement href="ecse321-group13-old.uml#_HscgIAUkEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_F1VeEAdUEeuNT_9npWWHbA" name="PrimaryKey">
-        <modelElement href="ecse321-group13-old.uml#_F1UP8AdUEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <visibility xmi:id="_HsdHMQUkEeuIIZ7C7k2DOQ" label="+"/>
-      <cardinality xmi:id="_HsdHMgUkEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
-      <type xmi:id="_HsdHMwUkEeuIIZ7C7k2DOQ" name="String">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_ks0SIAdgEeuNT_9npWWHbA" name="artwork">
-      <modelElement href="ecse321-group13-old.uml#_ksvZoAdgEeuNT_9npWWHbA"/>
-      <visibility xmi:id="_ks0SIQdgEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_ks0SIgdgEeuNT_9npWWHbA" label="*" max="-1"/>
-      <type xmi:id="_ks0SIwdgEeuNT_9npWWHbA" name="Artwork">
-        <modelElement href="ecse321-group13-old.uml#_4I2-0AUVEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_td2C4AdgEeuNT_9npWWHbA" name="user">
-      <modelElement href="ecse321-group13-old.uml#_tdy_kAdgEeuNT_9npWWHbA"/>
-      <visibility xmi:id="_td2C4QdgEeuNT_9npWWHbA" label="+"/>
-      <cardinality xmi:id="_td2C4gdgEeuNT_9npWWHbA" label="1" max="1" min="1"/>
-      <type xmi:id="_td2C4wdgEeuNT_9npWWHbA" name="User">
-        <modelElement href="ecse321-group13-old.uml#_x5mlQAUrEeuIIZ7C7k2DOQ"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_IY3nQAnEEeuRkIIv065dJw" name="orderStatus">
-      <modelElement href="ecse321-group13-old.uml#_IY3AMAnEEeuRkIIv065dJw"/>
-      <visibility xmi:id="_IY3nQQnEEeuRkIIv065dJw" label="+"/>
-      <cardinality xmi:id="_IY3nQgnEEeuRkIIv065dJw" label="1" max="1" min="1"/>
-      <type xmi:id="_IY3nQwnEEeuRkIIv065dJw" name="OrderStatus">
-        <modelElement href="ecse321-group13-old.uml#_nBsNEAUWEeuLIOtIfVSwpg"/>
-      </type>
-    </attributes>
-  </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_AUikcgnEEeuRkIIv065dJw" name="Cart" associationsIn="_AUgIMAnEEeuRkIIv065dJw _AUgvQAnEEeuRkIIv065dJw">
     <modelElement href="ecse321-group13-old.uml#_EtRq0Am6EeuRkIIv065dJw"/>
     <visualProperties xmi:id="_AUikcwnEEeuRkIIv065dJw" position="634.0,366.0" size="-1.0,-1.0"/>
@@ -764,9 +331,6 @@
     <attributes xmi:id="_AUikegnEEeuRkIIv065dJw" name="totalCost">
       <modelElement href="ecse321-group13-old.uml#_Et-1cAm6EeuRkIIv065dJw"/>
       <visualProperties xmi:id="_AUlnwAnEEeuRkIIv065dJw"/>
-      <stereotypes xmi:id="_AUikewnEEeuRkIIv065dJw" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_Et_cgAm6EeuRkIIv065dJw"/>
-      </stereotypes>
       <visibility xmi:id="_AUikfAnEEeuRkIIv065dJw" label="+"/>
       <cardinality xmi:id="_AUikfQnEEeuRkIIv065dJw" label="1" max="1" min="1"/>
       <type xmi:id="_AUikfgnEEeuRkIIv065dJw" name="double">
@@ -796,9 +360,6 @@
     <visibility xmi:id="_4I3l4gUVEeuLIOtIfVSwpg" label="+"/>
     <attributes xmi:id="_6bE5EAUVEeuLIOtIfVSwpg" name="description">
       <modelElement href="ecse321-group13-old.uml#_6bESAAUVEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_tFbXgAUeEeuIIZ7C7k2DOQ" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_s-C9IAUeEeuIIZ7C7k2DOQ"/>
-      </stereotypes>
       <visibility xmi:id="_6bE5EQUVEeuLIOtIfVSwpg" label="+"/>
       <cardinality xmi:id="_6bE5EgUVEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
       <type xmi:id="_6bE5EwUVEeuLIOtIfVSwpg" name="String">
@@ -807,9 +368,6 @@
     </attributes>
     <attributes xmi:id="_7GIoQAUVEeuLIOtIfVSwpg" name="title">
       <modelElement href="ecse321-group13-old.uml#_7GHaIAUVEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_tFcloAUeEeuIIZ7C7k2DOQ" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_s-DkMAUeEeuIIZ7C7k2DOQ"/>
-      </stereotypes>
       <visibility xmi:id="_7GIoQQUVEeuLIOtIfVSwpg" label="+"/>
       <cardinality xmi:id="_7GIoQgUVEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
       <type xmi:id="_7GIoQwUVEeuLIOtIfVSwpg" name="String">
@@ -818,9 +376,6 @@
     </attributes>
     <attributes xmi:id="_8XI9IAUVEeuLIOtIfVSwpg" name="creationDate">
       <modelElement href="ecse321-group13-old.uml#_8XIWEAUVEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_tFdzwAUeEeuIIZ7C7k2DOQ" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_s-ELQAUeEeuIIZ7C7k2DOQ"/>
-      </stereotypes>
       <visibility xmi:id="_8XI9IQUVEeuLIOtIfVSwpg" label="+"/>
       <cardinality xmi:id="_8XI9IgUVEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
       <type xmi:id="_8XI9IwUVEeuLIOtIfVSwpg" name="String">
@@ -829,9 +384,6 @@
     </attributes>
     <attributes xmi:id="_-IQVcAUVEeuLIOtIfVSwpg" name="dimensions">
       <modelElement href="ecse321-group13-old.uml#_-IPuYAUVEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_tFea0AUeEeuIIZ7C7k2DOQ" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_s-EyUAUeEeuIIZ7C7k2DOQ"/>
-      </stereotypes>
       <visibility xmi:id="_-IQVcQUVEeuLIOtIfVSwpg" label="+"/>
       <cardinality xmi:id="_-IQVcgUVEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
       <type xmi:id="_-IQ8gAUVEeuLIOtIfVSwpg" name="String">
@@ -840,9 +392,6 @@
     </attributes>
     <attributes xmi:id="_-05ZAAUVEeuLIOtIfVSwpg" name="medium">
       <modelElement href="ecse321-group13-old.uml#_-04x8AUVEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_tFfo8AUeEeuIIZ7C7k2DOQ" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_s-EyUQUeEeuIIZ7C7k2DOQ"/>
-      </stereotypes>
       <visibility xmi:id="_-05ZAQUVEeuLIOtIfVSwpg" label="+"/>
       <cardinality xmi:id="_-05ZAgUVEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
       <type xmi:id="_-05ZAwUVEeuLIOtIfVSwpg" name="String">
@@ -851,9 +400,6 @@
     </attributes>
     <attributes xmi:id="__WlJwAUVEeuLIOtIfVSwpg" name="collection">
       <modelElement href="ecse321-group13-old.uml#__Wj7oAUVEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_tFvgkAUeEeuIIZ7C7k2DOQ" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_s-EyUgUeEeuIIZ7C7k2DOQ"/>
-      </stereotypes>
       <visibility xmi:id="__WlJwQUVEeuLIOtIfVSwpg" label="+"/>
       <cardinality xmi:id="__WlJwgUVEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
       <type xmi:id="__WlJwwUVEeuLIOtIfVSwpg" name="String">
@@ -862,9 +408,6 @@
     </attributes>
     <attributes xmi:id="_ABw0wAUWEeuLIOtIfVSwpg" name="imageUrl">
       <modelElement href="ecse321-group13-old.uml#_ABwNsAUWEeuLIOtIfVSwpg"/>
-      <stereotypes xmi:id="_tF1nMAUeEeuIIZ7C7k2DOQ" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_s-FZYAUeEeuIIZ7C7k2DOQ"/>
-      </stereotypes>
       <visibility xmi:id="_ABw0wQUWEeuLIOtIfVSwpg" label="+"/>
       <cardinality xmi:id="_ABw0wgUWEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
       <type xmi:id="_ABw0wwUWEeuLIOtIfVSwpg" name="String">
@@ -873,9 +416,6 @@
     </attributes>
     <attributes xmi:id="__piL4AUeEeuIIZ7C7k2DOQ" name="artworkSold">
       <modelElement href="ecse321-group13-old.uml#__pehgAUeEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHHJ8AdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzWs4QdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="__piL4QUeEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="__piL4gUeEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_-mC8UAUjEeuIIZ7C7k2DOQ" name="boolean">
@@ -926,18 +466,262 @@
       </type>
     </attributes>
   </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_MmDbwAUWEeuLIOtIfVSwpg" name="Order" associationsIn="_kszrEAdgEeuNT_9npWWHbA _td1b0AdgEeuNT_9npWWHbA" associationsOut="_UcIKsAUXEeuLIOtIfVSwpg _VHOWIAUXEeuLIOtIfVSwpg">
+    <modelElement href="ecse321-group13-old.uml#_MmC0sAUWEeuLIOtIfVSwpg"/>
+    <visualProperties xmi:id="_MmDbwQUWEeuLIOtIfVSwpg" position="999.0,467.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_MmDbwgUWEeuLIOtIfVSwpg" label="+"/>
+    <attributes xmi:id="_p7N-8AUWEeuLIOtIfVSwpg" name="totalAmount">
+      <modelElement href="ecse321-group13-old.uml#_p7NX4AUWEeuLIOtIfVSwpg"/>
+      <visualProperties xmi:id="_VMlP4QUaEeuLIOtIfVSwpg"/>
+      <visibility xmi:id="_p7N-8QUWEeuLIOtIfVSwpg" label="+"/>
+      <cardinality xmi:id="_p7N-8gUWEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
+      <type xmi:id="_p7N-8wUWEeuLIOtIfVSwpg" name="double">
+        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_UcL1EAUXEeuLIOtIfVSwpg" name="payment">
+      <modelElement href="ecse321-group13-old.uml#_UcFucwUXEeuLIOtIfVSwpg"/>
+      <visibility xmi:id="_UcL1EQUXEeuLIOtIfVSwpg" label="+"/>
+      <cardinality xmi:id="_UcL1EgUXEeuLIOtIfVSwpg" label="0..1" max="1"/>
+      <type xmi:id="_UcL1EwUXEeuLIOtIfVSwpg" name="Payment">
+        <modelElement href="ecse321-group13-old.uml#_zIPIIAUWEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_VHQyYAUXEeuLIOtIfVSwpg" name="shipment">
+      <modelElement href="ecse321-group13-old.uml#_VHL54QUXEeuLIOtIfVSwpg"/>
+      <visibility xmi:id="_VHQyYQUXEeuLIOtIfVSwpg" label="+"/>
+      <cardinality xmi:id="_VHQyYgUXEeuLIOtIfVSwpg" label="*" max="-1"/>
+      <type xmi:id="_VHQyYwUXEeuLIOtIfVSwpg" name="Shipment">
+        <modelElement href="ecse321-group13-old.uml#_1ULbQAUWEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_HsdHMAUkEeuIIZ7C7k2DOQ" name="orderID">
+      <modelElement href="ecse321-group13-old.uml#_HscgIAUkEeuIIZ7C7k2DOQ"/>
+      <stereotypes xmi:id="_F1VeEAdUEeuNT_9npWWHbA" name="PrimaryKey">
+        <modelElement href="ecse321-group13-old.uml#_F1UP8AdUEeuNT_9npWWHbA"/>
+      </stereotypes>
+      <visibility xmi:id="_HsdHMQUkEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_HsdHMgUkEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_HsdHMwUkEeuIIZ7C7k2DOQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_ks0SIAdgEeuNT_9npWWHbA" name="artwork">
+      <modelElement href="ecse321-group13-old.uml#_ksvZoAdgEeuNT_9npWWHbA"/>
+      <visibility xmi:id="_ks0SIQdgEeuNT_9npWWHbA" label="+"/>
+      <cardinality xmi:id="_ks0SIgdgEeuNT_9npWWHbA" label="1..*" max="-1" min="1"/>
+      <type xmi:id="_ks0SIwdgEeuNT_9npWWHbA" name="Artwork">
+        <modelElement href="ecse321-group13-old.uml#_4I2-0AUVEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_td2C4AdgEeuNT_9npWWHbA" name="user">
+      <modelElement href="ecse321-group13-old.uml#_tdy_kAdgEeuNT_9npWWHbA"/>
+      <visibility xmi:id="_td2C4QdgEeuNT_9npWWHbA" label="+"/>
+      <cardinality xmi:id="_td2C4gdgEeuNT_9npWWHbA" label="1" max="1" min="1"/>
+      <type xmi:id="_td2C4wdgEeuNT_9npWWHbA" name="User">
+        <modelElement href="ecse321-group13-old.uml#_x5mlQAUrEeuIIZ7C7k2DOQ"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_J9gcsBgQEeuUA40cN2Mckg" name="orderStatus">
+      <modelElement href="ecse321-group13-old.uml#_J9eAcBgQEeuUA40cN2Mckg"/>
+      <visibility xmi:id="_J9gcsRgQEeuUA40cN2Mckg" label="+"/>
+      <cardinality xmi:id="_J9gcshgQEeuUA40cN2Mckg" label="1" max="1" min="1"/>
+      <type xmi:id="_J9gcsxgQEeuUA40cN2Mckg" name="OrderStatus">
+        <modelElement href="ecse321-group13-old.uml#_nBsNEAUWEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_1UMCUAUWEeuLIOtIfVSwpg" name="Shipment" associationsIn="_VHOWIAUXEeuLIOtIfVSwpg" associationsOut="_i7wdAAUXEeuLIOtIfVSwpg">
+    <modelElement href="ecse321-group13-old.uml#_1ULbQAUWEeuLIOtIfVSwpg"/>
+    <visualProperties xmi:id="_1UMCUQUWEeuLIOtIfVSwpg" position="657.0,587.0" size="314.0,-1.0"/>
+    <stereotypes xmi:id="_fNbpwAUaEeuLIOtIfVSwpg" name="JPA1StyledElement">
+      <modelElement href="ecse321-group13-old.uml#_fNbCsAUaEeuLIOtIfVSwpg"/>
+    </stereotypes>
+    <visibility xmi:id="_1UMCUgUWEeuLIOtIfVSwpg" label="+"/>
+    <attributes xmi:id="_VHPkQAUXEeuLIOtIfVSwpg" name="order">
+      <modelElement href="ecse321-group13-old.uml#_VHLS0QUXEeuLIOtIfVSwpg"/>
+      <visibility xmi:id="_VHPkQQUXEeuLIOtIfVSwpg" label="+"/>
+      <cardinality xmi:id="_VHPkQgUXEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
+      <type xmi:id="_VHPkQwUXEeuLIOtIfVSwpg" name="Order">
+        <modelElement href="ecse321-group13-old.uml#_MmC0sAUWEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_i7xEEAUXEeuLIOtIfVSwpg" name="address">
+      <modelElement href="ecse321-group13-old.uml#_i7uAwAUXEeuLIOtIfVSwpg"/>
+      <visibility xmi:id="_i7xEEQUXEeuLIOtIfVSwpg" label="+"/>
+      <cardinality xmi:id="_i7xrIAUXEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
+      <type xmi:id="_i7xrIQUXEeuLIOtIfVSwpg" name="Address">
+        <modelElement href="ecse321-group13-old.uml#_VtKUwAUXEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_f8mAYAUbEeuLIOtIfVSwpg" name="estimatedDateOfArrival">
+      <modelElement href="ecse321-group13-old.uml#_f71ycAUbEeuLIOtIfVSwpg"/>
+      <visualProperties xmi:id="_iOX_kBgQEeuUA40cN2Mckg"/>
+      <stereotypes xmi:id="_f8mAYQUbEeuLIOtIfVSwpg" name="LegacyStyledElement">
+        <modelElement href="ecse321-group13-old.uml#_f72ZgAUbEeuLIOtIfVSwpg"/>
+      </stereotypes>
+      <stereotypes xmi:id="_yKdGgAdhEeuNT_9npWWHbA" name="Temporal">
+        <modelElement href="ecse321-group13-old.uml#_yKcfcAdhEeuNT_9npWWHbA"/>
+      </stereotypes>
+      <visibility xmi:id="_f8mAYgUbEeuLIOtIfVSwpg" label="+"/>
+      <cardinality xmi:id="_f8mAYwUbEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
+      <type xmi:id="_bbbsIBgQEeuUA40cN2Mckg" name="Date">
+        <modelElement href="ecse321-group13-old.uml#_TpcWgBgQEeuUA40cN2Mckg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_Gr9TgAUkEeuIIZ7C7k2DOQ" name="shipmentID">
+      <modelElement href="ecse321-group13-old.uml#_Gr7eUAUkEeuIIZ7C7k2DOQ"/>
+      <visualProperties xmi:id="_iOYmoBgQEeuUA40cN2Mckg"/>
+      <visibility xmi:id="_Gr9TgQUkEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_Gr9TggUkEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_Gr9TgwUkEeuIIZ7C7k2DOQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_ptajYAdOEeuNT_9npWWHbA" name="shipmentMethodIsDelivery">
+      <modelElement href="ecse321-group13-old.uml#_ptZVQAdOEeuNT_9npWWHbA"/>
+      <visualProperties xmi:id="_iOZNsBgQEeuUA40cN2Mckg"/>
+      <visibility xmi:id="_ptajYQdOEeuNT_9npWWHbA" label="+"/>
+      <cardinality xmi:id="_ptajYgdOEeuNT_9npWWHbA" label="1" max="1" min="1"/>
+      <type xmi:id="_1PcmsAdPEeuNT_9npWWHbA" name="boolean">
+        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_OCU9ABgQEeuUA40cN2Mckg" name="shipmentStatus">
+      <modelElement href="ecse321-group13-old.uml#_OCTu4BgQEeuUA40cN2Mckg"/>
+      <visualProperties xmi:id="_iOZNsRgQEeuUA40cN2Mckg"/>
+      <visibility xmi:id="_OCU9ARgQEeuUA40cN2Mckg" label="+"/>
+      <cardinality xmi:id="_OCU9AhgQEeuUA40cN2Mckg" label="1" max="1" min="1"/>
+      <type xmi:id="_OCU9AxgQEeuUA40cN2Mckg" name="ShipmentStatus">
+        <modelElement href="ecse321-group13-old.uml#_Xa76oAUWEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_fdelQBgQEeuUA40cN2Mckg" name="estimatedTimeOfArrival">
+      <modelElement href="ecse321-group13-old.uml#_fddXIBgQEeuUA40cN2Mckg"/>
+      <visualProperties xmi:id="_iOZNshgQEeuUA40cN2Mckg"/>
+      <visibility xmi:id="_fdelQRgQEeuUA40cN2Mckg" label="+"/>
+      <cardinality xmi:id="_fdelQhgQEeuUA40cN2Mckg" label="1" max="1" min="1"/>
+      <type xmi:id="_fdelQxgQEeuUA40cN2Mckg" name="Time">
+        <modelElement href="ecse321-group13-old.uml#_W68jgBgQEeuUA40cN2Mckg"/>
+      </type>
+    </attributes>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_zIQ9UAUWEeuLIOtIfVSwpg" name="Payment" associationsIn="_UcIKsAUXEeuLIOtIfVSwpg _cHI_IgdHEeuNT_9npWWHbA">
+    <modelElement href="ecse321-group13-old.uml#_zIPIIAUWEeuLIOtIfVSwpg"/>
+    <visualProperties xmi:id="_zIQ9UQUWEeuLIOtIfVSwpg" position="1166.0,37.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_zIQ9UgUWEeuLIOtIfVSwpg" label="+"/>
+    <attributes xmi:id="_UcJY0AUXEeuLIOtIfVSwpg" name="order">
+      <modelElement href="ecse321-group13-old.uml#_UcFucAUXEeuLIOtIfVSwpg"/>
+      <visibility xmi:id="_UcJY0QUXEeuLIOtIfVSwpg" label="+"/>
+      <cardinality xmi:id="_UcJY0gUXEeuLIOtIfVSwpg" label="1" max="1" min="1"/>
+      <type xmi:id="_UcJY0wUXEeuLIOtIfVSwpg" name="Order">
+        <modelElement href="ecse321-group13-old.uml#_MmC0sAUWEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_QF-eQAUhEeuIIZ7C7k2DOQ" name="totalAmount">
+      <modelElement href="ecse321-group13-old.uml#_QF93MAUhEeuIIZ7C7k2DOQ"/>
+      <visibility xmi:id="_QF-eQQUhEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_QF-eQgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_QF-eQwUhEeuIIZ7C7k2DOQ" name="double">
+        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_buQwAAUhEeuIIZ7C7k2DOQ" name="cardNumber">
+      <modelElement href="ecse321-group13-old.uml#_buPh4AUhEeuIIZ7C7k2DOQ"/>
+      <visibility xmi:id="_buQwAQUhEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_buQwAgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_buQwAwUhEeuIIZ7C7k2DOQ" name="double">
+        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_hKH7wAUhEeuIIZ7C7k2DOQ" name="expirationDate">
+      <modelElement href="ecse321-group13-old.uml#_hKHUsAUhEeuIIZ7C7k2DOQ"/>
+      <stereotypes xmi:id="_ejjEQAdUEeuNT_9npWWHbA" name="StyledElement"/>
+      <stereotypes xmi:id="_ejjrUAdUEeuNT_9npWWHbA" name="StyledElement"/>
+      <stereotypes xmi:id="_ejtcUAdUEeuNT_9npWWHbA" name="StyledElement"/>
+      <stereotypes xmi:id="_2dSNoQdhEeuNT_9npWWHbA" name="StyledElement"/>
+      <stereotypes xmi:id="_2dS0sAdhEeuNT_9npWWHbA" name="Temporal"/>
+      <stereotypes xmi:id="_7nUnYAnDEeuRkIIv065dJw" name="StyledElement"/>
+      <stereotypes xmi:id="_7nUnYQnDEeuRkIIv065dJw" name="Temporal"/>
+      <stereotypes xmi:id="_7nV1gAnDEeuRkIIv065dJw" name="StyledElement"/>
+      <stereotypes xmi:id="_7nV1gQnDEeuRkIIv065dJw" name="Temporal"/>
+      <stereotypes xmi:id="_7ncjMAnDEeuRkIIv065dJw" name="StyledElement"/>
+      <stereotypes xmi:id="_7ndKQAnDEeuRkIIv065dJw" name="Temporal"/>
+      <stereotypes xmi:id="_qJtqgAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qJvfsAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qJ1mUAqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qJ2NYAqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_qKOn4AqTEeuTwoUan5Fe1g" name="StyledElement"/>
+      <stereotypes xmi:id="_qKPO8AqTEeuTwoUan5Fe1g" name="Temporal"/>
+      <stereotypes xmi:id="_4VL7IBgPEeuUA40cN2Mckg" name="StyledElement"/>
+      <stereotypes xmi:id="_4VL7IRgPEeuUA40cN2Mckg" name="Temporal"/>
+      <stereotypes xmi:id="_4VOXYBgPEeuUA40cN2Mckg" name="StyledElement"/>
+      <stereotypes xmi:id="_4VO-cBgPEeuUA40cN2Mckg" name="Temporal"/>
+      <stereotypes xmi:id="_4VgrQBgPEeuUA40cN2Mckg" name="StyledElement"/>
+      <stereotypes xmi:id="_4VhSUBgPEeuUA40cN2Mckg" name="Temporal"/>
+      <visibility xmi:id="_hKH7wQUhEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_hKH7wgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_hKH7wwUhEeuIIZ7C7k2DOQ" name="Date">
+        <modelElement href="ecse321-group13-old.uml#_f6qtwAUbEeuLIOtIfVSwpg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_idXsUAUhEeuIIZ7C7k2DOQ" name="nameOnCard">
+      <modelElement href="ecse321-group13-old.uml#_idUpAAUhEeuIIZ7C7k2DOQ"/>
+      <visibility xmi:id="_idXsUQUhEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_idXsUgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_idXsUwUhEeuIIZ7C7k2DOQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_kkGvUAUhEeuIIZ7C7k2DOQ" name="cvv">
+      <modelElement href="ecse321-group13-old.uml#_kkFhMAUhEeuIIZ7C7k2DOQ"/>
+      <visibility xmi:id="_kkGvUQUhEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_kkGvUgUhEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_kkGvUwUhEeuIIZ7C7k2DOQ" name="int">
+        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_IqOXAAUkEeuIIZ7C7k2DOQ" name="paymentID">
+      <modelElement href="ecse321-group13-old.uml#_IqNv8AUkEeuIIZ7C7k2DOQ"/>
+      <visibility xmi:id="_IqOXAQUkEeuIIZ7C7k2DOQ" label="+"/>
+      <cardinality xmi:id="_IqOXAgUkEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
+      <type xmi:id="_IqOXAwUkEeuIIZ7C7k2DOQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_uaD5UBgQEeuUA40cN2Mckg" name="paymentDate">
+      <modelElement href="ecse321-group13-old.uml#_uaCrMBgQEeuUA40cN2Mckg"/>
+      <visibility xmi:id="_uaD5URgQEeuUA40cN2Mckg" label="+"/>
+      <cardinality xmi:id="_uaD5UhgQEeuUA40cN2Mckg" label="1" max="1" min="1"/>
+      <type xmi:id="_uaD5UxgQEeuUA40cN2Mckg" name="Date">
+        <modelElement href="ecse321-group13-old.uml#_TpcWgBgQEeuUA40cN2Mckg"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_yA4PABgQEeuUA40cN2Mckg" name="paymentTime">
+      <modelElement href="ecse321-group13-old.uml#_yA3n8BgQEeuUA40cN2Mckg"/>
+      <visibility xmi:id="_yA4PARgQEeuUA40cN2Mckg" label="+"/>
+      <cardinality xmi:id="_yA4PAhgQEeuUA40cN2Mckg" label="1" max="1" min="1"/>
+      <type xmi:id="_yA4PAxgQEeuUA40cN2Mckg" name="Time">
+        <modelElement href="ecse321-group13-old.uml#_W68jgBgQEeuUA40cN2Mckg"/>
+      </type>
+    </attributes>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:UMLDataTypeVisual" xmi:id="_W69KkBgQEeuUA40cN2Mckg" name="Time">
+    <modelElement href="ecse321-group13-old.uml#_W68jgBgQEeuUA40cN2Mckg"/>
+    <visualProperties xmi:id="_W69KkRgQEeuUA40cN2Mckg" position="141.0,483.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_W69KkhgQEeuUA40cN2Mckg" label="+"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:UMLDataTypeVisual" xmi:id="_TpdkoBgQEeuUA40cN2Mckg" name="Date">
+    <modelElement href="ecse321-group13-old.uml#_TpcWgBgQEeuUA40cN2Mckg"/>
+    <visualProperties xmi:id="_TpdkoRgQEeuUA40cN2Mckg" position="144.0,543.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_TpdkohgQEeuUA40cN2Mckg" label="+"/>
+  </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_x5nMUAUrEeuIIZ7C7k2DOQ" name="User" associationsOut="_c3GQ4AdREeuNT_9npWWHbA _Zch8kAdTEeuNT_9npWWHbA _td1b0AdgEeuNT_9npWWHbA _AUgvQAnEEeuRkIIv065dJw">
     <modelElement href="ecse321-group13-old.uml#_x5mlQAUrEeuIIZ7C7k2DOQ"/>
     <visualProperties xmi:id="_x5nMUQUrEeuIIZ7C7k2DOQ" position="442.0,123.0" size="-1.0,-1.0"/>
     <visibility xmi:id="_x5nMUgUrEeuIIZ7C7k2DOQ" label="+"/>
     <attributes xmi:id="_z2beUAUrEeuIIZ7C7k2DOQ" name="username">
       <modelElement href="ecse321-group13-old.uml#_z2a3QAUrEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHMCcAdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzczgAdHEeuNT_9npWWHbA"/>
-      </stereotypes>
-      <stereotypes xmi:id="_ajrusAdPEeuNT_9npWWHbA" name="PrimaryKey">
-        <modelElement href="ecse321-group13-old.uml#_ajpScAdPEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_z2beUQUrEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_z2beUgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_z2beUwUrEeuIIZ7C7k2DOQ" name="String">
@@ -946,9 +730,6 @@
     </attributes>
     <attributes xmi:id="_1iVmgAUrEeuIIZ7C7k2DOQ" name="password">
       <modelElement href="ecse321-group13-old.uml#_1iU_cAUrEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHMCcQdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzczgQdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_1iVmgQUrEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_1iVmggUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_1iVmgwUrEeuIIZ7C7k2DOQ" name="String">
@@ -957,9 +738,6 @@
     </attributes>
     <attributes xmi:id="_2DrZAAUrEeuIIZ7C7k2DOQ" name="email">
       <modelElement href="ecse321-group13-old.uml#_2Dqx8AUrEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHMCcgdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzczggdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_2DrZAQUrEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_2DrZAgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_2DrZAwUrEeuIIZ7C7k2DOQ" name="String">
@@ -968,9 +746,6 @@
     </attributes>
     <attributes xmi:id="_3cyhAAUrEeuIIZ7C7k2DOQ" name="profilePictureURL">
       <modelElement href="ecse321-group13-old.uml#_3cx58AUrEeuIIZ7C7k2DOQ"/>
-      <stereotypes xmi:id="_cHMpgAdHEeuNT_9npWWHbA" name="StyledElement">
-        <modelElement href="ecse321-group13-old.uml#_VzczgwdHEeuNT_9npWWHbA"/>
-      </stereotypes>
       <visibility xmi:id="_3cyhAQUrEeuIIZ7C7k2DOQ" label="+"/>
       <cardinality xmi:id="_3cyhAgUrEeuIIZ7C7k2DOQ" label="1" max="1" min="1"/>
       <type xmi:id="_3cyhAwUrEeuIIZ7C7k2DOQ" name="String">
@@ -1015,6 +790,14 @@
       <cardinality xmi:id="_cJ8N4gqcEeuTwoUan5Fe1g" label="1" max="1" min="1"/>
       <type xmi:id="_cJ8N4wqcEeuTwoUan5Fe1g" name="String">
         <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_Bu7cQBgREeuUA40cN2Mckg" name="isAdmin">
+      <modelElement href="ecse321-group13-old.uml#_Bu61MBgREeuUA40cN2Mckg"/>
+      <visibility xmi:id="_Bu7cQRgREeuUA40cN2Mckg" label="+"/>
+      <cardinality xmi:id="_Bu7cQhgREeuUA40cN2Mckg" label="1" max="1" min="1"/>
+      <type xmi:id="_Bu7cQxgREeuUA40cN2Mckg" name="boolean">
+        <modelElement href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
       </type>
     </attributes>
   </nodes>
