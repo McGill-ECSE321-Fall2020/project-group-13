@@ -7,13 +7,21 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Shipment{
-private ShipmentStatus shipmentInfo;
+private ShipmentStatus shipmentStatus;
    
-   public void setShipmentInfo(ShipmentStatus value) {
-this.shipmentInfo = value;
+   public void setShipmentStatus(ShipmentStatus value) {
+this.shipmentStatus = value;
     }
-public ShipmentStatus getShipmentInfo() {
-return this.shipmentInfo;
+public ShipmentStatus getShipmentStatus() {
+return this.shipmentStatus;
+    }
+private Time estimatedTimeOfArrival;
+
+public void setEstimatedTimeOfArrival(Time value) {
+this.estimatedTimeOfArrival = value;
+    }
+public Time getEstimatedTimeOfArrival() {
+return this.estimatedTimeOfArrival;
     }
 private boolean shipmentMethodIsDelivery;
 
@@ -31,8 +39,7 @@ this.shipmentID = value;
 public String getShipmentID() {
 return this.shipmentID;
     }
-  private Date estimatedDateOfArrival;
-  private Time estimatedTimeOfArrival;
+public Date estimatedDateOfArrival;
 private Order order;
 
 @ManyToOne(optional=false)

@@ -5,17 +5,9 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Payment{
-private double totalAmount;
-   
-   public void setTotalAmount(double value) {
-this.totalAmount = value;
-    }
-public double getTotalAmount() {
-return this.totalAmount;
-    }
 private Date paymentDate;
-
-public void setPaymentDate(Date value) {
+   
+   public void setPaymentDate(Date value) {
 this.paymentDate = value;
     }
 public Date getPaymentDate() {
@@ -28,6 +20,14 @@ this.paymentTime = value;
     }
 public Time getPaymentTime() {
 return this.paymentTime;
+    }
+private double totalAmount;
+   
+   public void setTotalAmount(double value) {
+this.totalAmount = value;
+    }
+public double getTotalAmount() {
+return this.totalAmount;
     }
 private double cardNumber;
 

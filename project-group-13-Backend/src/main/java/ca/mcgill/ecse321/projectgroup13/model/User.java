@@ -6,6 +6,16 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 public class User{
+	
+private boolean isAdmin;
+   
+public void setIsAdmin(boolean value) {
+	this.isAdmin = value;
+}
+public boolean isIsAdmin() {
+	return this.isAdmin;
+}	
+	
 private Cart cart;
 
 @OneToOne(mappedBy="user", cascade={CascadeType.ALL})
@@ -95,7 +105,6 @@ return this.profilePictureURL;
     }
 
 
-
 @Override
 public int hashCode() {
 	final int prime = 31;
@@ -104,13 +113,13 @@ public int hashCode() {
 	result = prime * result + ((bio == null) ? 0 : bio.hashCode());
 	result = prime * result + ((cart == null) ? 0 : cart.hashCode());
 	result = prime * result + ((email == null) ? 0 : email.hashCode());
+	result = prime * result + (isAdmin ? 1231 : 1237);
 	result = prime * result + ((order == null) ? 0 : order.hashCode());
 	result = prime * result + ((password == null) ? 0 : password.hashCode());
 	result = prime * result + ((profilePictureURL == null) ? 0 : profilePictureURL.hashCode());
 	result = prime * result + ((username == null) ? 0 : username.hashCode());
 	return result;
 }
-
 @Override
 public boolean equals(Object obj) {
 	if (this == obj)
@@ -140,6 +149,8 @@ public boolean equals(Object obj) {
 			return false;
 	} else if (!email.equals(other.email))
 		return false;
+	if (isAdmin != other.isAdmin)
+		return false;
 	if (order == null) {
 		if (other.order != null)
 			return false;
@@ -162,5 +173,6 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
+
 
 }
