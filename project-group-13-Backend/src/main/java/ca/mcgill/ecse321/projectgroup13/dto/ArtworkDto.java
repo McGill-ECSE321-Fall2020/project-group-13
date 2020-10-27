@@ -11,9 +11,9 @@ import javax.persistence.ManyToMany;
 
 public class ArtworkDto {
     private boolean isOnPremise;
-    private Set<User> artist;
+    private Set<UserDto> artist;
     private String artworkID;
-    private Order order;
+    private OrderDto order;
     private double worth;
     private boolean artworkSold;
     private String description;
@@ -28,7 +28,7 @@ public class ArtworkDto {
     }
 
 
-    public ArtworkDto(boolean isOnPremise, Set<User> artist, String artworkID, Order order, double worth, boolean artworkSold, String description, String title, String creationDate, String dimensions, String medium, String collection, String imageUrl) {
+    public ArtworkDto(boolean isOnPremise, Set<UserDto> artist, String artworkID, OrderDto order, double worth, boolean artworkSold, String description, String title, String creationDate, String dimensions, String medium, String collection, String imageUrl) {
         this.isOnPremise = isOnPremise;
         this.artist = artist;
         this.artworkID = artworkID;
@@ -51,13 +51,13 @@ public class ArtworkDto {
     }
 
     public boolean isIsOnPremise() {
-        return this.isOnPremise;
+        return isOnPremise;
     }
 
-
-    public Set<User> getArtist() {
-        return this.artist;
+    public Set<UserDto> getArtist() {
+        return artist;
     }
+
 
 //    public void setArtist(Set<User> artists) {
 //        this.artist = artists;
@@ -69,13 +69,13 @@ public class ArtworkDto {
 //    }
 
     public String getArtworkID() {
-        return this.artworkID;
+        return artworkID;
     }
 
 
-    public Order getOrder() {
-        return this.order;
-    }
+//    public OrderDto getOrder() {
+//        return order;
+//    }
 
 //    public void setOrder(Order order) {
 //        this.order = order;
@@ -87,16 +87,15 @@ public class ArtworkDto {
     }
 
     public double getWorth() {
-        return this.worth;
+        return worth;
     }
-
 
 //    public void setArtworkSold(boolean value) {
 //        this.artworkSold = value;
 //    }
 
     public boolean isArtworkSold() {
-        return this.artworkSold;
+        return artworkSold;
     }
 
 
@@ -105,7 +104,7 @@ public class ArtworkDto {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
 
@@ -114,7 +113,7 @@ public class ArtworkDto {
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
 
@@ -123,7 +122,7 @@ public class ArtworkDto {
     }
 
     public String getCreationDate() {
-        return this.creationDate;
+        return creationDate;
     }
 
 
@@ -132,7 +131,7 @@ public class ArtworkDto {
     }
 
     public String getDimensions() {
-        return this.dimensions;
+        return dimensions;
     }
 
 
@@ -141,7 +140,7 @@ public class ArtworkDto {
     }
 
     public String getMedium() {
-        return this.medium;
+        return medium;
     }
 
     public void setCollection(String value) {
@@ -149,7 +148,7 @@ public class ArtworkDto {
     }
 
     public String getCollection() {
-        return this.collection;
+        return collection;
     }
 
 
@@ -158,6 +157,6 @@ public class ArtworkDto {
     }
 
     public String getImageUrl() {
-        return this.imageUrl;
+        return imageUrl;
     }
 }

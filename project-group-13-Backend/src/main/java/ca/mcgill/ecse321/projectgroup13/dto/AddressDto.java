@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.dto;
 
+import ca.mcgill.ecse321.projectgroup13.model.User;
+
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -13,11 +15,12 @@ public class AddressDto {
     private String province;
     private String country;
     private String postalCode;
+    private UserDto user;
 
     public AddressDto() {
     }
 
-    public AddressDto(String addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
+    public AddressDto(String addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode, UserDto user) {
         this.addressID = addressID;
         this.streetAddress1 = streetAddress1;
         this.streetAddress2 = streetAddress2;
@@ -25,10 +28,15 @@ public class AddressDto {
         this.province = province;
         this.country = country;
         this.postalCode = postalCode;
+        this.user = user;
     }
 
     public String getAddressID() {
-        return this.addressID;
+        return addressID;
+    }
+
+    public UserDto getUser() {
+        return user;
     }
 
     public void setStreetAddress1(String value) {
@@ -36,7 +44,7 @@ public class AddressDto {
     }
 
     public String getStreetAddress1() {
-        return this.streetAddress1;
+        return streetAddress1;
     }
 
     public void setCity(String value) {
@@ -44,7 +52,7 @@ public class AddressDto {
     }
 
     public String getCity() {
-        return this.city;
+        return city;
     }
 
     public void setProvince(String value) {
@@ -52,7 +60,7 @@ public class AddressDto {
     }
 
     public String getProvince() {
-        return this.province;
+        return province;
     }
 
     public void setCountry(String value) {
@@ -60,7 +68,7 @@ public class AddressDto {
     }
 
     public String getCountry() {
-        return this.country;
+        return country;
     }
 
     public void setPostalCode(String value) {
@@ -68,7 +76,7 @@ public class AddressDto {
     }
 
     public String getPostalCode() {
-        return this.postalCode;
+        return postalCode;
     }
 
     public void setStreetAddress2(String value) {
@@ -76,6 +84,6 @@ public class AddressDto {
     }
 
     public String getStreetAddress2() {
-        return this.streetAddress2;
+        return streetAddress2;
     }
 }

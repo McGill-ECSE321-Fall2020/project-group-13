@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ca.mcgill.ecse321.projectgroup13.dto.OrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,22 +27,32 @@ public class ProjectGroup13Controller {
 	
 	private PaymentDto convertToDto(Payment e) {
 		if (e == null) {
-			throw new IllegalArgumentException("There is no such Event!");
+			throw new IllegalArgumentException("There is no such payment!");
 		}
-		PaymentDto dto = new PaymentDto(e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(),e.getOrder());
+		PaymentDto dto = new PaymentDto(e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(),convertToDto(e.getOrder()));
+		return dto;
+	}
+
+	private OrderDto convertToDto(Order order) {
+		if (order == null) {
+			throw new IllegalArgumentException("There is no such order!");
+		}
+		OrderDto dto = new OrderDto(order.getTotalAmount(), order.getOrderID(), order.getOrderStatus(), convertToDto(order.getArtwork()), convertToDto(order.getUser()), convertToDto(order.getPayment()), convertToDto(order.getShipment()));
 		return dto;
 	}
 	
+
+
 	@GetMapping(value = { "/payments", "/payments/" })
 	public List<PaymentDto> getAllPayments() {
 		return service.getAllPayments().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
 
-	@PostMapping(value = { "/pay", "/pay/" })
-	public PaymentDto PayForOrder(@RequestParam(name="card") double cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="order") OrderDto orderDto) throws IllegalArgumentException {
-		Order order = service.getOrder(orderDto.getOrderID());
-		Payment payment = service.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
-		return convertToDto(payment);
-	}
+//	@PostMapping(value = { "/pay", "/pay/" })
+//	public PaymentDto PayForOrder(@RequestParam(name="card") double cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="order") OrderDto orderDto) throws IllegalArgumentException {
+//		Order order = service.getOrder(orderDto.getOrderID());
+//		Payment payment = service.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
+//		return convertToDto(payment);
+//	}
 
 }

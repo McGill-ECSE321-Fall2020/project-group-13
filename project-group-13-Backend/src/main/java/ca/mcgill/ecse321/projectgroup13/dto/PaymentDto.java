@@ -17,13 +17,12 @@ public class PaymentDto {
 	private String nameOnCard;
 	private int cvv;
 	private String paymentID;
-	private Order order;
+	private OrderDto order;
 	
 	public PaymentDto() {
 		
 	}
-	public PaymentDto(double cardNumber, Date expirationDate, String nameOnCard, int cvv,
-			Order order) {
+	public PaymentDto(double cardNumber, Date expirationDate, String nameOnCard, int cvv, OrderDto order) {
 		this.cardNumber = cardNumber;
 		this.expirationDate = expirationDate;
 		this.nameOnCard = nameOnCard;
@@ -87,9 +86,9 @@ public class PaymentDto {
 	    }
 	
 
-	public void setPaymentID(String value) {
-	this.paymentID = value;
-	    }
+//	public void setPaymentID(String value) {
+//	this.paymentID = value;
+//	    }
 
 	
 	public String getPaymentID() {
@@ -98,11 +97,11 @@ public class PaymentDto {
 	
 
 	
-	public Order getOrder() {
+	public OrderDto getOrder() {
 	   return this.order;
 	}
 
-	public void setOrder(Order order) {
+	public void setOrder(OrderDto order) {
 	   this.order = order;
 	}
 }
