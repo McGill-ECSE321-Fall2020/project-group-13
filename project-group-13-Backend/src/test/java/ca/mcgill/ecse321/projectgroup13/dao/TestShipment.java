@@ -71,7 +71,7 @@ public class TestShipment {
         Shipment shipment = new Shipment();
 
         //parameters for order
-        String orderID = "myOrderID";
+        Integer orderID = "myOrderID".hashCode();
         OrderStatus orderStatus = OrderStatus.Shipped;
         Double totalAmount = 100.02;
 
@@ -82,7 +82,7 @@ public class TestShipment {
         String province = "province";
         String street1 = "street1";
         String street2 = "street2";
-        String addressID = "TESTaddressID";
+        Integer addressID = "TESTaddressID".hashCode();
 
 
         //parameters for user
@@ -94,7 +94,7 @@ public class TestShipment {
 
 
         //parameters for shipment
-        String shipmentID = "myShipmentID";
+        Integer shipmentID = "myShipmentID".hashCode();
         ShipmentStatus shipmentInfo = ShipmentStatus.OnRoute;
         Date date = Date.valueOf("2020-02-02");
 

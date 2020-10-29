@@ -78,14 +78,14 @@ public class TestUser {
     	address.setCity("Montreal");
     	address.setCountry("Canada");
     	address.setStreetAddress1("3302 St-Catherine");
-    	address.setAddressID("3732St-Catherine");
+    	address.setAddressID("3732St-Catherine".hashCode());
     	Set<Address> addresss = new HashSet<>();
     	addresss.add(address);
     	
     	//create Artwork
     	Artwork artwork = new Artwork();
     	artwork.setTitle("Beauty");
-    	artwork.setArtworkID("Beauty");
+    	artwork.setArtworkID("Beauty".hashCode());
     	Set<User> artists = new HashSet<User>();
     	
     	Set<Artwork> artworks = new HashSet<Artwork>();
@@ -112,7 +112,7 @@ public class TestUser {
     public void testPersistAndLoadUser() {
     	initDatabase();
     	//get artwork beauty from repo
-    	Artwork artwork=artworkRepository.findArtworkByArtworkID("Beauty");
+    	Artwork artwork=artworkRepository.findArtworkByArtworkID("Beauty".hashCode());
     	Set<User> artists= artwork.getArtist();
     	Iterator<User> iter = artists.iterator();
         //assertEquals(user.getUsername(),"TestUser");

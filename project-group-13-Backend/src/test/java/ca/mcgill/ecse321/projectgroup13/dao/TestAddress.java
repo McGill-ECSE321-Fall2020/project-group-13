@@ -72,7 +72,7 @@ public class TestAddress {
 	    String province = "province";
 	    String street1 = "street1";
 	    String street2 = "street2";
-	    String addressID = "TESTaddressID";
+	    Integer addressID = "TESTaddressID".hashCode();
 	    
 	    
 	    //parameters for user
@@ -87,7 +87,7 @@ public class TestAddress {
 	    	
 	    	
 	    //parameters for cart
-	    String cartID = "TESTcartID";
+	    Integer cartID = "TESTcartID".hashCode();
 	    double totalCost = 100.1;
 	    
 	    //set address parameters

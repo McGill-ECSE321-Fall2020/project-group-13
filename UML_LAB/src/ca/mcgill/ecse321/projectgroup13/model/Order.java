@@ -8,11 +8,41 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import ca.mcgill.ecse321.projectgroup13.model.OrderStatus;
 
 @Entity
 @Table(name="orders")
 public class Order{
+@Override
+public boolean equals (Object obj)
+{
+if (this == obj)
+   		return true;
+   	if (obj == null)
+   		return false;
+   	if (getClass() != obj.getClass())
+   		return false;
+   	Order other = (Order) obj;
+   	if (artwork == null) {
+   		if (other.artwork != null)
+   			return false;
+   	} else if (!artwork.equals(other.artwork))
+   		return false;
+   	if (orderID == null) {
+   		if (other.orderID != null)
+   			return false;
+   	} else if (!orderID.equals(other.orderID))
+   		return false;
+   	if (orderStatus != other.orderStatus)
+   		return false;
+   	if (payment == null) {
+   		if (other.payment != null)
+   			return false;
+   	} else if (!payment.equals(other.payment))
+   		return false;
+   	if (Double.doubleToLongBits(totalAmount) != Double.doubleToLongBits(other.totalAmount))
+   		return false;
+   	return true;
+   }
 private double totalAmount;
    
    public void setTotalAmount(double value) {
@@ -74,12 +104,12 @@ public void setUser(User user) {
    this.user = user;
 }
 
-private OrderStatus orderStatus;
+private  orderStatus;
 
-public void setOrderStatus(OrderStatus value) {
+public void setOrderStatus( value) {
 this.orderStatus = value;
     }
-public OrderStatus getOrderStatus() {
+public  getOrderStatus() {
 return this.orderStatus;
     }
 @Override
@@ -95,36 +125,5 @@ final int prime = 31;
    	temp = Double.doubleToLongBits(totalAmount);
    	result = prime * result + (int) (temp ^ (temp >>> 32));
    	return result;
-   }
-@Override
-public boolean equals (Object obj)
-{
-if (this == obj)
-   		return true;
-   	if (obj == null)
-   		return false;
-   	if (getClass() != obj.getClass())
-   		return false;
-   	Order other = (Order) obj;
-   	if (artwork == null) {
-   		if (other.artwork != null)
-   			return false;
-   	} else if (!artwork.equals(other.artwork))
-   		return false;
-   	if (orderID == null) {
-   		if (other.orderID != null)
-   			return false;
-   	} else if (!orderID.equals(other.orderID))
-   		return false;
-   	if (orderStatus != other.orderStatus)
-   		return false;
-   	if (payment == null) {
-   		if (other.payment != null)
-   			return false;
-   	} else if (!payment.equals(other.payment))
-   		return false;
-   	if (Double.doubleToLongBits(totalAmount) != Double.doubleToLongBits(other.totalAmount))
-   		return false;
-   	return true;
    }
 }

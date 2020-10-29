@@ -58,9 +58,9 @@ class TestPayment {
 	
 	@Test
 	public void persistAndLoadPayment() {
-		String orderID = "456";
+		Integer orderID = "456".hashCode();
 		double totalAmount = 11.5;
-		String paymentID = "123";
+		Integer paymentID = "123".hashCode();
 		User user = new User();
 		user.setUsername("David");
 		userRepository.save(user);

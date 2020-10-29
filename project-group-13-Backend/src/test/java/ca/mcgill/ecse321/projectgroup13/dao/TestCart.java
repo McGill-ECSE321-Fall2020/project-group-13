@@ -70,7 +70,7 @@ public class TestCart {
 	    	
 	    	
 	    //parameters for cart
-	    String cartID = "TESTcartID";
+	    Integer cartID = "TESTcartID".hashCode();
 	    double totalCost = 100.1;
 	    Set<Artwork> artworksInCart = new HashSet<>();
 	    

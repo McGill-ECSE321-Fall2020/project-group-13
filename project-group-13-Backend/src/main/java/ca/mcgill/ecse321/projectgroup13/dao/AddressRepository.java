@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AddressRepository extends CrudRepository<Address, Long>{
 
-    Address findAddressByAddressID(String tits);
+    Address findAddressByAddressID(Integer id);
     List<Address> findAddressesByCity(String city);
     Boolean deleteAddressByAddressID(Integer id);
     

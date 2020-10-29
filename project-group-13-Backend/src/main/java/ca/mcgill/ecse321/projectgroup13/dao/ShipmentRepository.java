@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Set;
 
 public interface ShipmentRepository extends CrudRepository<Shipment, Long>{
-    Shipment findShipmentByShipmentID(String shipmentID);
+    Shipment findShipmentByShipmentID(Integer shipmentID);
     //Shipment findShipmentByOrder(Order order);
     Set<Shipment> findShipmentByOrder(Order order);
     Set<Shipment> findShipmentByUser(User user);
