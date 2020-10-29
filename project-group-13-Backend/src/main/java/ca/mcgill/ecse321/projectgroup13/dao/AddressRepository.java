@@ -10,8 +10,9 @@ import java.util.List;
 
 public interface AddressRepository extends CrudRepository<Address, Long>{
 
-	User findUserByAddressID(Integer id);
-    Address findAddressByAddressID(String tits);
+
+    Address findAddressByAddressID(Integer id);
+	  User findUserByAddressID(Integer id);
     List<Address> findAddressesByCity(String city);
     Boolean deleteAddressByAddressID(Integer id);
     

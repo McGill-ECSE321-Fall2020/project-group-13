@@ -73,12 +73,12 @@ TestOrder {
 	    	orders.add(order);
 	    	
 	    //parameters for cart
-	    String cartID = "TESTcartID";
+	    Integer cartID = "TESTcartID".hashCode();
 	    double totalCost = 100.1;
 	    Set<Artwork> artworksInCart = new HashSet<>();
 	    
 	    //parameters for order
-	    String orderID = "testORDERID";
+	    Integer orderID = "testORDERID".hashCode();
 	    double totalAmount = 10000.3;
 	    OrderStatus orderStatus = OrderStatus.PaymentPending;
 	    Set<Artwork> OrderArtworks = new HashSet<>();

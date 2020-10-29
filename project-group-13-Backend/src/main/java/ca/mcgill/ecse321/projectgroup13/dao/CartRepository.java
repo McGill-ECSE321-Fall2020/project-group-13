@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CartRepository extends CrudRepository<Cart, Long>{
     Cart findCartByUser(User user);
-    Cart findCartByCartID(String cartID);
+    Cart findCartByCartID(Integer cartID);
 }

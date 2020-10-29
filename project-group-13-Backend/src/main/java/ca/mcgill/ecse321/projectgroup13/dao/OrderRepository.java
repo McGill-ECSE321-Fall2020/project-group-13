@@ -12,6 +12,6 @@ public interface OrderRepository extends CrudRepository<Order, Long>{
 	
 	List<Order> findOrderByArtwork(Artwork artwork);
     List<Order> findOrderByUser(User user);
-    Order findOrderByOrderID(String orderID);
+    Order findOrderByOrderID(Integer orderID);
     
 }
