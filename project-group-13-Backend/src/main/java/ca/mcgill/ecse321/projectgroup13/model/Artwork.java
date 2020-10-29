@@ -1,9 +1,12 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
-import javax.persistence.Entity;
 import java.util.Set;
-import javax.persistence.ManyToMany;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -89,6 +92,7 @@ public void setArtworkID(Integer value) {
 this.artworkID = value;
     }
 @Id
+@GeneratedValue(strategy = GenerationType.AUTO)
 public Integer getArtworkID() {
 return this.artworkID;
     }

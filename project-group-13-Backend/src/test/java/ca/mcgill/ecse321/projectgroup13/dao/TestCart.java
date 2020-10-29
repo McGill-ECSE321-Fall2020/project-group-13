@@ -70,7 +70,7 @@ public class TestCart {
 	    	
 	    	
 	    //parameters for cart
-	    Integer cartID = "TESTcartID".hashCode();
+	    //Integer cartID = "TESTcartID".hashCode();
 	    double totalCost = 100.1;
 	    Set<Artwork> artworksInCart = new HashSet<>();
 	    
@@ -86,7 +86,7 @@ public class TestCart {
 	    
 	    
 	    //set cart parameters
-	    cart.setCartID(cartID);
+	    //cart.setCartID(cartID);
 	    cart.setTotalCost(totalCost);
 	    cart.setUser(user);
 	    cart.setArtwork(artworksInCart);
@@ -96,7 +96,7 @@ public class TestCart {
 	    cart = cartRepository.save(cart);
 
         //restore address instance from database
-        Cart cartPersisted = cartRepository.findCartByCartID(cartID);
+        Cart cartPersisted = cartRepository.findCartByCartID(cart.getCartID());
 
         //assert if instance retrieved from database equals the original
         assertEquals(true, cart.equals(cartPersisted));

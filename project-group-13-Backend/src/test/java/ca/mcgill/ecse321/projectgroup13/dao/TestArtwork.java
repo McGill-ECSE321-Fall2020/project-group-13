@@ -71,14 +71,14 @@ public class TestArtwork {
     	address.setCity("Montreal");
     	address.setCountry("Canada");
     	address.setStreetAddress1("3302 St-Catherine");
-    	address.setAddressID("3732St-Catherine".hashCode());
+    	//address.setAddressID("3732St-Catherine".hashCode());
     	Set<Address> addresss = new HashSet<>();
     	addresss.add(address);
     	
     	//create Artwork
     	Artwork artwork = new Artwork();
     	artwork.setTitle("Beauty");
-    	artwork.setArtworkID("Beauty".hashCode());
+    	//artwork.setArtworkID("Beauty".hashCode());
     	Set<User> artists = new HashSet<User>();
     	
     	Set<Artwork> artworks = new HashSet<Artwork>();
@@ -111,10 +111,9 @@ public class TestArtwork {
     	Artwork artwork = artworkRepository.findArtworkByArtist(artist); //test search using foreign keys
     	assertNotNull(artwork); // test reference of object
     	assertEquals(artwork.getTitle(),"Beauty"); // test attribute of object
-    	assertEquals(((Integer)"Beauty".hashCode()).equals(artist.getArtwork().iterator().next().getArtworkID()), true); //test navigating association of object
-    	
-    	
-    	
+    	assertNotNull(artwork.getArtworkID());
+    	System.out.println("\n\n\n\n" + artwork.getArtworkID()+ "\n\n\n\n\n");
+    	//assertEquals(((Integer)"Beauty".hashCode()).equals(artist.getArtwork().iterator().next().getArtworkID()), true); //test navigating association of object
     }
     
     

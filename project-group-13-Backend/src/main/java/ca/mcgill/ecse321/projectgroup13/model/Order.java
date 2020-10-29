@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
@@ -49,6 +51,7 @@ public void setOrderID(Integer value) {
 this.orderID = value;
     }
 @Id
+@GeneratedValue(strategy = GenerationType.AUTO)
 public Integer getOrderID() {
 return this.orderID;
     }

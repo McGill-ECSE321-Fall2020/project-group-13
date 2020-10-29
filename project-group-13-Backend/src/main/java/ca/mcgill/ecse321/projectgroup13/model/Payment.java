@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
 import java.sql.Date;
 import javax.persistence.Id;
@@ -74,6 +76,7 @@ public void setPaymentID(Integer value) {
 this.paymentID = value;
     }
 @Id
+@GeneratedValue(strategy = GenerationType.AUTO)
 public Integer getPaymentID() {
 return this.paymentID;
     }

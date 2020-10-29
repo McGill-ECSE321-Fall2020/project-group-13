@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import java.sql.Date;
 import javax.persistence.Id;
@@ -54,6 +56,7 @@ public void setShipmentID(Integer value) {
 this.shipmentID = value;
     }
 @Id
+@GeneratedValue(strategy = GenerationType.AUTO)
 public Integer getShipmentID() {
 return this.shipmentID;
     }
