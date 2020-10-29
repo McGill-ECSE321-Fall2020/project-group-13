@@ -71,14 +71,14 @@ public class ShipmentService {
      * @param user
      * @return dto shipments
      */
-    @Transactional
-    public Set<Shipment> getShipmentsOfUser(User user) {
-        Set<Shipment> shipments = new HashSet<Shipment>();
-        for (Shipment shipment : shipmentRepo.findShipmentByUser(user)) {
-            shipments.add(shipment);
-        }
-        return shipments;
-    }
+//    @Transactional
+//    public Set<Shipment> getShipmentsOfUser(User user) {
+//        Set<Shipment> shipments = new HashSet<Shipment>();
+//        for (Shipment shipment : shipmentRepo.findOrderByUser(user)) {
+//            shipments.add(shipment);
+//        }
+//        return shipments;
+//    }
 
 
 
