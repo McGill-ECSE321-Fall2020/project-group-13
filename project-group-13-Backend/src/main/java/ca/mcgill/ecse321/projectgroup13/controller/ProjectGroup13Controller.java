@@ -152,14 +152,14 @@ public class ProjectGroup13Controller {
 	 * @param order
 	 * @return DTO shipments
 	 */
-	@GetMapping(value = { "/order//shipments", "/order//shipments/"})
-	public Set<ShipmentDto> getAllShipmentsOfOrder(@RequestParam Order order){
-		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-		for(Shipment shipment : shipmentService.getShipmentsOfOrder(order)) {
-			shipmentsDto.add(convertToDto(shipment));
-		}
-		return shipmentsDto;
-	}
+//	@GetMapping(value = { "/order//shipments", "/order//shipments/"})
+//	public Set<ShipmentDto> getAllShipmentsOfOrder(@RequestParam Order order){
+//		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+//		for(Shipment shipment : shipmentService.getShipmentsOfOrder(order)) {
+//			shipmentsDto.add(convertToDto(shipment));
+//		}
+//		return shipmentsDto;
+//	}
 
 
 	/**
@@ -167,14 +167,14 @@ public class ProjectGroup13Controller {
 	 * @param user
 	 * @return DTO shipments
 	 */
-	@GetMapping(value = { "/user/{username}/shipments", "/user/{username}/shipments/"})
-	public Set<ShipmentDto> getAllShipmentsOfUser(@RequestParam User user){
-		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-		for(Shipment shipment : shipmentService.getShipmentsOfUser(user)) {
-			shipmentsDto.add(convertToDto(shipment));
-		}
-		return shipmentsDto;
-	}
+//	@GetMapping(value = { "/user/{username}/shipments", "/user/{username}/shipments/"})
+//	public Set<ShipmentDto> getAllShipmentsOfUser(@RequestParam User user){
+//		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+//		for(Shipment shipment : shipmentService.getShipmentsOfUser(user)) {
+//			shipmentsDto.add(convertToDto(shipment));
+//		}
+//		return shipmentsDto;
+//	}
 
 
 	/**
