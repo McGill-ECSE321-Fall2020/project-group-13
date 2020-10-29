@@ -38,7 +38,18 @@ public class ProjectGroup13Controller {
 		if (order == null) {
 			throw new IllegalArgumentException("There is no such order!");
 		}
-		OrderDto dto = new OrderDto(order.getTotalAmount(), order.getOrderID(), order.getOrderStatus(), convertToDto(order.getArtwork()), convertToDto(order.getUser()), convertToDto(order.getPayment()), convertToDto(order.getShipment()));
+
+		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
+		for (Artwork artwork : order.getArtwork()) {
+			artworksDto.add(convertToDto(artwork));
+		}
+
+		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+		for (Shipment shipment : order.getShipment()) {
+			shipmentsDto.add(convertToDto(shipment));
+		}
+
+		OrderDto dto = new OrderDto(order.getTotalAmount(), order.getOrderID(), order.getOrderStatus(), artworksDto, convertToDto(order.getUser()), convertToDto(order.getPayment()), shipmentsDto);
 		return dto;
 	}
 
@@ -47,49 +58,54 @@ public class ProjectGroup13Controller {
 		if (artwork == null) {
 			throw new IllegalArgumentException("There is no such artwork!");
 		}
-		ArtworkDto dto = new ArtworkDto(artwork.isIsOnPremise(), convertToDto(artwork.getArtist()), artwork.getArtworkID(), convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
+
+		Set<UserDto> artists = new HashSet<UserDto>();
+		for (User artist : artwork.getArtist()) {
+			artists.add(convertToDto(artist));
+		}
+
+		ArtworkDto dto = new ArtworkDto(artwork.isIsOnPremise(), artists, artwork.getArtworkID(), convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
 		return dto;
 	}
 
-
-	private Set<ArtworkDto> convertToDto(Set<Artwork> artworks) {
-		if (artworks == null) {
-			throw new IllegalArgumentException("There are no such artworks!");
-		}
-		Set<ArtworkDto> dto = new HashSet<ArtworkDto>();
-		for (Artwork artwork : artworks) {
-			dto.add(convertToDto(artwork));
-		}
-		return dto;
-	}
 
 
 	private UserDto convertToDto(User user) {
 		if (user == null) {
 			throw new IllegalArgumentException("There is no such user!");
 		}
-		UserDto dto = new UserDto(convertToDto(user.getCart()), convertToDto(user.getArtwork()), user.getBio(), convertToDto(user.getAddress()), user.getUsername(), user.getEmail(), user.getProfilePictureURL());
+
+		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
+		for (Artwork artwork : user.getArtwork()) {
+			artworksDto.add(convertToDto(artwork));
+		}
+
+		Set<AddressDto> addressDtos = new HashSet<AddressDto>();
+		for (Address address : user.getAddress()) {
+			addressDtos.add(convertToDto(address));
+		}
+
+		Set<OrderDto> ordersDto = new HashSet<OrderDto>();
+		for (Order order : user.getOrder()) {
+			ordersDto.add(convertToDto(order));
+		}
+
+		UserDto dto = new UserDto(convertToDto(user.getCart()), artworksDto, user.getBio(), addressDtos, ordersDto ,user.getUsername(), user.getEmail(), user.getProfilePictureURL());
 		return dto;
 	}
-
-
-//	private Set<UserDto> convertToDto(Set<User> users) {
-//		if (users == null) {
-//			throw new IllegalArgumentException("There are no such artworks!");
-//		}
-//		Set<UserDto> dto = new HashSet<UserDto>();
-//		for (User user : users) {
-//			dto.add(convertToDto(user));
-//		}
-//		return dto;
-//	}
 
 
 	private CartDto convertToDto(Cart cart) {
 		if (cart == null) {
 			throw new IllegalArgumentException("There is no such cart!");
 		}
-		CartDto dto = new CartDto(cart.getCartID(), cart.getTotalCost(), convertToDto(cart.getArtwork()), convertToDto(cart.getUser()));
+
+		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
+		for (Artwork artwork : cart.getArtwork()) {
+			artworksDto.add(convertToDto(artwork));
+		}
+
+		CartDto dto = new CartDto(cart.getCartID(), cart.getTotalCost(), artworksDto, convertToDto(cart.getUser()));
 		return dto;
 	}
 
@@ -110,19 +126,6 @@ public class ProjectGroup13Controller {
 		AddressDto dto = new AddressDto(address.getAddressID(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode(), convertToDto(address.getUser()));
 		return dto;
 	}
-
-
-//	private Set<UserDto> convertToDto(Set<User> users) {
-//		if (users == null) {
-//			throw new IllegalArgumentException("There are no such users!");
-//		}
-//		Set<UserDto> dto = new HashSet<UserDto>();
-//		for (User user : users) {
-//			dto.add(convertToDto(user));
-//		}
-//		return dto;
-//	}
-
 
 
 
