@@ -137,7 +137,7 @@ public class TestShipment {
         shipment = shipmentRepository.save(shipment);
 
         //restore shipment instance from database
-        Shipment shipmentPersisted = shipmentRepository.findShipmentByOrder(order);
+        Shipment shipmentPersisted = shipmentRepository.findShipmentByShipmentID(shipmentID);
 
         //assert if instance retrieved from database equals the original
         assertEquals(true, shipment.equals(shipmentPersisted));
