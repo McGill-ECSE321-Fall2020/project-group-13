@@ -111,7 +111,7 @@ public class TestArtwork {
     	Artwork artwork = artworkRepository.findArtworkByArtist(artist); //test search using foreign keys
     	assertNotNull(artwork); // test reference of object
     	assertEquals(artwork.getTitle(),"Beauty"); // test attribute of object
-    	assertEquals("Beauty",artist.getArtwork().iterator().next().getArtworkID()); //test navigating association of object
+    	assertEquals(((Integer)"Beauty".hashCode()).equals(artist.getArtwork().iterator().next().getArtworkID()), true); //test navigating association of object
     	
     	
     	
