@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 /*
  * Service to handle login and registration of users.
  */
+//TODO: Change name to PaymentService
 @Service
 public class ArtServices {
 	public <T> List<T> toList(Iterable<T> iterable) {

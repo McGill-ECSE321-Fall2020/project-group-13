@@ -45,12 +45,18 @@ public class OrderService {
 	
 	//TODO: How to differentiate between old and new orders (issue #84)
 	public List<Order> getOrdersFromUser(User user) {
+		if (user == null) {
+			throw new IllegalArgumentException("user cannot be null");
+		}
 		List<Order> order = toList(orderRepository.findOrdersByUser(user));
 		return order;
 	}
 	
 	//TODO: How to get most recent order (issue #84)
 	public Order getMostRecentOrder(User user) {
+		if (user == null) {
+			throw new IllegalArgumentException("user cannot be null");
+		}
 		List<Order> orders = toList(orderRepository.findOrdersByUser(user));
 		Order order = orders.get(0);
 		return order;
@@ -62,6 +68,9 @@ public class OrderService {
 	 * TODO: Change SetOrderID to ensure that consecutive calls generate the same value
 	*/
 	public Order createOrder(User user, Set<Artwork> art) {
+		if (user == null) {
+			throw new IllegalArgumentException("user cannot be null");
+		}
 		Order newOrder = new Order();
 		newOrder.setOrderStatus(OrderStatus.PaymentPending);
 		newOrder.setUser(user);
