@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.controller;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 import ca.mcgill.ecse321.projectgroup13.dto.*;
 import ca.mcgill.ecse321.projectgroup13.model.*;
+import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +29,9 @@ public class ProjectGroup13Controller {
 	private ArtServices paymentService;
 	@Autowired
 	private ShipmentService shipmentService;
+	@Autowired
+	private OrderService orderService;
+
 	
 	private PaymentDto convertToDto(Payment e) {
 		if (e == null) {
@@ -152,14 +157,14 @@ public class ProjectGroup13Controller {
 	 * @param order
 	 * @return DTO shipments
 	 */
-//	@GetMapping(value = { "/order//shipments", "/order//shipments/"})
-//	public Set<ShipmentDto> getAllShipmentsOfOrder(@RequestParam Order order){
-//		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-//		for(Shipment shipment : shipmentService.getShipmentsOfOrder(order)) {
-//			shipmentsDto.add(convertToDto(shipment));
-//		}
-//		return shipmentsDto;
-//	}
+	@GetMapping(value = { "/order//shipments", "/order//shipments/"})
+	public Set<ShipmentDto> getAllShipmentsOfOrder(@RequestParam Order order){
+		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+		for(Shipment shipment : shipmentService.getShipmentsOfOrder(order)) {
+			shipmentsDto.add(convertToDto(shipment));
+		}
+		return shipmentsDto;
+	}
 
 
 	/**
@@ -167,25 +172,25 @@ public class ProjectGroup13Controller {
 	 * @param user
 	 * @return DTO shipments
 	 */
-//	@GetMapping(value = { "/user/{username}/shipments", "/user/{username}/shipments/"})
-//	public Set<ShipmentDto> getAllShipmentsOfUser(@RequestParam User user){
-//		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-//		for(Shipment shipment : shipmentService.getShipmentsOfUser(user)) {
-//			shipmentsDto.add(convertToDto(shipment));
-//		}
-//		return shipmentsDto;
-//	}
+	@GetMapping(value = { "/user/{username}/shipments", "/user/{username}/shipments/"})
+	public Set<ShipmentDto> getAllShipmentsOfUser(@RequestParam User user){
+		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+		for(Shipment shipment : shipmentService.getShipmentsOfUser(user)) {
+			shipmentsDto.add(convertToDto(shipment));
+		}
+		return shipmentsDto;
+	}
 
 
 	/**
 	 * RESTful service to create a shipment once an order is placed
-	 * @param order
+	 * @param orderId
 	 * @return shipment dto
 	 */
-//	@PostMapping(value = { "/order/shipping", "/order/shipping/"})
-//	public ShipmentDto createShipment(@PathVariable Address address, @RequestParam Order order, ShipmentStatus status, boolean isDelivery){
-//		ShipmentDto shipmentDto = shipmentService.createShipment(order, address, status, date??, time???, isDelivery);
-//		return shipmentDto;
-//	}
+	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
+	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam Address address, ShipmentStatus status, boolean isDelivery){
+		ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
+		return shipmentDto;
+	}
 
 }

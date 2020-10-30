@@ -49,7 +49,7 @@ public class ShipmentService {
 
     //get user of shipment
     @Transactional
-    public User getUserOfShipment(Integer shipmentID){
+    public User getUserOfShipment(int shipmentID){
         Shipment shipment = shipmentRepo.findShipmentByShipmentID(shipmentID);
         User user = shipment.getOrder().getUser();
         return user;
@@ -59,7 +59,7 @@ public class ShipmentService {
     @Transactional
     public Set<Shipment> getShipmentsOfOrder(Order order) {
         Set<Shipment> shipments = new HashSet<Shipment>();
-        for (Shipment shipment : shipmentRepo.findShipmentByOrder(order)) {
+        for (Shipment shipment : shipmentRepo.findShipmentsByOrder(order)) {
             shipments.add(shipment);
         }
         return shipments;
@@ -71,21 +71,70 @@ public class ShipmentService {
      * @param user
      * @return dto shipments
      */
-//    @Transactional
-//    public Set<Shipment> getShipmentsOfUser(User user) {
-//        Set<Shipment> shipments = new HashSet<Shipment>();
-//        for (Shipment shipment : shipmentRepo.findOrderByUser(user)) {
-//            shipments.add(shipment);
-//        }
-//        return shipments;
-//    }
+    @Transactional
+    public Set<Shipment> getShipmentsOfUser(User user) {
+        Set<Shipment> shipments = new HashSet<Shipment>();
+        for (Order order : orderRepo.findOrdersByUser(user)) {
+            for (Shipment shipment : shipmentRepo.findShipmentsByOrder(order)) {
+                shipments.add(shipment);
+            }
+        }
+        return shipments;
+    }
+
+
+    /**
+     * service method to get all the shipments in database
+     * @return
+     */
+    @Transactional
+    public Set<Shipment> getAllShipments() {
+        Set<Shipment> shipments = new HashSet<Shipment>();
+        for (Shipment shipment : shipmentRepo.findAll()) {
+            shipments.add(shipment);
+        }
+        return shipments;
+    }
+
+
+    /**
+     * service method to edit shipment status
+     * @param shipment
+     * @param status
+     * @return
+     */
+    @Transactional
+    public Shipment editShipmentStatus (Shipment shipment, ShipmentStatus status){
+        shipment.setShipmentInfo(status);
+        return shipment;
+    }
 
 
 
-//    @Transactional
-//    public Shipment editShipmentStatus (ShipmentStatus status){
-//
-//    }
+    /**
+     * service method to edit shipment estimated date of arrival
+     * @param shipment
+     * @param estimatedDate
+     * @return
+     */
+    @Transactional
+    public Shipment editShipmentEstimatedDate (Shipment shipment, Date estimatedDate){
+        shipment.setEstimatedDateOfArrival(estimatedDate);
+        return shipment;
+    }
+
+
+    /**
+     * service method to edit shipment estimated time of arrival
+     * @param shipment
+     * @param estimatedTime
+     * @return
+     */
+    @Transactional
+    public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime){
+        shipment.setEstimatedTimeOfArrival(estimatedTime);
+        return shipment;
+    }
 
 
 

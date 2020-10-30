@@ -68,7 +68,7 @@ public class ArtServices {
 	@Transactional
 	public List<Payment> getPaymentsForCustomer(User user){
 		List<Payment> result = new ArrayList<Payment>();
-		for (Order order:orderRepo.findOrderByUser(user)) {
+		for (Order order:orderRepo.findOrdersByUser(user)) {
 			result.add(order.getPayment());
 		}
 		return result;
