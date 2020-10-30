@@ -62,13 +62,14 @@ public class TestUser {
      * populates them with test information, saves them to the database
      */
     
-    public void initDatabase() {
+    public User initDatabase() {
     	//    Artwork<---User-->Address
     	//create address
     	
     	User artist = new User();
     	artist.setUsername("Julius Cesar Arnouk");
     	artist.setEmail("JCesar@RussianBrides.com");
+    	artist.setOrder(null);
     	userRepository.save(artist);
     	
     	Address address = new Address();
@@ -95,9 +96,9 @@ public class TestUser {
     	
     	artwork.setArtist(artists);
     	artist.setArtwork(artworks);
-    	artworkRepository.save(artwork);
-    	userRepository.save(artist);
-    	
+    	artwork = artworkRepository.save(artwork);
+    	artist = userRepository.save(artist);
+    	return artist;
     	
     }
    
@@ -108,18 +109,21 @@ public class TestUser {
      */
     @Test
     public void testPersistAndLoadUser() {
-    	initDatabase();
-//    	//get artwork beauty from repo
-//    	Artwork artwork=artworkRepository.findArtworkByArtworkID("Beauty".hashCode());
+    	User user = initDatabase();
+    	//get artwork beauty from repo
+//    	Artwork artwork=artworkRepository.findArtworkByArtworkID((Artwork [])user.getArtwork().toArray())[0]);
 //    	Set<User> artists= artwork.getArtist();
 //    	Iterator<User> iter = artists.iterator();
 //        //assertEquals(user.getUsername(),"TestUser");
 //    	User artist = iter.next();
 //    	//now check if this username is same as the one it should be 
 //    	String email = artist.getEmail();
-//    	User querryUser = userRepository.findUserByEmail(email);
-//    	assertEquals(querryUser.getUsername(),"Julius Cesar Arnouk");
-    	assertEquals(true, true);
+    	User queryUser = userRepository.findUserByEmail(user.getEmail());
+    	assertEquals(queryUser.getUsername(),"Julius Cesar Arnouk");
+    	System.out.println(user);
+    	System.out.println(queryUser);
+  
+    	assertEquals(true, user.equals(queryUser));
     }
     
 }

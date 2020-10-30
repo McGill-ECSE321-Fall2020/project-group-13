@@ -17,6 +17,7 @@ import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.OrderStatus;
 import ca.mcgill.ecse321.projectgroup13.model.Payment;
+import ca.mcgill.ecse321.projectgroup13.model.Shipment;
 import ca.mcgill.ecse321.projectgroup13.model.User;
 
 @Service
@@ -42,6 +43,18 @@ public class OrderService {
 		return order;
 	}
 	
+	//TODO: How to differentiate between old and new orders (issue #84)
+	public List<Order> getOrdersFromUser(User user) {
+		List<Order> order = toList(orderRepository.findOrdersByUser(user));
+		return order;
+	}
+	
+	//TODO: How to get most recent order (issue #84)
+	public Order getMostRecentOrder(User user) {
+		List<Order> orders = toList(orderRepository.findOrdersByUser(user));
+		Order order = orders.get(0);
+		return order;
+	}
 	
 	/**
 	 * createOrder
@@ -54,8 +67,83 @@ public class OrderService {
 		newOrder.setUser(user);
 		newOrder.setArtwork(art);
 		
-		orderRepository.save(newOrder);
+		newOrder = orderRepository.save(newOrder);
 		return newOrder;
+	}
+	
+	
+	//deleteOrder
+	public boolean deleteOrder(Order order) {
+		boolean b = true;
+		
+		//remove order and artworks association
+		List<Artwork> arts = toList(order.getArtwork());
+		for (Artwork a: arts) {
+			a.setOrder(null);
+		}
+		b = b && order.getArtwork().removeAll(arts);
+		
+		//remove order and payments association
+		Payment p = order.getPayment();
+		//TODO: delete payment 
+		order.setPayment(null);
+		
+		//remove order and shipments association
+		List<Shipment> shipments = toList(order.getShipment());
+		for (Shipment s: shipments) {
+			//TODO: delete shipment
+			
+		}
+		b = b && order.getShipment().removeAll(shipments);
+		
+		//remove order and user association
+		User user = order.getUser();
+		user.getOrder().remove(order);
+		order.setUser(null);
+		
+		orderRepository.delete(order);
+		
+		return b;
+	}
+	
+	public boolean removeFromOrder(Order order, Artwork art) {
+		boolean b = order.getArtwork().remove(art);
+		updateTotal(order);
+		
+		//TODO: update order in database
+		return b;
+	}
+	
+	public boolean removeFromOrder(Order order, Set<Artwork> art) {
+		boolean b = order.getArtwork().removeAll(art);
+		updateTotal(order);
+		
+		//TODO: update order in database
+		return b;
+	}
+	
+	public boolean addToOrder(Order order, Set<Artwork> art) {
+		boolean b = order.getArtwork().addAll(art);
+		updateTotal(order);
+		
+		//TODO: update order in database
+		return b;
+	}
+	
+	public boolean addToOrder(Order order, Artwork art) {
+		boolean b = order.getArtwork().add(art);
+		updateTotal(order);
+		//TODO: update order in database
+		return b;
+	}
+	
+	private void updateTotal(Order order) {
+		List<Artwork> arts = toList(order.getArtwork());
+		double total = 0;
+		for (Artwork a : arts) {
+			total += a.getWorth();
+		}
+		order.setTotalAmount(total);
 	}
 	
 	/**
@@ -67,14 +155,19 @@ public class OrderService {
 	public void addPaymentToOrder(Order order, Payment payment) {
 		order.setPayment(payment);
 		order.setOrderStatus(OrderStatus.Placed);
+		//TODO: update order in database
 	}
-	//placeOrder
 	
-	//shipOrder
-	
-	//deliverOrder
-	
-	//getAllOrdersFromUser
+	/**
+	 * addShipmentToOrder
+	 * TODO: shipment has one to one relationship with artwork in order, but there is no way to know which is for which.
+	*/
+	public void addShipmentToOrder(Order order, Set<Shipment> shipment) {
+		order.setShipment(shipment);
+		if (order.getOrderStatus().equals(OrderStatus.Placed))
+			order.setOrderStatus(OrderStatus.Shipped);
+		//TODO: update order in database
+	}
 	
 	
 	/**
@@ -82,10 +175,11 @@ public class OrderService {
 	 * 		I don't think so...
 	 * @return
 	 */
-	@Transactional
-	public List<Order> getAllOrders(){
-		return toList(orderRepository.findAll());
-	}
+	//should not be able to get all orders since that would be a security/privacy breach. Can only gain access to orders linked to user account 
+//	@Transactional
+//	public List<Order> getAllOrders(){
+//		return toList(orderRepository.findAll());
+//	}
 	
 	
 	private <T> List<T> toList(Iterable<T> iterable){

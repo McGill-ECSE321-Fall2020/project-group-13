@@ -40,7 +40,9 @@ public class ArtServices {
     private OrderRepository orderRepo;
     
     private double commissionRate = 0.05;
-   
+    
+    
+    //TODO: when payment sets order, order should also set payment
     @Transactional
 	public Payment createPayment(double cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) {
 		Payment payment = new Payment();

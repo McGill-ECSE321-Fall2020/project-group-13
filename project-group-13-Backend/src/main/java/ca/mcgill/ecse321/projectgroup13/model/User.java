@@ -175,4 +175,12 @@ if (this == obj)
    		return false;
    	return true;
    }
+@Override
+public String toString() {
+	return "User [username=" + username + ", password=" + password + ", email=" + email + ", profilePictureURL="
+			+ profilePictureURL + ", artwork=" + artwork + ", address=" + address + ", order=" + order + ", cart="
+			+ cart + ", bio=" + bio + ", isAdmin=" + isAdmin + "]";
+}
+
+	
 }
