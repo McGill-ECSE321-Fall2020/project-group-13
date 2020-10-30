@@ -69,7 +69,7 @@ public class TestUser {
     	User artist = new User();
     	artist.setUsername("Julius Cesar Arnouk");
     	artist.setEmail("JCesar@RussianBrides.com");
-    	artist.setOrder(null);
+    	artist.setOrder(new HashSet<>());
     	userRepository.save(artist);
     	
     	Address address = new Address();
@@ -80,6 +80,7 @@ public class TestUser {
     	//address.setAddressID("3732St-Catherine".hashCode());
     	Set<Address> addresss = new HashSet<>();
     	addresss.add(address);
+    	artist.setAddress(addresss);
     	
     	//create Artwork
     	Artwork artwork = new Artwork();
