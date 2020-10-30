@@ -32,7 +32,7 @@ public class ProjectGroup13Controller {
 		if (e == null) {
 			throw new IllegalArgumentException("There is no such payment!");
 		}
-		PaymentDto dto = new PaymentDto(e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(),convertToDto(e.getOrder()));
+		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(),convertToDto(e.getOrder()));
 		return dto;
 	}
 
@@ -52,7 +52,7 @@ public class ProjectGroup13Controller {
 			shipmentsDto.add(convertToDto(shipment));
 		}
 
-		OrderDto dto = new OrderDto(order.getTotalAmount(), order.getOrderID(), order.getOrderStatus(), artworksDto, convertToDto(order.getUser()), convertToDto(order.getPayment()), shipmentsDto);
+		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getUser()), convertToDto(order.getPayment()), shipmentsDto);
 		return dto;
 	}
 
@@ -67,7 +67,7 @@ public class ProjectGroup13Controller {
 			artists.add(convertToDto(artist));
 		}
 
-		ArtworkDto dto = new ArtworkDto(artwork.isIsOnPremise(), artists, artwork.getArtworkID(), convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
+		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), artists,  convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
 		return dto;
 	}
 

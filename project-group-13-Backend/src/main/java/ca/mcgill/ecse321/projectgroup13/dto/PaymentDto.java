@@ -9,6 +9,7 @@ import javax.persistence.OneToOne;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
 
 public class PaymentDto {
+	private int paymentID;
 	private double totalAmount;
 	private Date paymentDate;
 	private Time paymentTime;
@@ -16,13 +17,13 @@ public class PaymentDto {
 	private Date expirationDate;
 	private String nameOnCard;
 	private int cvv;
-	private String paymentID;
 	private OrderDto order;
 	
 	public PaymentDto() {
 		
 	}
-	public PaymentDto(double cardNumber, Date expirationDate, String nameOnCard, int cvv, OrderDto order) {
+	public PaymentDto(int paymentID, double cardNumber, Date expirationDate, String nameOnCard, int cvv, OrderDto order) {
+		this.paymentID = paymentID;
 		this.cardNumber = cardNumber;
 		this.expirationDate = expirationDate;
 		this.nameOnCard = nameOnCard;
@@ -91,7 +92,7 @@ public class PaymentDto {
 //	    }
 
 	
-	public String getPaymentID() {
+	public int getPaymentID() {
 	return this.paymentID;
 	    }
 	

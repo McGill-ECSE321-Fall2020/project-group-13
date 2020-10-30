@@ -33,12 +33,10 @@ public class AddressService {
 	
 	// Address creation
 	@Transactional
-	public Address createAddress(User user, String addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
+	public Address createAddress(User user, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		
 		Address address = new Address();
-		
 		address.setUser(user);
-		address.setAddressID(addressID);
 		address.setStreetAddress1(streetAddress1);
 		address.setStreetAddress2(streetAddress2);
 		address.setCity(city);
@@ -84,9 +82,9 @@ public class AddressService {
 	
 	// Get Addresses of User
 	@Transactional
-	public List<Address> getAddressesByUserID(Integer userID) {
+	public List<Address> getAddressesByUsername(String username) {
 		
-		User user = userRepo.findUserById(userID);
+		User user = userRepo.findUserByUsername(username);
 		
 		if(user != null) {
 			List<Address> addresses = addressRepo.findAddressesByUser(user);

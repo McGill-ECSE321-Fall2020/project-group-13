@@ -102,7 +102,7 @@ public class TestAddress {
 	    
 	    
 	    //set user parameters
-	    user.setUsername(username);
+	    user.setUsername("duhedhuegud");
 	    user.setPassword(password);
 	    user.setEmail(email);
 	    user.setProfilePictureURL(profilePicURL);
@@ -119,14 +119,14 @@ public class TestAddress {
 	    
 	    //save instances to database 
 	    user = userRepository.save(user);
-	    cart.setUser(user);
-	    cart = cartRepository.save(cart);
+	    //cart.setUser(user);
+	    //cart = cartRepository.save(cart);
 	    address = addressRepository.save(address);
 
         //restore address instance from database
-        //Address addressPersisted = addressRepository.findAddressByAddressID(address.getAddressID());
+        Address addressPersisted = addressRepository.findAddressByAddressID(address.getAddressID());
 
         //assert if instance retrieved from database equals the original
-        assertEquals(true, true);//address.equals(addressPersisted));
+        assertEquals(address.getAddressID(), addressPersisted.getAddressID());//address.equals(addressPersisted));
     }
 }

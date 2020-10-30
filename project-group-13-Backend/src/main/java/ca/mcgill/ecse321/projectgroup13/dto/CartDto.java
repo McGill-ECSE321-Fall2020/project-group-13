@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class CartDto {
 
-    private String cartID;
+    private int cartID;
     private double totalCost;
     private Set<ArtworkDto> artwork;
     private UserDto user;
@@ -19,7 +19,7 @@ public class CartDto {
 
     }
 
-    public CartDto(String cartID, double totalCost, Set<ArtworkDto> artwork, UserDto user){
+    public CartDto(int cartID, double totalCost, Set<ArtworkDto> artwork, UserDto user){
         this.cartID= cartID;
         this.totalCost = totalCost;
         this.artwork = artwork;
@@ -32,7 +32,7 @@ public class CartDto {
 //    }
 
 
-    public String getCartID() {
+    public int getCartID() {
         return this.cartID;
     }
 

@@ -51,9 +51,7 @@ public class ArtServices {
 		payment.setExpirationDate(expirationDate);
 		payment.setNameOnCard(nameOnCard);
 		payment.setCvv(cvv);
-		payment.setPaymentID(nameOnCard+payment.getPaymentDate().toString()+payment.getPaymentTime().toString());
 		payment.setOrder(order);
-		
 		paymentRepo.save(payment);
 		return payment;
 	}
@@ -87,7 +85,7 @@ public class ArtServices {
 		return result;
 	}
 	@Transactional
-	public Payment getPayment(String paymentID) {
+	public Payment getPayment(int paymentID) {
 		Payment payment = paymentRepo.findPaymentByPaymentID(paymentID);
 		return payment;
 	}

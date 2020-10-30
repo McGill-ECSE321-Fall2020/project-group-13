@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 
 
 public class AddressDto {
-    private String addressID;
+    private Integer addressID;
     private String streetAddress1;
     private String streetAddress2;
     private String city;
@@ -20,7 +20,7 @@ public class AddressDto {
     public AddressDto() {
     }
 
-    public AddressDto(String addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode, UserDto user) {
+    public AddressDto(Integer addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode, UserDto user) {
         this.addressID = addressID;
         this.streetAddress1 = streetAddress1;
         this.streetAddress2 = streetAddress2;
@@ -31,7 +31,7 @@ public class AddressDto {
         this.user = user;
     }
 
-    public String getAddressID() {
+    public int getAddressID() {
         return addressID;
     }
 

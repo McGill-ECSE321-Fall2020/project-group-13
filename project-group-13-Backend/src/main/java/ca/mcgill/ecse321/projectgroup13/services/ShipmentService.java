@@ -41,7 +41,7 @@ public class ShipmentService {
 
     //get shipment by id
     @Transactional
-    public Shipment getShipment(String shipmentID){
+    public Shipment getShipment(int shipmentID){
         Shipment shipment = shipmentRepo.findShipmentByShipmentID(shipmentID);
         return shipment;
     }
@@ -49,7 +49,7 @@ public class ShipmentService {
 
     //get user of shipment
     @Transactional
-    public User getUserOfShipment(String shipmentID){
+    public User getUserOfShipment(Integer shipmentID){
         Shipment shipment = shipmentRepo.findShipmentByShipmentID(shipmentID);
         User user = shipment.getOrder().getUser();
         return user;

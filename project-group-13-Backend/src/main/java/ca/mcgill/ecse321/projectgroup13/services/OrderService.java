@@ -37,7 +37,7 @@ public class OrderService {
 	OrderRepository orderRepository;
 	
 	@Transactional
-	public Order getOrder(String orderID) {
+	public Order getOrder(int orderID) {
 		Order order = orderRepository.findOrderByOrderID(orderID);
 		return order;
 	}
@@ -53,7 +53,6 @@ public class OrderService {
 		newOrder.setOrderStatus(OrderStatus.PaymentPending);
 		newOrder.setUser(user);
 		newOrder.setArtwork(art);
-		newOrder.setOrderID(Integer.toString(newOrder.hashCode()));
 		
 		orderRepository.save(newOrder);
 		return newOrder;

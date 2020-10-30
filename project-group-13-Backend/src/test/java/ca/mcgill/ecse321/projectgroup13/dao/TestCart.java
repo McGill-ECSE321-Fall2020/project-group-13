@@ -53,14 +53,14 @@ public class TestCart {
      */
     
     @Test
-    public void testPersistAndLoadAddress() {
+    public void testPersistAndLoadCart() {
     	//need instances of these classes
 	    User user = new User();
 	    Cart cart = new Cart();
 	    
 	    
 	    //parameters for user
-	    String username = "testUser20";
+	    String username = "testUser21";
 	    String password = "passW0rd";
 	    String email = "me@home.com";
 	    String profilePicURL = "//yes.com/img.jpg";
@@ -79,7 +79,7 @@ public class TestCart {
 	    user.setPassword(password);
 	    user.setEmail(email);
 	    user.setProfilePictureURL(profilePicURL);
-	    user.setCart(cart);
+	    //user.setCart(cart);
 	    user.setAddress(addrs);
 	    user.setOrder(orders);
 	    user.setArtwork(artworks);
@@ -95,9 +95,10 @@ public class TestCart {
 	    user = userRepository.save(user);
 	    cart = cartRepository.save(cart);
 
+		System.out.println(cart.getCartID());
         //restore address instance from database
         Cart cartPersisted = cartRepository.findCartByCartID(cart.getCartID());
-
+		System.out.println(cartPersisted.getCartID());
         //assert if instance retrieved from database equals the original
         assertEquals(true, cart.equals(cartPersisted));
     }

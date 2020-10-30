@@ -65,7 +65,7 @@ public class UserService {
         if(userRepository.findUserByUsername(user.getUsername())!=null)  throw new RegistrationException("Username already in use");
         //invalid password -- password must contain at least one letter and one number
         String password = user.getPassword();
-        if(!password.matches(".*\\d.*") || !password.matches(".*[a-Z].*")) throw new  RegistrationException("invalid password entered, contain number and letter");
+        if(!password.matches(".*\\d.*") || !password.matches(".*[A-z].*")) throw new  RegistrationException("invalid password entered, contain number and letter");
         
         //ALL CONDITIONS HAVE PASSED
         User newUser = initializeUser(user);
@@ -122,7 +122,7 @@ public class UserService {
         //should I add the cart also? give user a cart
         Cart cart = new Cart();
         cart.setUser(newUser);
-        cart.setCartID(newUser.getUsername() + "cart");
+        //cart.setCartID(newUser.getUsername() + "cart");   need to be changer since ID type is now Integer
 
         return newUser;
     }

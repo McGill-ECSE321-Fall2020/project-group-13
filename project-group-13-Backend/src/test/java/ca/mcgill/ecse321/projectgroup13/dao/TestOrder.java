@@ -78,7 +78,7 @@ TestOrder {
 	    Set<Artwork> artworksInCart = new HashSet<>();
 	    
 	    //parameters for order
-	    Integer orderID = "testORDERID".hashCode();
+	    //Integer orderID = "testORDERID".hashCode();
 	    double totalAmount = 10000.3;
 	    OrderStatus orderStatus = OrderStatus.PaymentPending;
 	    Set<Artwork> OrderArtworks = new HashSet<>();
@@ -91,19 +91,19 @@ TestOrder {
 	    user.setProfilePictureURL(profilePicURL);
 	    user.setCart(cart);
 	    user.setAddress(addrs);
-	    user.setOrder(orders);
+	    //user.setOrder(orders);
 	    user.setArtwork(artworks);
 	    
 	    
 	    //set cart parameters
-	    cart.setCartID(cartID);
+	    //cart.setCartID(cartID);
 	    cart.setTotalCost(totalCost);
 	    cart.setUser(user);
 	    cart.setArtwork(artworksInCart);
 	    
 	    //set order parameters
 	    order.setArtwork(OrderArtworks);
-	    order.setOrderID(orderID);
+	    //order.setOrderID(orderID);
 	    order.setOrderStatus(orderStatus);
 	    order.setPayment(null);
 	    order.setShipment(shipments);
@@ -112,13 +112,13 @@ TestOrder {
 	    
 	    //save instances to database 
 	    user = userRepository.save(user);
-	    cart = cartRepository.save(cart);
+	    //cart = cartRepository.save(cart);
 	    order = orderRepository.save(order);
 	    
         //restore address instance from database
-        Order orderPersisted = orderRepository.findOrderByOrderID(orderID);
+        Order orderPersisted = orderRepository.findOrderByOrderID(order.getOrderID());
 
         //assert if instance retrieved from database equals the original
-        assertEquals(true, order.equals(orderPersisted));
+        assertEquals(order.getOrderID(), orderPersisted.getOrderID());
     }
 }

@@ -11,7 +11,7 @@ import java.sql.Time;
 
 public class ShipmentDto {
 
-    private String shipmentID;
+    private int shipmentID;
     private ShipmentStatus shipmentInfo;
     private Date estimatedDateOfArrival;
     private Time estimatedTimeOfArrival;
@@ -25,7 +25,7 @@ public class ShipmentDto {
 
     }
 
-    public ShipmentDto(String shipmentID, ShipmentStatus shipmentInfo, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, OrderDto order, AddressDto address, boolean shipmentMethodIsDelivery){
+    public ShipmentDto(int shipmentID, ShipmentStatus shipmentInfo, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, OrderDto order, AddressDto address, boolean shipmentMethodIsDelivery){
         this.shipmentID = shipmentID;
         this.shipmentInfo = shipmentInfo;
         this.estimatedDateOfArrival = estimatedDateOfArrival;
@@ -52,11 +52,7 @@ public class ShipmentDto {
         return this.shipmentMethodIsDelivery;
     }
 
-    public void setShipmentID(String value) {
-        this.shipmentID = value;
-    }
-
-    public String getShipmentID() {
+    public Integer getShipmentID() {
         return this.shipmentID;
     }
 

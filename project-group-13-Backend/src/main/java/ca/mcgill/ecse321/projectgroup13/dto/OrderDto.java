@@ -7,7 +7,7 @@ import java.util.Set;
 public class OrderDto{
 
     private double totalAmount;
-    private String orderID;
+    private int orderID;
     private OrderStatus orderStatus;
     private Set<ArtworkDto> artwork;
     private UserDto user;
@@ -18,7 +18,7 @@ public class OrderDto{
 
     }
 
-    public OrderDto(double totalAmount, String orderID, OrderStatus orderStatus, Set<ArtworkDto> artwork, UserDto user, PaymentDto payment, Set<ShipmentDto> shipment){
+    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, UserDto user, PaymentDto payment, Set<ShipmentDto> shipment){
         this.totalAmount = totalAmount;
         this.orderID = orderID;
         this.orderStatus = orderStatus;
@@ -60,7 +60,7 @@ public class OrderDto{
 //        this.orderID = value;
 //    }
 
-    public String getOrderID() {
+    public int getOrderID() {
         return orderID;
     }
 
