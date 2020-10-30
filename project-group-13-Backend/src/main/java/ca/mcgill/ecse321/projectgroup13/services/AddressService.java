@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,23 +49,59 @@ public class AddressService {
 		return address;
 	}
 	
+	//Get User of Address By ID
+	@Transactional
+	public User getUserOfShipement(String addressID) {
+		Address address = addressRepo.findAddressByAddressID(addressID);
+		User user = address.getUser();
+		return user;
+	}
+	
 	// Get Address by ID
 	@Transactional
-	public Address getAddress(String addressID) {
+	public Address getAddressById(String addressID) {
+		
+		if(addressID == null) {
+			throw new IllegalArgumentException("You must input an ID");
+		}
+		
+		
 		Address address = addressRepo.findAddressByAddressID(addressID);
-		return address;
+		
+		if(address != null) {
+			return address;
+		} else {
+			throw new IllegalArgumentException("Address not found");
+		}
+		
 	}
+	
+	
+//	//Delete Address
+//	@Transactional
+//	public boolean deleteAddress
+//	
 	
 	// Get Addresses of User
 	@Transactional
-	public List<Address> getAddressesOfUser(User user) {
+	public List<Address> getAddressesByUserID(Integer userID) {
 		
-		@Query("SELECT ")
+		User user = userRepo.findUserById(userID);
 		
-		List<Address> addressByPerson = new ArrayList<>();
+		if(user != null) {
+			List<Address> addresses = addressRepo.findAddressesByUser(user);
+			return addresses;
+		} else {
+			throw new IllegalArgumentException("No user with this ID found");
+		}
 		
-		for(User user : addressRepo.find)
 		
+//		@Query("SELECT ")
+//		
+//		List<Address> addressByPerson = new ArrayList<>();
+//		
+//		for(User user : addressRepo.find)
+//		
 		//Set<Address> addresses = new HashSet<Address>();
 		
 		//for(Address address: addressRepo.findAddressByAddressID())

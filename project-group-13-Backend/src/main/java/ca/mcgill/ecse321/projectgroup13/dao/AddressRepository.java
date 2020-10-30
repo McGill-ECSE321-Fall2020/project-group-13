@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface AddressRepository extends CrudRepository<Address, Long>{
 
+	List<Address> findAddressesByUser(User user);
 	User findUserByAddressID(Integer id);
     Address findAddressByAddressID(String tits);
     List<Address> findAddressesByCity(String city);
