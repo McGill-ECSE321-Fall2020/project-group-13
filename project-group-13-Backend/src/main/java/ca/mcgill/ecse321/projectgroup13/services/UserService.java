@@ -58,38 +58,42 @@ public class UserService {
 //     *
 //     */
 //
-//    public UserDto createUser(UserDto user) throws RegistrationException {
-//        //must verify that no other user is associated with the same email
-//        if(userRepository.findUserByEmail(user.getEmail()) != null) throw new RegistrationException("Email already in use");
-//        //make sure Username is unique
-//        if(userRepository.findUserByUsername(user.getUsername())!=null)  throw new RegistrationException("Username already in use");
-//        //invalid password -- password must contain at least one letter and one number
-//        String password = user.getPassword();
-//        if(!password.matches(".*\\d.*") || !password.matches(".*[A-z].*")) throw new  RegistrationException("invalid password entered, contain number and letter");
-//
-//        //ALL CONDITIONS HAVE PASSED
-//        User newUser = initializeUser(user);
-//
-//
-//        userRepository.save(newUser);
-//        cartRepository.save(newUser.getCart());
-//        return userToDto(newUser);
-//    }
 
-
-    //created this for testing purposes (commented out jake's work temporarily)
     @Transactional
-    public User createUser(String username) {
+    public User createUser(String username, String email, String password) throws RegistrationException {
         User user = new User();
+        //must verify that no other user is associated with the same email
+        if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+        //make sure Username is unique
+        if(userRepository.findUserByUsername(username) !=  null)  throw new RegistrationException("Username already in use");
+        //invalid password -- password must contain at least one letter and one number
+        if(!password.matches(".*\\d.*") || !password.matches(".*[A-z].*")) throw new  RegistrationException("invalid password entered, contain number and letter");
+
+        //ALL CONDITIONS HAVE PASSED
         user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        userRepository.save(user);
+        //cartRepository.save(user.getCart());
         return user;
     }
+
+
+//    //created this for testing purposes (commented out jake's work temporarily)
+//    @Transactional
+//    public User createUser(String username) {
+//        User user = new User();
+//        user.setUsername(username);
+//        return user;
+//    }
+
 
 
 //    public boolean deleteUser(String username) throws RegistrationException {
 //        User user = userRepository.findUserByUsername(username);
 //        if(user==null) throw new RegistrationException("User does not exist");
 //    }
+
 
 
     //To reset user password
@@ -121,25 +125,6 @@ public class UserService {
 //
 //    
 //    }
-
-    //must fix maybe?
-    //helper
-    private static User initializeUser(UserDto user) {
-        User newUser = new User();
-        //set parameters of user
-        newUser.setUsername(user.getUsername());
-    
-        newUser.setEmail(user.getEmail());
-        newUser.setPassword( user.getPassword());
-        //should I add the cart also? give user a cart
-        Cart cart = new Cart();
-        cart.setUser(newUser);
-        //cart.setCartID(newUser.getUsername() + "cart");   need to be changer since ID type is now Integer
-
-        return newUser;
-    }
-
-
 
 
 }

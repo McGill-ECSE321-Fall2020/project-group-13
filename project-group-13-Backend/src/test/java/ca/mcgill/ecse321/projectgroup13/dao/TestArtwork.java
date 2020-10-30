@@ -37,7 +37,7 @@ public class TestArtwork {
     // this is to clear database prior to every run
        
     /**
-     *  Deletes all information from addressRepository, artoworkRepository and
+     *  Deletes all information from addressRepository, artworkRepository and
      *  userRepository
      */
     

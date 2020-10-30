@@ -141,16 +141,16 @@ public class ProjectGroup13Controller {
 
 
 
-	/**
-	 * RESTful service to create a person
-	 * @param name
-	 * @return shipment dto
-	 */
-	@PostMapping(value = { "/person/{name}", "/person/{name}/" })
-	public UserDto createPerson(@PathVariable("name") String name) throws IllegalArgumentException {
-		User user = userService.createUser(name);
-		return convertToDto(user);
-	}
+//	/**
+//	 * RESTful service to create a person
+//	 * @param name
+//	 * @return shipment dto
+//	 */
+//	@PostMapping(value = { "/person/{name}", "/person/{name}/" })
+//	public UserDto createPerson(@PathVariable("name") String name) throws IllegalArgumentException {
+//		User user = userService.createUser(name);
+//		return convertToDto(user);
+//	}
 
 
 
