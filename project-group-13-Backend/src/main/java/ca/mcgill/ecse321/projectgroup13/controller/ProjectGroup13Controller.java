@@ -11,6 +11,7 @@ import ca.mcgill.ecse321.projectgroup13.dto.*;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
+import ca.mcgill.ecse321.projectgroup13.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,8 @@ public class ProjectGroup13Controller {
 	private ShipmentService shipmentService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private UserService userService;
 
 	
 	private PaymentDto convertToDto(Payment e) {
@@ -138,11 +141,24 @@ public class ProjectGroup13Controller {
 
 
 
+	/**
+	 * RESTful service to create a person
+	 * @param name
+	 * @return shipment dto
+	 */
+	@PostMapping(value = { "/person/{name}", "/person/{name}/" })
+	public UserDto createPerson(@PathVariable("name") String name) throws IllegalArgumentException {
+		User user = userService.createUser(name);
+		return convertToDto(user);
+	}
+
+
 
 	@GetMapping(value = { "/payments", "/payments/" })
 	public List<PaymentDto> getAllPayments() {
 		return paymentService.getAllPayments().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
+
 
 	@PostMapping(value = { "/pay", "/pay/" })
 	public PaymentDto PayForOrder(@RequestParam(name="card") double cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="order") OrderDto orderDto) throws IllegalArgumentException {
@@ -150,6 +166,20 @@ public class ProjectGroup13Controller {
 		Payment payment = paymentService.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
 		return convertToDto(payment);
 	}
+
+
+//	/**
+//	 * RESTful service that gets all shipments in database
+//	 * @return DTO shipments
+//	 */
+//	@GetMapping(value = { "/shipments", "/shipments/"})
+//	public Set<ShipmentDto> getAllShipments(){
+//		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+//		for(Shipment shipment : shipmentService.getAllShipments()) {
+//			shipmentsDto.add(convertToDto(shipment));
+//		}
+//		return shipmentsDto;
+//	}
 
 
 	/**
