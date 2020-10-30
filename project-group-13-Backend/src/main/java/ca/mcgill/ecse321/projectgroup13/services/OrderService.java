@@ -66,7 +66,7 @@ public class OrderService {
 		newOrder.setOrderStatus(OrderStatus.PaymentPending);
 		newOrder.setUser(user);
 		newOrder.setArtwork(art);
-		
+		updateTotal(newOrder);
 		newOrder = orderRepository.save(newOrder);
 		return newOrder;
 	}

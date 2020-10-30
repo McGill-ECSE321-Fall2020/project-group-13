@@ -144,12 +144,12 @@ public class ProjectGroup13Controller {
 		return paymentService.getAllPayments().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
 
-//	@PostMapping(value = { "/pay", "/pay/" })
-//	public PaymentDto PayForOrder(@RequestParam(name="card") double cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="order") OrderDto orderDto) throws IllegalArgumentException {
-//		Order order = service.getOrder(orderDto.getOrderID());
-//		Payment payment = service.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
-//		return convertToDto(payment);
-//	}
+	@PostMapping(value = { "/pay", "/pay/" })
+	public PaymentDto PayForOrder(@RequestParam(name="card") double cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="order") OrderDto orderDto) throws IllegalArgumentException {
+		Order order = orderService.getOrder(orderDto.getOrderID());
+		Payment payment = paymentService.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
+		return convertToDto(payment);
+	}
 
 
 	/**
