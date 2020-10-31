@@ -18,53 +18,41 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import ca.mcgill.ecse321.projectgroup13.services.exception.*;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
-//import org.passay.CharacterRule;
-//import org.passay.EnglishCharacterData;
-//import org.passay.LengthRule;
-//import org.passay.PasswordData;
-//import org.passay.PasswordValidator;
-//import org.passay.Rule;
-//import org.passay.RuleResult;
-//import org.passay.WhitespaceRule;
-@Service
+
 
 /**
  * Service to handle login and creation of user account.
  */
+@Service
 public class UserService {
 
-    /**
-	 * Create userDTO from user obj input
-	 * @param user user object
-	 * @return dto object
-	 */
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private CartRepository cartRepository;
 
-//	public static UserDto userToDto(User user) {
-//		UserDto userDto = new UserDto();
-//		userDto.setEmail(user.getEmail());
-//		userDto.setUsername(user.getUsername());
-//        //userDto.setUserType(user.getUserType());
-//		return userDto;
-//	}
-//
-//    /**
-//     * If we are given valid user params, go ahead and create a user, otherwise throws an exception
-//     *
-//     */
-//
 
+    /**
+     * service method to create a new user
+     * @param username
+     * @param email
+     * @param password
+     * @return user
+     * @throws RegistrationException
+     */
     @Transactional
     public User createUser(String username, String email, String password) throws RegistrationException {
         User user = new User();
-        //must verify that no other user is associated with the same email
-        if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+        //checking if email syntax is valid
+        if(checkIfValidEmail(email) == true){
+            //must verify that no other user is associated with the same email
+            if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+        }else{
+            throw new RegistrationException("Invalid Email");
+        }
         //make sure Username is unique
         if(userRepository.findUserByUsername(username) !=  null)  throw new RegistrationException("Username already in use");
         //invalid password -- password must contain at least one letter and one number
@@ -93,35 +81,101 @@ public class UserService {
     }
 
 
-    //To reset user password
+    /**
+     * service method to edit user email
+     * @param username
+     * @param newEmail
+     * @throws RegistrationException
+     */
     @Transactional
-    public String resetPassword(String username) throws RegistrationException {
+    public void editEmail(String username, String newEmail) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
-        if(user == null) throw new RegistrationException("No user found");
-        //String tmpPassword = randomPassword();  //MUST COMPLETE IMPLEMENTATION
-        String tmpPassword = "Mister1";
-        user.setPassword(tmpPassword);
-        return tmpPassword;
+        if(checkIfValidEmail(newEmail) == true){
+            //must verify that no other user is associated with the same email
+            if(userRepository.findUserByEmail(newEmail) != null) {
+                throw new RegistrationException("Email already in use");
+            }else{
+                user.setEmail(newEmail);
+                userRepository.save(user);
+            }
+        }else{
+            throw new RegistrationException("Invalid Email");
+        }
     }
 
 
-    //HELPER METHODS BELOW
-    //must test this not sure if it works
-//    private String randomPassword(){
-//        
-//        PasswordGenerator generator = new PasswordGenerator();
-//        CharacterData digit = EnglishCharacterData.Digit;
-//        CharacterData upperCaseChars= EnglishCharacterData.UpperCase, lowerCaseChars = EnglishCharacterData.UpperCase;
-//        
-//        //set first rule
-//        lowerCaseRule.setNumberOfCharacters(4);
-//        upperCaseRule.setNumberOfCharacters(2);
-//        digit.setNumberOfCharacters(3);
-//        String password = generator.generatePassword(10, upperCaseRule, lowerCaseRule, digitRule);
-//
-//
-//    
+    /**
+     * service method to edit user bio
+     * @param username
+     * @param newBio
+     */
+    @Transactional
+    public void editBio(String username, String newBio){
+        User user = userRepository.findUserByUsername(username);
+        user.setBio(newBio);
+        userRepository.save(user);
+    }
+
+
+    /**
+     * service method to edit profile picture of user
+     * @param username
+     * @param newUrl
+     */
+    @Transactional
+    public void editProfilePictureUrl(String username, String newUrl){
+        User user = userRepository.findUserByUsername(username);
+        user.setProfilePictureURL(newUrl);
+        userRepository.save(user);
+    }
+
+
+    /**
+     * Generates a strong temporary password to be used in case of password reset.
+     *
+     * @return randomly generated password
+     */
+    public String generateRandomPassword() {
+        String upperCaseLetters = RandomStringUtils.random(1, 65, 90, true, true);
+        String lowerCaseLetters = RandomStringUtils.random(1, 97, 122, true, true);
+        String numbers = RandomStringUtils.randomNumeric(1);
+        String totalChars = RandomStringUtils.randomAlphanumeric(6);
+        String combinedChars = upperCaseLetters.concat(lowerCaseLetters).concat(numbers).concat(totalChars);
+        List<Character> pwdChars = combinedChars.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+        Collections.shuffle(pwdChars);
+        return pwdChars.stream().collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString();
+    }
+
+
+
+//    //To reset user password
+//    @Transactional
+//    public String resetPassword(String username) throws RegistrationException {
+//        User user = userRepository.findUserByUsername(username);
+//        if(user == null) throw new RegistrationException("No user found");
+//        //String tmpPassword = randomPassword();  //MUST COMPLETE IMPLEMENTATION
+//        String tmpPassword = "Mister1";
+//        user.setPassword(tmpPassword);
+//        return tmpPassword;
 //    }
 
 
+
+
+    //*************** HELPER METHODS ***************//
+
+
+    /*
+     * Checks for a valid email using regex from
+     * https://stackoverflow.com/questions/8204680/java-regex-email
+     *
+     */
+    private boolean checkIfValidEmail(String email) {
+        Pattern VALID_EMAIL_ADDRESS_REGEX =
+                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+
+        return !matcher.find();
+    }
 }
