@@ -12,7 +12,7 @@ import java.util.Set;
 public interface ShipmentRepository extends CrudRepository<Shipment, Long>{
     Shipment findShipmentByShipmentID(int shipmentID);
     Set<Shipment> findAll();
-    //Shipment findShipmentByOrder(Order order);
-    Set<Shipment> findShipmentsByOrder(Order order);
+    Shipment findShipmentByOrder(Order order);
+    //Set<Shipment> findShipmentsByOrder(Order order);
     //Set<Shipment> findShipmentByUser(User user);
 }

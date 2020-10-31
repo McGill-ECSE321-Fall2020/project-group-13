@@ -55,32 +55,35 @@ public class ShipmentService {
         return user;
     }
 
-    //get all shipments of a single order since one order could have different shipments (e.g multiple items...)
-    @Transactional
-    public Set<Shipment> getShipmentsOfOrder(Order order) {
-        Set<Shipment> shipments = new HashSet<Shipment>();
-        for (Shipment shipment : shipmentRepo.findShipmentsByOrder(order)) {
-            shipments.add(shipment);
-        }
-        return shipments;
-    }
+    //TODO:change to shipment instead of Set<Shipment>
+//    //get all shipments of a single order since one order could have different shipments (e.g multiple items...)
+//    @Transactional
+//    public Set<Shipment> getShipmentsOfOrder(Order order) {
+//        Set<Shipment> shipments = new HashSet<Shipment>();
+//        for (Shipment shipment : shipmentRepo.findShipmentsByOrder(order)) {
+//            shipments.add(shipment);
+//        }
+//        return shipments;
+//    }
 
 
+    
+  //TODO:change to shipment instead of Set<Shipment>
     /**
      * service method to get all the shipments of a user
      * @param user
      * @return dto shipments
      */
-    @Transactional
-    public Set<Shipment> getShipmentsOfUser(User user) {
-        Set<Shipment> shipments = new HashSet<Shipment>();
-        for (Order order : orderRepo.findOrdersByUser(user)) {
-            for (Shipment shipment : shipmentRepo.findShipmentsByOrder(order)) {
-                shipments.add(shipment);
-            }
-        }
-        return shipments;
-    }
+//    @Transactional
+//    public Set<Shipment> getShipmentsOfUser(User user) {
+//        Set<Shipment> shipments = new HashSet<Shipment>();
+//        for (Order order : orderRepo.findOrdersByUser(user)) {
+//            for (Shipment shipment : shipmentRepo.findShipmentsByOrder(order)) {
+//                shipments.add(shipment);
+//            }
+//        }
+//        return shipments;
+//    }
 
 
     /**

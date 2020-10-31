@@ -12,13 +12,13 @@ public class OrderDto{
     private Set<ArtworkDto> artwork;
     private UserDto user;
     private PaymentDto payment;
-    private Set<ShipmentDto> shipment;
+    private ShipmentDto shipment;
 
     public OrderDto() {
 
     }
 
-    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, UserDto user, PaymentDto payment, Set<ShipmentDto> shipment){
+    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, UserDto user, PaymentDto payment, ShipmentDto shipment){
         this.totalAmount = totalAmount;
         this.orderID = orderID;
         this.orderStatus = orderStatus;
@@ -82,7 +82,7 @@ public class OrderDto{
 //    }
 
 
-    public Set<ShipmentDto> getShipment() {
+    public ShipmentDto getShipment() {
         return shipment;
     }
 

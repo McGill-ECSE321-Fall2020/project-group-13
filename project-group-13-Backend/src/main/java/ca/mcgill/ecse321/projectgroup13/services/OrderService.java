@@ -98,12 +98,9 @@ public class OrderService {
 		order.setPayment(null);
 		
 		//remove order and shipments association
-		List<Shipment> shipments = toList(order.getShipment());
-		for (Shipment s: shipments) {
-			//TODO: delete shipment
-			
-		}
-		b = b && order.getShipment().removeAll(shipments);
+		Shipment shipment = order.getShipment();
+		//TODO: delete shipment
+		order.setShipment(null);
 		
 		//remove order and user association
 		User user = order.getUser();
@@ -171,7 +168,7 @@ public class OrderService {
 	 * addShipmentToOrder
 	 * TODO: shipment has one to one relationship with artwork in order, but there is no way to know which is for which.
 	*/
-	public void addShipmentToOrder(Order order, Set<Shipment> shipment) {
+	public void addShipmentToOrder(Order order, Shipment shipment) {
 		order.setShipment(shipment);
 		if (order.getOrderStatus().equals(OrderStatus.Placed))
 			order.setOrderStatus(OrderStatus.Shipped);

@@ -55,10 +55,7 @@ public class ProjectGroup13Controller {
 			artworksDto.add(convertToDto(artwork));
 		}
 
-		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-		for (Shipment shipment : order.getShipment()) {
-			shipmentsDto.add(convertToDto(shipment));
-		}
+		ShipmentDto shipmentsDto = convertToDto(order.getShipment());
 
 		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getUser()), convertToDto(order.getPayment()), shipmentsDto);
 		return dto;

@@ -106,7 +106,6 @@ final int prime = 31;
    	result = prime * result + ((bio == null) ? 0 : bio.hashCode());
    	result = prime * result + ((cart == null) ? 0 : cart.hashCode());
    	result = prime * result + ((email == null) ? 0 : email.hashCode());
-   	result = prime * result + (isAdmin ? 1231 : 1237);
    	result = prime * result + ((order == null) ? 0 : order.hashCode());
    	result = prime * result + ((password == null) ? 0 : password.hashCode());
    	result = prime * result + ((profilePictureURL == null) ? 0 : profilePictureURL.hashCode());
@@ -143,8 +142,6 @@ if (this == obj)
    			return false;
    	} else if (!email.equals(other.email))
    		return false;
-   	if (isAdmin != other.isAdmin)
-   		return false;
    	if (order == null) {
    		if (other.order != null)
    			return false;
@@ -171,7 +168,7 @@ if (this == obj)
 public String toString() {
 	return "User [username=" + username + ", password=" + password + ", email=" + email + ", profilePictureURL="
 			+ profilePictureURL + ", artwork=" + artwork + ", address=" + address + ", order=" + order + ", cart="
-			+ cart + ", bio=" + bio + ", isAdmin=" + isAdmin + "]";
+			+ cart + ", bio=" + bio + "]";
 }
 
 	

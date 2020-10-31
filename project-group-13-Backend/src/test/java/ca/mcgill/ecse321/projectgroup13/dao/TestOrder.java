@@ -82,7 +82,6 @@ TestOrder {
 	    double totalAmount = 10000.3;
 	    OrderStatus orderStatus = OrderStatus.PaymentPending;
 	    Set<Artwork> OrderArtworks = new HashSet<>();
-	    Set<Shipment> shipments= new HashSet<>();
 	    
 	    //set user parameters
 	    user.setUsername(username);
@@ -106,7 +105,7 @@ TestOrder {
 	    //order.setOrderID(orderID);
 	    order.setOrderStatus(orderStatus);
 	    order.setPayment(null);
-	    order.setShipment(shipments);
+	    order.setShipment(null);
 	    order.setTotalAmount(totalAmount);
 	    order.setUser(user);
 	    

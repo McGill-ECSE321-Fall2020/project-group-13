@@ -34,15 +34,14 @@ public void setPayment(Payment payment) {
    this.payment = payment;
 }
 
-private Set<Shipment> shipment;
-
-@OneToMany(mappedBy="order", cascade={CascadeType.ALL})
-public Set<Shipment> getShipment() {
+private Shipment shipment;
+@OneToOne(mappedBy="order", cascade={CascadeType.ALL})
+public Shipment getShipment() {
    return this.shipment;
 }
 
-public void setShipment(Set<Shipment> shipments) {
-   this.shipment = shipments;
+public void setShipment(Shipment shipment) {
+   this.shipment = shipment;
 }
 
 private Integer orderID;

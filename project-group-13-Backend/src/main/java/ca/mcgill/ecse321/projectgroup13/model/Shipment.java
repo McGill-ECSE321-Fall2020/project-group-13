@@ -1,19 +1,20 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
+import java.sql.Date;
+import java.sql.Time;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
-import java.sql.Date;
 import javax.persistence.Id;
-import java.sql.Time;
-import ca.mcgill.ecse321.projectgroup13.model.ShipmentStatus;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Shipment{
 private Order order;
 
-@ManyToOne(optional=false)
+@OneToOne(optional=false)
 public Order getOrder() {
    return this.order;
 }
