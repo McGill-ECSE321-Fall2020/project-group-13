@@ -156,10 +156,10 @@ public class UserService {
     /**
      * Create token upon login, and set it for corresponding user
      * 
-     * @param User user
+     * @param user
      * @return String token 
      */
-    public String createToken( User user){
+    public String createToken(User user){
     	String token = UUID.randomUUID().toString();
     	user.setApiToken(token);
     	userRepository.save(user);

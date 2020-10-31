@@ -108,7 +108,8 @@ public class TestArtwork {
     	initializeDatabase();
     	//System.out.println(userRepository.findUserByUsername("Julius Cesar Arnouk"));
     	User artist = userRepository.findUserByUsername("Julius Cesar Arnouk");
-    	Artwork artwork = artworkRepository.findArtworkByArtist(artist); //test search using foreign keys
+    	Set<Artwork> artworks = artworkRepository.findArtworkByArtist(artist); //test search using foreign keys
+		Artwork artwork = artworks.iterator().next();
     	assertNotNull(artwork); // test reference of object
     	assertEquals(artwork.getTitle(),"Beauty"); // test attribute of object
     	assertNotNull(artwork.getArtworkID());

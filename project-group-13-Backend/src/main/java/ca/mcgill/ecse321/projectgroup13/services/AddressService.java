@@ -101,7 +101,7 @@ public class AddressService {
 	/**
 	 * GET all addresses given userID
 	 * 
-	 * @param userID
+	 * @param user
 	 * @return
 	 */
 	
@@ -126,7 +126,9 @@ public class AddressService {
 	 */
 	
 	@Transactional
-	public boolean deleteAddress(Address address) {
+	public boolean deleteAddress(int addressId) {
+
+		Address address = addressRepo.findAddressByAddressID(addressId);
 		
 		//Removing user association
 		User addressUser = address.getUser();
