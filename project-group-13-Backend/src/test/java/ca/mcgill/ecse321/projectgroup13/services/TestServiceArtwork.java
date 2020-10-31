@@ -78,24 +78,10 @@ public class TestServiceArtwork {
 	        });
 		 
 		 
-		 
 	 }
 	 
 	 
 	 
-//	 @Test
-//	 public void testNullWorthCreateArtwork() {
-//		 Artwork artwork=null;
-//		 String message;
-//		 try {
-//			 //TODO
-//			// artwork = artworkService.createArtwork();
-//		 } catch (illegalArgumentException e) {
-//			 message = e.getMessage();
-//		 }
-//		 assertNull(artwork);
-//		 assertEquals(message, "error: no worth added to artwork");
-//	 }
 	 
 	 @Test
 	 public void testNullNameCreateArtwork() {

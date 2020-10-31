@@ -10,10 +10,11 @@ import java.util.Set;
 
 public interface ArtworkRepository extends CrudRepository<Artwork, Long>{
 
-    Artwork findArtworkByTitle(String title);
-    Artwork findArtworkByArtist(User artist);
-    Artwork findArtworkByArtworkID(Integer artworkID);
+    Set<Artwork> findArtworkByArtist(User artist);
+    Set<Artwork> findArtworkByArtist(String username);
+    Artwork findArtworkByArtworkID(int artworkID);
     Set<Artwork> findByArtist(User Artist);
     //Set<Artwork> findArtworkByArtistUsername(Set<String> artistsID);
+    void deleteArtworkByArtworkID(int artworkID);
 
 }
