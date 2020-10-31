@@ -8,7 +8,7 @@ import ca.mcgill.ecse321.projectgroup13.dto.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.projectgroup13.model.*;
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -34,9 +35,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    //TODO must implement password encoder, was causing errors
+    //@Autowired
+    //private PasswordEncoder passwordEncoder;
 
     /**
      * service method to create a new user
@@ -64,7 +65,9 @@ public class UserService {
         //ALL CONDITIONS HAVE PASSED
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        //TODO implement the encoder -- was causing errors
+        //user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
         userRepository.save(user);
         return user;
     }
@@ -108,7 +111,17 @@ public class UserService {
         }
     }
 
-
+    @Transactional
+    public String login(LoginDto loginDto) throws LoginException {
+    	//must validate login information
+    	//check if username exists
+    	User user = userRepository.findUserByUsername(loginDto.getUsername());
+    	if (user!=null ) throw new LoginException("invalid username");
+    	//TODO must implement the password encoder
+    	//if (user.getPassword()!=passwordEncoder.encode(loginDto.getPassword())) throw new LoginException("invalid password");
+    	if (user.getPassword()!=loginDto.getPassword()) throw new LoginException("invalid password");
+    	return createToken(loginDto);
+    }
     /**
      * service method to edit user bio
      * @param username
@@ -138,6 +151,16 @@ public class UserService {
    // @Transactional
     //public void editPassword(String username, )
 
+    /**
+     * Create token upon login, and set it for corresponding user
+     * 
+     * @param String username
+     * @return String token 
+     */
+    public String createToken( LoginDto loginDto){
+    	
+    	return "abcd";
+    }
 
     /**
      * Generates a strong temporary password to be used in case of password reset.
