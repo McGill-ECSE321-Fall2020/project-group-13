@@ -60,6 +60,16 @@ public class ArtworkService {
 
 
     /**
+     * service method to delete given artwork from database
+     * @param artworkId
+     */
+    @Transactional
+    public void deleteArtworkById(int artworkId){
+        artworkRepo.deleteArtworkByArtworkID(artworkId);
+    }
+
+
+    /**
      * service method to return artwork given ID
      * @param artworkID
      * @return
@@ -77,8 +87,10 @@ public class ArtworkService {
      * @return
      */
     @Transactional
-    public Set<Artwork> getArtworksOfUser(String username){
+    public Set<Artwork> getArtworksOfArtist(String username){
         User user = userRepo.findUserByUsername(username);
+        if (user == null)
+            throw new IllegalArgumentException("Artist does not exist");
         Set<Artwork> artworks = artworkRepo.findArtworkByArtist(username);
         return artworks;
     }
@@ -94,6 +106,9 @@ public class ArtworkService {
     public void editArtworkDescription(Artwork artwork, String description){
         artwork.setDescription(description);
     }
+
+
+
 
 
 
