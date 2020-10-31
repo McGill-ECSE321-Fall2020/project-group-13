@@ -97,14 +97,6 @@ this.bio = value;
 public String getBio() {
 return this.bio;
     }
-private boolean isAdmin;
-
-public void setIsAdmin(boolean value) {
-this.isAdmin = value;
-    }
-public boolean isIsAdmin() {
-return this.isAdmin;
-    }
 @Override
 public int hashCode ()
 {
