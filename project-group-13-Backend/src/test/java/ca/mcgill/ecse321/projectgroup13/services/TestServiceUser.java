@@ -113,6 +113,81 @@ public class TestServiceUser {
 			assertEquals("invalid password", e.getMessage());
 		}
 	}
+	@Test
+	public void testCreateNoUsername() {
+		UserDto userDto = new UserDto(); 
+		userDto.setUsername("");
+		userDto.setPassword(USER_PASSWORD2);
+		userDto.setEmail(USER_EMAIL2);
+		User newUser = null; 
+		try {
+			newUser = userService.createUser(userDto);
+		} catch (RegistrationException e) {
+			assertNull(newUser);
+			assertEquals("invalid username", e.getMessage());
+		}
+	}
+	@Test	
+	public void testCreateInvalidEmail() {
+		
+		String email = "jokesOnYou";
+		UserDto userDto = new UserDto(); 
+		userDto.setUsername(USERNAME2);
+		userDto.setPassword(USER_PASSWORD2);
+		userDto.setEmail(email);
+		User newUser = null; 
+		try {
+			newUser = userService.createUser(userDto);
+		} catch (RegistrationException e) {
+			assertNull(newUser);
+			assertEquals("invalid email", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testChangePasswordToInvalid() {
+		
+		
+	}
+	
+	@Test
+	public void testChangePasswordToEmpty() {
+		
+		
+	}
+	
+	@Test
+	public void testResetPasswordGenerated() {
+		
+		
+	}
+	
+	@Test
+	public void testPasswordNoNumber() {
+		
+		
+	}
+	
+	@Test
+	public void testPasswordNoAlphabet() {
+		
+		
+	}
+	
+	@Test
+	public void testDeleteInvalidUser() {
+		
+		
+	}
+	
+	@Test
+	public void testEditDescription() {
+		
+		
+	}
+		
+		
+	
 	
 }
 
