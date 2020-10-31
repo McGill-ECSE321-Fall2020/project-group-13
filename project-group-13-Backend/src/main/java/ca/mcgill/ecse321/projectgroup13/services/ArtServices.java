@@ -45,7 +45,7 @@ public class ArtServices {
     
     //TODO: when payment sets order, order should also set payment
     @Transactional
-	public Payment createPayment(double cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) {
+	public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) {
 		Payment payment = new Payment();
 		payment.setTotalAmount(order.getTotalAmount());
 		payment.setPaymentDate(new Date(System.currentTimeMillis()));

@@ -18,7 +18,7 @@ public Order getOrder() {
 }
 
 public void setOrder(Order order) {
-   this.order = order;
+   this.order = order; 
 }
 
 private double totalAmount;
@@ -29,12 +29,12 @@ this.totalAmount = value;
 public double getTotalAmount() {
 return this.totalAmount;
     }
-private double cardNumber;
+private long cardNumber;
 
-public void setCardNumber(double value) {
+public void setCardNumber(long value) {
 this.cardNumber = value;
     }
-public double getCardNumber() {
+public long getCardNumber() {
 return this.cardNumber;
     }
 /**

@@ -161,7 +161,7 @@ public class ProjectGroup13Controller {
 
 
 	@PostMapping(value = { "/pay", "/pay/" })
-	public PaymentDto PayForOrder(@RequestParam(name="card") double cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="order") OrderDto orderDto) throws IllegalArgumentException {
+	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="order") OrderDto orderDto) throws IllegalArgumentException {
 		Order order = orderService.getOrder(orderDto.getOrderID());
 		Payment payment = paymentService.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
 		return convertToDto(payment);
