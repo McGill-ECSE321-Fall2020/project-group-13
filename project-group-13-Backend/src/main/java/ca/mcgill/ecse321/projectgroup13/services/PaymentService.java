@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 //TODO: Change name to PaymentService
 @Service
-public class ArtServices {
+public class PaymentService {
 	public <T> List<T> toList(Iterable<T> iterable) {
         List<T> resultList = new ArrayList<T>();
         for (T t : iterable) {

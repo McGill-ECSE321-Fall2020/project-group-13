@@ -17,6 +17,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import ca.mcgill.ecse321.projectgroup13.services.exception.*;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
@@ -74,26 +75,22 @@ public class UserService {
         user.setEmail(email);
         user.setPassword(password);
         userRepository.save(user);
-        //cartRepository.save(user.getCart());
         return user;
     }
 
 
-//    //created this for testing purposes (commented out jake's work temporarily)
-//    @Transactional
-//    public User createUser(String username) {
-//        User user = new User();
-//        user.setUsername(username);
-//        return user;
-//    }
-
-
-
-//    public boolean deleteUser(String username) throws RegistrationException {
-//        User user = userRepository.findUserByUsername(username);
-//        if(user==null) throw new RegistrationException("User does not exist");
-//    }
-
+    /**
+     * service method to delete a certain user from Database
+     * @param username
+     * @throws RegistrationException
+     */
+    @Transactional
+    public void deleteUser(String username) throws RegistrationException {
+        User user = userRepository.findUserByUsername(username);
+        if(user==null) throw new RegistrationException("User does not exist");
+        Set<Address> userAddresses = user.getAddress();
+        userRepository.delete(user);
+    }
 
 
     //To reset user password

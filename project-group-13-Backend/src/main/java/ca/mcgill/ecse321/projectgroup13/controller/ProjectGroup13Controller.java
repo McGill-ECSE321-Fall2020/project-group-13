@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.mcgill.ecse321.projectgroup13.services.ArtServices;
+import ca.mcgill.ecse321.projectgroup13.services.PaymentService;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class ProjectGroup13Controller {
 
 	@Autowired
-	private ArtServices paymentService;
+	private PaymentService paymentService;
 	@Autowired
 	private ShipmentService shipmentService;
 	@Autowired
