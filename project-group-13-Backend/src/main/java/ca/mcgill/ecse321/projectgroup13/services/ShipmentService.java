@@ -28,7 +28,18 @@ public class ShipmentService {
     //create a new shipment
     @Transactional
     public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery) {
-        Shipment shipment = new Shipment();
+    	if (address == null)
+			throw new IllegalArgumentException("address cannot be null");
+    	if (order == null)
+			throw new IllegalArgumentException("order cannot be null");
+    	if (status == null)
+			throw new IllegalArgumentException("status cannot be null or empty");
+    	if (estimatedDateOfArrival == null)
+			throw new IllegalArgumentException("estimatedDateOfArrival cannot be null");
+    	if (estimatedTimeOfArrival == null)
+			throw new IllegalArgumentException("estimatedTimeOfArrival cannot be null");
+    	
+    	Shipment shipment = new Shipment();
         
         try {
 			orderService.addShipmentToOrder(order, shipment);
