@@ -31,11 +31,24 @@ public class AddressService {
 	@Autowired
 	private AddressRepository addressRepo;
 	
-	// Address creation
+	/**
+	 * CREATE address object with provided address information and user object
+	 * 
+	 * @param user
+	 * @param streetAddress1
+	 * @param streetAddress2
+	 * @param city
+	 * @param province
+	 * @param country
+	 * @param postalCode
+	 * @return
+	 */
+	
 	@Transactional
 	public Address createAddress(User user, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		
 		Address address = new Address();
+		
 		address.setUser(user);
 		address.setStreetAddress1(streetAddress1);
 		address.setStreetAddress2(streetAddress2);
@@ -47,17 +60,28 @@ public class AddressService {
 		return address;
 	}
 	
-	//Get User of Address By ID
+	/**
+	 * GET the user object given the addressID
+	 * @param addressID
+	 * @return
+	 */
+	
 	@Transactional
-	public User getUserOfShipement(String addressID) {
+	public User getUserOfAddress(Integer addressID) {
 		Address address = addressRepo.findAddressByAddressID(addressID);
 		User user = address.getUser();
 		return user;
 	}
 	
-	// Get Address by ID
+	/**
+	 * GET address object given addressID
+	 * 
+	 * @param addressID
+	 * @return
+	 */
+	
 	@Transactional
-	public Address getAddressById(String addressID) {
+	public Address getAddressById(Integer addressID) {
 		
 		if(addressID == null) {
 			throw new IllegalArgumentException("You must input an ID");
@@ -74,35 +98,75 @@ public class AddressService {
 		
 	}
 	
+	/**
+	 * GET all addresses given userID
+	 * 
+	 * @param userID
+	 * @return
+	 */
 	
-//	//Delete Address
-//	@Transactional
-//	public boolean deleteAddress
-//	
-	
-	// Get Addresses of User
 	@Transactional
-	public List<Address> getAddressesByUsername(String username) {
+	public List<Address> getAddressesByUser(User user) {
 		
-		User user = userRepo.findUserByUsername(username);
-		
-		if(user != null) {
+		if(user == null) {
+			throw new IllegalArgumentException("No user with this ID found");
+			
+		} else {
 			List<Address> addresses = addressRepo.findAddressesByUser(user);
 			return addresses;
-		} else {
-			throw new IllegalArgumentException("No user with this ID found");
 		}
 		
-		
-//		@Query("SELECT ")
-//		
-//		List<Address> addressByPerson = new ArrayList<>();
-//		
-//		for(User user : addressRepo.find)
-//		
-		//Set<Address> addresses = new HashSet<Address>();
-		
-		//for(Address address: addressRepo.findAddressByAddressID())
 	}
+	
+	/**
+	 * DELETE address given an addressID
+	 * 
+	 * @param addressId
+	 * @return
+	 */
+	
+	@Transactional
+	public boolean deleteAddress(Address address) {
+		
+		//Removing user association
+		User addressUser = address.getUser();
+		
+		//Getting set of user addresses, remove address, set new list
+		Set<Address> addressUserAddresses = addressUser.getAddress();
+		addressUserAddresses.remove(address);
+		addressUser.setAddress(addressUserAddresses);
+		
+		//Deleting from repository
+		addressRepo.delete(address);
+		
+		return true;
+	}
+	
+	/**
+	 * UPDATE details of an existing address
+	 */
+	
+	@Transactional	
+	public void updateAddress(Address oldAddress, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
+	
+		//Preserving oldAddressID
+		int oldAddressID = oldAddress.getAddressID();
+	
+		//Deleting from repository
+		addressRepo.delete(oldAddress);
+		
+		//Creating updated address
+		Address address = new Address();
+		address.setAddressID(oldAddressID);
+		address.setStreetAddress1(streetAddress1);
+		address.setStreetAddress2(streetAddress2);
+		address.setCity(city);
+		address.setProvince(province);
+		address.setCountry(country);
+		address.setPostalCode(postalCode);
+		addressRepo.save(address);
+	}
+	
+	
 	
 }
