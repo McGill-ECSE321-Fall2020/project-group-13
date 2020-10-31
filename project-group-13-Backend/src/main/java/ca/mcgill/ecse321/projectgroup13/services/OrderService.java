@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.services;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +44,7 @@ public class OrderService {
 		return order;
 	}
 	
-	//TODO: How to differentiate between old and new orders (issue #84)
+
 	public List<Order> getOrdersFromUser(User user) {
 		if (user == null) {
 			throw new IllegalArgumentException("user cannot be null");
@@ -52,24 +53,31 @@ public class OrderService {
 		return order;
 	}
 	
-	//TODO: How to get most recent order (issue #84)
+
 	public Order getMostRecentOrder(User user) {
 		if (user == null) {
 			throw new IllegalArgumentException("user cannot be null");
 		}
 		List<Order> orders = toList(orderRepository.findOrdersByUser(user));
 		Order order = orders.get(0);
+		for (Order o : orders) {
+			if (order.getPayment().getPaymentDate().before(o.getPayment().getPaymentDate())) {
+				order = o;
+			}
+		}
 		return order;
 	}
 	
 	/**
 	 * createOrder
 	 * OrderStatus is PaymentPending when order is created.
-	 * TODO: Change SetOrderID to ensure that consecutive calls generate the same value
 	*/
 	public Order createOrder(User user, Set<Artwork> art) {
 		if (user == null) {
 			throw new IllegalArgumentException("user cannot be null");
+		}
+		if (art == null) {
+			throw new IllegalArgumentException("set<artwork> cannot be null");
 		}
 		Order newOrder = new Order();
 		newOrder.setOrderStatus(OrderStatus.PaymentPending);
@@ -79,6 +87,23 @@ public class OrderService {
 		newOrder = orderRepository.save(newOrder);
 		return newOrder;
 	}
+	/**
+	 * createOrder
+	 * OrderStatus is PaymentPending when order is created.
+	*/
+	public Order createOrder(User user) {
+		if (user == null) {
+			throw new IllegalArgumentException("user cannot be null");
+		}
+		Order newOrder = new Order();
+		newOrder.setOrderStatus(OrderStatus.PaymentPending);
+		newOrder.setUser(user);
+		newOrder.setArtwork(new HashSet<Artwork>());
+		newOrder.setTotalAmount(0);
+		newOrder = orderRepository.save(newOrder);
+		return newOrder;
+	}
+	
 	
 	
 	//deleteOrder
@@ -115,7 +140,7 @@ public class OrderService {
 	public boolean removeFromOrder(Order order, Artwork art) {
 		boolean b = order.getArtwork().remove(art);
 		updateTotal(order);
-		
+		orderRepository.save(order);
 		//TODO: update order in database
 		return b;
 	}
@@ -123,7 +148,7 @@ public class OrderService {
 	public boolean removeFromOrder(Order order, Set<Artwork> art) {
 		boolean b = order.getArtwork().removeAll(art);
 		updateTotal(order);
-		
+		orderRepository.save(order);
 		//TODO: update order in database
 		return b;
 	}
@@ -131,7 +156,7 @@ public class OrderService {
 	public boolean addToOrder(Order order, Set<Artwork> art) {
 		boolean b = order.getArtwork().addAll(art);
 		updateTotal(order);
-		
+		orderRepository.save(order);
 		//TODO: update order in database
 		return b;
 	}
@@ -139,6 +164,7 @@ public class OrderService {
 	public boolean addToOrder(Order order, Artwork art) {
 		boolean b = order.getArtwork().add(art);
 		updateTotal(order);
+		orderRepository.save(order);
 		//TODO: update order in database
 		return b;
 	}
