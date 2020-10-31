@@ -56,7 +56,7 @@ public class TestServiceArtwork {
 	 
 	 @Test
 	 public void testNullWorthCreateArtwork() {
-		 Artwork artwork;
+		 Artwork artwork=null;
 		 String message;
 		 try {
 			 //TODO
@@ -78,6 +78,10 @@ public class TestServiceArtwork {
 		 
 	 }
 	 
+	 @Test
+	 public void testAddArtist() {
+		 
+	 }
 	 
 	 
 	 

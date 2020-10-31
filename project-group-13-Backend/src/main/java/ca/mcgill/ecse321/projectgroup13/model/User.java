@@ -112,6 +112,17 @@ final int prime = 31;
    	result = prime * result + ((username == null) ? 0 : username.hashCode());
    	return result;
    }
+
+private String apiToken;
+
+public void setApiToken(String value) {
+	this.apiToken = value;
+}
+
+public String getApiToken() {
+	return this.apiToken;
+}
+
 @Override
 public boolean equals (Object obj)
 {

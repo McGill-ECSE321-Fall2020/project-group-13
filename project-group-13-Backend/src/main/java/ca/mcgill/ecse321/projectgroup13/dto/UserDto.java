@@ -100,5 +100,15 @@ public class UserDto{
     public String getProfilePictureURL() {
         return this.profilePictureURL;
     }
+    
+	private String apiToken;
+
+	public void setApiToken(String value) {
+		this.apiToken = value;
+	}
+
+	public String getApiToken() {
+		return this.apiToken;
+	}
 
 }

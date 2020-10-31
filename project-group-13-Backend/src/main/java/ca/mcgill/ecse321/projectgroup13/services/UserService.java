@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.projectgroup13.dto.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * service method to create a new user
@@ -57,21 +60,23 @@ public class UserService {
         if(userRepository.findUserByUsername(username) !=  null)  throw new RegistrationException("Username already in use");
         //invalid password -- password must contain at least one letter and one number
         if(!password.matches(".*\\d.*") || !password.matches(".*[A-z].*")) throw new  RegistrationException("invalid password entered, contain number and letter");
-
+        
         //ALL CONDITIONS HAVE PASSED
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
         return user;
     }
-
+    
+    //TODO make class to do password stuff
 
     /**
      * service method to delete a certain user from Database
      * @param username
      * @throws RegistrationException
      */
+    //TODO make sure it checks that its admin
     @Transactional
     public void deleteUser(String username) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
@@ -128,6 +133,10 @@ public class UserService {
         user.setProfilePictureURL(newUrl);
         userRepository.save(user);
     }
+    
+    //TODO maybe we should use a DTO for the login information
+   // @Transactional
+    //public void editPassword(String username, )
 
 
     /**
