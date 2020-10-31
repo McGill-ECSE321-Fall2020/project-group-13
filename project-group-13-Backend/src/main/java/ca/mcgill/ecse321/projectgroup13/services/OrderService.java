@@ -30,6 +30,7 @@ public class OrderService {
 	 * @param art Set of art to add to order
 	 * @return new order object
 	 */
+	@Transactional
 	public Order createOrder(User user, Set<Artwork> art) {
 		if (user == null) 														//must check parameter is not null
 			throw new IllegalArgumentException("user cannot be null");
@@ -50,6 +51,7 @@ public class OrderService {
 	 * @param user User who owns the order
 	 * @return new order object
 	 */
+	@Transactional
 	public Order createOrder(User user) {
 		if (user == null) 												//must check parameter is not null
 			throw new IllegalArgumentException("user cannot be null");
@@ -80,6 +82,7 @@ public class OrderService {
 	 * @param user user whose orders we are finding
 	 * @return list of Order objects
 	 */
+	@Transactional
 	public List<Order> getOrdersFromUser(User user) {
 		if (user == null)													//must check parameter is not null
 			throw new IllegalArgumentException("user cannot be null");
@@ -93,6 +96,7 @@ public class OrderService {
 	 * @param user user whose order wer are finding
 	 * @return most recent order made by user
 	 */
+	@Transactional
 	public Order getMostRecentOrder(User user) {
 		if (user == null) 																//must check parameter is not null
 			throw new IllegalArgumentException("user cannot be null");
@@ -115,6 +119,7 @@ public class OrderService {
 	 * @param order order to delete
 	 * @return whether the order was successfully deleted
 	 */
+	@Transactional
 	public boolean deleteOrder(Order order) {
 		if (order == null)															//must check parameter is not null
 			throw new IllegalArgumentException("order cannot be null");
@@ -147,6 +152,7 @@ public class OrderService {
 	 * @param art art to remove from order
 	 * @return whether the art was successfully removed from the order
 	 */
+	@Transactional
 	public boolean removeFromOrder(Order order, Artwork art) {
 		if (order == null) 															//check that user parameter is not null
 			throw new IllegalArgumentException("order cannot be null");
@@ -167,6 +173,7 @@ public class OrderService {
 	 * @param art collection to remove from order
 	 * @return whether the art was successfully removed
 	 */
+	@Transactional
 	public boolean removeFromOrder(Order order, Set<Artwork> art) {
 		if (order == null)															//must check parameter is not null
 			throw new IllegalArgumentException("order cannot be null");
@@ -187,6 +194,7 @@ public class OrderService {
 	 * @param art collection to add to order
 	 * @return whether the operation was successful
 	 */
+	@Transactional
 	public boolean addToOrder(Order order, Set<Artwork> art) {
 		if (order == null)															//must check parameter is not null
 			throw new IllegalArgumentException("order cannot be null");
@@ -207,6 +215,7 @@ public class OrderService {
 	 * @param art art to add to order
 	 * @return whether the operation was successful
 	 */
+	@Transactional
 	public boolean addToOrder(Order order, Artwork art) {
 		if (order == null) 															//must check parameter is not null
 			throw new IllegalArgumentException("order cannot be null");
@@ -226,6 +235,7 @@ public class OrderService {
 	 * @param order order to add payment to 
 	 * @param payment payment to add to order
 	 */
+	@Transactional
 	public void addPaymentToOrder(Order order, Payment payment) {
 		if (order.getOrderStatus() != OrderStatus.PaymentPending)					//must check that order hasn't been finalized
 			throw new IllegalArgumentException("Cannot alter a finalized order");
@@ -240,6 +250,7 @@ public class OrderService {
 	 * @param order order has to be unshipped but have a payment
 	 * @param shipment shipment to add to order
 	 */
+	@Transactional
 	public void addShipmentToOrder(Order order, Shipment shipment) {
 		if (order.getOrderStatus() == OrderStatus.Shipped || order.getOrderStatus() == OrderStatus.Delivered)	//must check that order hasn't been finalized.
 			throw new IllegalArgumentException("Cannot alter shipment after an order was shipped");
