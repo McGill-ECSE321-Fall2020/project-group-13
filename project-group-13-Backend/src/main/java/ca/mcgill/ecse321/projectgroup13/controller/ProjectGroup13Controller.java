@@ -165,29 +165,14 @@ public class ProjectGroup13Controller {
 	}
 
 
-//	/**
-//	 * RESTful service that gets all shipments in database
-//	 * @return DTO shipments
-//	 */
-//	@GetMapping(value = { "/shipments", "/shipments/"})
-//	public Set<ShipmentDto> getAllShipments(){
-//		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-//		for(Shipment shipment : shipmentService.getAllShipments()) {
-//			shipmentsDto.add(convertToDto(shipment));
-//		}
-//		return shipmentsDto;
-//	}
-
-
 	/**
-	 * RESTful service that gets all shipments of an order
-	 * @param order
+	 * RESTful service that gets all shipments in database
 	 * @return DTO shipments
 	 */
-	@GetMapping(value = { "/order//shipments", "/order//shipments/"})
-	public Set<ShipmentDto> getAllShipmentsOfOrder(@RequestParam Order order){
+	@GetMapping(value = { "/shipments", "/shipments/"})
+	public Set<ShipmentDto> getAllShipments(){
 		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-		for(Shipment shipment : shipmentService.getShipmentsOfOrder(order)) {
+		for(Shipment shipment : shipmentService.getAllShipments()) {
 			shipmentsDto.add(convertToDto(shipment));
 		}
 		return shipmentsDto;
