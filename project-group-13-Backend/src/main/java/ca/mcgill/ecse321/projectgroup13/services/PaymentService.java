@@ -45,10 +45,17 @@ public class PaymentService {
     
     @Transactional
 	public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) {
+    	if (expirationDate == null)
+			throw new IllegalArgumentException("expirationDate cannot be null");
+    	if (order == null)
+			throw new IllegalArgumentException("order cannot be null");
+    	if (nameOnCard == null || nameOnCard.equals(""))
+			throw new IllegalArgumentException("nameOnCard cannot be null or empty");
+    	
 		Payment payment = new Payment();
-		try {
-			orderService.addPaymentToOrder(order, payment);
-		} catch (IllegalArgumentException e) {
+		
+		try { orderService.addPaymentToOrder(order, payment);} 
+		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
 		}
