@@ -41,9 +41,7 @@ public class UserService {
 
     /**
      * service method to create a new user
-     * @param username
-     * @param email
-     * @param password
+     * @param userDto
      * @return user
      * @throws RegistrationException
      */
@@ -71,6 +69,27 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
+
+    @Transactional
+    public User createUser(String username, String email, String password) throws RegistrationException {
+        User user = new User();
+        //checking if email syntax is valid
+        if(checkIfValidEmail(email) == true){
+            //must verify that no other user is associated with the same email
+            if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+        }else{
+            throw new RegistrationException("Invalid Email");
+        }
+        //ALL CONDITIONS HAVE PASSED
+        user.setUsername(username);
+        user.setEmail(email);
+        //TODO implement the encoder -- was causing errors
+        //user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
+        userRepository.save(user);
+        return user;
+    }
     
     //TODO make class to do password stuff
 
@@ -86,6 +105,13 @@ public class UserService {
         if(user==null) throw new RegistrationException("User does not exist");
         Set<Address> userAddresses = user.getAddress();
         userRepository.delete(user);
+    }
+
+
+    @Transactional
+    public User getUserByUsername(String username){
+        User user = userRepository.findUserByUsername(username);
+        return user;
     }
 
 
