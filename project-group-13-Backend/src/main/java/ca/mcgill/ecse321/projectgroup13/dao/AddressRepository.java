@@ -17,6 +17,4 @@ public interface AddressRepository extends CrudRepository<Address, Long>{
     Boolean deleteAddressByAddressID(Integer id);
     
 
-    
-
 }
