@@ -44,7 +44,7 @@ public class ArtworkService {
     public Artwork createArtwork(ArtworkDto artworkDto) throws illegalArgumentException {
     	if( artworkDto.getTitle().trim()==null ) throw new illegalArgumentException("no title for artwork");
     	if(artworkDto.getArtist().isEmpty()) throw new illegalArgumentException("no artist for artwork") ;
-    	if(artworkDto.getWorth()==null) throw new illegalArgumentException("no worth specified") ;
+    	if(artworkDto.getWorth()==0) throw new illegalArgumentException("no worth specified") ;
     	//must convert set of userDTO into set of Users, find them in the database one by one 
     	Set<UserDto> allArtistsDto = artworkDto.getArtist();
     	Iterator<UserDto> artistsDto = allArtistsDto.iterator();
@@ -60,31 +60,18 @@ public class ArtworkService {
     	while (artistsDto.hasNext()) {
     		//for each user
     		User user = userRepo.findUserByUsername(((UserDto)artistsDto.next()).getUsername());
-    		if(user==null) throw new illegalArgumentException("user not found");
+    		if(user==null) throw new illegalArgumentException("artist not found");
     		user.getArtwork().add(artwork);
     		artwork.getArtist().add(user);
     		artworkRepo.save(artwork);
     		userRepo.save(user);
     	}
-    	
     	return artwork;
     	
     }
     
 
 
-    /**
-     * service method to create artwork (specifying all artists)
-     * @param artists
-     * @return
-     */
-    @Transactional
-    public Artwork createArtwork(Set<User> artists) {
-        Artwork artwork = new Artwork();
-        artwork.setArtist(artists);
-        artworkRepo.save(artwork);
-        return artwork;
-    }
 
     /**
      * service method to delete given artwork from database

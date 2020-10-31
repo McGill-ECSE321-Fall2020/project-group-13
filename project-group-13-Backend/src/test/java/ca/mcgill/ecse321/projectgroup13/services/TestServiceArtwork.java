@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.projectgroup13.services;
 
 import ca.mcgill.ecse321.projectgroup13.dao.*;
+import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
+import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.services.exception.*;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,9 +84,35 @@ public class TestServiceArtwork {
 	 
 	 
 	 
+	 @Test
+	 public void testCreateValidArtwork() {
+		 ArtworkDto artworkDto = new ArtworkDto();
+		 UserDto userDto = new UserDto();
+		 userDto.setUsername(USERNAME);
+		 Set<UserDto> artDto= new HashSet<>();
+		 artDto.add(userDto);
+		 artworkDto.setArtist(artDto);
+		 artworkDto.setTitle("done with it");
+		 artworkDto.setWorth(23.99);
+		 
+		 Artwork artwork = null;
+		try {
+		 artwork=artworkService.createArtwork(artworkDto);
+		}catch(illegalArgumentException e) {
+			e.getMessage();
+		}
+		assertNotNull(artwork);
+		assertEquals(artwork.getTitle(), artworkDto.getTitle());
+		 
+	 }
 	 
 	 @Test
 	 public void testNullNameCreateArtwork() {
+		 
+	 }
+	 
+	 @Test
+	 public void testNoWorthCreateArtwork() {
 		 
 	 }
 	 
@@ -98,6 +126,17 @@ public class TestServiceArtwork {
 		 
 	 }
 	 
+	 @Test
+	 public void testArtworkWithInvalidArtist() {
+		 
+	 }
+	 
+	 @Test
+	 public void testDeleteExistingArtwork() {
+		 
+		 
+		 
+	 }
 	 
 	 public static <T> List<T> toList(Iterable<T> iterable) {
 	        List<T> lst = new ArrayList<T>();

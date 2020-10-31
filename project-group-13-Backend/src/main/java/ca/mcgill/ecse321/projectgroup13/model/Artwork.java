@@ -115,12 +115,12 @@ this.isOnPremise = value;
 public boolean isIsOnPremise() {
 return this.isOnPremise;
     }
-private Double worth;
+private double worth;
 
-public void setWorth(Double value) {
+public void setWorth(double value) {
 this.worth = value;
     }
-public Double getWorth() {
+public double getWorth() {
 return this.worth;
     }
 @Override

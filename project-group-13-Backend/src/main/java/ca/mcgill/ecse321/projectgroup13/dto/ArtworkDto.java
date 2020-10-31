@@ -59,9 +59,9 @@ public class ArtworkDto {
     }
 
 
-//    public void setArtist(Set<User> artists) {
-//        this.artist = artists;
-//    }
+    public void setArtist(Set<UserDto> artists) {
+        this.artist = artists;
+    }
 
 
 //    public void setArtworkID(String value) {
