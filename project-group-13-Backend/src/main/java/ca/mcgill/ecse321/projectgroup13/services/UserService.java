@@ -48,26 +48,26 @@ public class UserService {
      * @throws RegistrationException
      */
     @Transactional
-    public User createUser(String username, String email, String password) throws RegistrationException {
+    public User createUser(UserDto userDto) throws RegistrationException {
         User user = new User();
         //checking if email syntax is valid
-        if(checkIfValidEmail(email) == true){
+        if(checkIfValidEmail(userDto.getEmail()) == true){
             //must verify that no other user is associated with the same email
-            if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+            if(userRepository.findUserByEmail(userDto.getEmail()) != null) throw new RegistrationException("Email already in use");
         }else{
             throw new RegistrationException("Invalid Email");
         }
         //make sure Username is unique
-        if(userRepository.findUserByUsername(username) !=  null)  throw new RegistrationException("Username already in use");
+        if(userRepository.findUserByUsername(userDto.getUsername()) !=  null)  throw new RegistrationException("Username already in use");
         //invalid password -- password must contain at least one letter and one number
-        if(!password.matches(".*\\d.*") || !password.matches(".*[A-z].*")) throw new  RegistrationException("invalid password entered, contain number and letter");
+        if(!userDto.getPassword().matches(".*\\d.*") || !userDto.getPassword().matches(".*[A-z].*")) throw new  RegistrationException("invalid password entered, contain number and letter");
         
         //ALL CONDITIONS HAVE PASSED
-        user.setUsername(username);
-        user.setEmail(email);
+        user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
         //TODO implement the encoder -- was causing errors
         //user.setPassword(passwordEncoder.encode(password));
-        user.setPassword(password);
+        user.setPassword(userDto.getPassword());
         userRepository.save(user);
         return user;
     }
