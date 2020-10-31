@@ -120,7 +120,7 @@ public class UserService {
     	//TODO must implement the password encoder
     	//if (user.getPassword()!=passwordEncoder.encode(loginDto.getPassword())) throw new LoginException("invalid password");
     	if (user.getPassword()!=loginDto.getPassword()) throw new LoginException("invalid password");
-    	return createToken(loginDto);
+    	return createToken(user);
     }
     /**
      * service method to edit user bio
@@ -151,15 +151,19 @@ public class UserService {
    // @Transactional
     //public void editPassword(String username, )
 
+    
+    //TODO update token sophistication
     /**
      * Create token upon login, and set it for corresponding user
      * 
-     * @param String username
+     * @param User user
      * @return String token 
      */
-    public String createToken( LoginDto loginDto){
-    	
-    	return "abcd";
+    public String createToken( User user){
+    	String token = UUID.randomUUID().toString();
+    	user.setApiToken(token);
+    	userRepository.save(user);
+    	return token;
     }
 
     /**
@@ -195,7 +199,16 @@ public class UserService {
 
 
     //*************** HELPER METHODS ***************//
-
+    
+    //iterable to list
+    public <T> List<T> toList(Iterable<T> iterable) {
+        List<T> lst = new ArrayList<T>();
+        for (T t : iterable) {
+            lst.add(t);
+        }
+        
+        return lst;
+    }
 
     /*
      * Checks for a valid email using regex from
