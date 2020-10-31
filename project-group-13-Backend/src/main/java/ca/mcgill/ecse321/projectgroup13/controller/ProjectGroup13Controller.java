@@ -12,8 +12,10 @@ import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import ca.mcgill.ecse321.projectgroup13.services.UserService;
+import ca.mcgill.ecse321.projectgroup13.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +36,8 @@ public class ProjectGroup13Controller {
 	private OrderService orderService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AddressService addressService;
 
 	
 	private PaymentDto convertToDto(Payment e) {
@@ -204,5 +208,44 @@ public class ProjectGroup13Controller {
 		ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
 		return shipmentDto;
 	}
+	
+	/**
+	 * RESTful service that returns user's addresses
+	 */
+	
+	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
+	public Set<AddressDto> getAllAddressOfUser(@RequestParam User user){
+		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
+		for(Address address : addressService.getAddressesByUser(user)) {
+			addressesDto.add(convertToDto(address));
+		}
+		return addressesDto;
+	}
+	
+	/**
+	 * RESTful service that adds address to user 
+	 */
+	
+	@PostMapping(value = { "user/{username}/addresses", "user/{username}/addresses" }) 
+	public AddressDto createAddress(@PathVariable("username") String username, @RequestParam User user, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
+		AddressDto addressDto = convertToDto(addressService.createAddress(user, streetAddress1, streetAddress2, city, province, country, postalCode));
+		return addressDto;
+	}
+	
+	/**
+	 * RESTful service that deletes address by id
+	 */
+	
+	@DeleteMapping(value = {"/addresses}", "/addresses/addressId}"})
+	public boolean deleteAddress(@PathVariable(name = "addressId") Integer addressId) {
+		if (addressId == null) {
+			throw new IllegalArgumentException("There is no such Donation Id!");
+		} else {
+			return addressService.deleteAddress(addressId);
+		}
+	}
+		
+		
+	
 
 }
