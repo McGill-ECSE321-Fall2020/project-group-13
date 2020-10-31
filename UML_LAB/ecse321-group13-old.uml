@@ -903,7 +903,7 @@
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_buPh4AUhEeuIIZ7C7k2DOQ" name="cardNumber">
-                  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_hKHUsAUhEeuIIZ7C7k2DOQ" name="expirationDate" type="_f6qtwAUbEeuLIOtIfVSwpg" association="_VztSMAdHEeuNT_9npWWHbA"/>
                 <ownedAttribute xmi:id="_idUpAAUhEeuIIZ7C7k2DOQ" name="nameOnCard">
@@ -1148,7 +1148,7 @@
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_VHL54QUXEeuLIOtIfVSwpg" name="shipment" type="_1ULbQAUWEeuLIOtIfVSwpg" aggregation="composite" association="_VHLS0AUXEeuLIOtIfVSwpg">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VHL54gUXEeuLIOtIfVSwpg"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VHL54wUXEeuLIOtIfVSwpg" value="*"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VHL54wUXEeuLIOtIfVSwpg" value="1"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_HscgIAUkEeuIIZ7C7k2DOQ" name="orderID">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
@@ -1413,9 +1413,6 @@
                 </ownedAttribute>
                 <ownedAttribute xmi:id="_cJ6YsAqcEeuTwoUan5Fe1g" name="bio">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-                </ownedAttribute>
-                <ownedAttribute xmi:id="_Bu61MBgREeuUA40cN2Mckg" name="isAdmin">
-                  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
                 </ownedAttribute>
                 <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_PrGoMBn-Eeu0RMAfNwaNqQ" name="hashCode" specification="_PrBIoBn-Eeu0RMAfNwaNqQ">
                   <ownedParameter xmi:id="_PrGoMRn-Eeu0RMAfNwaNqQ" direction="return">
