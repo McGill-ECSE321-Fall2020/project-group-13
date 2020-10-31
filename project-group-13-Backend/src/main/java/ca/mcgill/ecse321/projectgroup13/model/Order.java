@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import ca.mcgill.ecse321.projectgroup13.model.OrderStatus;
 
 @Entity
 @Table(name="orders")

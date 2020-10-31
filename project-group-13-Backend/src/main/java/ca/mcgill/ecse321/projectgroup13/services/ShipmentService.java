@@ -22,11 +22,21 @@ public class ShipmentService {
     @Autowired
     private OrderRepository orderRepo;
 
-
+  //import other services
+    private OrderService orderService;
+    
     //create a new shipment
     @Transactional
     public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery) {
         Shipment shipment = new Shipment();
+        
+        try {
+			orderService.addShipmentToOrder(order, shipment);
+		} catch (IllegalArgumentException e) {
+			System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
+			throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
+		}
+        
         //initialization of all required fields
         shipment.setOrder(order);
         shipment.setAddress(address);
@@ -55,10 +65,12 @@ public class ShipmentService {
         return user;
     }
 
-    //TODO:change to shipment instead of Set<Shipment>
-    //get all shipments of a single order since one order could have different shipments (e.g multiple items...)
+    //get shipment of a single order
     @Transactional
     public Shipment getShipmentOfOrder(Order order) {
+    	if (order == null) 														//must check parameter is not null
+			throw new IllegalArgumentException("order cannot be null");
+    	
         Shipment shipment = shipmentRepo.findShipmentByOrder(order);
 
         return shipment;
@@ -73,6 +85,9 @@ public class ShipmentService {
      */
     @Transactional
     public Set<Shipment> getShipmentsOfUser(User user) {
+    	if (user == null) 														//must check parameter is not null
+			throw new IllegalArgumentException("user cannot be null");
+    	
         Set<Shipment> shipments = new HashSet<Shipment>();
         for (Order order : orderRepo.findOrdersByUser(user)) {
             shipments.add(shipmentRepo.findShipmentByOrder(order));
@@ -103,6 +118,11 @@ public class ShipmentService {
      */
     @Transactional
     public Shipment editShipmentStatus (Shipment shipment, ShipmentStatus status){
+    	if (shipment == null) 														//must check parameter is not null
+			throw new IllegalArgumentException("shipment cannot be null");
+    	if (status == null) 														//must check parameter is not null
+			throw new IllegalArgumentException("status cannot be null");
+    	
         shipment.setShipmentInfo(status);
         return shipment;
     }
@@ -117,6 +137,11 @@ public class ShipmentService {
      */
     @Transactional
     public Shipment editShipmentEstimatedDate (Shipment shipment, Date estimatedDate){
+    	if (shipment == null) 														//must check parameter is not null
+			throw new IllegalArgumentException("shipment cannot be null");
+    	if (estimatedDate == null) 														//must check parameter is not null
+			throw new IllegalArgumentException("estimatedDate cannot be null");
+    	
         shipment.setEstimatedDateOfArrival(estimatedDate);
         return shipment;
     }
@@ -130,6 +155,11 @@ public class ShipmentService {
      */
     @Transactional
     public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime){
+    	if (shipment == null) 														//must check parameter is not null
+			throw new IllegalArgumentException("shipment cannot be null");
+    	if (estimatedTime == null) 														//must check parameter is not null
+			throw new IllegalArgumentException("estimatedTime cannot be null");
+    	
         shipment.setEstimatedTimeOfArrival(estimatedTime);
         return shipment;
     }
