@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 public class User{
 private String username;
    
-   public void setUsername(String value) {
+public void setUsername(String value) {
 this.username = value;
     }
 @Id
