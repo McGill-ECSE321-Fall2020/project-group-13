@@ -264,6 +264,32 @@ public class OrderService {
 		
 		orderRepository.save(order);
 	}
+
+
+	/**
+	 * service method to change isDelivery boolean of order with orderId
+	 * @param orderId
+	 * @param isDelivery
+	 */
+	@Transactional
+	public void editIsDelivery(int orderId, boolean isDelivery){
+		Order order = orderRepository.findOrderByOrderID(orderId);
+		order.setShipmentMethodIsDelivery(isDelivery);
+		order = orderRepository.save(order);
+	}
+
+
+	/**
+	 * service method to change isDelivery boolean of order
+	 * @param order
+	 * @param isDelivery
+	 */
+	@Transactional
+	public void editIsDelivery(Order order, boolean isDelivery){
+		order.setShipmentMethodIsDelivery(isDelivery);
+		order = orderRepository.save(order);
+	}
+
 	
 	/**
 	 * iterate through all artwork associated with an order and sum up all their costs. This sum is used to update the order.totalAmount attribute
@@ -284,17 +310,6 @@ public class OrderService {
 	}
 
 
-	/**
-	 * service method to change isDelivery boolean
-	 * @param orderId
-	 * @param isDelivery
-	 */
-	public void editIsDelivery(int orderId, boolean isDelivery){
-		Order order = orderRepository.findOrderByOrderID(orderId);
-		order.setShipmentMethodIsDelivery(isDelivery);
-		order = orderRepository.save(order);
-	}
-	
 	
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();

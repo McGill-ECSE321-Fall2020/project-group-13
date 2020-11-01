@@ -36,6 +36,8 @@ import ca.mcgill.ecse321.projectgroup13.services.PaymentService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import ca.mcgill.ecse321.projectgroup13.services.UserService;
 
+import javax.persistence.PreUpdate;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -81,7 +83,7 @@ public class ProjectGroup13Controller {
 
 		ShipmentDto shipmentsDto = convertToDto(order.getShipment());
 
-		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getUser()), convertToDto(order.getPayment()), shipmentsDto);
+		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getPayment()), shipmentsDto);
 		return dto;
 	}
 
@@ -148,7 +150,7 @@ public class ProjectGroup13Controller {
 		if (shipment == null) {
 			return null;
 		}
-		ShipmentDto dto = new ShipmentDto(shipment.getShipmentID(), shipment.getShipmentInfo(), shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival(), convertToDto(shipment.getAddress()), shipment.isShipmentMethodIsDelivery());
+		ShipmentDto dto = new ShipmentDto(shipment.getShipmentID(), shipment.getShipmentInfo(), shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival(), convertToDto(shipment.getAddress()));
 		return dto;
 	}
 
@@ -157,7 +159,7 @@ public class ProjectGroup13Controller {
 			//throw new IllegalArgumentException("There is no such address!");
 			return null;
 		}
-		AddressDto dto = new AddressDto(address.getAddressID(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode());
+		AddressDto dto = new AddressDto(address.getAddressID(), address.getUser().getUsername(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode());
 		return dto;
 	}
 
@@ -207,17 +209,17 @@ public class ProjectGroup13Controller {
 
 	//public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) 
 	@PostMapping(value = { "/order/{orderId}/pay", "/order/{orderId}/pay/" })
-	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @PathVariable("user") Integer orderId) throws IllegalArgumentException {
-		Order order = orderService.getOrder(orderId);
+	public PaymentDto PayForOrder(@PathVariable("orderId") int orderId, @RequestBody Payment payment) throws IllegalArgumentException {
+		Order order = payment.getOrder();
 		
-		Payment payment = paymentService.createPayment(cardNumber, new java.sql.Date(expirationDate.getTime()), nameOnCard, cvv, order);
+		PaymentDto paymentDto = convertToDto(paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId));
 		try { orderService.addPaymentToOrder(order, payment);} 
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
 			//TODO: Maybe return null?
 		}
-		return convertToDto(payment);
+		return paymentDto;
 	}
 	
 	
@@ -270,8 +272,22 @@ public class ProjectGroup13Controller {
 		OrderDto orderDto = convertToDto(order);
 		return orderDto;
 	}
+
+
+	//set method of delivery for order
+	@PutMapping(value = { "/order/{orderId}/delivery", "/order/{orderId}/delivery/" })
+	public void editIsDelivery(@PathVariable int orderId, @RequestParam(name = "delivery") boolean isDelivery){
+		try{
+			orderService.editIsDelivery(orderId, isDelivery);
+		}catch(Exception e){
+			System.out.println("NOPE " + e.toString());
+		}
+	}
+
+
 	
 	//public Order createOrder(User user, Set<Artwork> art)
+
 
 	//public List<Order> getOrdersFromUser(User user)
 	@GetMapping(value = {"/user/{username}/orders", "/user/{username}/orders/"})
@@ -381,11 +397,12 @@ public class ProjectGroup13Controller {
 	 */
 	//public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery)
 	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") Address address, @RequestParam(name="status") ShipmentStatus status, @RequestParam(name="delivery") boolean isDelivery){
+	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestParam(name="status") ShipmentStatus status){
 		Order order = orderService.getOrder(orderId);
+//		Address address = addressService.getAddressById(addressId);
 		ShipmentDto shipmentDto = null;
 		if (order.isShipmentMethodIsDelivery() == true) {
-			shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
+			shipmentDto = convertToDto(shipmentService.createShipment(orderId, addressId, Date.valueOf("2020-8-04"), Time.valueOf("18:07")));
 		}else{
 			System.out.println("order is not to be delivered");
 		}
@@ -399,6 +416,7 @@ public class ProjectGroup13Controller {
 	//public Shipment getShipmentOfOrder(Order order)
 	
 	//public Set<Shipment> getShipmentsOfUser(User user)
+
 	/**
 	 * RESTful service that gets all shipments of a user
 	 * @param username
@@ -419,39 +437,26 @@ public class ProjectGroup13Controller {
 	//public Shipment editShipmentEstimatedDate (Shipment shipment, Date estimatedDate)
 	
 	//public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime)
-	
-	/**
-	 * RESTful service that gets all shipments in database
-	 * @return DTO shipments
-	 */
-	//public Set<Shipment> getAllShipments() 
-	//TODO: Should this method exist? It is a security flaw since it sends data about all users to anyone
-	@GetMapping(value = { "/shipments", "/shipments/"})
-	public Set<ShipmentDto> getAllShipments(){
-		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-		for(Shipment shipment : shipmentService.getAllShipments()) {
-			shipmentsDto.add(convertToDto(shipment));
-		}
-		return shipmentsDto;
-	}
+
+
 
 	// ---------------------------------------------- ADDRESS CONTROLLER METHODS
+
 
 	/**
 	 * RESTful service that adds address to user
 	 */
 	//public Address createAddress(String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) 
 	@PostMapping(value = { "/user/{username}/new/address", "/user/{username}/new/address/" })
-	public AddressDto createAddress(@PathVariable("username") String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
+	public AddressDto createAddress(@PathVariable("username") String username, @RequestBody Address address){
 		//User user = userService.getUserByUsername(username);
-		AddressDto addressDto = convertToDto(addressService.createAddress(username, streetAddress1, streetAddress2, city, province, country, postalCode));
+		AddressDto addressDto = convertToDto(addressService.createAddress(username, address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode()));
 		return addressDto;
 	}
 
 	//public User getUserOfAddress(Integer addressID)
 	
-	//public Address getAddressById(Integer addressID) 
-	
+	//public Address getAddressById(Integer addressID)
 	
 	//public boolean deleteAddress(int addressId)
 	/**
@@ -471,7 +476,7 @@ public class ProjectGroup13Controller {
 	 * RESTful service that updates address by id
 	 */
 	@PutMapping(value = {"/address/{addressId}/update", "/address/{addressId}/update/"})
-	public AddressDto updateAddress(@PathVariable(name = "addressId") @RequestParam Integer addressId, @RequestParam String streetAddress1, @RequestParam String streetAddress2, 
+	public AddressDto updateAddress(@PathVariable(name = "addressId") Integer addressId, @RequestParam String streetAddress1, @RequestParam String streetAddress2,
 			@RequestParam String city, @RequestParam String province, @RequestParam String country, @RequestParam String postalCode) throws IllegalArgumentException {
 		if (addressId == null) {
 			throw new IllegalArgumentException("There must be an addressID to update");
@@ -492,6 +497,7 @@ public class ProjectGroup13Controller {
 			
 			addressService.updateAddress(addressId, streetAddress1, streetAddress2, city, province, country, postalCode);
 			Address oldAddress = addressService.getAddressById(addressId);
+
 			return convertToDto(oldAddress);
 		}
 	}

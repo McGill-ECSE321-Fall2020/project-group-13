@@ -141,10 +141,7 @@ public class TestServiceArtwork {
 		 
 	 }
 	 
-	 @Test
-	 public void testGetUserOfAddress() {
-		 
-	 }
+	 
 	 
 	 @Test
 	 public void testAddValidArtist() {
