@@ -45,6 +45,7 @@ public class OrderService {
 		newOrder = orderRepository.save(newOrder);
 		return newOrder;
 	}
+
 	
 	/**
 	 * create a new order with a user and no art

@@ -2,9 +2,7 @@ package ca.mcgill.ecse321.projectgroup13.controller;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import ca.mcgill.ecse321.projectgroup13.dto.*;
@@ -13,14 +11,10 @@ import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import ca.mcgill.ecse321.projectgroup13.services.UserService;
 import ca.mcgill.ecse321.projectgroup13.services.AddressService;
+import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
+import net.minidev.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ca.mcgill.ecse321.projectgroup13.services.PaymentService;
 
@@ -154,6 +148,20 @@ public class ProjectGroup13Controller {
 //	}
 
 
+	@PostMapping(value = {"/newuser", "/newuser/"})
+	public UserDto createUser(@RequestParam(name = "username") String username, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password) throws RegistrationException{
+		System.out.println(username+ " " + email + " " + password);
+		try{
+//			UserDto userDto = convertToDto(userService.createUser(username, email, password));
+//			return userDto;
+			UserDto userDto = convertToDto(userService.createUser(username, email, password));
+			return userDto;
+		}catch(Exception e){
+			System.out.println("user null "+e.toString());
+		}
+		return null;
+	}
+
 
 	@GetMapping(value = { "/payments", "/payments/" })
 	public List<PaymentDto> getAllPayments() {
@@ -166,6 +174,26 @@ public class ProjectGroup13Controller {
 		Order order = orderService.getOrder(orderDto.getOrderID());
 		Payment payment = paymentService.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
 		return convertToDto(payment);
+	}
+
+
+	@PostMapping(value = { "/{username}/order", "/{username}/order/" })
+	public OrderDto createOrder(@PathVariable String username){
+		User user = userService.getUserByUsername(username);
+		Order order = orderService.createOrder(user);
+		OrderDto orderDto = convertToDto(order);
+		return orderDto;
+	}
+
+
+	@GetMapping(value = {"/user/{username}/orders", "/user/{username}/orders/"})
+	public List<OrderDto> getAllOrders(@PathVariable String username){
+		List<OrderDto> orders = new ArrayList<OrderDto>();
+		User user = userService.getUserByUsername(username);
+		for(Order order: orderService.getOrdersFromUser(user)){
+			orders.add(convertToDto(order));
+		}
+		return orders;
 	}
 
 
@@ -185,12 +213,13 @@ public class ProjectGroup13Controller {
 
 	/**
 	 * RESTful service that gets all shipments of a user
-	 * @param user
+	 * @param username
 	 * @return DTO shipments
 	 */
-	@GetMapping(value = { "/user/{username}/shipments", "/user/{username}/shipments/"})
-	public Set<ShipmentDto> getAllShipmentsOfUser(@RequestParam User user){
+	@GetMapping(value = { "/shipments/user/{username}", "/shipments/user/{username}/"})
+	public Set<ShipmentDto> getAllShipmentsOfUser(@PathVariable String username){
 		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+		User user = userService.getUserByUsername(username);
 		for(Shipment shipment : shipmentService.getShipmentsOfUser(user)) {
 			shipmentsDto.add(convertToDto(shipment));
 		}
@@ -203,11 +232,12 @@ public class ProjectGroup13Controller {
 	 * @param orderId
 	 * @return shipment dto
 	 */
-	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam Address address, ShipmentStatus status, boolean isDelivery){
-		ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
-		return shipmentDto;
-	}
+//	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
+//	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestBody Address address, ShipmentStatus status, boolean isDelivery){
+//		ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
+//		return shipmentDto;
+//	}
+
 	
 	/**
 	 * RESTful service that returns user's addresses
