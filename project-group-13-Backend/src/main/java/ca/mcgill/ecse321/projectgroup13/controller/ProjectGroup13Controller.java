@@ -15,6 +15,7 @@ import ca.mcgill.ecse321.projectgroup13.services.AddressService;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
@@ -38,7 +39,7 @@ import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.PaymentService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import ca.mcgill.ecse321.projectgroup13.services.UserService;
-import sun.security.x509.OtherName;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -193,10 +194,10 @@ public class ProjectGroup13Controller {
 
 	//public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) 
 	@PostMapping(value = { "/pay", "/pay/" })
-	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="orderId") Integer orderId) throws IllegalArgumentException {
+	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="orderId") Integer orderId) throws IllegalArgumentException {
 		Order order = orderService.getOrder(orderId);
 		
-		Payment payment = paymentService.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
+		Payment payment = paymentService.createPayment(cardNumber, new java.sql.Date(expirationDate.getTime()), nameOnCard, cvv, order);
 		try { orderService.addPaymentToOrder(order, payment);} 
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
@@ -208,8 +209,8 @@ public class ProjectGroup13Controller {
 	
 	//public int calculateGalleryCommissionAfter(Date date)
 	@GetMapping(value = { "/payments/gallery", "/payments/gallery/"})
-	 public double getGalleryCommissionAfter(@RequestParam Date date){
-		return paymentService.calculateGalleryCommissionAfter(date);
+	 public double getGalleryCommissionAfter(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date date){
+		return paymentService.calculateGalleryCommissionAfter(new java.sql.Date(date.getTime()));
 	}
 	
 	//public List<Payment> getPaymentsForCustomer(User user)
