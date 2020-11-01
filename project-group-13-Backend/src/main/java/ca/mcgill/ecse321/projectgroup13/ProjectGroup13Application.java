@@ -17,7 +17,7 @@ public class ProjectGroup13Application {
 
 	@RequestMapping("/")
 	public String greeting(){
-		return "Hello world!";
+		return "Art management system";
 	}
 
 }

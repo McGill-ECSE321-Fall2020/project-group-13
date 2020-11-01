@@ -54,11 +54,7 @@ public class PaymentService {
     	
 		Payment payment = new Payment();
 		
-		try { orderService.addPaymentToOrder(order, payment);} 
-		catch (IllegalArgumentException e) {
-			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
-			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
-		}
+		
 		
 		payment.setTotalAmount(order.getTotalAmount());
 		payment.setPaymentDate(new Date(System.currentTimeMillis()));
