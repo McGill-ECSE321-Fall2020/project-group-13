@@ -161,8 +161,35 @@ public class ProjectGroup13Controller {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-//----------------------------Payment RESTful service--------------------------------------------------------------------------------------------------
-	
+
+
+
+
+	// ---------------------------------------------- USER CONTROLLER METHODS
+
+
+	@PostMapping(value = {"/newuser", "/newuser/"})
+	public UserDto createUser(@RequestParam(name = "username") String username, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password) throws RegistrationException{
+		System.out.println(username+ " " + email + " " + password);
+		try{
+			UserDto userDto = convertToDto(userService.createUser(username, email, password));
+			return userDto;
+		}catch(Exception e){
+			System.out.println("user null " + e.toString());
+		}
+		return null;
+	}
+
+
+
+
+
+
+// ---------------------------------------------- PAYMENT CONTROLLER METHODS
+
+
+
+
 	//public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) 
 	@PostMapping(value = { "/pay", "/pay/" })
 	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="orderId") Integer orderId) throws IllegalArgumentException {
@@ -206,57 +233,21 @@ public class ProjectGroup13Controller {
 		return paymentsDto;
 	}
 	
+
 	//public Payment getPayment(int paymentID)
 	@GetMapping(value = { "/payments/{id}", "/payments/{id}/" })
-	public PaymentDto createPerson(@PathVariable("id") Integer id) throws IllegalArgumentException {
+	public PaymentDto getPaymentById(@PathVariable("id") Integer id) throws IllegalArgumentException {
 		Payment payment = paymentService.getPayment(id);
 		return convertToDto(payment);
 	}
-	
-	
-	
-
-//	/**
-//	 * RESTful service to create a person
-//	 * @param name
-//	 * @return shipment dto
-//	 */
-//	@PostMapping(value = { "/person/{name}", "/person/{name}/" })
-//	public UserDto createPerson(@PathVariable("name") String name) throws IllegalArgumentException {
-//		User user = userService.createUser(name);
-//		return convertToDto(user);
-//	}
-
-
-	//TODO: Security flaw. All card info would be sent
-//	@GetMapping(value = { "/payments", "/payments/" })
-//	public List<PaymentDto> getAllPayments() {
-//		return paymentService.getAllPayments().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
-//	}
-
-
-	@PostMapping(value = {"/newuser", "/newuser/"})
-	public UserDto createUser(@RequestParam(name = "username") String username, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password) throws RegistrationException{
-		System.out.println(username+ " " + email + " " + password);
-		try{
-//			UserDto userDto = convertToDto(userService.createUser(username, email, password));
-//			return userDto;
-			UserDto userDto = convertToDto(userService.createUser(username, email, password));
-			return userDto;
-		}catch(Exception e){
-			System.out.println("user null " + e.toString());
-		}
-		return null;
-	}
-
-
-//	@GetMapping(value = { "/payments", "/payments/" })
-//	public List<PaymentDto> getAllPayments() {
-//		return paymentService.getAllPayments().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
-//	}
 
 
 
+
+
+
+
+	// ---------------------------------------------- ORDER CONTROLLER METHODS
 
 
 	@PostMapping(value = { "/{username}/order", "/{username}/order/" })
@@ -269,13 +260,31 @@ public class ProjectGroup13Controller {
 
 
 	@GetMapping(value = {"/user/{username}/orders", "/user/{username}/orders/"})
-	public List<OrderDto> getAllOrders(@PathVariable String username){
+	public List<OrderDto> getAllOrdersOfUser(@PathVariable String username){
 		List<OrderDto> orders = new ArrayList<OrderDto>();
 		User user = userService.getUserByUsername(username);
 		for(Order order: orderService.getOrdersFromUser(user)){
 			orders.add(convertToDto(order));
 		}
 		return orders;
+	}
+
+
+
+
+
+	// ---------------------------------------------- SHIPMENT CONTROLLER METHODS
+
+
+	/**
+	 * RESTful service to create a shipment once an order is placed
+	 * @param orderId
+	 * @return shipment dto
+	 */
+	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
+	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestBody Address address, ShipmentStatus status, boolean isDelivery){
+		ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
+		return shipmentDto;
 	}
 
 
@@ -309,25 +318,27 @@ public class ProjectGroup13Controller {
 	}
 
 
-	/**
-	 * RESTful service to create a shipment once an order is placed
-	 * @param orderId
-	 * @return shipment dto
-	 */
-//	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-//	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestBody Address address, ShipmentStatus status, boolean isDelivery){
-//		ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
-//		return shipmentDto;
-//	}
 	
-	
+
+
+
+
 	// ---------------------------------------------- ADDRESS CONTROLLER METHODS
 
-	
+	/**
+	 * RESTful service that adds address to user
+	 */
+	@PostMapping(value = { "/addAddress", "/addAddress" })
+	public AddressDto createAddress(@RequestParam String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
+		User user = userService.getUserByUsername(username);
+		AddressDto addressDto = convertToDto(addressService.createAddress(user, streetAddress1, streetAddress2, city, province, country, postalCode));
+		return addressDto;
+	}
+
+
 	/**
 	 * RESTful service that returns user's addresses
 	 */
-	
 	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
 	public Set<AddressDto> getAllAddressOfUser(@RequestParam User user){
 		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
@@ -336,22 +347,11 @@ public class ProjectGroup13Controller {
 		}
 		return addressesDto;
 	}
-	
-	/**
-	 * RESTful service that adds address to user 
-	 */
-	
-	@PostMapping(value = { "/addAddress", "/addAddress" }) 
-	public AddressDto createAddress(@RequestParam String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
-		User user = userService.getUserByUsername(username);
-		AddressDto addressDto = convertToDto(addressService.createAddress(user, streetAddress1, streetAddress2, city, province, country, postalCode));
-		return addressDto;
-	}
+
 	
 	/**
 	 * RESTful service that deletes address by id
 	 */
-	
 	@DeleteMapping(value = {"/addresses/{addressId}", "/addresses/{addressId}"})
 	public boolean deleteAddress(@PathVariable(name = "addressId") Integer addressId) {
 		if (addressId == null) {
@@ -360,7 +360,11 @@ public class ProjectGroup13Controller {
 			return addressService.deleteAddress(addressId);
 		}
 	}
-	
+
+
+	/**
+	 * RESTful service that updates address by id
+	 */
 	@PutMapping(value = {"/addresses/addressId}", "/addresses/addressId}"})
 	public AddressDto updateAddress(@PathVariable(name = "addressId") @RequestParam Integer addressId,String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) throws IllegalArgumentException {
 		if (addressId == null) {
@@ -378,7 +382,7 @@ public class ProjectGroup13Controller {
 		} else if (postalCode == null){
 			throw new IllegalArgumentException("postalCode cannot be null");
 		} else {
-			
+
 			Address oldAddress = addressService.getAddressById(addressId);
 			addressService.updateAddress(oldAddress, streetAddress1, streetAddress2, city, province, country, postalCode);
 			return convertToDto(oldAddress);
