@@ -54,11 +54,7 @@ public class PaymentService {
     	
 		Payment payment = new Payment();
 		
-		try { orderService.addPaymentToOrder(order, payment);} 
-		catch (IllegalArgumentException e) {
-			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
-			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
-		}
+		
 		
 		payment.setTotalAmount(order.getTotalAmount());
 		payment.setPaymentDate(new Date(System.currentTimeMillis()));
@@ -117,7 +113,7 @@ public class PaymentService {
 		Payment payment = paymentRepo.findPaymentByPaymentID(paymentID);
 		return payment;
 	}
-	
+	 
 	//TODO:security issue. All card details would be sent to random user!
 //	@Transactional
 //	public List<Payment> getAllPayments() {

@@ -15,12 +15,14 @@ import ca.mcgill.ecse321.projectgroup13.model.*;
 
 import java.sql.Date;
 import java.sql.Time;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -77,18 +79,23 @@ public class UserService {
     public User createUser(String username, String email, String password) throws RegistrationException {
         User user = new User();
         //checking if email syntax is valid
-        if(checkIfValidEmail(email) == true){
-            //must verify that no other user is associated with the same email
-            if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
-        }else{
-            throw new RegistrationException("Invalid Email");
-        }
+        //TODO: validate email
+//        if(checkIfValidEmail(email) == true){
+//            //must verify that no other user is associated with the same email
+//            if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+//        }else{
+//            throw new RegistrationException("Invalid Email");
+//        }
+        if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
         //ALL CONDITIONS HAVE PASSED
         user.setUsername(username);
         user.setEmail(email);
         //TODO implement the encoder -- was causing errors
         //user.setPassword(passwordEncoder.encode(password));
         user.setPassword(password);
+        user.setArtwork(new HashSet<>());
+        user.setOrder(new HashSet<>());
+        user.setAddress(new HashSet<>());
         userRepository.save(user);
         return user;
     }

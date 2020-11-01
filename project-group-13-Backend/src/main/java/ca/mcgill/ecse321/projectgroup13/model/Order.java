@@ -83,7 +83,19 @@ this.orderStatus = value;
 public OrderStatus getOrderStatus() {
 return this.orderStatus;
     }
-@Override
+
+
+
+    private boolean isDelivery;
+	public void setShipmentMethodIsDelivery(boolean value) {
+		this.isDelivery = value;
+	}
+	public boolean isShipmentMethodIsDelivery() {
+		return this.isDelivery;
+	}
+
+
+	@Override
 public int hashCode ()
 {
 final int prime = 31;
