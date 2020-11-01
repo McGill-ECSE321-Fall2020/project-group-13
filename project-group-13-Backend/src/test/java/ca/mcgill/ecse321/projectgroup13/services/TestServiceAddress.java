@@ -125,14 +125,15 @@ public class TestServiceAddress {
 	public void testGetUserOfAddress() {
 		
 		try {
-			User juser = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
 			Address address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 			Integer ID = address.getAddressID();
-		User checkUser = addressRepository.findAddressByAddressID(ID).getUser();
-		User user = addressService.getUserOfAddress(ID);
-		assertTrue(checkUser.getUsername().contentEquals(user.getUsername()));
+			
+			
+			User user = addressService.getUserOfAddress(ID);
+			assertTrue(user.getUsername().contentEquals("jake"));
 		} catch (IllegalArgumentException | RegistrationException e) {
-			assertTrue(false);
+			
 		}
 	}
 	
@@ -169,7 +170,7 @@ public class TestServiceAddress {
 	
 		
 		try {
-			add = addressService.getAddressById(11100021);
+			add = addressService.getAddressById(null);
 			
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
@@ -182,13 +183,15 @@ public class TestServiceAddress {
 	
 	@Test 
 	public void testGetAddressesByUser() {
-		Address address = addressService.createAddress(USERNAME ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 		
 		try {
+			User juser = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			Address address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+		
 		Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
 		Address add = addressService.getAddressById(ADDRESSID);
 		assertTrue(checkAdd.getCity().contentEquals(add.getCity()) && checkAdd.getAddressID()==add.getAddressID());
-		} catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException | RegistrationException e) {
 			assertTrue(false);
 		}
 	}
@@ -228,16 +231,20 @@ public class TestServiceAddress {
 	
 	@Test
 	public void testUpdateAddress() {
-		Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
-		String origCity = checkAdd.getCity();
+		String origCity = null;
 		
 		try {
+			User juser = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			Address address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+			origCity = address.getCity();
+			Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
+		
 			addressService.updateAddress(ADDRESSID, ADDRESS,null, "SuckyToronto", "QUEBEC", "CANADA", "H4C2C4");
 			
-		}catch(IllegalArgumentException e) {
+		}catch(IllegalArgumentException | RegistrationException e) {
 			
 		}
-		assertTrue(addressRepository.findAddressByAddressID(ADDRESSID).getCity()!=origCity);
+		assertFalse(addressRepository.findAddressByAddressID(ADDRESSID).getCity().contentEquals(origCity));
 		
 		
 	}
