@@ -51,7 +51,9 @@ public class PaymentService {
 			throw new IllegalArgumentException("order cannot be null");
     	if (nameOnCard == null || nameOnCard.equals(""))
 			throw new IllegalArgumentException("nameOnCard cannot be null or empty");
-    	
+    	if(cardNumber<100000000000L) throw new IllegalArgumentException("Invalid card");
+    	if(expirationDate.toLocalDate().isBefore(new Date(System.currentTimeMillis()).toLocalDate())) 
+    		throw new IllegalArgumentException("Expired card");
 		Payment payment = new Payment();
 		
 		
@@ -70,11 +72,11 @@ public class PaymentService {
 	}
 
 	@Transactional
-	public int calculateGalleryCommissionAfter(Date date) {
+	public double calculateGalleryCommissionAfter(Date date) {
 		if (date == null)
 			throw new IllegalArgumentException("date cannot be null");
 		
-		int result = 0;
+		double result = 0;
 		List<Payment> paymentList = paymentRepo.findByPaymentDateAfter(date);
 		for(Payment payment : paymentList) {
 			result += payment.getTotalAmount()*commissionRate;

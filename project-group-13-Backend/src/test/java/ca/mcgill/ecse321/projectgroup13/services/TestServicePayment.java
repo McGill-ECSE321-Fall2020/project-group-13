@@ -23,6 +23,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+import java.util.*;
 
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
@@ -43,6 +44,8 @@ public class TestServicePayment {
 	private PaymentRepository paymentRepo;
 	@Mock
 	private Order order;
+	@Mock
+	private Order order2;
 	@InjectMocks
 	private OrderService orderService;
 	@InjectMocks
@@ -54,9 +57,25 @@ public class TestServicePayment {
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
-		//lenient().when(orderService.addPaymentToOrder(any(Order.class),any(Payment.class))).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(order.getTotalAmount()).thenAnswer((InvocationOnMock invocation) -> {
+			return 10.0;
+		});
+		lenient().when(order2.getTotalAmount()).thenAnswer((InvocationOnMock invocation) -> {
+			return 20.0;
+		});
+		lenient().when(paymentRepo.findByPaymentDateAfter(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
+			Payment payment = new Payment();
+			payment.setTotalAmount(10);
+			Payment payment2 = new Payment();
+			payment2.setTotalAmount(20);
+			List<Payment> list = new ArrayList<Payment>();
+			list.add(payment);
+			list.add(payment2);
 			
-		//});
+			return list;
+			
+			
+		});
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
@@ -86,7 +105,7 @@ public class TestServicePayment {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertEquals(error,"Order cannot be null");
+		assertEquals(error,"order cannot be null");
 		assertNull(payment);
 	}
 	@Test
@@ -114,8 +133,9 @@ public class TestServicePayment {
 		assertEquals(error,"Expired card");
 		assertNull(payment);
 	}
+	/*
 	@Test
-	public void testGetPaymentByCustomer() {
+	public void testGetPaymentsByCustomer() {
 		//assertEquals(0, service.getAllPayments().size());
 		error = "";
 		User user = null;
@@ -131,21 +151,28 @@ public class TestServicePayment {
 		}
 		
 		try {
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-01-12"), "David", 111, order);
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order);
 		}catch (IllegalArgumentException e) {
 			error += e.getMessage();
 		}
 		
+		assertEquals(error,"");
+		assertEquals(service.getPaymentsForCustomer(user).contains(payment),true);
+		
 	}
+	*/
 	@Test
 	public void testCalculateGalleryCommissionAfter() {
 		//assertEquals(0, service.getAllPayments().size());
-		
+		Payment payment = null;
+		try {
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order);
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order2);
+		}catch (IllegalArgumentException e) {
+			error += e.getMessage();
+		}
+		assertEquals(service.calculateGalleryCommissionAfter(Date.valueOf("2020-01-01")),1.5); //$30*5% = $1.5
 	}
-	@Test
-	public void testGetPaymentsForArtist() {
-		//assertEquals(0, service.getAllPayments().size());
-		
-	}
+	
 	
 }
