@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ public class OrderService {
 	
 	@Autowired
 	OrderRepository orderRepository;
+	@Autowired
+	UserRepository userRepository;
 	
 	
 	/**
@@ -62,7 +65,6 @@ public class OrderService {
 		newOrder.setUser(user);
 		newOrder.setArtwork(new HashSet<Artwork>());
 		newOrder.setTotalAmount(0);
-		
 		newOrder = orderRepository.save(newOrder);
 		return newOrder;
 	}
@@ -246,6 +248,7 @@ public class OrderService {
 		order.setPayment(payment);
 		order.setOrderStatus(OrderStatus.Placed);
 		orderRepository.save(order);
+		System.out.println("testing2");
 	}
 	
 	/**

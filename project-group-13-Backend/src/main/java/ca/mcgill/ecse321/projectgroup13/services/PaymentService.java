@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.mcgill.ecse321.projectgroup13.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
-import ca.mcgill.ecse321.projectgroup13.model.Artwork;
-import ca.mcgill.ecse321.projectgroup13.model.Order;
-import ca.mcgill.ecse321.projectgroup13.model.Payment;
-import ca.mcgill.ecse321.projectgroup13.model.User;
 
 
 @Service
@@ -67,7 +64,10 @@ public class PaymentService {
 		payment.setNameOnCard(nameOnCard);
 		payment.setCvv(cvv);
 		payment.setOrder(order);
-		
+
+		order.setPayment(payment);
+		order.setOrderStatus(OrderStatus.Placed);
+		orderRepo.save(order);
 		payment = paymentRepo.save(payment);
 		return payment;
 	}
