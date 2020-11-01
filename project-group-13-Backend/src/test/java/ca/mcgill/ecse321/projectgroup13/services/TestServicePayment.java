@@ -31,6 +31,7 @@ import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.Payment;
 import ca.mcgill.ecse321.projectgroup13.model.User;
+import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
 @ExtendWith(MockitoExtension.class)
 public class TestServicePayment {
@@ -42,10 +43,12 @@ public class TestServicePayment {
 	private PaymentRepository paymentRepo;
 	@Mock
 	private Order order;
-	@Mock
+	@InjectMocks
 	private OrderService orderService;
 	@InjectMocks
 	private PaymentService service;
+	@InjectMocks
+	private UserService userService;
 	
 	private String error = "";
 	@BeforeEach
@@ -63,7 +66,7 @@ public class TestServicePayment {
 	}
 	@Test
 	public void testCreatePaymentSuccess() {
-		assertEquals(0, service.getAllPayments().size());
+		//assertEquals(0, service.getAllPayments().size());
 		Payment payment = null;
 		try {
 			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order);
@@ -72,35 +75,76 @@ public class TestServicePayment {
 		}
 		assertNotNull(payment);
 		assertEquals(error,"");
+		assertEquals(payment.getNameOnCard(),"David");
 	}
 	@Test
 	public void testCreatePaymentNullOrder() {
-		assertEquals(0, service.getAllPayments().size());
-		
+		//assertEquals(0, service.getAllPayments().size());
+		Payment payment = null;
+		try {
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error,"Order cannot be null");
+		assertNull(payment);
 	}
 	@Test
 	public void testCreatePaymentInvalidCardNumber() {
-		assertEquals(0, service.getAllPayments().size());
+		//assertEquals(0, service.getAllPayments().size());
+		Payment payment = null;
+		try {
+			payment = service.createPayment(9705L, Date.valueOf("2020-12-12"), "David", 111, order);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error,"Invalid card");
+		assertNull(payment);
 		
 	}
 	@Test
 	public void testCreatePaymentExpiredCard() {
-		assertEquals(0, service.getAllPayments().size());
-		
+		//assertEquals(0, service.getAllPayments().size());
+		Payment payment = null;
+		try {
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-01-12"), "David", 111, order);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error,"Expired card");
+		assertNull(payment);
 	}
 	@Test
 	public void testGetPaymentByCustomer() {
-		assertEquals(0, service.getAllPayments().size());
+		//assertEquals(0, service.getAllPayments().size());
+		error = "";
+		User user = null;
+		Order order = null;
+		try{user = userService.createUser("david", "david@gmail.com", "aAbc123");}
+		catch(RegistrationException e) {
+			error = e.getMessage();
+		}
+		Payment payment = null;
+		try{order = orderService.createOrder(user);}
+		catch(Exception e) {
+			error += e.getMessage();
+		}
+		
+		try {
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-01-12"), "David", 111, order);
+		}catch (IllegalArgumentException e) {
+			error += e.getMessage();
+		}
 		
 	}
 	@Test
 	public void testCalculateGalleryCommissionAfter() {
-		assertEquals(0, service.getAllPayments().size());
+		//assertEquals(0, service.getAllPayments().size());
 		
 	}
 	@Test
 	public void testGetPaymentsForArtist() {
-		assertEquals(0, service.getAllPayments().size());
+		//assertEquals(0, service.getAllPayments().size());
 		
 	}
 	
