@@ -402,44 +402,26 @@ public class ProjectGroup13Controller {
 	//public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery)
 
 	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestParam(name="status") ShipmentStatus status){
+	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestBody Shipment shipment){
 		System.out.println("reached");
 		Order order = orderService.getOrder(orderId);
 //		Address address = addressService.getAddressById(addressId);
-		
-		ShipmentDto shipmentDto = null;
-		Shipment shipment = null;
+
+		Shipment newShipment = null;
 		if (order.isShipmentMethodIsDelivery() == true) {
-			shipment = shipmentService.createShipment(orderId, addressId, Date.valueOf("2020-8-04"), Time.valueOf("18:07"));
-			shipmentDto = convertToDto(shipment);
+			newShipment = shipmentService.createShipment(orderId, addressId, shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival());
+			try {
+				orderService.addShipmentToOrder(order, newShipment);
+			} catch (IllegalArgumentException e) {
+				System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
+				throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
+				//TODO: Maybe we should return a null value instead of throwing an exception???
+			}
 		}else{
 			System.out.println("order is not to be delivered");
 		}
-		try {
-            orderService.addShipmentToOrder(order, shipment);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
-            throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
-            //TODO: Maybe we should return a null value instead of throwing an exception???
-        }
-		return shipmentDto;
+		return convertToDto(newShipment);
 	}
-
-
-//	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-//	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestParam(name="status") ShipmentStatus status){
-//		Order order = orderService.getOrder(orderId);
-////		Address address = addressService.getAddressById(addressId);
-//		ShipmentDto shipmentDto = null;
-//		if (order.isShipmentMethodIsDelivery() == true) {
-//			shipmentDto = convertToDto(shipmentService.createShipment(orderId, addressId, Date.valueOf("2020-8-04"), Time.valueOf("18:07")));
-//		}else{
-//			System.out.println("order is not to be delivered");
-//		}
-//		return shipmentDto;
-//	}
-
-
 
 
 
