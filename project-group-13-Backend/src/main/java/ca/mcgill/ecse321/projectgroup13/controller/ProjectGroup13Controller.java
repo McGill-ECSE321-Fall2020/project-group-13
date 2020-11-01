@@ -103,7 +103,7 @@ public class ProjectGroup13Controller {
 
 	private CartDto convertToDto(Cart cart) {
 		if (cart == null) {
-			throw new IllegalArgumentException("There is no such cart!");
+			return null;
 		}
 
 		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
@@ -118,7 +118,7 @@ public class ProjectGroup13Controller {
 
 	private ShipmentDto convertToDto(Shipment shipment) {
 		if (shipment == null) {
-			throw new IllegalArgumentException("There is no such shipment!");
+			return null;
 		}
 		ShipmentDto dto = new ShipmentDto(shipment.getShipmentID(), shipment.getShipmentInfo(), shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival(), convertToDto(shipment.getOrder()), convertToDto(shipment.getAddress()), shipment.isShipmentMethodIsDelivery());
 		return dto;
@@ -127,25 +127,12 @@ public class ProjectGroup13Controller {
 
 	private AddressDto convertToDto(Address address) {
 		if (address == null) {
-			throw new IllegalArgumentException("There is no such address!");
+			//throw new IllegalArgumentException("There is no such address!");
+			return null;
 		}
 		AddressDto dto = new AddressDto(address.getAddressID(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode(), convertToDto(address.getUser()));
 		return dto;
 	}
-
-
-
-
-//	/**
-//	 * RESTful service to create a person
-//	 * @param name
-//	 * @return shipment dto
-//	 */
-//	@PostMapping(value = { "/person/{name}", "/person/{name}/" })
-//	public UserDto createPerson(@PathVariable("name") String name) throws IllegalArgumentException {
-//		User user = userService.createUser(name);
-//		return convertToDto(user);
-//	}
 
 
 	@PostMapping(value = {"/newuser", "/newuser/"})
@@ -157,7 +144,7 @@ public class ProjectGroup13Controller {
 			UserDto userDto = convertToDto(userService.createUser(username, email, password));
 			return userDto;
 		}catch(Exception e){
-			System.out.println("user null "+e.toString());
+			System.out.println("user null " + e.toString());
 		}
 		return null;
 	}
