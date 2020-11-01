@@ -108,7 +108,8 @@ public class OrderService {
 		
 		Order order = orders.get(0);
 		for (Order o : orders) {
-			if (order.getPayment().getPaymentDate().before(o.getPayment().getPaymentDate())) 
+			
+			if (o.getPayment()!=null && order.getPayment().getPaymentDate().before(o.getPayment().getPaymentDate())) 
 				order = o;
 		}
 		return order;
