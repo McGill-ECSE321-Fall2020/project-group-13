@@ -100,9 +100,8 @@ public class AddressService {
 	 */
 	@Transactional
 	public List<Address> getAddressesByUser(String username) {
-		User user = userRepo.findUserByUsername(username);
-		if(user == null||userRepo.findUserByUsername(username)==null) throw new IllegalArgumentException("invalid user");
-		List<Address> addresses = addressRepo.findAddressesByUser(userRepo.findUserByUsername(username));
+		if(username == null||userRepo.findUserByUsername(username)==null) throw new IllegalArgumentException("invalid user");
+		List<Address> addresses = addressRepo.findAddressesByUserUsername(username);
 		return addresses;
 	}
 	
@@ -115,6 +114,7 @@ public class AddressService {
 	
 	@Transactional
 	public boolean deleteAddress(int addressId) {
+		
 		Address address = addressRepo.findAddressByAddressID(addressId);
 		
 		//Removing user association
