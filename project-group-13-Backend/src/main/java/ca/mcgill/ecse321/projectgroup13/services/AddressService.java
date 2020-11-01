@@ -45,11 +45,11 @@ public class AddressService {
 	 */
 	
 	@Transactional
-	public Address createAddress(User user, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
-		
+	public Address createAddress(String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
+		if(username==null||streetAddress1==null||city==null|province==null||country==null||postalCode==null) throw new IllegalArgumentException("missing parameter");
+		if(userRepo.findUserByUsername(username)==null) throw new IllegalArgumentException("invalid user");
 		Address address = new Address();
-		
-		address.setUser(user);
+		address.setUser(userRepo.findUserByUsername(username));
 		address.setStreetAddress1(streetAddress1);
 		address.setStreetAddress2(streetAddress2);
 		address.setCity(city);
@@ -69,6 +69,7 @@ public class AddressService {
 	@Transactional
 	public User getUserOfAddress(Integer addressID) {
 		Address address = addressRepo.findAddressByAddressID(addressID);
+		if(address == null) throw new IllegalArgumentException("invalid address");
 		User user = address.getUser();
 		return user;
 	}
@@ -108,14 +109,9 @@ public class AddressService {
 	@Transactional
 	public List<Address> getAddressesByUser(User user) {
 		
-		if(user == null) {
-			throw new IllegalArgumentException("No user with this ID found");
-			
-		} else {
+			if (userRepo.findUserByUsername(user.getUsername())==null) throw new IllegalArgumentException("invalid user");
 			List<Address> addresses = addressRepo.findAddressesByUser(user);
 			return addresses;
-		}
-		
 	}
 	
 	/**
@@ -154,9 +150,7 @@ public class AddressService {
 	
 	@Transactional	
 	public void updateAddress(Address oldAddress, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
-	
-		//Preserving oldAddressID
-		int oldAddressID = oldAddress.getAddressID();
+		if (addressRepo.findAddressByAddressID(oldAddress.getAddressID())==null) throw new IllegalArgumentException("invalid address");
 	
 		//Creating updated address
 		oldAddress.setStreetAddress1(streetAddress1);

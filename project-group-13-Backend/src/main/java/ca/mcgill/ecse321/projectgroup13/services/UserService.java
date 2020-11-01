@@ -151,7 +151,7 @@ public class UserService {
     	//must validate login information
     	//check if username exists
     	User user = userRepository.findUserByUsername(loginDto.getUsername());
-    	if (user!=null ) throw new LoginException("invalid username");
+    	if (user==null ) throw new LoginException("invalid username");
     	//TODO must implement the password encoder
     	//if (user.getPassword()!=passwordEncoder.encode(loginDto.getPassword())) throw new LoginException("invalid password");
     	if (user.getPassword()!=loginDto.getPassword()) throw new LoginException("invalid password");
