@@ -210,15 +210,18 @@ public class ProjectGroup13Controller {
 	//public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) 
 	@PostMapping(value = { "/order/{orderId}/pay", "/order/{orderId}/pay/" })
 	public PaymentDto PayForOrder(@PathVariable("orderId") int orderId, @RequestBody Payment payment) throws IllegalArgumentException {
-		Order order = payment.getOrder();
-		System.out.println(order.getOrderStatus());
-		PaymentDto paymentDto = convertToDto(paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId));
-		try { orderService.addPaymentToOrder(order, payment);} 
+		System.out.println(payment);
+		Order order = orderService.getOrder(orderId);
+		System.out.println(order);
+		Payment p = paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId);
+		
+		try { orderService.addPaymentToOrder(order, p);} 
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
 			//TODO: Maybe return null?
 		}
+		PaymentDto paymentDto = convertToDto(p);
 		return paymentDto;
 	}
 	

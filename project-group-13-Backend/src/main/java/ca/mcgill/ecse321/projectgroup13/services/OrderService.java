@@ -58,10 +58,11 @@ public class OrderService {
 			throw new IllegalArgumentException("user cannot be null");
 		
 		Order newOrder = new Order();
-		newOrder.setOrderStatus(OrderStatus.Placed);
+		newOrder.setOrderStatus(OrderStatus.PaymentPending);
 		newOrder.setUser(user);
 		newOrder.setArtwork(new HashSet<Artwork>());
 		newOrder.setTotalAmount(0);
+		
 		newOrder = orderRepository.save(newOrder);
 		return newOrder;
 	}
