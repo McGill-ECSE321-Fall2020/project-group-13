@@ -34,7 +34,7 @@ public class AddressService {
 	/**
 	 * CREATE address object with provided address information and user object
 	 * 
-	 * @param user
+	 * @param username
 	 * @param streetAddress1
 	 * @param streetAddress2
 	 * @param city
@@ -95,7 +95,7 @@ public class AddressService {
 	/**
 	 * GET all addresses given userID
 	 * 
-	 * @param user
+	 * @param username
 	 * @return
 	 */
 	@Transactional

@@ -44,7 +44,8 @@ public class PaymentService {
     
     
     @Transactional
-	public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) {
+	public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, int orderId) {
+    	Order order = orderRepo.findOrderByOrderID(orderId);
     	if (expirationDate == null)
 			throw new IllegalArgumentException("expirationDate cannot be null");
     	if (order == null)

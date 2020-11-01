@@ -25,13 +25,12 @@ public class ShipmentDto {
 
     }
 
-    public ShipmentDto(int shipmentID, ShipmentStatus shipmentInfo, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, AddressDto address, boolean shipmentMethodIsDelivery){
+    public ShipmentDto(int shipmentID, ShipmentStatus shipmentInfo, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, AddressDto address){
         this.shipmentID = shipmentID;
         this.shipmentInfo = shipmentInfo;
         this.estimatedDateOfArrival = estimatedDateOfArrival;
         this.estimatedTimeOfArrival = estimatedTimeOfArrival;
         this.address = address;
-        this.shipmentMethodIsDelivery = shipmentMethodIsDelivery;
     }
 
 

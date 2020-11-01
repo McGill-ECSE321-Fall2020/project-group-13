@@ -35,12 +35,17 @@ public class ShipmentService {
 
     //create a new shipment
     @Transactional
-    public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery) {
-    	
-        if (address == null||addressRepo.findAddressByAddressID(address.getAddressID())==null)
-            throw new IllegalArgumentException("invalid address");
-        if (order == null||orderRepo.findOrderByOrderID(order.getOrderID())==null)
-            throw new IllegalArgumentException("invalid order");
+
+    public Shipment createShipment(int orderId, int addressId, Date estimatedDateOfArrival, Time estimatedTimeOfArrival) {
+
+        Order order = orderRepo.findOrderByOrderID(orderId);
+        Address address = addressRepo.findAddressByAddressID(addressId);
+        ShipmentStatus status = ShipmentStatus.OnRoute;
+
+        if (address == null)
+            throw new IllegalArgumentException("address cannot be null");
+        if (order == null)
+            throw new IllegalArgumentException("order cannot be null");
         if (status == null)
             throw new IllegalArgumentException("invalid status");
         if (estimatedDateOfArrival == null)
@@ -64,7 +69,6 @@ public class ShipmentService {
         shipment.setShipmentInfo(status);
         shipment.setEstimatedDateOfArrival(estimatedDateOfArrival);
         shipment.setEstimatedTimeOfArrival(estimatedTimeOfArrival);
-        shipment.setShipmentMethodIsDelivery(isDelivery);
         shipmentRepo.save(shipment);
         return shipment;
     }
@@ -84,6 +88,14 @@ public class ShipmentService {
         Shipment shipment = shipmentRepo.findShipmentByShipmentID(shipmentID);
         User user = shipment.getOrder().getUser();
         return user;
+    }
+
+
+    //get address of shipment
+    public Address getAddressOfShipment(int shipmentID){
+        Shipment shipment = shipmentRepo.findShipmentByShipmentID(shipmentID);
+        Address address = shipment.getAddress();
+        return address;
     }
 
     //get shipment of a single order
