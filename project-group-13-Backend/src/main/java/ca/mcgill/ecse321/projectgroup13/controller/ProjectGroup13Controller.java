@@ -61,7 +61,7 @@ public class ProjectGroup13Controller {
 			return null;
 //			throw new IllegalArgumentException("There is no such payment!");
 		}
-		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(),convertToDto(e.getOrder()));
+		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv());
 		return dto;
 	}
 
@@ -69,7 +69,7 @@ public class ProjectGroup13Controller {
 	private OrderDto convertToDto(Order order) {
 		if (order == null) {
 			return null;
-//			throw new IllegalArgumentException("There is no such order!");
+		//throw new IllegalArgumentException("There is no such order!");
 		}
 
 		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
@@ -137,7 +137,7 @@ public class ProjectGroup13Controller {
 			artworksDto.add(convertToDto(artwork));
 		}
 
-		CartDto dto = new CartDto(cart.getCartID(), cart.getTotalCost(), artworksDto, convertToDto(cart.getUser()));
+		CartDto dto = new CartDto(cart.getCartID(), cart.getTotalCost(), artworksDto);
 		return dto;
 	}
 
@@ -146,7 +146,7 @@ public class ProjectGroup13Controller {
 		if (shipment == null) {
 			return null;
 		}
-		ShipmentDto dto = new ShipmentDto(shipment.getShipmentID(), shipment.getShipmentInfo(), shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival(), convertToDto(shipment.getOrder()), convertToDto(shipment.getAddress()), shipment.isShipmentMethodIsDelivery());
+		ShipmentDto dto = new ShipmentDto(shipment.getShipmentID(), shipment.getShipmentInfo(), shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival(), convertToDto(shipment.getAddress()), shipment.isShipmentMethodIsDelivery());
 		return dto;
 	}
 
@@ -155,7 +155,7 @@ public class ProjectGroup13Controller {
 			//throw new IllegalArgumentException("There is no such address!");
 			return null;
 		}
-		AddressDto dto = new AddressDto(address.getAddressID(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode(), convertToDto(address.getUser()));
+		AddressDto dto = new AddressDto(address.getAddressID(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode());
 		return dto;
 	}
 
@@ -180,7 +180,7 @@ public class ProjectGroup13Controller {
 	
 	//public int calculateGalleryCommissionAfter(Date date)
 	@GetMapping(value = { "/payments/gallery", "/payments/gallery/"})
-	 public int getGalleryCommissionAfter(@RequestParam Date date){
+	 public double getGalleryCommissionAfter(@RequestParam Date date){
 		return paymentService.calculateGalleryCommissionAfter(date);
 	}
 	

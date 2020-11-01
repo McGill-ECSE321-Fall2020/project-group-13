@@ -22,13 +22,12 @@ public class PaymentDto {
 	public PaymentDto() {
 		
 	}
-	public PaymentDto(int paymentID, double cardNumber, Date expirationDate, String nameOnCard, int cvv, OrderDto order) {
+	public PaymentDto(int paymentID, double cardNumber, Date expirationDate, String nameOnCard, int cvv) {
 		this.paymentID = paymentID;
 		this.cardNumber = cardNumber;
 		this.expirationDate = expirationDate;
 		this.nameOnCard = nameOnCard;
 		this.cvv = cvv;
-		this.order = order;
 	}
 	
 	public void setTotalAmount(double value) {

@@ -19,11 +19,10 @@ public class CartDto {
 
     }
 
-    public CartDto(int cartID, double totalCost, Set<ArtworkDto> artwork, UserDto user){
+    public CartDto(int cartID, double totalCost, Set<ArtworkDto> artwork){
         this.cartID= cartID;
         this.totalCost = totalCost;
         this.artwork = artwork;
-        this.user = user;
     }
 
 

@@ -20,7 +20,7 @@ public class AddressDto {
     public AddressDto() {
     }
 
-    public AddressDto(Integer addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode, UserDto user) {
+    public AddressDto(Integer addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
         this.addressID = addressID;
         this.streetAddress1 = streetAddress1;
         this.streetAddress2 = streetAddress2;
@@ -28,7 +28,6 @@ public class AddressDto {
         this.province = province;
         this.country = country;
         this.postalCode = postalCode;
-        this.user = user;
     }
 
     public int getAddressID() {
