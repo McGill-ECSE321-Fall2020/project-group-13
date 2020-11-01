@@ -80,13 +80,13 @@ public class UserService {
         User user = new User();
         //checking if email syntax is valid
         //TODO: validate email
-//        if(checkIfValidEmail(email) == true){
-//            //must verify that no other user is associated with the same email
-//            if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
-//        }else{
-//            throw new RegistrationException("Invalid Email");
-//        }
-        if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+        if(checkIfValidEmail(email) == true){
+            //must verify that no other user is associated with the same email
+            if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+        }else{
+            throw new RegistrationException("Invalid Email");
+        }
+        //if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
         //ALL CONDITIONS HAVE PASSED
         user.setUsername(username);
         user.setEmail(email);
@@ -254,5 +254,6 @@ public class UserService {
     	String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     	 Pattern pattern = Pattern.compile(regex);
     	 return pattern.matcher(email).matches();
+
     }
 }

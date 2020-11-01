@@ -58,7 +58,8 @@ public class ProjectGroup13Controller {
 	
 	private PaymentDto convertToDto(Payment e) {
 		if (e == null) {
-			throw new IllegalArgumentException("There is no such payment!");
+			return null;
+//			throw new IllegalArgumentException("There is no such payment!");
 		}
 		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(),convertToDto(e.getOrder()));
 		return dto;
@@ -67,7 +68,8 @@ public class ProjectGroup13Controller {
 
 	private OrderDto convertToDto(Order order) {
 		if (order == null) {
-			throw new IllegalArgumentException("There is no such order!");
+			return null;
+//			throw new IllegalArgumentException("There is no such order!");
 		}
 
 		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
@@ -84,7 +86,8 @@ public class ProjectGroup13Controller {
 
 	private ArtworkDto convertToDto(Artwork artwork) {
 		if (artwork == null) {
-			throw new IllegalArgumentException("There is no such artwork!");
+			return null;
+//			throw new IllegalArgumentException("There is no such artwork!");
 		}
 
 		Set<UserDto> artists = new HashSet<UserDto>();
@@ -100,7 +103,8 @@ public class ProjectGroup13Controller {
 
 	private UserDto convertToDto(User user) {
 		if (user == null) {
-			throw new IllegalArgumentException("There is no such user!");
+			return null;
+//			throw new IllegalArgumentException("There is no such user!");
 		}
 
 		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
@@ -146,7 +150,6 @@ public class ProjectGroup13Controller {
 		return dto;
 	}
 
-
 	private AddressDto convertToDto(Address address) {
 		if (address == null) {
 			//throw new IllegalArgumentException("There is no such address!");
@@ -176,7 +179,10 @@ public class ProjectGroup13Controller {
 	
 	
 	//public int calculateGalleryCommissionAfter(Date date)
-	
+	@GetMapping(value = { "/payments/gallery", "/payments/gallery/"})
+	 public int getGalleryCommissionAfter(@RequestParam Date date){
+		return paymentService.calculateGalleryCommissionAfter(date);
+	}
 	
 	//public List<Payment> getPaymentsForCustomer(User user)
 	@GetMapping(value = { "/payments/{user}/customer", "/payments/{user}/customer/"})
@@ -313,6 +319,9 @@ public class ProjectGroup13Controller {
 //		ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
 //		return shipmentDto;
 //	}
+	
+	
+	// ---------------------------------------------- ADDRESS CONTROLLER METHODS
 
 	
 	/**
@@ -332,8 +341,9 @@ public class ProjectGroup13Controller {
 	 * RESTful service that adds address to user 
 	 */
 	
-	@PostMapping(value = { "user/{username}/addresses", "user/{username}/addresses" }) 
-	public AddressDto createAddress(@PathVariable("username") String username, @RequestParam User user, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
+	@PostMapping(value = { "/addAddress", "/addAddress" }) 
+	public AddressDto createAddress(@RequestParam String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
+		User user = userService.getUserByUsername(username);
 		AddressDto addressDto = convertToDto(addressService.createAddress(user, streetAddress1, streetAddress2, city, province, country, postalCode));
 		return addressDto;
 	}
@@ -342,12 +352,36 @@ public class ProjectGroup13Controller {
 	 * RESTful service that deletes address by id
 	 */
 	
-	@DeleteMapping(value = {"/addresses}", "/addresses/addressId}"})
+	@DeleteMapping(value = {"/addresses/{addressId}", "/addresses/{addressId}"})
 	public boolean deleteAddress(@PathVariable(name = "addressId") Integer addressId) {
 		if (addressId == null) {
-			throw new IllegalArgumentException("There is no such Donation Id!");
+			throw new IllegalArgumentException("There is no such Address Id!");
 		} else {
 			return addressService.deleteAddress(addressId);
+		}
+	}
+	
+	@PutMapping(value = {"/addresses/addressId}", "/addresses/addressId}"})
+	public AddressDto updateAddress(@PathVariable(name = "addressId") @RequestParam Integer addressId,String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) throws IllegalArgumentException {
+		if (addressId == null) {
+			throw new IllegalArgumentException("There must be an addressID to update");
+		} else if (streetAddress1 == null){
+			throw new IllegalArgumentException("streetAddress1 cannot be null");
+		} else if (streetAddress2 == null){
+			throw new IllegalArgumentException("streetAddress2 cannot be null");
+		} else if (city == null){
+			throw new IllegalArgumentException("city cannot be null");
+		} else if (province == null){
+			throw new IllegalArgumentException("province cannot be null");
+		} else if (country == null){
+			throw new IllegalArgumentException("country cannot be null");
+		} else if (postalCode == null){
+			throw new IllegalArgumentException("postalCode cannot be null");
+		} else {
+			
+			Address oldAddress = addressService.getAddressById(addressId);
+			addressService.updateAddress(oldAddress, streetAddress1, streetAddress2, city, province, country, postalCode);
+			return convertToDto(oldAddress);
 		}
 	}
 }
