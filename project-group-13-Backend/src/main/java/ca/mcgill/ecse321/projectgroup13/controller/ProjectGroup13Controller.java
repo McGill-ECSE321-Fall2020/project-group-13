@@ -494,8 +494,10 @@ public class ProjectGroup13Controller {
 			throw new IllegalArgumentException("postalCode cannot be null");
 		} else {
 
-			Address oldAddress = addressService.getAddressById(addressId);
+			
 			addressService.updateAddress(addressId, streetAddress1, streetAddress2, city, province, country, postalCode);
+			Address oldAddress = addressService.getAddressById(addressId);
+
 			return convertToDto(oldAddress);
 		}
 	}
@@ -692,7 +694,6 @@ public class ProjectGroup13Controller {
 			artworkService.editArtwork_isOnPremise(artwork, OnPremise);
 		if (worth >= 0)
 			artworkService.editArtwork_worth(artwork, worth);
-
 		return true;
 	}
 	

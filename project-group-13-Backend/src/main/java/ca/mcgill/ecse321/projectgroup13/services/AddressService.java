@@ -136,10 +136,12 @@ public class AddressService {
 	 */
 	
 	@Transactional	
+
 	public void updateAddress(Integer addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		if (addressRepo.findAddressByAddressID(addressID)==null) throw new IllegalArgumentException("invalid address");
 		//TODO: validate parameters
 		Address oldAddress = addressRepo.findAddressByAddressID(addressID);
+
 		//Creating updated address
 		oldAddress.setStreetAddress1(streetAddress1);
 		oldAddress.setStreetAddress2(streetAddress2);
