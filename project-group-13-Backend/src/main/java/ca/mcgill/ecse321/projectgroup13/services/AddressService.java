@@ -34,7 +34,7 @@ public class AddressService {
 	/**
 	 * CREATE address object with provided address information and user object
 	 * 
-	 * @param user
+	 * @param username
 	 * @param streetAddress1
 	 * @param streetAddress2
 	 * @param city
@@ -95,11 +95,12 @@ public class AddressService {
 	/**
 	 * GET all addresses given userID
 	 * 
-	 * @param user
+	 * @param username
 	 * @return
 	 */
 	@Transactional
 	public List<Address> getAddressesByUser(String username) {
+		User user = userRepo.findUserByUsername(username);
 		if(user == null||userRepo.findUserByUsername(username)==null) throw new IllegalArgumentException("invalid user");
 		List<Address> addresses = addressRepo.findAddressesByUser(userRepo.findUserByUsername(username));
 		return addresses;

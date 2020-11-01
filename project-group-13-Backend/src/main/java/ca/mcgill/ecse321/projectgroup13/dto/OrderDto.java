@@ -18,12 +18,11 @@ public class OrderDto{
 
     }
 
-    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, UserDto user, PaymentDto payment, ShipmentDto shipment){
+    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, PaymentDto payment, ShipmentDto shipment){
         this.totalAmount = totalAmount;
         this.orderID = orderID;
         this.orderStatus = orderStatus;
         this.artwork = artwork;
-        this.user = user;
         this.payment = payment;
         this.shipment = shipment;
     }

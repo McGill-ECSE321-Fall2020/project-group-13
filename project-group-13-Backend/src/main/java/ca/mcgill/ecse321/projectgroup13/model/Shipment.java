@@ -63,12 +63,6 @@ return this.shipmentID;
     }
 private boolean shipmentMethodIsDelivery;
 
-public void setShipmentMethodIsDelivery(boolean value) {
-this.shipmentMethodIsDelivery = value;
-    }
-public boolean isShipmentMethodIsDelivery() {
-return this.shipmentMethodIsDelivery;
-    }
 /**
  * <pre>
  *           1..1     1..1
