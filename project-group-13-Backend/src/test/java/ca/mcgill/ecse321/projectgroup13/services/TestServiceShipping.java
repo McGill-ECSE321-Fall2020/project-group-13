@@ -281,9 +281,13 @@ public class TestServiceShipping {
 			//Create a shipment with proper orderID and addressID
 			Shipment shipment = shipmentService.createShipment(order.getOrderID(),address.getAddressID(),Date.valueOf("2020-12-31"),Time.valueOf("14:00"));   
 			
-			//Assert that shipment recieved by calling method is equal to initial user
+			//Assert that shipment received by calling method is equal to initial user
 			assertEquals(shipmentService.getUserOfShipment(shipment.getShipmentID()), user);
 			
+			//Teardown
+			userService.deleteUser("ibrahim");
+			addressService.deleteAddress(address.getAddressID());
+			orderService.deleteOrder(order);
 		} catch (IllegalArgumentException | RegistrationException e) {
 			
 		}
