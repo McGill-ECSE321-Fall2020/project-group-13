@@ -126,44 +126,100 @@ public class TestServiceUser {
 		}
 	}
 	
-	@Test
-	public void testChangePasswordToInvalid() {
+	@Test 
+	public void testGetUserByUsername() {
+		User user = null;
+		try {
+			user = userService.getUserByUsername(USERNAME);
+		} catch (IllegalArgumentException e) {
+			
+		}
+		assertTrue(user!=null);
+		assertTrue(user.getEmail().contentEquals(USER_EMAIL));
+	}
+	
+	@Test 
+	public void testInvalidGetUserByUsername() {
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 		
 	}
 	
-	@Test
-	public void testChangePasswordToEmpty() {
-		
+	
+	@Test 
+	public void testInvalidEditEmail() {
+		try {
+			userService.editEmail(USERNAME, "thisaintyomamasemail");
+		} catch (IllegalArgumentException | RegistrationException e) {
+			assertEquals(e.getMessage(), "invalid email");
+		}
 		
 	}
+	
+	@Test 
+	public void testValidEditEmail() {
+		assertEquals(userRepository.findUserByUsername(USERNAME).getEmail(), USER_EMAIL);
+		try {
+			userService.editEmail(USERNAME, USER_EMAIL2);
+		} catch (IllegalArgumentException | RegistrationException e) {
+		
+		}
+		assertEquals(userRepository.findUserByUsername(USERNAME).getEmail(), USER_EMAIL2);
+		
+	}
+	
+
 	
 	@Test
 	public void testResetPasswordGenerated() {
 		
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 	}
 	
 	@Test
 	public void testPasswordNoNumber() {
 		
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 	}
 	
 	@Test
 	public void testPasswordNoAlphabet() {
 		
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 	}
 	
 	@Test
 	public void testDeleteInvalidUser() {
 		
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 	}
 	
 	@Test
 	public void testEditDescription() {
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 		
 	}
 		

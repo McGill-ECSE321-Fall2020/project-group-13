@@ -81,11 +81,8 @@ public class UserService {
         if(userRepository.findUserByUsername(username) != null) throw new RegistrationException("Username already in use");
         //checking if email syntax is valid
         //TODO: validate email
-        if(checkIfValidEmail(email) == true){
-            //must verify that no other user is associated with the same email
-            if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
-        }else{
-            throw new RegistrationException("Invalid Email");
+        if(checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
+            throw new RegistrationException("invalid email");
         }
         //if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
         //ALL CONDITIONS HAVE PASSED
@@ -121,6 +118,7 @@ public class UserService {
 
     @Transactional
     public User getUserByUsername(String username){
+        if(username ==null) throw IllegalArgumentException("invalid username");
         User user = userRepository.findUserByUsername(username);
         return user;
     }
@@ -135,17 +133,11 @@ public class UserService {
     @Transactional
     public void editEmail(String username, String newEmail) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
-        if(checkIfValidEmail(newEmail) == true){
-            //must verify that no other user is associated with the same email
-            if(userRepository.findUserByEmail(newEmail) != null) {
-                throw new RegistrationException("Email already in use");
-            }else{
+            if(checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
+                throw new RegistrationException("invalid email");
+            }
                 user.setEmail(newEmail);
                 userRepository.save(user);
-            }
-        }else{
-            throw new RegistrationException("Invalid Email");
-        }
     }
 
     @Transactional
@@ -184,7 +176,7 @@ public class UserService {
         userRepository.save(user);
     }
     
-    //TODO maybe we should use a DTO for the login information
+    
    // @Transactional
     //public void editPassword(String username, )
 
