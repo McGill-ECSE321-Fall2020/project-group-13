@@ -72,7 +72,7 @@ public class AddressService {
 	//TODO: cannot get user of address
 	public User getUserOfAddress(Integer addressID) {
 		Address address = addressRepo.findAddressByAddressID(addressID);
-		if(address == null) throw new IllegalArgumentException("invalid address");
+		if(address == null||addressRepo.findAddressByAddressID(addressID)) throw new IllegalArgumentException("invalid address");
 		User user = address.getUser();
 		return user;
 	}

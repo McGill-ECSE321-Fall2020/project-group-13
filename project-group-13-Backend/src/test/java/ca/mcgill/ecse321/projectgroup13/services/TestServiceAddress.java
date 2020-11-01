@@ -45,7 +45,7 @@ public class TestServiceAddress {
 	private static final String USER_EMAIL= "person1@gmail.com";
 	private static final Integer ARTWORKID = 12324324 ;
 	private static final String TITLE = "Beauty of the times";
-	private static final Integer ARTWORKID2 = 12312324 ;
+	private static final Integer ADDRESSID = 12312324 ;
 	private static final String TITLE2 = "Beauty of the times";
 	
 	 @BeforeEach
@@ -53,6 +53,7 @@ public class TestServiceAddress {
 	        lenient().when(addressRepository.save(any(Address.class))).thenAnswer((InvocationOnMock invocation) -> {
 	            Address address = new Address();
 	            address.setCity(ADDRESS);
+	            address.setAddressID(ADDRESSID);
 	            return address;
 	        });
 	        lenient().when(userRepository.save(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
@@ -109,6 +110,65 @@ public class TestServiceAddress {
 		
 		assertNull(address);
 		assertTrue(error.contentEquals("missing parameter"));
+	}
+	
+	@Test 
+	public void testGetUserOfAddress() {
+		try {
+		User checkUser = addressRepository.findAddressByAddressID(ADDRESSID).getUser();
+		User user = addressService.getUserOfAddress(ADDRESSID);
+		assertTrue(checkUser.getUsername().contentEquals(user.getUsername()));
+		} catch (IllegalArgumentException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test 
+	public void testInvalidGetUserOfAddress() {
+		User checkUser = addressRepository.findAddressByAddressID(ADDRESSID).getUser();
+		String error = "";
+		User user = null;
+		
+		try {
+			user = addressService.getUserOfAddress(1);
+			
+		}catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(user);
+		assertTrue(error.contentEquals("invalid address"));
+	}
+	
+	@Test 
+	public void testGetAddressByAddressID() {
+		try {
+		Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
+		Address add = addressService.getAddressById(ADDRESSID);
+		assertTrue(checkAdd.getCity().contentEquals(add.getCity()) && checkAdd.getAddressID()==add.getAddressID());
+		} catch (IllegalArgumentException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test 
+	public void testGetAddressByAddressIDInvalid() {
+		Address add = null;
+		String error = "";
+	
+		
+		try {
+			add = addressService.getAddressById(11100021);
+			
+		}catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(add);
+		assertTrue(error.contentEquals("invalid address"));
+	}
+	
+	@Test
+	public void testGetAddressByUser(User user) {
+		
 	}
 	
 	

@@ -90,7 +90,7 @@ public class ShipmentService {
     @Transactional
     public Shipment getShipmentOfOrder(Order order) {
         if (order == null||orderRepo.findOrderByOrderID(order.getOrderID())==null) 														//must check parameter is not null
-            throw new IllegalArgumentException("order cannot be null");
+            throw new IllegalArgumentException("invalid order");
 
         Shipment shipment = shipmentRepo.findShipmentByOrder(order);
 
@@ -107,7 +107,7 @@ public class ShipmentService {
     @Transactional
     public Set<Shipment> getShipmentsOfUser(User user) {
         if (user == null||userRepo.findUserByUsername(user.getUsername())==null) 														//must check parameter is not null
-            throw new IllegalArgumentException("user cannot be null");
+            throw new IllegalArgumentException("invalid user");
 
         Set<Shipment> shipments = new HashSet<Shipment>();
         for (Order order : orderRepo.findOrdersByUser(user)) {
