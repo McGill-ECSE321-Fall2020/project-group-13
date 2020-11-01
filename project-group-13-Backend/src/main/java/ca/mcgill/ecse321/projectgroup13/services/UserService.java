@@ -17,6 +17,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -66,6 +67,7 @@ public class UserService {
         //TODO implement the encoder -- was causing errors
         //user.setPassword(passwordEncoder.encode(password));
         user.setPassword(userDto.getPassword());
+        user.setArtwork(new HashSet<Artwork>());
         userRepository.save(user);
         return user;
     }
@@ -243,7 +245,7 @@ public class UserService {
      */
     private boolean checkIfValidEmail(String email) {
         Pattern VALID_EMAIL_ADDRESS_REGEX =
-                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+                Pattern.compile("^[._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 

@@ -3,16 +3,8 @@ package ca.mcgill.ecse321.projectgroup13.controller;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import ca.mcgill.ecse321.projectgroup13.dto.*;
-import ca.mcgill.ecse321.projectgroup13.model.*;
-import ca.mcgill.ecse321.projectgroup13.services.OrderService;
-import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
-import ca.mcgill.ecse321.projectgroup13.services.UserService;
-import ca.mcgill.ecse321.projectgroup13.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +14,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
+import ca.mcgill.ecse321.projectgroup13.dto.AddressDto;
+import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
+import ca.mcgill.ecse321.projectgroup13.dto.CartDto;
+import ca.mcgill.ecse321.projectgroup13.dto.OrderDto;
+import ca.mcgill.ecse321.projectgroup13.dto.PaymentDto;
+import ca.mcgill.ecse321.projectgroup13.dto.ShipmentDto;
+import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
+import ca.mcgill.ecse321.projectgroup13.model.Address;
+import ca.mcgill.ecse321.projectgroup13.model.Artwork;
+import ca.mcgill.ecse321.projectgroup13.model.Cart;
+import ca.mcgill.ecse321.projectgroup13.model.Order;
+import ca.mcgill.ecse321.projectgroup13.model.Payment;
+import ca.mcgill.ecse321.projectgroup13.model.Shipment;
+import ca.mcgill.ecse321.projectgroup13.model.ShipmentStatus;
+import ca.mcgill.ecse321.projectgroup13.model.User;
+import ca.mcgill.ecse321.projectgroup13.services.AddressService;
+import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.PaymentService;
+import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
+import ca.mcgill.ecse321.projectgroup13.services.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -39,6 +51,7 @@ public class ProjectGroup13Controller {
 	@Autowired
 	private AddressService addressService;
 
+//------------------ toDTO methods ---------------------------------------------------------------------------------------------------
 	
 	private PaymentDto convertToDto(Payment e) {
 		if (e == null) {
@@ -139,8 +152,52 @@ public class ProjectGroup13Controller {
 		return dto;
 	}
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+//----------------------------Payment RESTful service--------------------------
+	
+	//public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) 
+	@PostMapping(value = { "/pay", "/pay/" })
+	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="orderId") Integer orderId) throws IllegalArgumentException {
+		Order order = orderService.getOrder(orderId);
+		Payment payment = paymentService.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
+		return convertToDto(payment);
+	}
+	
+	//public int calculateGalleryCommissionAfter(Date date)
+	
+	
+	//public List<Payment> getPaymentsForCustomer(User user)
+	@GetMapping(value = { "/payments/{user}/customer", "/payments/{user}/customer/"})
+	public Set<PaymentDto> getPaymentsForCustomer(@PathVariable("user") String username){
+		User user = userService.getUserByUsername(username);
+		Set<PaymentDto> paymentsDto = new HashSet<PaymentDto>();
+		for(Payment p : paymentService.getPaymentsForCustomer(user)) {
+			paymentsDto.add(convertToDto(p));
+		}
+		return paymentsDto;
+	}
+	
+	//public List<Payment> getPaymentsForArtist(User user)
+	@GetMapping(value = { "/payments/{artist}/artist", "/payments/{artist}/artist"})
+	public Set<PaymentDto> getPaymentsForArtist(@PathVariable("artist") String username){
+		User artist = userService.getUserByUsername(username);
+		Set<PaymentDto> paymentsDto = new HashSet<PaymentDto>();
+		for(Payment p : paymentService.getPaymentsForArtist(artist)) {
+			paymentsDto.add(convertToDto(p));
+		}
+		return paymentsDto;
+	}
+	
+	//public Payment getPayment(int paymentID)
+	@GetMapping(value = { "/payments/{id}", "/payments/{id}/" })
+	public PaymentDto createPerson(@PathVariable("id") Integer id) throws IllegalArgumentException {
+		Payment payment = paymentService.getPayment(id);
+		return convertToDto(payment);
+	}
+	
+	
+	
 
 //	/**
 //	 * RESTful service to create a person
@@ -154,19 +211,11 @@ public class ProjectGroup13Controller {
 //	}
 
 
-
-	@GetMapping(value = { "/payments", "/payments/" })
-	public List<PaymentDto> getAllPayments() {
-		return paymentService.getAllPayments().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
-	}
-
-
-	@PostMapping(value = { "/pay", "/pay/" })
-	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="order") OrderDto orderDto) throws IllegalArgumentException {
-		Order order = orderService.getOrder(orderDto.getOrderID());
-		Payment payment = paymentService.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
-		return convertToDto(payment);
-	}
+	//TODO: Security flaw. All card info would be sent
+//	@GetMapping(value = { "/payments", "/payments/" })
+//	public List<PaymentDto> getAllPayments() {
+//		return paymentService.getAllPayments().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+//	}
 
 
 	/**
@@ -244,8 +293,4 @@ public class ProjectGroup13Controller {
 			return addressService.deleteAddress(addressId);
 		}
 	}
-		
-		
-	
-
 }

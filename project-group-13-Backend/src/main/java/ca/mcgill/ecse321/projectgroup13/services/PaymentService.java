@@ -118,9 +118,10 @@ public class PaymentService {
 		return payment;
 	}
 	
-	@Transactional
-	public List<Payment> getAllPayments() {
-		return toList(paymentRepo.findAll());
-	}
+	//TODO:security issue. All card details would be sent to random user!
+//	@Transactional
+//	public List<Payment> getAllPayments() {
+//		return toList(paymentRepo.findAll());
+//	}
 }
 
