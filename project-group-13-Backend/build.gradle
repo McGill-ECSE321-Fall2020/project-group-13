@@ -25,6 +25,7 @@ repositories {
 
 dependencies {
 implementation 'org.springframework.boot:spring-boot-starter-web'
+compile 'commons-validator:commons-validator:1.7'
 implementation 'org.hibernate:hibernate-core:5.4.22.Final'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'junit:junit:4.12'
@@ -38,6 +39,7 @@ implementation 'org.hibernate:hibernate-core:5.4.22.Final'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	
 
     runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -53,7 +55,7 @@ implementation 'org.hibernate:hibernate-core:5.4.22.Final'
 	compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.9.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-
+	compile group: 'commons-validator', name: 'commons-validator', version: '1.6'
 
 }
 task compile(type: JavaCompile) {
