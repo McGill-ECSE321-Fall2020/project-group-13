@@ -58,7 +58,8 @@ public class ProjectGroup13Controller {
 	
 	private PaymentDto convertToDto(Payment e) {
 		if (e == null) {
-			throw new IllegalArgumentException("There is no such payment!");
+			return null;
+//			throw new IllegalArgumentException("There is no such payment!");
 		}
 		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(),convertToDto(e.getOrder()));
 		return dto;
@@ -67,7 +68,8 @@ public class ProjectGroup13Controller {
 
 	private OrderDto convertToDto(Order order) {
 		if (order == null) {
-			throw new IllegalArgumentException("There is no such order!");
+			return null;
+//			throw new IllegalArgumentException("There is no such order!");
 		}
 
 		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
@@ -84,7 +86,8 @@ public class ProjectGroup13Controller {
 
 	private ArtworkDto convertToDto(Artwork artwork) {
 		if (artwork == null) {
-			throw new IllegalArgumentException("There is no such artwork!");
+			return null;
+//			throw new IllegalArgumentException("There is no such artwork!");
 		}
 
 		Set<UserDto> artists = new HashSet<UserDto>();
@@ -100,7 +103,8 @@ public class ProjectGroup13Controller {
 
 	private UserDto convertToDto(User user) {
 		if (user == null) {
-			throw new IllegalArgumentException("There is no such user!");
+			return null;
+//			throw new IllegalArgumentException("There is no such user!");
 		}
 
 		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
@@ -146,7 +150,6 @@ public class ProjectGroup13Controller {
 		return dto;
 	}
 
-
 	private AddressDto convertToDto(Address address) {
 		if (address == null) {
 			//throw new IllegalArgumentException("There is no such address!");
@@ -176,7 +179,10 @@ public class ProjectGroup13Controller {
 	
 	
 	//public int calculateGalleryCommissionAfter(Date date)
-	
+	@GetMapping(value = { "/payments/gallery", "/payments/gallery/"})
+	 public int getGalleryCommissionAfter(@RequestParam Date date){
+		return paymentService.calculateGalleryCommissionAfter(date);
+	}
 	
 	//public List<Payment> getPaymentsForCustomer(User user)
 	@GetMapping(value = { "/payments/{user}/customer", "/payments/{user}/customer/"})
