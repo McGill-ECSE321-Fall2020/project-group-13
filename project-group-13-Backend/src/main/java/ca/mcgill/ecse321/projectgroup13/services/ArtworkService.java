@@ -72,13 +72,14 @@ public class ArtworkService {
     	
     }
     
-    public Artwork createArtwork(String Title, ArrayList<String> usernames, Double worth) throws illegalArgumentException {
+    public Artwork createArtwork(String Title, String[] usernames, Double worth) throws illegalArgumentException {
     	if( Title.trim()==null ) throw new illegalArgumentException("invalid title");
-    	if(usernames.isEmpty()) throw new illegalArgumentException("invalid user") ;
+    	if(usernames == null || usernames.length==0) throw new illegalArgumentException("invalid user") ;
     	if(worth==null||worth==0) throw new illegalArgumentException("invalid worth") ;
     	
     	Artwork artwork = new Artwork();
-    	for(String name: usernames) {
+    	for(int i = 0; i < usernames.length; i++){
+    		String name = usernames[i];
     		User user = userRepo.findUserByUsername(name);
     		if(user==null) throw new illegalArgumentException("invalid user");
     		Set<User> artists=artwork.getArtist();
@@ -149,15 +150,56 @@ public class ArtworkService {
      * @param description
      */
     @Transactional
-    public void editArtworkDescription(Artwork artwork, String description){
+    public void editArtwork_description(Artwork artwork, String description){
         artwork.setDescription(description);
+        artwork = artworkRepo.save(artwork);
     }
-
+    @Transactional
+    public void editArtwork_title(Artwork artwork, String title){
+        artwork.setTitle(title);
+        artwork = artworkRepo.save(artwork);
+    }
+    @Transactional
+    public void editArtwork_creationDate(Artwork artwork, String date){
+        artwork.setCreationDate(date);
+        artwork = artworkRepo.save(artwork);
+    }
+    @Transactional
+    public void editArtwork_dimensions(Artwork artwork, String dimensions){
+        artwork.setDimensions(dimensions);
+        artwork = artworkRepo.save(artwork);
+    }
     
-    //TODO: editArtworkName
-    //TODO: editArtwork  all attributes
+    @Transactional
+    public void editArtwork_medium(Artwork artwork, String medium){
+        artwork.setMedium(medium);
+        artwork = artworkRepo.save(artwork);
+    }
+    @Transactional
+    public void editArtwork_collection(Artwork artwork, String collection){
+        artwork.setCollection(collection);
+        artwork = artworkRepo.save(artwork);
+    }
+    @Transactional
+    public void editArtwork_imageURL(Artwork artwork, String image){
+        artwork.setImageUrl(image);
+        artwork = artworkRepo.save(artwork);
+    }
+    @Transactional
+    public void setArtwork_artworkSold(Artwork artwork){
+        artwork.setArtworkSold(true);
+        artwork = artworkRepo.save(artwork);
+    }
     
-
-
+    @Transactional
+    public void editArtwork_isOnPremise(Artwork artwork, boolean onPremise){
+        artwork.setIsOnPremise(onPremise);
+        artwork = artworkRepo.save(artwork);
+    }
+    @Transactional
+    public void editArtwork_worth(Artwork artwork, double worth){
+        artwork.setWorth(worth);
+        artwork = artworkRepo.save(artwork);
+    }
 
 }
