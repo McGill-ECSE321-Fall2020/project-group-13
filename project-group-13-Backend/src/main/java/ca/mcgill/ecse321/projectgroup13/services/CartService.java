@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.CartRepository;
+import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.User;
@@ -19,7 +22,10 @@ public class CartService {
 	
 	@Autowired
 	CartRepository cartRepository;
-	
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	ArtworkRepository artworkRepository;
 	/**
 	 * Create empty cart and associate it with user
 	 * @param user user to link to cart
@@ -70,8 +76,13 @@ public class CartService {
 	public Cart createCart(User user, Set<Artwork> art) {
 		if (user == null)
 			throw new IllegalArgumentException("user cannot be null");
+		if (userRepository.findUserByUsername(user.getUsername())==null) throw new IllegalArgumentException("invalid user");
 		if (art == null) 
 			throw new IllegalArgumentException("set<artwork> cannot be null");	//must check parameter is not null
+		//make sure they are all valid additions
+		for(Artwork artsy : art) {
+			artworkRepository.findArtworkByArtworkID(artsy.getArtworkID());
+		}
 		
 		Cart cart = new Cart();
 		cart.setUser(user);
@@ -101,7 +112,6 @@ public class CartService {
 	public Cart getCartFromUser(User user) {
 		if (user == null)
 			throw new IllegalArgumentException("user cannot be null");
-		
 		return cartRepository.findCartByUser(user);
 	}
 	
@@ -137,6 +147,8 @@ public class CartService {
 	 */
 	@Transactional
 	public boolean removeFromCart(Cart cart, Artwork art) {
+		//invalid artwork is passed
+		if(artworkRepository.findArtworkByArtworkID(art.getArtworkID())==null) throw new IllegalArgumentException("invalid artwork");
 		if (cart == null) 															//check that user parameter is not null
 			throw new IllegalArgumentException("cart cannot be null");
 		if (art == null) 															//check that art parameter is not null
@@ -155,16 +167,19 @@ public class CartService {
 	 * @return whether the art was successfully removed
 	 */
 	@Transactional
-	public boolean removeFromCart(Cart cart, Set<Artwork> art) {
+	public Set<Artwork> removeFromCart(Cart cart, Set<Artwork> art) {
 		if (cart == null)															//must check parameter is not null
 			throw new IllegalArgumentException("cart cannot be null");
 		if (art == null)															//must check parameter is not null
 			throw new IllegalArgumentException("set<artwork> cannot be null");	
-		
-		boolean b = cart.getArtwork().removeAll(art);
+		//this will only add valid artworks
+				Set<Artwork> filteredSet = art.stream()
+		                .filter(s -> artworkRepository.findArtworkByArtworkID(s.getArtworkID())!=null)
+		                .collect(Collectors.toSet());
+		boolean b = cart.getArtwork().removeAll(filteredSet);
 		updateTotal(cart);
 		cartRepository.save(cart);
-		return b;
+		return filteredSet; //these are those which are removed
 	}
 	
 	/**
@@ -174,16 +189,22 @@ public class CartService {
 	 * @return whether the operation was successful
 	 */
 	@Transactional
-	public boolean addToCart(Cart cart, Set<Artwork> art) {
+	public Set<Artwork> addToCart(Cart cart, Set<Artwork> art) {
 		if (cart == null)															//must check parameter is not null
 			throw new IllegalArgumentException("cart cannot be null");
 		if (art == null)															//must check parameter is not null
 			throw new IllegalArgumentException("set<artwork> cannot be null");
+		//make sure all artwork are valid
 		
-		boolean b = cart.getArtwork().addAll(art);
+		//this will only add valid artworks
+		Set<Artwork> filteredSet = art.stream()
+                .filter(s -> artworkRepository.findArtworkByArtworkID(s.getArtworkID())!=null)
+                .collect(Collectors.toSet());
+		
+		
 		updateTotal(cart);
 		cartRepository.save(cart);
-		return b;
+		return filteredSet;
 	}
 	
 	/**
