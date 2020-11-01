@@ -193,8 +193,8 @@ public class ProjectGroup13Controller {
 
 
 	//public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) 
-	@PostMapping(value = { "/pay", "/pay/" })
-	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="orderId") Integer orderId) throws IllegalArgumentException {
+	@PostMapping(value = { "/order/{orderId}/pay", "/order/{orderId}/pay/" })
+	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @PathVariable("user") Integer orderId) throws IllegalArgumentException {
 		Order order = orderService.getOrder(orderId);
 		
 		Payment payment = paymentService.createPayment(cardNumber, new java.sql.Date(expirationDate.getTime()), nameOnCard, cvv, order);
@@ -253,7 +253,7 @@ public class ProjectGroup13Controller {
 	// ---------------------------------------------- ORDER CONTROLLER METHODS
 
 
-	@PostMapping(value = { "/{username}/order", "/{username}/order/" })
+	@PostMapping(value = { "/user/{username}/new/order", "/user/{username}/new/order/" })
 	public OrderDto createOrder(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
 		Order order = orderService.createOrder(user);
@@ -317,7 +317,7 @@ public class ProjectGroup13Controller {
 	 * @param username
 	 * @return DTO shipments
 	 */
-	@GetMapping(value = { "/shipments/user/{username}", "/shipments/user/{username}/"})
+	@GetMapping(value = { "/user/{username}/shipments", "/user/{username}/shipments/"})
 	public Set<ShipmentDto> getAllShipmentsOfUser(@PathVariable String username){
 		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
 		User user = userService.getUserByUsername(username);
@@ -338,8 +338,8 @@ public class ProjectGroup13Controller {
 	/**
 	 * RESTful service that adds address to user
 	 */
-	@PostMapping(value = { "/addAddress", "/addAddress/" })
-	public AddressDto createAddress(@RequestParam String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
+	@PostMapping(value = { "/user/{username}/new/address", "/user/{username}/new/address/" })
+	public AddressDto createAddress(@PathVariable("username") String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
 		//User user = userService.getUserByUsername(username);
 		AddressDto addressDto = convertToDto(addressService.createAddress(username, streetAddress1, streetAddress2, city, province, country, postalCode));
 		return addressDto;
@@ -363,7 +363,7 @@ public class ProjectGroup13Controller {
 	/**
 	 * RESTful service that deletes address by id
 	 */
-	@DeleteMapping(value = {"/addresses/{addressId}/delete", "/addresses/{addressId}/delete/"})
+	@DeleteMapping(value = {"/address/{addressId}/delete", "/address/{addressId}/delete/"})
 	public boolean deleteAddress(@PathVariable(name = "addressId") Integer addressId) {
 		if (addressId == null) {
 			throw new IllegalArgumentException("There is no such Address Id!");
@@ -376,7 +376,7 @@ public class ProjectGroup13Controller {
 	/**
 	 * RESTful service that updates address by id
 	 */
-	@PutMapping(value = {"/addresses/{addressId}/update", "/addresses/{addressId}/update/"})
+	@PutMapping(value = {"/address/{addressId}/update", "/address/{addressId}/update/"})
 	public AddressDto updateAddress(@PathVariable(name = "addressId") @RequestParam Integer addressId, @RequestParam String streetAddress1, @RequestParam String streetAddress2, 
 			@RequestParam String city, @RequestParam String province, @RequestParam String country, @RequestParam String postalCode) throws IllegalArgumentException {
 		if (addressId == null) {
