@@ -51,6 +51,9 @@ public class TestServiceArtwork {
 	 @InjectMocks
 	 	private ArtworkService artworkService;
 	 
+		@InjectMocks
+		private UserService userService;
+	 
 	 
 	 @BeforeEach
 	 public void setMockOutput() {
@@ -199,6 +202,7 @@ public class TestServiceArtwork {
 	        
 	        return lst;
 	    }
+	 
 	 
 	
 }

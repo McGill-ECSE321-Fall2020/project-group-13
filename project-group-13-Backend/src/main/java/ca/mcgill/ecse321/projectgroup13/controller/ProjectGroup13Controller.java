@@ -400,25 +400,29 @@ public class ProjectGroup13Controller {
 	 * @return shipment dto
 	 */
 	//public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery)
-	@PostMapping(value = { "/order/{orderId}/shipping", "/order/{orderId}/shipping/"})
-	public ShipmentDto createShipment(@PathVariable("orderId") int orderId, @RequestParam(name = "addressId") int addressId , @RequestBody Shipment shipment){
+
+	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
+	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestParam(name="status") ShipmentStatus status){
+		System.out.println("reached");
 		Order order = orderService.getOrder(orderId);
-		Address address = addressService.getAddressById(addressId);
-		Shipment newShipment = null;
+//		Address address = addressService.getAddressById(addressId);
+		
+		ShipmentDto shipmentDto = null;
+		Shipment shipment = null;
 		if (order.isShipmentMethodIsDelivery() == true) {
-			System.out.println("testing  " + address.getAddressID());
-			newShipment = shipmentService.createShipment(orderId, addressId, shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival());
-			try {
-				orderService.addShipmentToOrder(order, newShipment);
-			} catch (IllegalArgumentException e) {
-				System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
-				throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
-				//TODO: Maybe we should return a null value instead of throwing an exception???
-			}
+			shipment = shipmentService.createShipment(orderId, addressId, Date.valueOf("2020-8-04"), Time.valueOf("18:07"));
+			shipmentDto = convertToDto(shipment);
 		}else{
 			System.out.println("order is not to be delivered");
 		}
-		return convertToDto(newShipment);
+		try {
+            orderService.addShipmentToOrder(order, shipment);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
+            throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
+            //TODO: Maybe we should return a null value instead of throwing an exception???
+        }
+		return shipmentDto;
 	}
 
 
