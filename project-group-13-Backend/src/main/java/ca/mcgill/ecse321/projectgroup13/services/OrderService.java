@@ -58,7 +58,7 @@ public class OrderService {
 			throw new IllegalArgumentException("user cannot be null");
 		
 		Order newOrder = new Order();
-		newOrder.setOrderStatus(OrderStatus.PaymentPending);
+		newOrder.setOrderStatus(OrderStatus.Placed);
 		newOrder.setUser(user);
 		newOrder.setArtwork(new HashSet<Artwork>());
 		newOrder.setTotalAmount(0);
