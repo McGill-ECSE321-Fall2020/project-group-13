@@ -109,8 +109,8 @@ public class TestServiceArtwork {
 	 @Test
 	 public void testSpaceNameCreateArtwork() {
 		 Artwork artwork = null;
-		 ArrayList<String> artists = new ArrayList<String>();
-		 artists.add(USERNAME);
+		 String[] artists = {USERNAME};
+		 
 		 try {
 			 artwork = artworkService.createArtwork(" ", artists, 100.00);
 			 
@@ -123,8 +123,7 @@ public class TestServiceArtwork {
 	 @Test
 	 public void testZeroWorthCreateArtwork() {
 		 Artwork artwork = null;
-		 ArrayList<String> artists = new ArrayList<String>();
-		 artists.add(USERNAME);
+		 String[] artists = {USERNAME};
 		 String error ="";
 		 try {
 			 artwork = artworkService.createArtwork(" ", artists, 0.0);
@@ -158,8 +157,7 @@ public class TestServiceArtwork {
 	 public void testArtworkWithInvalidArtist() {
 		 Artwork artwork = null;
 		 String error ="";
-		 ArrayList<String> artists = new ArrayList<String>();
-		 artists.add("InvisibleBoy");
+		 String[] artists = {"invisibleBoy"};
 		 try {
 			 artwork = artworkService.createArtwork(" ", artists, 100.00);
 			 

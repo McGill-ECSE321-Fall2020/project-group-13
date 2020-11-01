@@ -125,7 +125,6 @@ public class TestShipment {
         //shipment.setShipmentID(shipmentID);
         shipment.setShipmentInfo(shipmentInfo);
         shipment.setEstimatedDateOfArrival(date);
-        shipment.setShipmentMethodIsDelivery(true);
         shipment.setOrder(order);
         shipment.setAddress(address);
 

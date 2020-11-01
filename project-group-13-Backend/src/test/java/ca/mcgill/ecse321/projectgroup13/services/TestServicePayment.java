@@ -54,6 +54,9 @@ public class TestServicePayment {
 	private UserService userService;
 	
 	private String error = "";
+	private static final int invalidID = 404;
+	private static final int order1ID = 1;
+	private static final int order2ID = 2;
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
@@ -63,6 +66,7 @@ public class TestServicePayment {
 		lenient().when(order2.getTotalAmount()).thenAnswer((InvocationOnMock invocation) -> {
 			return 20.0;
 		});
+		
 		lenient().when(paymentRepo.findByPaymentDateAfter(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
 			Payment payment = new Payment();
 			payment.setTotalAmount(10);
@@ -74,6 +78,19 @@ public class TestServicePayment {
 			
 			return list;
 			
+			
+		});
+		lenient().when(orderRepo.findOrderByOrderID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(invalidID)) {
+				return null;
+			} else if (invocation.getArgument(0).equals(order1ID)){
+				return order;
+			} else if(invocation.getArgument(0).equals(order2ID)) {
+				return order2;
+			}
+			else {
+				return order;
+			}
 			
 		});
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -88,7 +105,7 @@ public class TestServicePayment {
 		//assertEquals(0, service.getAllPayments().size());
 		Payment payment = null;
 		try {
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order);
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, 111);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -97,11 +114,11 @@ public class TestServicePayment {
 		assertEquals(payment.getNameOnCard(),"David");
 	}
 	@Test
-	public void testCreatePaymentNullOrder() {
+	public void testCreatePaymentInvalidOrder() {
 		//assertEquals(0, service.getAllPayments().size());
 		Payment payment = null;
 		try {
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, null);
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, invalidID);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -113,7 +130,7 @@ public class TestServicePayment {
 		//assertEquals(0, service.getAllPayments().size());
 		Payment payment = null;
 		try {
-			payment = service.createPayment(9705L, Date.valueOf("2020-12-12"), "David", 111, order);
+			payment = service.createPayment(9705L, Date.valueOf("2020-12-12"), "David", 111, 111);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -126,7 +143,7 @@ public class TestServicePayment {
 		//assertEquals(0, service.getAllPayments().size());
 		Payment payment = null;
 		try {
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-01-12"), "David", 111, order);
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-01-12"), "David", 111, 111);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -166,8 +183,8 @@ public class TestServicePayment {
 		//assertEquals(0, service.getAllPayments().size());
 		Payment payment = null;
 		try {
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order);
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order2);
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order1ID);
+			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order2ID);
 		}catch (IllegalArgumentException e) {
 			error += e.getMessage();
 		}
