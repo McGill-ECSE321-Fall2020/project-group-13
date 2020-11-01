@@ -62,6 +62,7 @@ public class OrderService {
 		newOrder.setUser(user);
 		newOrder.setArtwork(new HashSet<Artwork>());
 		newOrder.setTotalAmount(0);
+		
 		newOrder = orderRepository.save(newOrder);
 		return newOrder;
 	}

@@ -65,33 +65,26 @@ public class TestServiceUser {
 	
 	@Test
 	public void testValidRegistration() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser(USERNAME2, USER_PASSWORD2, USER_EMAIL2);
 		} catch (RegistrationException e) {
 			e.printStackTrace();
 		}
 		
 		assertNotNull(newUser);
-		assertEquals(userDto.getEmail(),newUser.getEmail());
-		assertEquals(userDto.getUsername(),newUser.getUsername());
-		assertEquals(userDto.getPassword(),newUser.getPassword());
+		assertEquals(USER_EMAIL2,newUser.getEmail());
+		assertEquals(USERNAME2,newUser.getUsername());
+		assertEquals(USER_PASSWORD2,newUser.getPassword());
 	}
 	
 	
 	@Test
 	public void testCreateWithInvalidUsername() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME); //this is the username of the first user that's already been populated in the database
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
+
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser(USERNAME, USER_PASSWORD2, USER_EMAIL2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals( "invalid username" , e.getMessage());
@@ -101,13 +94,9 @@ public class TestServiceUser {
 	@Test
 	
 	public void testCreateWithEmptyPassword() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword(" ");
-		userDto.setEmail(USER_EMAIL2);
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser(USERNAME2, USER_EMAIL2, " ");
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid password", e.getMessage());
@@ -115,13 +104,10 @@ public class TestServiceUser {
 	}
 	@Test
 	public void testCreateNoUsername() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername("");
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
+	
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser("", USER_EMAIL2,USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid username", e.getMessage());
@@ -131,58 +117,109 @@ public class TestServiceUser {
 	public void testCreateInvalidEmail() {
 		
 		String email = "jokesOnYou";
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(email);
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser(USERNAME2, email, USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid email", e.getMessage());
 		}
 	}
 	
-	@Test
-	public void testChangePasswordToInvalid() {
-		
+	@Test 
+	public void testGetUserByUsername() {
+		User user = null;
+		try {
+			user = userService.getUserByUsername(USERNAME);
+		} catch (IllegalArgumentException e) {
+			
+		}
+		assertTrue(user!=null);
+		assertTrue(user.getEmail().contentEquals(USER_EMAIL));
+	}
+	
+	@Test 
+	public void testInvalidGetUserByUsername() {
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 		
 	}
 	
-	@Test
-	public void testChangePasswordToEmpty() {
-		
+	
+	@Test 
+	public void testInvalidEditEmail() {
+		try {
+			userService.editEmail(USERNAME, "thisaintyomamasemail");
+		} catch (IllegalArgumentException | RegistrationException e) {
+			assertEquals(e.getMessage(), "invalid email");
+		}
 		
 	}
+	
+	@Test 
+	public void testValidEditEmail() {
+		assertEquals(userRepository.findUserByUsername(USERNAME).getEmail(), USER_EMAIL);
+		try {
+			userService.editEmail(USERNAME, USER_EMAIL2);
+		} catch (IllegalArgumentException | RegistrationException e) {
+		
+		}
+		assertEquals(userRepository.findUserByUsername(USERNAME).getEmail(), USER_EMAIL2);
+		
+	}
+	
+
 	
 	@Test
 	public void testResetPasswordGenerated() {
 		
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 	}
 	
 	@Test
 	public void testPasswordNoNumber() {
 		
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 	}
 	
 	@Test
 	public void testPasswordNoAlphabet() {
 		
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 	}
 	
 	@Test
 	public void testDeleteInvalidUser() {
 		
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 	}
 	
 	@Test
 	public void testEditDescription() {
-		
+		try {
+			userService.getUserByUsername("");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "invalid username");
+		}
 		
 	}
 		
