@@ -38,6 +38,7 @@ import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.PaymentService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import ca.mcgill.ecse321.projectgroup13.services.UserService;
+import sun.security.x509.OtherName;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -281,11 +282,17 @@ public class ProjectGroup13Controller {
 	 * @param orderId
 	 * @return shipment dto
 	 */
-	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestBody Address address, ShipmentStatus status, boolean isDelivery){
-		ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
-		return shipmentDto;
-	}
+//	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
+//	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestBody Address address, ShipmentStatus status, boolean isDelivery){
+//		Order order = orderService.getOrder(orderId);
+//		if (order.isShipmentMethodIsDelivery() == true) {
+//			ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
+//		}else{
+//			System.out.println("order is not to be delivered");
+//			return null;
+//		}
+//		return null;
+//	}
 
 
 	/**
