@@ -237,12 +237,16 @@ public class TestServiceAddress {
 	
 	@Test
 	public void testUpdateAddress() {
+		
 		String origCity = null;
 		Address address = null;
+		Integer ID = null;
+		
 		
 		try {
 			userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
 			address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+			ID = address.getAddressID();
 			origCity = address.getCity();
 			
 		
@@ -251,7 +255,7 @@ public class TestServiceAddress {
 		}catch(IllegalArgumentException | RegistrationException e) {
 			
 		}
-		assertFalse(addressRepository.findAddressByAddressID(address.getAddressID()).getCity().contentEquals(origCity));
+		assertFalse(addressRepository.findAddressByAddressID(ID).getCity().contentEquals(origCity));
 		
 		
 	}

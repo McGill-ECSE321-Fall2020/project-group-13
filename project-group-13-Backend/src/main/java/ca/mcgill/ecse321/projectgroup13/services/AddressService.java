@@ -149,6 +149,7 @@ public class AddressService {
 		oldAddress.setProvince(province);
 		oldAddress.setCountry(country);
 		oldAddress.setPostalCode(postalCode);
+		oldAddress.setAddressID(addressID);
 		oldAddress = addressRepo.save(oldAddress);
 	}
 	
