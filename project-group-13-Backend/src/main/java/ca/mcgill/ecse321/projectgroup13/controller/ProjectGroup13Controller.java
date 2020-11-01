@@ -169,7 +169,7 @@ public class ProjectGroup13Controller {
 
 
 
-	// ---------------------------------------------- USER CONTROLLER METHODS
+// ---------------------------------------------- USER CONTROLLER METHODS
 
 
 	@PostMapping(value = {"/newuser", "/newuser/"})
@@ -357,8 +357,9 @@ public class ProjectGroup13Controller {
 		Artwork art = artworkService.getArtworkByID(artId);
 		return orderService.addToOrder(order, art);
 	}
-//	public boolean removeFromOrder(Order order, Set<Artwork> art)
 	
+	//TODO: Are these two methods necessary? If so, how do we implement their RESTful service controller methods?
+	//public boolean removeFromOrder(Order order, Set<Artwork> art)
 	//public boolean addToOrder(Order order, Set<Artwork> art)
 	
 	
@@ -371,34 +372,26 @@ public class ProjectGroup13Controller {
 	 * @param orderId
 	 * @return shipment dto
 	 */
-//	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-//	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestBody Address address, ShipmentStatus status, boolean isDelivery){
-//		Order order = orderService.getOrder(orderId);
-//		if (order.isShipmentMethodIsDelivery() == true) {
-//			ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
-//		}else{
-//			System.out.println("order is not to be delivered");
-//			return null;
-//		}
-//		return null;
-//	}
-
-
-	/**
-	 * RESTful service that gets all shipments in database
-	 * @return DTO shipments
-	 */
-	//TODO: Should this method exist? It is a security flaw since it sends data about all users to anyone
-	@GetMapping(value = { "/shipments", "/shipments/"})
-	public Set<ShipmentDto> getAllShipments(){
-		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-		for(Shipment shipment : shipmentService.getAllShipments()) {
-			shipmentsDto.add(convertToDto(shipment));
+	//public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery)
+	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
+	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") Address address, @RequestParam(name="status") ShipmentStatus status, @RequestParam(name="delivery") boolean isDelivery){
+		Order order = orderService.getOrder(orderId);
+		ShipmentDto shipmentDto = null;
+		if (order.isShipmentMethodIsDelivery() == true) {
+			shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
+		}else{
+			System.out.println("order is not to be delivered");
 		}
-		return shipmentsDto;
+		return shipmentDto;
 	}
 
-
+	//public Shipment getShipment(int shipmentID)
+	
+	//public User getUserOfShipment(int shipmentID)
+	
+	//public Shipment getShipmentOfOrder(Order order)
+	
+	//public Set<Shipment> getShipmentsOfUser(User user)
 	/**
 	 * RESTful service that gets all shipments of a user
 	 * @param username
@@ -413,18 +406,34 @@ public class ProjectGroup13Controller {
 		}
 		return shipmentsDto;
 	}
-
-
 	
-
-
-
+	//public Shipment editShipmentStatus (Shipment shipment, ShipmentStatus status)
+	
+	//public Shipment editShipmentEstimatedDate (Shipment shipment, Date estimatedDate)
+	
+	//public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime)
+	
+	/**
+	 * RESTful service that gets all shipments in database
+	 * @return DTO shipments
+	 */
+	//public Set<Shipment> getAllShipments() 
+	//TODO: Should this method exist? It is a security flaw since it sends data about all users to anyone
+	@GetMapping(value = { "/shipments", "/shipments/"})
+	public Set<ShipmentDto> getAllShipments(){
+		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+		for(Shipment shipment : shipmentService.getAllShipments()) {
+			shipmentsDto.add(convertToDto(shipment));
+		}
+		return shipmentsDto;
+	}
 
 	// ---------------------------------------------- ADDRESS CONTROLLER METHODS
 
 	/**
 	 * RESTful service that adds address to user
 	 */
+	//public Address createAddress(String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) 
 	@PostMapping(value = { "/user/{username}/new/address", "/user/{username}/new/address/" })
 	public AddressDto createAddress(@PathVariable("username") String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
 		//User user = userService.getUserByUsername(username);
@@ -432,21 +441,12 @@ public class ProjectGroup13Controller {
 		return addressDto;
 	}
 
-
-	/**
-	 * RESTful service that returns user's addresses
-	 */
-	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
-	public Set<AddressDto> getAllAddressesOfUser(@RequestParam String username){
-		User user = userService.getUserByUsername(username);
-		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
-		for(Address address : addressService.getAddressesByUser(user)) {
-			addressesDto.add(convertToDto(address));
-		}
-		return addressesDto;
-	}
-
+	//public User getUserOfAddress(Integer addressID)
 	
+	//public Address getAddressById(Integer addressID) 
+	
+	
+	//public boolean deleteAddress(int addressId)
 	/**
 	 * RESTful service that deletes address by id
 	 */
@@ -458,8 +458,8 @@ public class ProjectGroup13Controller {
 			return addressService.deleteAddress(addressId);
 		}
 	}
-
-
+	
+	//public void updateAddress(Address oldAddress, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode)
 	/**
 	 * RESTful service that updates address by id
 	 */
@@ -487,4 +487,23 @@ public class ProjectGroup13Controller {
 			return convertToDto(oldAddress);
 		}
 	}
+	
+	/**
+	 * RESTful service that returns user's addresses
+	 */
+	//public List<Address> getAddressesByUser(User user)
+	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
+	public Set<AddressDto> getAllAddressesOfUser(@RequestParam String username){
+		User user = userService.getUserByUsername(username);
+		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
+		for(Address address : addressService.getAddressesByUser(user)) {
+			addressesDto.add(convertToDto(address));
+		}
+		return addressesDto;
+	}
+	
+// ---------------------------------------------- CART CONTROLLER METHODS
+	
+// ---------------------------------------------- ARTWORK CONTROLLER METHODS
+	
 }
