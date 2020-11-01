@@ -165,6 +165,11 @@ public class ProjectGroup13Controller {
 	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="orderId") Integer orderId) throws IllegalArgumentException {
 		Order order = orderService.getOrder(orderId);
 		Payment payment = paymentService.createPayment(cardNumber, expirationDate, nameOnCard, cvv, order);
+		try { orderService.addPaymentToOrder(order, payment);} 
+		catch (IllegalArgumentException e) {
+			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
+			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
+		}
 		return convertToDto(payment);
 	}
 	
