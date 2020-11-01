@@ -20,13 +20,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
-import ca.mcgill.ecse321.projectgroup13.dto.AddressDto;
-import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
-import ca.mcgill.ecse321.projectgroup13.dto.CartDto;
-import ca.mcgill.ecse321.projectgroup13.dto.OrderDto;
-import ca.mcgill.ecse321.projectgroup13.dto.PaymentDto;
-import ca.mcgill.ecse321.projectgroup13.dto.ShipmentDto;
-import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Cart;
@@ -171,7 +164,9 @@ public class ProjectGroup13Controller {
 
 // ---------------------------------------------- USER CONTROLLER METHODS
 
-
+	// public User createUser(UserDto userDto) 
+	
+	//public User createUser(String username, String email, String password) 
 	@PostMapping(value = {"/newuser", "/newuser/"})
 	public UserDto createUser(@RequestParam(name = "username") String username, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password) throws RegistrationException{
 		System.out.println(username+ " " + email + " " + password);
@@ -184,10 +179,21 @@ public class ProjectGroup13Controller {
 		return null;
 	}
 
+	//public void deleteUser(String username)
 
-
-
-
+	//public User getUserByUsername(String username)
+	
+	//public void editEmail(String username, String newEmail)
+	
+	//public String login(LoginDto loginDto)
+	
+	//public void editBio(String username, String newBio)
+	
+	//public void editProfilePictureUrl(String username, String newUrl)
+	
+	//public String createToken(User user)
+	
+	//public String generateRandomPassword()
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS
 
@@ -246,10 +252,6 @@ public class ProjectGroup13Controller {
 		Payment payment = paymentService.getPayment(id);
 		return convertToDto(payment);
 	}
-
-
-
-
 
 
 
@@ -503,7 +505,45 @@ public class ProjectGroup13Controller {
 	}
 	
 // ---------------------------------------------- CART CONTROLLER METHODS
+	//public Cart createCart(User user)
+	
+	//public Cart createCart(User user, Artwork art)
+	
+	//public Cart createCart(User user, Set<Artwork> art)
+	
+	//public Cart getCart(int cartID)
+	
+	//public Cart getCartFromUser(User user)
+	
+	//public boolean deleteCart(int cartID)
+	
+	//public void deleteCart(Cart cart) 
+	
+	//public boolean removeFromCart(Cart cart, Artwork art)
+	
+	//public boolean addToCart(Cart cart, Artwork art)
+	
+	//public Set<Artwork> removeFromCart(Cart cart, Set<Artwork> art)
+	
+	//public Set<Artwork> addToCart(Cart cart, Set<Artwork> art)
+	
+	
 	
 // ---------------------------------------------- ARTWORK CONTROLLER METHODS
+	//public Artwork createArtwork(ArtworkDto artworkDto)
+	
+	//public Artwork createArtwork(String Title, ArrayList<String> usernames, Double worth)
+	
+	//public void deleteArtwork(Artwork artwork)
+	
+	//public void deleteArtworkById(int artworkId)
+	
+	//public Artwork getArtworkByID(int artworkID)
+	
+	//public Set<Artwork> getArtworksOfArtist(String username)
+	
+	//public void editArtworkDescription(Artwork artwork, String description)
+	
+	//TODO: Missing a bunch of update methods in ArtworkService. Need to write those and then add RESTful methods here to map to them.
 	
 }

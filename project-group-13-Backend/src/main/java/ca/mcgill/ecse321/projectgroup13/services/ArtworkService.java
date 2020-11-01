@@ -153,8 +153,10 @@ public class ArtworkService {
         artwork.setDescription(description);
     }
 
-
-
+    
+    //TODO: editArtworkName
+    //TODO: editArtwork  all attributes
+    
 
 
 

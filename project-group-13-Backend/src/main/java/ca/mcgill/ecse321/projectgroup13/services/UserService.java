@@ -111,6 +111,7 @@ public class UserService {
     //TODO make sure it checks that its admin
     @Transactional
     public void deleteUser(String username) throws RegistrationException {
+    	//TODO: must ensure that objects associated with user get deleted (cart, order, address)
         User user = userRepository.findUserByUsername(username);
         if(user==null) throw new RegistrationException("User does not exist");
         Set<Address> userAddresses = user.getAddress();
