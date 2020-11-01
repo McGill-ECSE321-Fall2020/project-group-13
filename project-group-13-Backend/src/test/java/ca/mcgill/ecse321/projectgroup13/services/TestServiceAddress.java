@@ -250,11 +250,15 @@ public class TestServiceAddress {
 			origCity = address.getCity();
 			
 		
-			addressService.updateAddress(ADDRESSID, ADDRESS,null, "SuckyToronto", "QUEBEC", "CANADA", "H4C2C4");
+			addressService.updateAddress(ID, ADDRESS,null, "SuckyToronto", "QUEBEC", "CANADA", "H4C2C4");
 			
 		}catch(IllegalArgumentException | RegistrationException e) {
 			
 		}
+		
+		System.out.print(addressRepository.findAddressByAddressID(ID).getCity());
+		System.out.print(origCity);
+		
 		assertFalse(addressRepository.findAddressByAddressID(ID).getCity().contentEquals(origCity));
 		
 		
