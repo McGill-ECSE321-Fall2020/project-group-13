@@ -45,9 +45,11 @@ public class AddressService {
 	 */
 	
 	@Transactional
+		//TODO: validate parameters
 	public Address createAddress(String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		if(username==null||streetAddress1==null||city==null|province==null||country==null||postalCode==null) throw new IllegalArgumentException("missing parameter");
 		if(userRepo.findUserByUsername(username)==null) throw new IllegalArgumentException("invalid user");
+
 		Address address = new Address();
 		address.setUser(userRepo.findUserByUsername(username));
 		address.setStreetAddress1(streetAddress1);
@@ -56,7 +58,7 @@ public class AddressService {
 		address.setProvince(province);
 		address.setCountry(country);
 		address.setPostalCode(postalCode);
-		addressRepo.save(address);
+		address = addressRepo.save(address);
 		return address;
 	}
 	
@@ -67,6 +69,7 @@ public class AddressService {
 	 */
 	
 	@Transactional
+	//TODO: cannot get user of address
 	public User getUserOfAddress(Integer addressID) {
 		Address address = addressRepo.findAddressByAddressID(addressID);
 		if(address == null) throw new IllegalArgumentException("invalid address");
@@ -83,20 +86,10 @@ public class AddressService {
 	
 	@Transactional
 	public Address getAddressById(Integer addressID) {
-		
-		if(addressID == null) {
+		if(addressID == null)
 			throw new IllegalArgumentException("You must input an ID");
-		}
-		
-		
-		Address address = addressRepo.findAddressByAddressID(addressID);
-		
-		if(address != null) {
-			return address;
-		} else {
-			throw new IllegalArgumentException("Address not found");
-		}
-		
+
+		return addressRepo.findAddressByAddressID(addressID);		
 	}
 	
 	/**
@@ -105,13 +98,13 @@ public class AddressService {
 	 * @param user
 	 * @return
 	 */
-	
 	@Transactional
 	public List<Address> getAddressesByUser(User user) {
+		if(user == null) throw new IllegalArgumentException("No user with this ID found");
+		if (userRepo.findUserByUsername(user.getUsername())==null) throw new IllegalArgumentException("invalid user");
 		
-			if (userRepo.findUserByUsername(user.getUsername())==null) throw new IllegalArgumentException("invalid user");
-			List<Address> addresses = addressRepo.findAddressesByUser(user);
-			return addresses;
+		List<Address> addresses = addressRepo.findAddressesByUser(user);
+		return addresses;
 	}
 	
 	/**
@@ -123,12 +116,7 @@ public class AddressService {
 	
 	@Transactional
 	public boolean deleteAddress(int addressId) {
-
 		Address address = addressRepo.findAddressByAddressID(addressId);
-		
-		if(address == null) {
-			throw new IllegalArgumentException("Address not found");
-		} 
 		
 		//Removing user association
 		User addressUser = address.getUser();
@@ -151,6 +139,7 @@ public class AddressService {
 	@Transactional	
 	public void updateAddress(Address oldAddress, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		if (addressRepo.findAddressByAddressID(oldAddress.getAddressID())==null) throw new IllegalArgumentException("invalid address");
+		//TODO: validate parameters
 	
 		//Creating updated address
 		oldAddress.setStreetAddress1(streetAddress1);
@@ -159,7 +148,7 @@ public class AddressService {
 		oldAddress.setProvince(province);
 		oldAddress.setCountry(country);
 		oldAddress.setPostalCode(postalCode);
-		addressRepo.save(oldAddress);
+		oldAddress = addressRepo.save(oldAddress);
 	}
 	
 	

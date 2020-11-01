@@ -12,6 +12,8 @@ import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import ca.mcgill.ecse321.projectgroup13.services.UserService;
 import ca.mcgill.ecse321.projectgroup13.services.AddressService;
+import ca.mcgill.ecse321.projectgroup13.services.ArtworkService;
+import ca.mcgill.ecse321.projectgroup13.services.CartService;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
-import ca.mcgill.ecse321.projectgroup13.dto.AddressDto;
-import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
-import ca.mcgill.ecse321.projectgroup13.dto.CartDto;
-import ca.mcgill.ecse321.projectgroup13.dto.OrderDto;
-import ca.mcgill.ecse321.projectgroup13.dto.PaymentDto;
-import ca.mcgill.ecse321.projectgroup13.dto.ShipmentDto;
-import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Cart;
@@ -55,7 +50,11 @@ public class ProjectGroup13Controller {
 	private UserService userService;
 	@Autowired
 	private AddressService addressService;
-
+	@Autowired
+	private ArtworkService artworkService;
+	@Autowired
+	private CartService cartService;
+	
 //------------------ toDTO methods ---------------------------------------------------------------------------------------------------
 	
 	private PaymentDto convertToDto(Payment e) {
@@ -167,9 +166,11 @@ public class ProjectGroup13Controller {
 
 
 
-	// ---------------------------------------------- USER CONTROLLER METHODS
+// ---------------------------------------------- USER CONTROLLER METHODS
 
-
+	// public User createUser(UserDto userDto) 
+	
+	//public User createUser(String username, String email, String password) 
 	@PostMapping(value = {"/newuser", "/newuser/"})
 	public UserDto createUser(@RequestParam(name = "username") String username, @RequestParam(name = "email") String email, @RequestParam(name = "password") String password) throws RegistrationException{
 		System.out.println(username+ " " + email + " " + password);
@@ -182,10 +183,21 @@ public class ProjectGroup13Controller {
 		return null;
 	}
 
+	//public void deleteUser(String username)
 
-
-
-
+	//public User getUserByUsername(String username)
+	
+	//public void editEmail(String username, String newEmail)
+	
+	//public String login(LoginDto loginDto)
+	
+	//public void editBio(String username, String newBio)
+	
+	//public void editProfilePictureUrl(String username, String newUrl)
+	
+	//public String createToken(User user)
+	
+	//public String generateRandomPassword()
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS
 
@@ -193,8 +205,8 @@ public class ProjectGroup13Controller {
 
 
 	//public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) 
-	@PostMapping(value = { "/pay", "/pay/" })
-	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @RequestParam(name="orderId") Integer orderId) throws IllegalArgumentException {
+	@PostMapping(value = { "/order/{orderId}/pay", "/order/{orderId}/pay/" })
+	public PaymentDto PayForOrder(@RequestParam(name="card") long cardNumber, @RequestParam(name="expiry") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.util.Date expirationDate, @RequestParam(name="name") String nameOnCard, @RequestParam(name="cvv") int cvv, @PathVariable("user") Integer orderId) throws IllegalArgumentException {
 		Order order = orderService.getOrder(orderId);
 		
 		Payment payment = paymentService.createPayment(cardNumber, new java.sql.Date(expirationDate.getTime()), nameOnCard, cvv, order);
@@ -202,6 +214,7 @@ public class ProjectGroup13Controller {
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
+			//TODO: Maybe return null?
 		}
 		return convertToDto(payment);
 	}
@@ -225,7 +238,7 @@ public class ProjectGroup13Controller {
 	}
 	
 	//public List<Payment> getPaymentsForArtist(User user)
-	@GetMapping(value = { "/payments/{artist}/artist", "/payments/{artist}/artist"})
+	@GetMapping(value = { "/payments/{artist}/artist", "/payments/{artist}/artist/"})
 	public Set<PaymentDto> getPaymentsForArtist(@PathVariable("artist") String username){
 		User artist = userService.getUserByUsername(username);
 		Set<PaymentDto> paymentsDto = new HashSet<PaymentDto>();
@@ -237,6 +250,7 @@ public class ProjectGroup13Controller {
 	
 
 	//public Payment getPayment(int paymentID)
+	//TODO: should only be able to get payments linked to your account!
 	@GetMapping(value = { "/payments/{id}", "/payments/{id}/" })
 	public PaymentDto getPaymentById(@PathVariable("id") Integer id) throws IllegalArgumentException {
 		Payment payment = paymentService.getPayment(id);
@@ -245,22 +259,20 @@ public class ProjectGroup13Controller {
 
 
 
-
-
-
-
 	// ---------------------------------------------- ORDER CONTROLLER METHODS
 
-
-	@PostMapping(value = { "/{username}/order", "/{username}/order/" })
+	//public Order createOrder(User user)
+	@PostMapping(value = { "/user/{username}/new/order", "/user/{username}/new/order/" })
 	public OrderDto createOrder(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
 		Order order = orderService.createOrder(user);
 		OrderDto orderDto = convertToDto(order);
 		return orderDto;
 	}
+	
+	//public Order createOrder(User user, Set<Artwork> art)
 
-
+	//public List<Order> getOrdersFromUser(User user)
 	@GetMapping(value = {"/user/{username}/orders", "/user/{username}/orders/"})
 	public List<OrderDto> getAllOrdersOfUser(@PathVariable String username){
 		List<OrderDto> orders = new ArrayList<OrderDto>();
@@ -270,11 +282,94 @@ public class ProjectGroup13Controller {
 		}
 		return orders;
 	}
+	
+	//public Order getMostRecentOrder(User user)
+	@GetMapping(value = {"/user/{username}/orders/most-recent", "/user/{username}/orders/most-recent/"})
+	public OrderDto getMostRecentOrderOfUser(@PathVariable String username){
+		OrderDto order;
+		User user = userService.getUserByUsername(username);
+		order = convertToDto(orderService.getMostRecentOrder(user));
+		
+		return order;
+	}
+	
+	//public Order getOrder(int orderID)
+	@GetMapping(value = { "/user/{username}/order/{orderId}", "/user/{username}/order/{orderId}/" })
+	public OrderDto getOrderDtoById(@PathVariable("orderId") Integer id, @PathVariable("username") String username) throws IllegalArgumentException {
+		Order order = null;
+		User user = userService.getUserByUsername(username);
+		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
+			if (o.getOrderID()==id) {
+				order = o;
+				break;
+			}
+		}
+		return convertToDto(order);
+	}
+	
+	//public boolean deleteOrder(Order order)
+	@DeleteMapping(value = { "/user/{username}/delete/order/{orderId}", "/user/{username}/delete/order/{orderId}/" })
+	public boolean deleteOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id){
+		User user = userService.getUserByUsername(username);
+		Order order = null;
 
-
-
-
-
+		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
+			if (o.getOrderID()==id) {
+				order = o;
+				break;
+			}
+		}
+		
+		if (order == null) 		//TODO: what to do if user is not authorized to delete order
+			return true;		//there was nothing to delete, therefore we successfully complete operation?
+		
+		return orderService.deleteOrder(order);
+	}
+	
+	//public boolean removeFromOrder(Order order, Artwork art)
+	@PutMapping(value = { "/user/{username}/edit-/order/{orderId}", "/user/{username}/edit-/order/{orderId}/" })
+	public boolean removeFromOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId){
+		Order order = null;
+		User user = userService.getUserByUsername(username);
+		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
+			if (o.getOrderID()==id) {
+				order = o;
+				break;
+			}
+		}
+		
+		if (order == null)
+			return false;
+		
+		Artwork art = artworkService.getArtworkByID(artId);
+		return orderService.removeFromOrder(order, art);
+	}
+	
+	//public boolean addToOrder(Order order, Artwork art)
+	@PutMapping(value = { "/user/{username}/edit+/order/{orderId}", "/user/{username}/edit+/order/{orderId}/" })
+	public boolean addToOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId) {
+		Order order = null;
+		User user = userService.getUserByUsername(username);
+		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
+			if (o.getOrderID()==id) {
+				order = o;
+				break;
+			}
+		}
+		
+		if (order == null)
+			return false;
+		
+		Artwork art = artworkService.getArtworkByID(artId);
+		return orderService.addToOrder(order, art);
+	}
+	
+	//TODO: Are these two methods necessary? If so, how do we implement their RESTful service controller methods?
+	//public boolean removeFromOrder(Order order, Set<Artwork> art)
+	//public boolean addToOrder(Order order, Set<Artwork> art)
+	
+	
+	
 	// ---------------------------------------------- SHIPMENT CONTROLLER METHODS
 
 
@@ -283,23 +378,53 @@ public class ProjectGroup13Controller {
 	 * @param orderId
 	 * @return shipment dto
 	 */
-//	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-//	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestBody Address address, ShipmentStatus status, boolean isDelivery){
-//		Order order = orderService.getOrder(orderId);
-//		if (order.isShipmentMethodIsDelivery() == true) {
-//			ShipmentDto shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
-//		}else{
-//			System.out.println("order is not to be delivered");
-//			return null;
-//		}
-//		return null;
-//	}
+	//public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery)
+	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
+	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") Address address, @RequestParam(name="status") ShipmentStatus status, @RequestParam(name="delivery") boolean isDelivery){
+		Order order = orderService.getOrder(orderId);
+		ShipmentDto shipmentDto = null;
+		if (order.isShipmentMethodIsDelivery() == true) {
+			shipmentDto = convertToDto(shipmentService.createShipment(orderService.getOrder(orderId), address, status, Date.valueOf("2020-8-04"), Time.valueOf("18:07"), isDelivery));
+		}else{
+			System.out.println("order is not to be delivered");
+		}
+		return shipmentDto;
+	}
 
-
+	//public Shipment getShipment(int shipmentID)
+	
+	//public User getUserOfShipment(int shipmentID)
+	
+	//public Shipment getShipmentOfOrder(Order order)
+	
+	//public Set<Shipment> getShipmentsOfUser(User user)
+	/**
+	 * RESTful service that gets all shipments of a user
+	 * @param username
+	 * @return DTO shipments
+	 */
+	@GetMapping(value = { "/user/{username}/shipments", "/user/{username}/shipments/"})
+	public Set<ShipmentDto> getAllShipmentsOfUser(@PathVariable String username){
+		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
+		User user = userService.getUserByUsername(username);
+		for(Shipment shipment : shipmentService.getShipmentsOfUser(user)) {
+			shipmentsDto.add(convertToDto(shipment));
+		}
+		return shipmentsDto;
+	}
+	
+	//public Shipment editShipmentStatus (Shipment shipment, ShipmentStatus status)
+	
+	//public Shipment editShipmentEstimatedDate (Shipment shipment, Date estimatedDate)
+	
+	//public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime)
+	
 	/**
 	 * RESTful service that gets all shipments in database
 	 * @return DTO shipments
 	 */
+	//public Set<Shipment> getAllShipments() 
+	//TODO: Should this method exist? It is a security flaw since it sends data about all users to anyone
 	@GetMapping(value = { "/shipments", "/shipments/"})
 	public Set<ShipmentDto> getAllShipments(){
 		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
@@ -309,58 +434,29 @@ public class ProjectGroup13Controller {
 		return shipmentsDto;
 	}
 
-
-	/**
-	 * RESTful service that gets all shipments of a user
-	 * @param username
-	 * @return DTO shipments
-	 */
-	@GetMapping(value = { "/shipments/user/{username}", "/shipments/user/{username}/"})
-	public Set<ShipmentDto> getAllShipmentsOfUser(@PathVariable String username){
-		Set<ShipmentDto> shipmentsDto = new HashSet<ShipmentDto>();
-		User user = userService.getUserByUsername(username);
-		for(Shipment shipment : shipmentService.getShipmentsOfUser(user)) {
-			shipmentsDto.add(convertToDto(shipment));
-		}
-		return shipmentsDto;
-	}
-
-
-	
-
-
-
-
 	// ---------------------------------------------- ADDRESS CONTROLLER METHODS
 
 	/**
 	 * RESTful service that adds address to user
 	 */
-	@PostMapping(value = { "/addAddress", "/addAddress" })
-	public AddressDto createAddress(@RequestParam String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
-		User user = userService.getUserByUsername(username);
-		AddressDto addressDto = convertToDto(addressService.createAddress(user, streetAddress1, streetAddress2, city, province, country, postalCode));
+	//public Address createAddress(String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) 
+	@PostMapping(value = { "/user/{username}/new/address", "/user/{username}/new/address/" })
+	public AddressDto createAddress(@PathVariable("username") String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode){
+		//User user = userService.getUserByUsername(username);
+		AddressDto addressDto = convertToDto(addressService.createAddress(username, streetAddress1, streetAddress2, city, province, country, postalCode));
 		return addressDto;
 	}
 
-
-	/**
-	 * RESTful service that returns user's addresses
-	 */
-	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
-	public Set<AddressDto> getAllAddressOfUser(@RequestParam User user){
-		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
-		for(Address address : addressService.getAddressesByUser(user)) {
-			addressesDto.add(convertToDto(address));
-		}
-		return addressesDto;
-	}
-
+	//public User getUserOfAddress(Integer addressID)
 	
+	//public Address getAddressById(Integer addressID) 
+	
+	
+	//public boolean deleteAddress(int addressId)
 	/**
 	 * RESTful service that deletes address by id
 	 */
-	@DeleteMapping(value = {"/addresses/{addressId}", "/addresses/{addressId}"})
+	@DeleteMapping(value = {"/address/{addressId}/delete", "/address/{addressId}/delete/"})
 	public boolean deleteAddress(@PathVariable(name = "addressId") Integer addressId) {
 		if (addressId == null) {
 			throw new IllegalArgumentException("There is no such Address Id!");
@@ -368,13 +464,14 @@ public class ProjectGroup13Controller {
 			return addressService.deleteAddress(addressId);
 		}
 	}
-
-
+	
+	//public void updateAddress(Address oldAddress, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode)
 	/**
 	 * RESTful service that updates address by id
 	 */
-	@PutMapping(value = {"/addresses/addressId}", "/addresses/addressId}"})
-	public AddressDto updateAddress(@PathVariable(name = "addressId") @RequestParam Integer addressId,String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) throws IllegalArgumentException {
+	@PutMapping(value = {"/address/{addressId}/update", "/address/{addressId}/update/"})
+	public AddressDto updateAddress(@PathVariable(name = "addressId") @RequestParam Integer addressId, @RequestParam String streetAddress1, @RequestParam String streetAddress2, 
+			@RequestParam String city, @RequestParam String province, @RequestParam String country, @RequestParam String postalCode) throws IllegalArgumentException {
 		if (addressId == null) {
 			throw new IllegalArgumentException("There must be an addressID to update");
 		} else if (streetAddress1 == null){
@@ -396,4 +493,138 @@ public class ProjectGroup13Controller {
 			return convertToDto(oldAddress);
 		}
 	}
+	
+	/**
+	 * RESTful service that returns user's addresses
+	 */
+	//public List<Address> getAddressesByUser(User user)
+	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
+	public Set<AddressDto> getAllAddressesOfUser(@RequestParam String username){
+		User user = userService.getUserByUsername(username);
+		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
+		for(Address address : addressService.getAddressesByUser(user)) {
+			addressesDto.add(convertToDto(address));
+		}
+		return addressesDto;
+	}
+	
+// ---------------------------------------------- CART CONTROLLER METHODS
+	//public Cart createCart(User user)
+	@PostMapping(value = { "/user/{username}/new/cart/empty", "/user/{username}/new/cart/empty/" })
+	public CartDto createCart(@PathVariable String username){
+		User user = userService.getUserByUsername(username);
+		Cart cart = cartService.createCart(user);
+		CartDto cartDto = convertToDto(cart);
+		return cartDto;
+	}
+	
+	//public Cart createCart(User user, Artwork art)
+	@PostMapping(value = { "/user/{username}/new/cart", "/user/{username}/new/cart/" })
+	public CartDto createCartWithArt(@PathVariable String username, @RequestParam(name="artid") Integer artId){
+		User user = userService.getUserByUsername(username);
+		Cart cart = cartService.createCart(user);
+		Artwork art = artworkService.getArtworkByID(artId);
+		cartService.addToCart(cart, art);
+		
+		CartDto cartDto = convertToDto(cart);
+		return cartDto;
+	}
+	//public Cart createCart(User user, Set<Artwork> art)
+	
+	//public Cart getCart(int cartID)
+	@GetMapping(value = { "/user/{username}/cart/{cartId}", "/user/{username}/cart/{cartId}/" })
+	public CartDto getCartDtoById(@PathVariable("cartId") Integer id, @PathVariable("username") String username) throws IllegalArgumentException {
+		Cart cart = null;
+		User user = userService.getUserByUsername(username);
+		Cart userCart = cartService.getCartFromUser(user);
+		if (userCart.getCartID()==id)
+			cart = userCart;
+	
+		return convertToDto(cart);
+	}
+	
+	//public Cart getCartFromUser(User user)
+	@GetMapping(value = {"/user/{username}/cart", "/user/{username}/cart/"})
+	public CartDto getCartOfUser(@PathVariable String username){
+		User user = userService.getUserByUsername(username);
+		Cart userCart = cartService.getCartFromUser(user);
+
+		return convertToDto(userCart);
+	}
+	
+	//public void deleteCart(Cart cart) 
+	@DeleteMapping(value = { "/user/{username}/delete/cart/{cartId}", "/user/{username}/delete/cart/{cartId}/" })
+	public boolean deleteCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id){
+		User user = userService.getUserByUsername(username);
+		Cart cart = null;
+
+		Cart userCart = cartService.getCartFromUser(user);
+		if (userCart.getCartID()==id)
+			cart = userCart;
+		
+		if (cart == null) 		//TODO: what to do if user is not authorized to delete cart
+			return true;		//there was nothing to delete, therefore we successfully complete operation?
+		
+		cartService.deleteCart(cart);
+		
+		return true;	//TODO: Method always return true. Check that out.
+	}
+	
+	//public boolean removeFromCart(Cart cart, Artwork art)
+	@PutMapping(value = { "/user/{username}/edit-/cart/{cartId}", "/user/{username}/edit-/cart/{cartId}/" })
+	public boolean removeFromCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id, @RequestParam(name="artid") Integer artId){
+		User user = userService.getUserByUsername(username);
+		Cart cart = null;
+
+		Cart userCart = cartService.getCartFromUser(user);
+		if (userCart.getCartID()==id)
+			cart = userCart;
+		
+		if (cart == null) 		//TODO: what to do if user is not authorized to delete from cart
+			return false;		//there was nothing to delete, therefore we successfully complete operation?
+		
+		Artwork art = artworkService.getArtworkByID(artId);
+		return cartService.removeFromCart(cart, art);
+	}
+	
+	//public boolean addToCart(Cart cart, Artwork art)
+	@PutMapping(value = { "/user/{username}/edit+/cart/{cartId}", "/user/{username}/edit+/cart/{cartId}/" })
+	public boolean addToCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id, @RequestParam(name="artid") Integer artId){
+		User user = userService.getUserByUsername(username);
+		Cart cart = null;
+
+		Cart userCart = cartService.getCartFromUser(user);
+		if (userCart.getCartID()==id)
+			cart = userCart;
+		
+		if (cart == null) 		//TODO: what to do if user is not authorized to add to cart
+			return false;		//there was nothing to add, therefore we successfully complete operation?
+		
+		Artwork art = artworkService.getArtworkByID(artId);
+		return cartService.addToCart(cart, art);
+	}
+	
+	//public Set<Artwork> removeFromCart(Cart cart, Set<Artwork> art)
+	
+	//public Set<Artwork> addToCart(Cart cart, Set<Artwork> art)
+	
+	
+	
+// ---------------------------------------------- ARTWORK CONTROLLER METHODS
+	//public Artwork createArtwork(ArtworkDto artworkDto)
+	
+	//public Artwork createArtwork(String Title, ArrayList<String> usernames, Double worth)
+	
+	//public void deleteArtwork(Artwork artwork)
+	
+	//public void deleteArtworkById(int artworkId)
+	
+	//public Artwork getArtworkByID(int artworkID)
+	
+	//public Set<Artwork> getArtworksOfArtist(String username)
+	
+	//public void editArtworkDescription(Artwork artwork, String description)
+	
+	//TODO: Missing a bunch of update methods in ArtworkService. Need to write those and then add RESTful methods here to map to them.
+	
 }

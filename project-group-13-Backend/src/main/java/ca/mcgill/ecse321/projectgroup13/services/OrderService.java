@@ -282,6 +282,18 @@ public class OrderService {
 		}
 		order.setTotalAmount(total);
 	}
+
+
+	/**
+	 * service method to change isDelivery boolean
+	 * @param orderId
+	 * @param isDelivery
+	 */
+	public void editIsDelivery(int orderId, boolean isDelivery){
+		Order order = orderRepository.findOrderByOrderID(orderId);
+		order.setShipmentMethodIsDelivery(isDelivery);
+		order = orderRepository.save(order);
+	}
 	
 	
 	private <T> List<T> toList(Iterable<T> iterable){

@@ -1,13 +1,17 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
 import java.util.Set;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnTransformer;
 
 @Entity
 @Table(name="users")
@@ -21,6 +25,9 @@ this.username = value;
 public String getUsername() {
 return this.username;
     }
+
+@Column
+@ColumnTransformer(read = "pgp_sym_decrypt(password, 'sajdfhskjfh234')", write = "pgp_sym_encrypt(?, 'sajdfhskjfh234')")
 private String password;
 
 public void setPassword(String value) {

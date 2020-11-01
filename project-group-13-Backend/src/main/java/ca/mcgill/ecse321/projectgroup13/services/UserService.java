@@ -78,6 +78,7 @@ public class UserService {
     @Transactional
     public User createUser(String username, String email, String password) throws RegistrationException {
         User user = new User();
+        if(userRepository.findUserByUsername(username) != null) throw new RegistrationException("Username already in use");
         //checking if email syntax is valid
         //TODO: validate email
         if(checkIfValidEmail(email) == true){
@@ -110,6 +111,7 @@ public class UserService {
     //TODO make sure it checks that its admin
     @Transactional
     public void deleteUser(String username) throws RegistrationException {
+    	//TODO: must ensure that objects associated with user get deleted (cart, order, address)
         User user = userRepository.findUserByUsername(username);
         if(user==null) throw new RegistrationException("User does not exist");
         Set<Address> userAddresses = user.getAddress();
