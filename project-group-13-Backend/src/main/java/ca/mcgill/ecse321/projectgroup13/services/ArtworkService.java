@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -70,6 +71,26 @@ public class ArtworkService {
     	
     }
     
+    public Artwork createArtwork(String Title, ArrayList<String> usernames, Double worth) throws illegalArgumentException {
+    	if( Title.trim()==null ) throw new illegalArgumentException("no title for artwork");
+    	if(usernames.isEmpty()) throw new illegalArgumentException("no artist for artwork") ;
+    	if(worth==null||worth==0) throw new illegalArgumentException("no worth specified") ;
+    	
+    	Artwork artwork = new Artwork();
+    	for(String name: usernames) {
+    		User user = userRepo.findUserByUsername(name);
+    		if(user==null) throw new illegalArgumentException("invalid user");
+    		Set<User> artists=artwork.getArtist();
+    		artists.add(user);
+    		artwork.setArtist(artists);
+    		Set<Artwork> works= user.getArtwork();
+    		works.add(artwork);
+    		user.setArtwork(works);
+    		artworkRepo.save(artwork);
+    		userRepo.save(user);
+    	}
+    	return artwork;
+    }
 
 
 
