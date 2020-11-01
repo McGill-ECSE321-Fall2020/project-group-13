@@ -81,7 +81,7 @@ public class UserService {
         if(userRepository.findUserByUsername(username) != null) throw new RegistrationException("Username already in use");
         //checking if email syntax is valid
         //TODO: validate email
-        if(checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
+        if(checkIfValidEmail(email) || userRepository.findUserByEmail(email) != null) {
             throw new RegistrationException("invalid email");
         }
         //if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
@@ -118,7 +118,7 @@ public class UserService {
 
     @Transactional
     public User getUserByUsername(String username){
-        if(username ==null) throw IllegalArgumentException("invalid username");
+        if(username ==null) throw new IllegalArgumentException("invalid username");
         User user = userRepository.findUserByUsername(username);
         return user;
     }

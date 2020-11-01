@@ -149,6 +149,7 @@ public class ShipmentService {
             throw new IllegalArgumentException("status cannot be null");
 
         shipment.setShipmentInfo(status);
+        shipmentRepo.save(shipment);
         return shipment;
     }
 
@@ -168,6 +169,7 @@ public class ShipmentService {
             throw new IllegalArgumentException("estimatedDate cannot be null");
 
         shipment.setEstimatedDateOfArrival(estimatedDate);
+        shipmentRepo.save(shipment);
         return shipment;
     }
 
@@ -186,6 +188,7 @@ public class ShipmentService {
             throw new IllegalArgumentException("estimatedTime cannot be null");
 
         shipment.setEstimatedTimeOfArrival(estimatedTime);
+        shipmentRepo.save(shipment);
         return shipment;
     }
 
