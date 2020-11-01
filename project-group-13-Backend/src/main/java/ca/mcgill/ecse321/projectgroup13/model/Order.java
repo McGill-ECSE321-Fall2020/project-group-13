@@ -1,15 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Set;
-import javax.persistence.OneToMany;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="orders")
@@ -75,6 +67,7 @@ public void setUser(User user) {
    this.user = user;
 }
 
+@Enumerated(EnumType.STRING)
 private OrderStatus orderStatus;
 
 public void setOrderStatus(OrderStatus value) {

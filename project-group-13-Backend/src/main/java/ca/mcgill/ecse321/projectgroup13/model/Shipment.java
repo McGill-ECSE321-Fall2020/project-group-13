@@ -61,7 +61,6 @@ this.shipmentID = value;
 public Integer getShipmentID() {
 return this.shipmentID;
     }
-private boolean shipmentMethodIsDelivery;
 
 /**
  * <pre>
@@ -98,7 +97,6 @@ final int prime = 31;
    	result = prime * result + ((order == null) ? 0 : order.hashCode());
    	result = prime * result + ((shipmentID == null) ? 0 : shipmentID.hashCode());
    	result = prime * result + ((shipmentInfo == null) ? 0 : shipmentInfo.hashCode());
-   	result = prime * result + (shipmentMethodIsDelivery ? 1231 : 1237);
    	return result;
    }
 @Override
@@ -132,8 +130,6 @@ if (this == obj)
    	} else if (!shipmentID.equals(other.shipmentID))
    		return false;
    	if (shipmentInfo != other.shipmentInfo)
-   		return false;
-   	if (shipmentMethodIsDelivery != other.shipmentMethodIsDelivery)
    		return false;
    	return true;
    }
