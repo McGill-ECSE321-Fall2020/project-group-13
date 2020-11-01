@@ -15,6 +15,7 @@ import ca.mcgill.ecse321.projectgroup13.services.AddressService;
 import ca.mcgill.ecse321.projectgroup13.services.ArtworkService;
 import ca.mcgill.ecse321.projectgroup13.services.CartService;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
+import ca.mcgill.ecse321.projectgroup13.services.exception.illegalArgumentException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -612,19 +613,83 @@ public class ProjectGroup13Controller {
 	
 // ---------------------------------------------- ARTWORK CONTROLLER METHODS
 	//public Artwork createArtwork(ArtworkDto artworkDto)
-	
+		
 	//public Artwork createArtwork(String Title, ArrayList<String> usernames, Double worth)
+	@PostMapping(value = { "/artwork/new", "/artwork/new/" })
+	public ArtworkDto createArtwork(@RequestParam(name="artid") String title, @RequestParam(name="usernames") String[] usernames , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
+		Artwork art = artworkService.createArtwork(title, usernames, worth);
+		return convertToDto(art);
+	}
 	
 	//public void deleteArtwork(Artwork artwork)
+	//TODO: deleting an artwork => removing self from list of artists. If list of artists is empty, then delete artwork.
+//	@PostMapping(value = { "/user/{username}/remove/artist/{artId}", "/user/{username}/remove/artist/{artId}/" })
+//	public ArtworkDto deleteArtwork(@RequestParam(name="artid") String title, @RequestParam(name="usernames") String[] usernames , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
+//		Artwork art = artworkService.createArtwork(title, usernames, worth);
+//		return convertToDto(art);
+//	}
 	
-	//public void deleteArtworkById(int artworkId)
 	
 	//public Artwork getArtworkByID(int artworkID)
+	@GetMapping(value = { "artwork/{artId}", "artwork/{artId}/" })
+	public ArtworkDto getArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
+		Artwork art = artworkService.getArtworkByID(id);
+	
+		return convertToDto(art);
+	}
+	//public void deleteArtworkById(int artworkId)
+	@GetMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
+	public boolean deleteArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
+		artworkService.deleteArtworkById(id);
+	
+		return true;
+	}
 	
 	//public Set<Artwork> getArtworksOfArtist(String username)
 	
 	//public void editArtworkDescription(Artwork artwork, String description)
+	//public void editArtwork_title(Artwork artwork, String title)
+	//public void editArtwork_creationDate(Artwork artwork, String date)
+	//public void editArtwork_dimensions(Artwork artwork, String dimensions)
+	//public void editArtwork_medium(Artwork artwork, String medium)
+	//public void editArtwork_collection(Artwork artwork, String collection)
+	//public void editArtwork_imageURL(Artwork artwork, String image)
+	//public void setArtwork_artworkSold(Artwork artwork)
+	//public void editArtwork_isOnPremise(Artwork artwork, boolean onPremise)
+	//public void editArtwork_worth(Artwork artwork, double worth)
+	@PutMapping(value={"/artwork/{id}/update", "/artwork/{id}/update/"})
+	public boolean updateArtwork(@PathVariable("id") Integer artId, @RequestParam(name="description", required=false) String description, 
+			@RequestParam(name="title", required=false) String title, @RequestParam(name="creationDate", required=false) String creationDate,
+			@RequestParam(name="dimensions", required=false) String dimensions, @RequestParam(name="medium", required=false) String medium,
+			@RequestParam(name="collection", required=false) String collection, @RequestParam(name="imageURL", required=false) String imageURL,
+			@RequestParam(name="artworkSold", required=false, defaultValue = "false") boolean artworkSold, @RequestParam(name="OnPremise", required=false, defaultValue = "false") boolean OnPremise,
+			@RequestParam(name="worth", required=false, defaultValue = "-1") double worth) {
+		
+		Artwork artwork = artworkService.getArtworkByID(artId);
+		
+		if (description != null)
+			artworkService.editArtwork_description(artwork, description);
+		if (title != null)
+			artworkService.editArtwork_title(artwork, title);
+		if (creationDate != null)
+			artworkService.editArtwork_creationDate(artwork, creationDate);
+		if (dimensions != null)
+			artworkService.editArtwork_dimensions(artwork, dimensions);
+		if (medium != null)
+			artworkService.editArtwork_medium(artwork, medium);
+		if (collection != null)
+			artworkService.editArtwork_collection(artwork, collection);
+		if (imageURL != null)
+			artworkService.editArtwork_imageURL(artwork, imageURL);
+		if (artworkSold)
+			artworkService.setArtwork_artworkSold(artwork);
+		if (OnPremise != artwork.isIsOnPremise())
+			artworkService.editArtwork_isOnPremise(artwork, OnPremise);
+		if (worth >= 0)
+			artworkService.editArtwork_worth(artwork, worth);
+
+		return true;
+	}
 	
-	//TODO: Missing a bunch of update methods in ArtworkService. Need to write those and then add RESTful methods here to map to them.
 	
 }

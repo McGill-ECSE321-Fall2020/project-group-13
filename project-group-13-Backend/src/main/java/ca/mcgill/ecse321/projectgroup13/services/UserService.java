@@ -208,6 +208,7 @@ public class UserService {
      *
      * @return randomly generated password
      */
+    //TODO: should this be a public method?
     public String generateRandomPassword() {
         String upperCaseLetters = RandomStringUtils.random(1, 65, 90, true, true);
         String lowerCaseLetters = RandomStringUtils.random(1, 97, 122, true, true);
