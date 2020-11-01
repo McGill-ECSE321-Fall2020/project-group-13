@@ -64,10 +64,6 @@ public class PaymentService {
 		payment.setNameOnCard(nameOnCard);
 		payment.setCvv(cvv);
 		payment.setOrder(order);
-
-		order.setPayment(payment);
-		order.setOrderStatus(OrderStatus.Placed);
-		orderRepo.save(order);
 		payment = paymentRepo.save(payment);
 		return payment;
 	}

@@ -248,7 +248,6 @@ public class OrderService {
 		order.setPayment(payment);
 		order.setOrderStatus(OrderStatus.Placed);
 		orderRepository.save(order);
-		System.out.println("testing2");
 	}
 	
 	/**

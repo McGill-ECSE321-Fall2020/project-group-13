@@ -400,18 +400,44 @@ public class ProjectGroup13Controller {
 	 * @return shipment dto
 	 */
 	//public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery)
-	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestParam(name="status") ShipmentStatus status){
+	@PostMapping(value = { "/order/{orderId}/shipping", "/order/{orderId}/shipping/"})
+	public ShipmentDto createShipment(@PathVariable("orderId") int orderId, @RequestParam(name = "addressId") int addressId , @RequestBody Shipment shipment){
 		Order order = orderService.getOrder(orderId);
-//		Address address = addressService.getAddressById(addressId);
-		ShipmentDto shipmentDto = null;
+		Address address = addressService.getAddressById(addressId);
+		Shipment newShipment = null;
 		if (order.isShipmentMethodIsDelivery() == true) {
-			shipmentDto = convertToDto(shipmentService.createShipment(orderId, addressId, Date.valueOf("2020-8-04"), Time.valueOf("18:07")));
+			System.out.println("testing  " + address.getAddressID());
+			newShipment = shipmentService.createShipment(orderId, addressId, shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival());
+			try {
+				orderService.addShipmentToOrder(order, newShipment);
+			} catch (IllegalArgumentException e) {
+				System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
+				throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
+				//TODO: Maybe we should return a null value instead of throwing an exception???
+			}
 		}else{
 			System.out.println("order is not to be delivered");
 		}
-		return shipmentDto;
+		return convertToDto(newShipment);
 	}
+
+
+//	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
+//	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestParam(name="status") ShipmentStatus status){
+//		Order order = orderService.getOrder(orderId);
+////		Address address = addressService.getAddressById(addressId);
+//		ShipmentDto shipmentDto = null;
+//		if (order.isShipmentMethodIsDelivery() == true) {
+//			shipmentDto = convertToDto(shipmentService.createShipment(orderId, addressId, Date.valueOf("2020-8-04"), Time.valueOf("18:07")));
+//		}else{
+//			System.out.println("order is not to be delivered");
+//		}
+//		return shipmentDto;
+//	}
+
+
+
+
 
 	//public Shipment getShipment(int shipmentID)
 	
