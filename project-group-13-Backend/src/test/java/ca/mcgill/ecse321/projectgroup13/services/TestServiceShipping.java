@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.projectgroup13.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
@@ -37,6 +38,7 @@ import ca.mcgill.ecse321.projectgroup13.model.Payment;
 import ca.mcgill.ecse321.projectgroup13.model.Shipment;
 import ca.mcgill.ecse321.projectgroup13.model.ShipmentStatus;
 import ca.mcgill.ecse321.projectgroup13.model.User;
+import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 public class TestServiceShipping {
 	@Mock
 	private UserRepository userRepository;
@@ -59,6 +61,10 @@ public class TestServiceShipping {
 	private UserService userService;
 	@InjectMocks
 	private ShipmentService shipmentService;
+	@InjectMocks
+	private AddressService addressService;
+	@InjectMocks
+	private OrderService orderService;
 	private String error = "";
 	
 	private static final int invalidID = 404;
@@ -258,6 +264,29 @@ public class TestServiceShipping {
 		
 		assertEquals(shipment.getEstimatedTimeOfArrival(),Time.valueOf("14:00"));
 		
+	}
+	
+	@Test 
+	public void testGetUserOfShipment() {
+		try {
+			//Create a user
+			User user = userService.createUser("ibrahim", "ibrahimt@google.com", "cool boi");
+			
+			//Create an address
+			Address address = addressService.createAddress("ibrahim" ,"47 Cesar Avenue", null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+			
+			//Create an order
+			order = orderService.createOrder(user);
+			
+			//Create a shipment with proper orderID and addressID
+			Shipment shipment = shipmentService.createShipment(order.getOrderID(),address.getAddressID(),Date.valueOf("2020-12-31"),Time.valueOf("14:00"));   
+			
+			//Assert that shipment recieved by calling method is equal to initial user
+			assertEquals(shipmentService.getUserOfShipment(shipment.getShipmentID()), user);
+			
+		} catch (IllegalArgumentException | RegistrationException e) {
+			
+		}
 	}
 	
 
