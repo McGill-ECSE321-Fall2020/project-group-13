@@ -59,15 +59,12 @@ public class TestServiceShipping {
 	private AddressRepository addressRepo;
 	@InjectMocks
 	private UserService userService;
-	
 	@InjectMocks
 	private ShipmentService shipmentService;
-
 	@InjectMocks
 	private AddressService addressService;
 	@InjectMocks
 	private OrderService orderService;
-
 	private String error = "";
 	
 	private static final int invalidID = 404;
@@ -116,20 +113,17 @@ public class TestServiceShipping {
 		
 		lenient().when(userRepository.save(any(User.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
-        lenient().when(orderRepo.save(any(Order.class))).thenAnswer(returnParameterAsAnswer);
-        lenient().when(addressRepo.save(any(Address.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(shipmentRepo.save(any(Shipment.class))).thenAnswer(returnParameterAsAnswer);
 	}
 	@Test
 	public void testCreateShipmentSuccess() {
 		//assertEquals(0, service.getAllPayments().size());
 		Shipment shipment = null;
-		//address.setAddressID(111);
+		address.setAddressID(111);
 		try {
 			shipment = shipmentService.createShipment(999,111,Date.valueOf("2020-12-31"),Time.valueOf("14:00"));   
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
-			System.out.println(error);
 		}
 		
 		assertNotNull(shipment);
@@ -274,29 +268,34 @@ public class TestServiceShipping {
 	
 	@Test 
 	public void testGetUserOfShipment() {
+		
+		User user = null;
+		Address address = null;
+		Order order = null;
+		Shipment shipment = null;
+		
 		try {
+			
 			//Create a user
-			User user = userService.createUser("ibrahim", "ibrahimt@google.com", "cool boi");
+			user = userService.createUser("ibrahim", "ibrahimt@google.com", "cool boi");
 			
 			//Create an address
-			Address address = addressService.createAddress("ibrahim" ,"47 Cesar Avenue", null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+			address = addressService.createAddress("ibrahim" ,"47 Cesar Avenue", null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 			
 			//Create an order
 			order = orderService.createOrder(user);
 			
 			//Create a shipment with proper orderID and addressID
-			Shipment shipment = shipmentService.createShipment(order.getOrderID(),address.getAddressID(),Date.valueOf("2020-12-31"),Time.valueOf("14:00"));   
+			shipment = shipmentService.createShipment(order.getOrderID(),address.getAddressID(),Date.valueOf("2020-12-31"),Time.valueOf("14:00"));   
 			
-			//Assert that shipment received by calling method is equal to initial user
-			assertEquals(shipmentService.getUserOfShipment(shipment.getShipmentID()), user);
-			
-			//Teardown
-			userService.deleteUser("ibrahim");
-			addressService.deleteAddress(address.getAddressID());
-			orderService.deleteOrder(order);
 		} catch (IllegalArgumentException | RegistrationException e) {
-			
+			error = e.getMessage();
 		}
+		
+		print(user);
+		
+		//Assert that shipment received by calling method is equal to initial user
+		assertEquals(shipmentService.getUserOfShipment(shipment.getShipmentID()), user);
 	}
 	
 
