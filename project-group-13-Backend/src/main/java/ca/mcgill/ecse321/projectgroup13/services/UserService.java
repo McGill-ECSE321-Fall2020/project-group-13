@@ -78,6 +78,7 @@ public class UserService {
     @Transactional
     public User createUser(String username, String email, String password) throws RegistrationException {
         User user = new User();
+        if(userRepository.findUserByUsername(username) != null) throw new RegistrationException("Username already in use");
         //checking if email syntax is valid
         //TODO: validate email
         if(checkIfValidEmail(email) == true){

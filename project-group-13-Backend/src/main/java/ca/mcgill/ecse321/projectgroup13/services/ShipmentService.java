@@ -47,6 +47,7 @@ public class ShipmentService {
         } catch (IllegalArgumentException e) {
             System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
             throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
+            //TODO: Maybe we should return a null value instead of throwing an exception???
         }
 
         //initialization of all required fields

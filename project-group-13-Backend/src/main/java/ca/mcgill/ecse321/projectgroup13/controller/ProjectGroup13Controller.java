@@ -12,6 +12,7 @@ import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import ca.mcgill.ecse321.projectgroup13.services.UserService;
 import ca.mcgill.ecse321.projectgroup13.services.AddressService;
+import ca.mcgill.ecse321.projectgroup13.services.ArtworkService;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,8 @@ public class ProjectGroup13Controller {
 	private UserService userService;
 	@Autowired
 	private AddressService addressService;
-
+	@Autowired
+	private ArtworkService artworkService;
 //------------------ toDTO methods ---------------------------------------------------------------------------------------------------
 	
 	private PaymentDto convertToDto(Payment e) {
@@ -238,6 +240,7 @@ public class ProjectGroup13Controller {
 	
 
 	//public Payment getPayment(int paymentID)
+	//TODO: should only be able to get payments linked to your account!
 	@GetMapping(value = { "/payments/{id}", "/payments/{id}/" })
 	public PaymentDto getPaymentById(@PathVariable("id") Integer id) throws IllegalArgumentException {
 		Payment payment = paymentService.getPayment(id);
@@ -252,7 +255,7 @@ public class ProjectGroup13Controller {
 
 	// ---------------------------------------------- ORDER CONTROLLER METHODS
 
-
+	//public Order createOrder(User user)
 	@PostMapping(value = { "/user/{username}/new/order", "/user/{username}/new/order/" })
 	public OrderDto createOrder(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
@@ -260,8 +263,10 @@ public class ProjectGroup13Controller {
 		OrderDto orderDto = convertToDto(order);
 		return orderDto;
 	}
+	
+	//public Order createOrder(User user, Set<Artwork> art)
 
-
+	//public List<Order> getOrdersFromUser(User user)
 	@GetMapping(value = {"/user/{username}/orders", "/user/{username}/orders/"})
 	public List<OrderDto> getAllOrdersOfUser(@PathVariable String username){
 		List<OrderDto> orders = new ArrayList<OrderDto>();
@@ -271,11 +276,93 @@ public class ProjectGroup13Controller {
 		}
 		return orders;
 	}
+	
+	//public Order getMostRecentOrder(User user)
+	@GetMapping(value = {"/user/{username}/orders/most-recent", "/user/{username}/orders/most-recent/"})
+	public OrderDto getMostRecentOrderOfUser(@PathVariable String username){
+		OrderDto order;
+		User user = userService.getUserByUsername(username);
+		order = convertToDto(orderService.getMostRecentOrder(user));
+		
+		return order;
+	}
+	
+	//public Order getOrder(int orderID)
+	@GetMapping(value = { "/user/{username}/order/{orderId}", "/user/{username}/order/{orderId}/" })
+	public OrderDto getOrderDtoById(@PathVariable("orderId") Integer id, @PathVariable("username") String username) throws IllegalArgumentException {
+		Order order = null;
+		User user = userService.getUserByUsername(username);
+		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
+			if (o.getOrderID()==id) {
+				order = o;
+				break;
+			}
+		}
+		return convertToDto(order);
+	}
+	
+	//public boolean deleteOrder(Order order)
+	@DeleteMapping(value = { "/user/{username}/delete/order/{orderId}", "/user/{username}/delete/order/{orderId}/" })
+	public boolean deleteOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id){
+		User user = userService.getUserByUsername(username);
+		Order order = null;
 
-
-
-
-
+		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
+			if (o.getOrderID()==id) {
+				order = o;
+				break;
+			}
+		}
+		
+		if (order == null) 		//TODO: what to do if user is not authorized to delete order
+			return true;		//there was nothing to delete, therefore we successfully complete operation?
+		
+		return orderService.deleteOrder(order);
+	}
+	
+	//public boolean removeFromOrder(Order order, Artwork art)
+	@PutMapping(value = { "/user/{username}/edit-/order/{orderId}", "/user/{username}/edit-/order/{orderId}/" })
+	public boolean removeFromOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId){
+		Order order = null;
+		User user = userService.getUserByUsername(username);
+		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
+			if (o.getOrderID()==id) {
+				order = o;
+				break;
+			}
+		}
+		
+		if (order == null)
+			return false;
+		
+		Artwork art = artworkService.getArtworkByID(artId);
+		return orderService.removeFromOrder(order, art);
+	}
+	
+	//public boolean addToOrder(Order order, Artwork art)
+	@PutMapping(value = { "/user/{username}/edit+/order/{orderId}", "/user/{username}/edit+/order/{orderId}/" })
+	public boolean addToOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId) {
+		Order order = null;
+		User user = userService.getUserByUsername(username);
+		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
+			if (o.getOrderID()==id) {
+				order = o;
+				break;
+			}
+		}
+		
+		if (order == null)
+			return false;
+		
+		Artwork art = artworkService.getArtworkByID(artId);
+		return orderService.addToOrder(order, art);
+	}
+//	public boolean removeFromOrder(Order order, Set<Artwork> art)
+	
+	//public boolean addToOrder(Order order, Set<Artwork> art)
+	
+	
+	
 	// ---------------------------------------------- SHIPMENT CONTROLLER METHODS
 
 

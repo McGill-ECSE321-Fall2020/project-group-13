@@ -147,12 +147,12 @@ public class CartService {
 	 */
 	@Transactional
 	public boolean removeFromCart(Cart cart, Artwork art) {
-		//invalid artwork is passed
-		if(artworkRepository.findArtworkByArtworkID(art.getArtworkID())==null) throw new IllegalArgumentException("invalid artwork");
 		if (cart == null) 															//check that user parameter is not null
 			throw new IllegalArgumentException("cart cannot be null");
 		if (art == null) 															//check that art parameter is not null
 			throw new IllegalArgumentException("artwork cannot be null");
+		if(artworkRepository.findArtworkByArtworkID(art.getArtworkID())==null) 		//invalid artwork is passed
+			throw new IllegalArgumentException("invalid artwork");
 		
 		boolean b = cart.getArtwork().remove(art);
 		updateTotal(cart);
@@ -172,10 +172,12 @@ public class CartService {
 			throw new IllegalArgumentException("cart cannot be null");
 		if (art == null)															//must check parameter is not null
 			throw new IllegalArgumentException("set<artwork> cannot be null");	
+		
 		//this will only add valid artworks
-				Set<Artwork> filteredSet = art.stream()
-		                .filter(s -> artworkRepository.findArtworkByArtworkID(s.getArtworkID())!=null)
-		                .collect(Collectors.toSet());
+		Set<Artwork> filteredSet = art.stream()
+                .filter(s -> artworkRepository.findArtworkByArtworkID(s.getArtworkID())!=null)
+                .collect(Collectors.toSet());
+		
 		boolean b = cart.getArtwork().removeAll(filteredSet);
 		updateTotal(cart);
 		cartRepository.save(cart);
