@@ -72,7 +72,7 @@ public class AddressService {
 	//TODO: cannot get user of address
 	public User getUserOfAddress(Integer addressID) {
 		Address address = addressRepo.findAddressByAddressID(addressID);
-		if(address == null||addressRepo.findAddressByAddressID(addressID)) throw new IllegalArgumentException("invalid address");
+		if(address == null) throw new IllegalArgumentException("invalid address");
 		User user = address.getUser();
 		return user;
 	}
@@ -99,10 +99,8 @@ public class AddressService {
 	 * @return
 	 */
 	@Transactional
-	public List<Address> getAddressesByUser(User user) {
-		if(user == null) throw new IllegalArgumentException("No user with this ID found");
-		if (userRepo.findUserByUsername(user.getUsername())==null) throw new IllegalArgumentException("invalid user");
-		
+	public List<Address> getAddressesByUser(String username) {
+		if(user == null||userRepo.findUserByUsername(user.getUsername())==null) throw new IllegalArgumentException("invalid user");
 		List<Address> addresses = addressRepo.findAddressesByUser(user);
 		return addresses;
 	}
@@ -137,7 +135,7 @@ public class AddressService {
 	 */
 	
 	@Transactional	
-	public void updateAddress(Address oldAddress, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
+	public void updateAddress(Integer oldAddressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		if (addressRepo.findAddressByAddressID(oldAddress.getAddressID())==null) throw new IllegalArgumentException("invalid address");
 		//TODO: validate parameters
 	

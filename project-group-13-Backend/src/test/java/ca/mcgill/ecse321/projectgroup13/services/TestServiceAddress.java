@@ -21,6 +21,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
+import java.util.List;
+
 @ExtendWith(MockitoExtension.class)
 public class TestServiceAddress {
 	@Mock
@@ -166,13 +168,83 @@ public class TestServiceAddress {
 		assertTrue(error.contentEquals("invalid address"));
 	}
 	
+	
+	
+	@Test 
+	public void testGetAddressesByUser() {
+		User checkUser = addressRepository.findAddressByAddressID(ADDRESSID).getUser();
+		try {
+		Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
+		Address add = addressService.getAddressById(ADDRESSID);
+		assertTrue(checkAdd.getCity().contentEquals(add.getCity()) && checkAdd.getAddressID()==add.getAddressID());
+		} catch (IllegalArgumentException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test 
+	public void testInvalidGetAddressesByUser() {
+
+		
+		List<Address> add = null;
+		String error = "";
+	
+		
+		try {
+			add = addressService.getAddressesByUser("johndahoe");
+			
+		}catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(add);
+		assertTrue(error.contentEquals("invalid user"));
+	}
+	
 	@Test
-	public void testGetAddressByUser(User user) {
+	public void testDeleteAddress() {
+		try {
+		Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
+		
+		addressService.deleteAddress(ADDRESSID);
+		assertTrue(checkAdd!=null);
+		} catch(IllegalArgumentException e) {
+			assertTrue(false);
+		}
+		assertNull(addressRepository.findAddressByAddressID(ADDRESSID));
 		
 	}
 	
 	
+	@Test
+	public void testUpdateAddress() {
+		Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
+		String origCity = checkAdd.getCity();
+		
+		try {
+			addressService.updateAddress(ADDRESSID, ADDRESS,null, "SuckyToronto", "QUEBEC", "CANADA", "H4C2C4");
+			
+		}catch(IllegalArgumentException e) {
+			
+		}
+		assertTrue(addressRepository.findAddressByAddressID(ADDRESSID).getCity()!=origCity);
+		
+		
+	}
 	
+	
+	@Test
+	public void testNonExistingUpdateAddress() {
+		String error = "";
+		
+		try {
+			addressService.updateAddress(111, ADDRESS,null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+			
+		}catch(IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertTrue(error.contentEquals("invalid address"));
+		
+	}
 	
 	
 		
