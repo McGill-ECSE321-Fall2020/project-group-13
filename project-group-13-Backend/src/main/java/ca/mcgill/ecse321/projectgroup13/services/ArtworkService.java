@@ -46,6 +46,7 @@ public class ArtworkService {
     	if( artworkDto.getTitle().trim()==null ) throw new illegalArgumentException("no title for artwork");
     	if(artworkDto.getArtist().isEmpty()) throw new illegalArgumentException("no artist for artwork") ;
     	if(artworkDto.getWorth()==0) throw new illegalArgumentException("no worth specified") ;
+    	
     	//must convert set of userDTO into set of Users, find them in the database one by one 
     	Set<UserDto> allArtistsDto = artworkDto.getArtist();
     	Iterator<UserDto> artistsDto = allArtistsDto.iterator();
