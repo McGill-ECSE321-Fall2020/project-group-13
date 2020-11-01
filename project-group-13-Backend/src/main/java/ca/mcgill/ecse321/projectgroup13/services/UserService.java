@@ -29,13 +29,13 @@ import java.util.stream.Collectors;
 import ca.mcgill.ecse321.projectgroup13.services.exception.*;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
-
 /**
  * Service to handle login and creation of user account.
  */
 @Service
 public class UserService {
-
+	
+	
     @Autowired
     private UserRepository userRepository;
     //TODO must implement password encoder, was causing errors
@@ -251,8 +251,9 @@ public class UserService {
      *
      */
     private boolean checkIfValidEmail(String email) {
-        Pattern ptr = Pattern.compile("^[A-Za-z0-9]+@[A-Za-z0-9]\\.[A-Za-z0-9]");
-        Matcher matcher = ptr.matcher(email);
-        return !matcher.find();
+    	String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    	 Pattern pattern = Pattern.compile(regex);
+    	 return pattern.matcher(email).matches();
+
     }
 }
