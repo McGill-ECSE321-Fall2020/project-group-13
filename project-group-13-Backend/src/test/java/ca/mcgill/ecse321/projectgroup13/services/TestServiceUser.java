@@ -65,33 +65,26 @@ public class TestServiceUser {
 	
 	@Test
 	public void testValidRegistration() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser(USERNAME2, USER_PASSWORD2, USER_EMAIL2);
 		} catch (RegistrationException e) {
 			e.printStackTrace();
 		}
 		
 		assertNotNull(newUser);
-		assertEquals(userDto.getEmail(),newUser.getEmail());
-		assertEquals(userDto.getUsername(),newUser.getUsername());
-		assertEquals(userDto.getPassword(),newUser.getPassword());
+		assertEquals(USER_EMAIL2,newUser.getEmail());
+		assertEquals(USERNAME2,newUser.getUsername());
+		assertEquals(USER_PASSWORD2,newUser.getPassword());
 	}
 	
 	
 	@Test
 	public void testCreateWithInvalidUsername() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME); //this is the username of the first user that's already been populated in the database
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
+
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser(USERNAME, USER_PASSWORD2, USER_EMAIL2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals( "invalid username" , e.getMessage());
@@ -101,13 +94,9 @@ public class TestServiceUser {
 	@Test
 	
 	public void testCreateWithEmptyPassword() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword(" ");
-		userDto.setEmail(USER_EMAIL2);
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser(USERNAME2, USER_EMAIL2, " ");
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid password", e.getMessage());
@@ -115,13 +104,10 @@ public class TestServiceUser {
 	}
 	@Test
 	public void testCreateNoUsername() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername("");
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
+	
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser("", USER_EMAIL2,USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid username", e.getMessage());
@@ -131,13 +117,9 @@ public class TestServiceUser {
 	public void testCreateInvalidEmail() {
 		
 		String email = "jokesOnYou";
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(email);
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(userDto);
+			newUser = userService.createUser(USERNAME2, email, USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid email", e.getMessage());
@@ -146,7 +128,6 @@ public class TestServiceUser {
 	
 	@Test
 	public void testChangePasswordToInvalid() {
-		
 		
 	}
 	
