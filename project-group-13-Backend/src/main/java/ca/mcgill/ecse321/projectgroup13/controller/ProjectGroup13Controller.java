@@ -489,8 +489,9 @@ public class ProjectGroup13Controller {
 			throw new IllegalArgumentException("postalCode cannot be null");
 		} else {
 
+			
+			addressService.updateAddress(addressId, streetAddress1, streetAddress2, city, province, country, postalCode);
 			Address oldAddress = addressService.getAddressById(addressId);
-			addressService.updateAddress(oldAddress, streetAddress1, streetAddress2, city, province, country, postalCode);
 			return convertToDto(oldAddress);
 		}
 	}
@@ -503,7 +504,7 @@ public class ProjectGroup13Controller {
 	public Set<AddressDto> getAllAddressesOfUser(@RequestParam String username){
 		User user = userService.getUserByUsername(username);
 		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
-		for(Address address : addressService.getAddressesByUser(user)) {
+		for(Address address : addressService.getAddressesByUser(username)) {
 			addressesDto.add(convertToDto(address));
 		}
 		return addressesDto;
@@ -687,7 +688,6 @@ public class ProjectGroup13Controller {
 			artworkService.editArtwork_isOnPremise(artwork, OnPremise);
 		if (worth >= 0)
 			artworkService.editArtwork_worth(artwork, worth);
-
 		return true;
 	}
 	

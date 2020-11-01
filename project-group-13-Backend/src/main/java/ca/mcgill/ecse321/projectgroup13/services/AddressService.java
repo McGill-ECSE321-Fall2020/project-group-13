@@ -100,6 +100,7 @@ public class AddressService {
 	 */
 	@Transactional
 	public List<Address> getAddressesByUser(String username) {
+		User user = userRepo.findUserByUsername(username);
 		if(user == null||userRepo.findUserByUsername(user.getUsername())==null) throw new IllegalArgumentException("invalid user");
 		List<Address> addresses = addressRepo.findAddressesByUser(user);
 		return addresses;
@@ -136,9 +137,9 @@ public class AddressService {
 	
 	@Transactional	
 	public void updateAddress(Integer oldAddressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
-		if (addressRepo.findAddressByAddressID(oldAddress.getAddressID())==null) throw new IllegalArgumentException("invalid address");
+		if (addressRepo.findAddressByAddressID(oldAddressID)==null) throw new IllegalArgumentException("invalid address");
 		//TODO: validate parameters
-	
+		Address oldAddress = addressRepo.findAddressByAddressID(oldAddressID);
 		//Creating updated address
 		oldAddress.setStreetAddress1(streetAddress1);
 		oldAddress.setStreetAddress2(streetAddress2);

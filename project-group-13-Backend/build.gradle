@@ -64,6 +64,15 @@ task compile(type: JavaCompile) {
   sourceSets.test.java.outputDir = file('build/bin')
   sourceSets.main.java.outputDir = file('build/bin')
 }
+
+task integrationTest(type: Exec){
+	workingDir 'build'
+	commandLine './test.sh'
+	
+	//store the output instead of printing to the console:
+  	//standardOutput = new ByteArrayOutputStream()
+}
+
 test {
 	useJUnitPlatform()
 }
