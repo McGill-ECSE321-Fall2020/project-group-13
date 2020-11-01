@@ -57,8 +57,10 @@ public class TestServiceShipping {
 	private AddressRepository addressRepo;
 	@InjectMocks
 	private UserService userService;
+	
 	@InjectMocks
 	private ShipmentService shipmentService;
+	
 	private String error = "";
 	
 	private static final int invalidID = 404;
@@ -107,17 +109,20 @@ public class TestServiceShipping {
 		
 		lenient().when(userRepository.save(any(User.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(orderRepo.save(any(Order.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(addressRepo.save(any(Address.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(shipmentRepo.save(any(Shipment.class))).thenAnswer(returnParameterAsAnswer);
 	}
 	@Test
 	public void testCreateShipmentSuccess() {
 		//assertEquals(0, service.getAllPayments().size());
 		Shipment shipment = null;
-		address.setAddressID(111);
+		//address.setAddressID(111);
 		try {
 			shipment = shipmentService.createShipment(999,111,Date.valueOf("2020-12-31"),Time.valueOf("14:00"));   
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
+			System.out.println(error);
 		}
 		
 		assertNotNull(shipment);

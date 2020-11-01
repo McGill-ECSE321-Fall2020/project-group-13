@@ -55,14 +55,6 @@ public class ShipmentService {
 
         Shipment shipment = new Shipment();
 
-        try {
-            orderService.addShipmentToOrder(order, shipment);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
-            throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
-            //TODO: Maybe we should return a null value instead of throwing an exception???
-        }
-
         //initialization of all required fields
         shipment.setOrder(order);
         shipment.setAddress(address);
