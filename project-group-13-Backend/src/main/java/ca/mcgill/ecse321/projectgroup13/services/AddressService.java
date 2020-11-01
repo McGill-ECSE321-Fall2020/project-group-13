@@ -154,18 +154,13 @@ public class AddressService {
 		//Preserving oldAddressID
 		int oldAddressID = oldAddress.getAddressID();
 	
-		//Deleting from repository
-		addressRepo.delete(oldAddress);
-		
 		//Creating updated address
-		Address address = new Address();
-		address.setAddressID(oldAddressID);
-		address.setStreetAddress1(streetAddress1);
-		address.setStreetAddress2(streetAddress2);
-		address.setCity(city);
-		address.setProvince(province);
-		address.setCountry(country);
-		address.setPostalCode(postalCode);
+		oldAddress.setStreetAddress1(streetAddress1);
+		oldAddress.setStreetAddress2(streetAddress2);
+		oldAddress.setCity(city);
+		oldAddress.setProvince(province);
+		oldAddress.setCountry(country);
+		oldAddress.setPostalCode(postalCode);
 		addressRepo.save(address);
 	}
 	
