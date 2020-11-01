@@ -107,13 +107,33 @@ public class TestServiceArtwork {
 	 }
 	 
 	 @Test
-	 public void testNullNameCreateArtwork() {
-		 
+	 public void testSpaceNameCreateArtwork() {
+		 Artwork artwork = null;
+		 ArrayList<String> artists = new ArrayList<String>();
+		 artists.add(USERNAME);
+		 try {
+			 artwork = artworkService.createArtwork(" ", artists, 100.00);
+			 
+		 }catch(illegalArgumentException e) {
+			
+		 }
+		 assertNull(artwork);
 	 }
 	 
 	 @Test
-	 public void testNoWorthCreateArtwork() {
-		 
+	 public void testZeroWorthCreateArtwork() {
+		 Artwork artwork = null;
+		 ArrayList<String> artists = new ArrayList<String>();
+		 artists.add(USERNAME);
+		 String error ="";
+		 try {
+			 artwork = artworkService.createArtwork(" ", artists, 0.0);
+			 
+		 }catch(illegalArgumentException e) {
+			error=e.getLocalizedMessage();
+		 }
+		 assertEquals(error , "invalid worth");
+		 assertNull(artwork);
 	 }
 	 
 	 @Test
@@ -128,7 +148,18 @@ public class TestServiceArtwork {
 	 
 	 @Test
 	 public void testArtworkWithInvalidArtist() {
-		 
+		 Artwork artwork = null;
+		 String error ="";
+		 ArrayList<String> artists = new ArrayList<String>();
+		 artists.add("InvisibleBoy");
+		 try {
+			 artwork = artworkService.createArtwork(" ", artists, 100.00);
+			 
+		 }catch(illegalArgumentException e) {
+			error = e.getMessage();
+		 }
+		 assertEquals(error , "invalid user");
+		 assertNull(artwork);
 	 }
 	 
 	 @Test
