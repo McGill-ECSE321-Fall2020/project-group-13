@@ -1,8 +1,10 @@
 package ca.mcgill.ecse321.projectgroup13.services;
 
 
+import ca.mcgill.ecse321.projectgroup13.dao.AddressRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.ShipmentRepository;
+import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.dto.ShipmentDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +23,30 @@ public class ShipmentService {
     private ShipmentRepository shipmentRepo;
     @Autowired
     private OrderRepository orderRepo;
-
+    @Autowired
+    private UserRepository userRepo;
+    @Autowired
+    private AddressRepository addressRepo;
     //import other services
+    @Autowired
     private OrderService orderService;
+    
+    
 
     //create a new shipment
     @Transactional
     public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery) {
-
-        if (address == null)
-            throw new IllegalArgumentException("address cannot be null");
-        if (order == null)
-            throw new IllegalArgumentException("order cannot be null");
+    	
+        if (address == null||addressRepo.findAddressByAddressID(address.getAddressID())==null)
+            throw new IllegalArgumentException("invalid address");
+        if (order == null||orderRepo.findOrderByOrderID(order.getOrderID())==null)
+            throw new IllegalArgumentException("invalid order");
         if (status == null)
-            throw new IllegalArgumentException("status cannot be null or empty");
+            throw new IllegalArgumentException("invalid status");
         if (estimatedDateOfArrival == null)
-            throw new IllegalArgumentException("estimatedDateOfArrival cannot be null");
+            throw new IllegalArgumentException("invalid estimatedDate");
         if (estimatedTimeOfArrival == null)
-            throw new IllegalArgumentException("estimatedTimeOfArrival cannot be null");
+            throw new IllegalArgumentException("invalid TimeOfArrival");
 
         Shipment shipment = new Shipment();
 
@@ -80,7 +88,7 @@ public class ShipmentService {
     //get shipment of a single order
     @Transactional
     public Shipment getShipmentOfOrder(Order order) {
-        if (order == null) 														//must check parameter is not null
+        if (order == null||orderRepo.findOrderByOrderID(order.getOrderID())==null) 														//must check parameter is not null
             throw new IllegalArgumentException("order cannot be null");
 
         Shipment shipment = shipmentRepo.findShipmentByOrder(order);
@@ -97,7 +105,7 @@ public class ShipmentService {
      */
     @Transactional
     public Set<Shipment> getShipmentsOfUser(User user) {
-        if (user == null) 														//must check parameter is not null
+        if (user == null||userRepo.findUserByUsername(user.getUsername())==null) 														//must check parameter is not null
             throw new IllegalArgumentException("user cannot be null");
 
         Set<Shipment> shipments = new HashSet<Shipment>();
