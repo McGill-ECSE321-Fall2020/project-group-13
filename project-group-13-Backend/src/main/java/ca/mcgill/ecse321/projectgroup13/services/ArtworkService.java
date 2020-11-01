@@ -72,9 +72,9 @@ public class ArtworkService {
     }
     
     public Artwork createArtwork(String Title, ArrayList<String> usernames, Double worth) throws illegalArgumentException {
-    	if( Title.trim()==null ) throw new illegalArgumentException("no title for artwork");
-    	if(usernames.isEmpty()) throw new illegalArgumentException("no artist for artwork") ;
-    	if(worth==null||worth==0) throw new illegalArgumentException("no worth specified") ;
+    	if( Title.trim()==null ) throw new illegalArgumentException("invalid title");
+    	if(usernames.isEmpty()) throw new illegalArgumentException("invalid user") ;
+    	if(worth==null||worth==0) throw new illegalArgumentException("invalid worth") ;
     	
     	Artwork artwork = new Artwork();
     	for(String name: usernames) {
