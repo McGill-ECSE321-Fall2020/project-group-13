@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
+import java.util.HashSet;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +38,9 @@ public class TestServiceAddress {
 	
 	@InjectMocks
 	private AddressService addressService;
+	
+	@InjectMocks
+	private UserService userService;
 	
 	private static final String ADDRESS="47 Cesar Avenue";
 	private static final String CITY="Montreal";
@@ -64,6 +68,9 @@ public class TestServiceAddress {
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
 				user.setPassword(USER_PASSWORD);
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(addressRepository.findAddressByAddressID(ADDRESSID));
+				user.setAddress(set);
 				return user;
 	        });
 	    }
@@ -116,18 +123,21 @@ public class TestServiceAddress {
 	
 	@Test 
 	public void testGetUserOfAddress() {
+		
 		try {
-		User checkUser = addressRepository.findAddressByAddressID(ADDRESSID).getUser();
-		User user = addressService.getUserOfAddress(ADDRESSID);
+			User juser = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			Address address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+			Integer ID = address.getAddressID();
+		User checkUser = addressRepository.findAddressByAddressID(ID).getUser();
+		User user = addressService.getUserOfAddress(ID);
 		assertTrue(checkUser.getUsername().contentEquals(user.getUsername()));
-		} catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException | RegistrationException e) {
 			assertTrue(false);
 		}
 	}
 	
 	@Test 
 	public void testInvalidGetUserOfAddress() {
-		User checkUser = addressRepository.findAddressByAddressID(ADDRESSID).getUser();
 		String error = "";
 		User user = null;
 		
@@ -172,7 +182,8 @@ public class TestServiceAddress {
 	
 	@Test 
 	public void testGetAddressesByUser() {
-		User checkUser = addressRepository.findAddressByAddressID(ADDRESSID).getUser();
+		Address address = addressService.createAddress(USERNAME ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+		
 		try {
 		Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
 		Address add = addressService.getAddressById(ADDRESSID);
@@ -187,7 +198,7 @@ public class TestServiceAddress {
 
 		
 		List<Address> add = null;
-		String error = "";
+		String error = null;
 	
 		
 		try {
