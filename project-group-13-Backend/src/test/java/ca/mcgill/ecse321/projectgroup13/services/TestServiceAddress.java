@@ -99,47 +99,20 @@ public class TestServiceAddress {
 	public void testCreateAddressMissingArguments() {
 		
 		Address address = null;
+		String error = null;
 		try{
-
-			//address = addressService.createAddress(userRepository.findUserByUsername(USERNAME), );
+			
+			address = addressService.createAddress(USERNAME, null, null, null,"QUEBEC", "CANADA", "H4C2C4" );
 		}catch(IllegalArgumentException e){
-
+			error = e.getMessage();
 		}
+		
+		assertNull(address);
+		assertTrue(error.contentEquals("missing parameter"));
 	}
 	
 	
-	@Test
-	public void testAddMultipleInvalid() {
-		
-	}
 	
-	
-	@Test
-	public void testAddSingleInvalid() {
-		
-	}
-	
-	@Test
-	
-	public void testAddSingleValid() {
-		
-	}
-	@Test
-	public void testAddMultipleValid() {
-		
-	}
-	
-	@Test
-	public void testRemoveMultipleInvalid() {
-		
-		
-	}
-	
-	@Test
-	public void testDeleteCart() {
-		
-		
-	}
 	
 	
 		
