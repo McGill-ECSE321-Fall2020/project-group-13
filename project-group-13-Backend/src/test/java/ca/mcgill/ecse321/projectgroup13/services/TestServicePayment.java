@@ -63,10 +63,9 @@ public class TestServicePayment {
 	}
 	@Test
 	public void testCreatePaymentSuccess() {
-		//assertEquals(0, service.getAllPayments().size());
+		assertEquals(0, service.getAllPayments().size());
 		Payment payment = null;
 		try {
-			
 			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
