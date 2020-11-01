@@ -130,6 +130,10 @@ public class AddressService {
 
 		Address address = addressRepo.findAddressByAddressID(addressId);
 		
+		if(address == null) {
+			throw new IllegalArgumentException("Address not found");
+		} 
+		
 		//Removing user association
 		User addressUser = address.getUser();
 		
@@ -161,7 +165,7 @@ public class AddressService {
 		oldAddress.setProvince(province);
 		oldAddress.setCountry(country);
 		oldAddress.setPostalCode(postalCode);
-		addressRepo.save(address);
+		addressRepo.save(oldAddress);
 	}
 	
 	

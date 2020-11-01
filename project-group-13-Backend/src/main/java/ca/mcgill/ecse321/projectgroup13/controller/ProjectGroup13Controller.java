@@ -346,7 +346,7 @@ public class ProjectGroup13Controller {
 	 * RESTful service that deletes address by id
 	 */
 	
-	@DeleteMapping(value = {"/addresses/addressId}", "/addresses/addressId}"})
+	@DeleteMapping(value = {"/addresses/{addressId}", "/addresses/{addressId}"})
 	public boolean deleteAddress(@PathVariable(name = "addressId") Integer addressId) {
 		if (addressId == null) {
 			throw new IllegalArgumentException("There is no such Address Id!");
