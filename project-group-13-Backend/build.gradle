@@ -66,8 +66,8 @@ task compile(type: JavaCompile) {
 }
 
 task integrationTest(type: Exec){
-	workingDir 'build'
-	commandLine './test.sh'
+	workingDir 'src/test/integrationTesting/'
+	commandLine './main.sh'
 	
 	//store the output instead of printing to the console:
   	//standardOutput = new ByteArrayOutputStream()

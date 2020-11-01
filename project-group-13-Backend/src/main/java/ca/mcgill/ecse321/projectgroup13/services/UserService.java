@@ -118,7 +118,7 @@ public class UserService {
 
     @Transactional
     public User getUserByUsername(String username){
-        if(username ==null) throw IllegalArgumentException("invalid username");
+        if(username ==null) throw new IllegalArgumentException("invalid username");
         User user = userRepository.findUserByUsername(username);
         return user;
     }
