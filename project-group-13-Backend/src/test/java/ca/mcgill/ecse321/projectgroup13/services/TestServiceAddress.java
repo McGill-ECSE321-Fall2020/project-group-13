@@ -62,18 +62,19 @@ public class TestServiceAddress {
 	private static final String TITLE = "Beauty of the times";
 	private static final Integer ADDRESSID = 12312324 ;
 	private static final String TITLE2 = "Beauty of the times";
+	private static final String NONEXIST_USER = "jokes on you";
 	private boolean isDeleted = false;
+	private boolean isSaved = false;
 	 @BeforeEach
 	    public void setMockOutput() {
 	        lenient().when(addressRepository.save(any(Address.class))).thenAnswer((InvocationOnMock invocation) -> {
-	            Address address = new Address();
-	            address.setCity(CITY);
-	            address.setAddressID(ADDRESSID);
-	            return address;
+	            isSaved = true;
+	            return invocation.getArgument(0);
 	        });
 	        lenient().when(addressRepository.findAddressByAddressID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+	        	User user1 = new User();
 	        	Set<Address> set = new HashSet<Address>();
-	        	
+	        	user1.setUsername(USERNAME);
 	        	Address address = new Address();
 	            address.setCity(CITY);
 	            address.setAddressID(invocation.getArgument(0));
@@ -83,8 +84,10 @@ public class TestServiceAddress {
 	            if(invocation.getArgument(0).equals(INVALID_ID)) return null;
 	            return address;
 	        });
+	        
 	        lenient().when(addressRepository.findAddressesByUserUsername(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
-	            List<Address> list = new ArrayList<Address>();
+	            if(invocation.getArgument(0)==NONEXIST_USER) return null;
+	        	List<Address> list = new ArrayList<Address>();
 	        	Address address = new Address();
 	            address.setCity(CITY);
 	            address.setAddressID(ADDRESSID);
@@ -95,12 +98,7 @@ public class TestServiceAddress {
 
 	            return list;
 	        });
-	        doAnswer(new Answer<Void>() {
-	        	  @Override public Void answer(InvocationOnMock invocation) {
-	        		   isDeleted = true;
-	        		   return null;
-	        		  }
-	        }).when(addressRepository).delete(any(Address.class));
+	        
 	        lenient().when(userRepository.save(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 				 User user = new User();
 				user.setUsername(USERNAME);
@@ -112,6 +110,7 @@ public class TestServiceAddress {
 				return user;
 	        });
 	        lenient().when(userRepository.findUserByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+	        	if(invocation.getArgument(0)==NONEXIST_USER) return null;
 				return new User();
 			});
 	        
@@ -127,9 +126,9 @@ public class TestServiceAddress {
 		String error = "";
 		User user = null;
 		try{
-			user = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
-			address = addressService.createAddress("jake",ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
-		}catch(IllegalArgumentException | RegistrationException e){
+			
+			address = addressService.createAddress("jake",ADDRESS, ADDRESS2, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+		}catch(IllegalArgumentException e){
 			error = e.getMessage();
 		}
 		assertNotNull(address);
@@ -143,9 +142,9 @@ public class TestServiceAddress {
 	public void testCreateAddressInvalidUser() {
 		
 		Address address = null;
-		String error = "poop";
+		String error = "";
 		try{
-			address = addressService.createAddress("jokesonyoubaby" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+			address = addressService.createAddress(NONEXIST_USER,ADDRESS, ADDRESS2, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 		}catch(IllegalArgumentException e){
 			error = e.getMessage();
 		}
@@ -177,7 +176,7 @@ public class TestServiceAddress {
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
-		assertEquals(user.getUsername(),"jake");
+		assertEquals(user.getUsername(),USERNAME);
 	}
 	
 	@Test 
@@ -255,11 +254,11 @@ public class TestServiceAddress {
 	public void testDeleteAddress() {
 		
 		Integer addressID = null;
-		
+		boolean isDeleted = false;
 		
 		try {
 			isDeleted = false;
-		addressService.deleteAddress(ADDRESS_ID);
+		isDeleted = addressService.deleteAddress(ADDRESS_ID);
 		} catch(IllegalArgumentException e) {
 			//Throws an invalid email error for some reason, but address gets added and deleted
 			fail();
@@ -273,17 +272,15 @@ public class TestServiceAddress {
 	@Test
 	public void testUpdateAddress() {
 		
-		String origCity = null;
-		Address address = null;
-		Integer ID = null;
-		
 		
 		try {
-			addressService.updateAddress(ID, ADDRESS,ADDRESS2, "SuckyToronto", "QUEBEC", "CANADA", "H4C2C4");
+			isSaved = false;
+			addressService.updateAddress(ADDRESS_ID, ADDRESS,ADDRESS2, "SuckyToronto", "QUEBEC", "CANADA", "H4C2C4");
 			
 		}catch(Exception e) {
 			fail();
 		}
+		assertTrue(isSaved);
 		
 	}
 	
@@ -291,9 +288,8 @@ public class TestServiceAddress {
 	@Test
 	public void testNonExistingUpdateAddress() {
 		String error = "";
-		
 		try {
-			addressService.updateAddress(111, ADDRESS,null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+			addressService.updateAddress(INVALID_ID, ADDRESS,ADDRESS2, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 			
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
