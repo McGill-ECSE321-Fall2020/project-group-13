@@ -79,28 +79,36 @@ public class TestServiceAddress {
 				return new User();
 			});
 	        
+	        
 	    }
 	 
 	@Test
 	public void testCreateAddressValid() {
 		
+		
+		
 		Address address = null;
 		String error = null;
 		try{
-
-			address = addressService.createAddress(USERNAME ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
-		}catch(IllegalArgumentException e){
+			User user = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			address = addressService.createAddress("jake",ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+		}catch(IllegalArgumentException | RegistrationException e){
 			error = e.getMessage();
 		}
-		assertTrue(address==null);
-		assertTrue(error.contentEquals("invalid user"));
+		System.out.print(address.getStreetAddress1());
+		System.out.print(address.getCity());
+		System.out.print(address.getProvince());
+		System.out.print(address.getCountry());
+		System.out.print(address.getPostalCode());
+
+//		assertTrue(error.contentEquals("invalid user"));
 	}
 
 	@Test
 	public void testCreateAddressInvalidUser() {
 		
 		Address address = null;
-		String error = null;
+		String error = "poop";
 		try{
 
 			address = addressService.createAddress("jokesonyoubaby" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
@@ -108,6 +116,7 @@ public class TestServiceAddress {
 			error = e.getMessage();
 		}
 		//assertTrue(address==null);
+		System.out.print(address);
 		assertTrue(error.contentEquals("invalid user"));
 	}
 
@@ -208,7 +217,7 @@ public class TestServiceAddress {
 	}
 	
 	@Test 
-	public void testNullGetAddressesByUser() {
+	public void testInvalidGetAddressesByUser() {
 
 		
 		List<Address> add = null;
