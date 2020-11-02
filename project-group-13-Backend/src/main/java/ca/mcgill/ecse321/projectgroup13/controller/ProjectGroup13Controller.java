@@ -294,7 +294,7 @@ public class ProjectGroup13Controller {
 		try{
 			orderService.editIsDelivery(orderId, isDelivery);
 		}catch(Exception e){
-			System.out.println("NOPE " + e.toString());
+			System.out.println(e.toString());
 		}
 		return convertToDto(orderService.getOrder(orderId));
 	}
