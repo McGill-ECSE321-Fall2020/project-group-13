@@ -101,16 +101,19 @@ public class TestServiceUser {
 				order.setUser(user);
 				setOrder.add(order);
 				user.setOrder(setOrder);
-				
+				order.setOrderStatus(OrderStatus.PaymentPending);
 				Artwork artwork = new Artwork();
 				artwork.setArtworkID(ARTWORK_ID);
+				Cart cart = new Cart();
+				cart.setCartID(CART_ID);
+				cart.setUser(user);
 				
 				
 				HashSet<Artwork> sets = new HashSet<Artwork>();
 				sets.add(artwork);
-				
+				cart.setArtwork(sets);
 				user.setArtwork(sets);
-				
+				user.setCart(cart);
 				HashSet<User> artistss = new HashSet<User>();
 				artistss.add(user);
 				artwork.setArtist(artistss);
@@ -120,6 +123,7 @@ public class TestServiceUser {
 				shipment.setOrder(order);
 				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
 				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+			
 				return user;
 			} else if (invocation.getArgument(0).equals(USERNAME2)){
 				User user = new User();
@@ -450,15 +454,17 @@ public class TestServiceUser {
 	}
 	@Test
 	public void testDeleteUser() {
-		error = "";
+		String error = null;
+		Boolean test = false;
 		try {
 			
-			userService.deleteUser(USERNAME);
+			test=userService.deleteUser(USERNAME);
 		}catch (Exception e) {
 			error = e.getMessage();
 			System.out.println(error);
 		}
-		assertEquals(error,"");		
+		assertEquals(error,null);	
+		assertTrue(test);
 		
 	}
 	
