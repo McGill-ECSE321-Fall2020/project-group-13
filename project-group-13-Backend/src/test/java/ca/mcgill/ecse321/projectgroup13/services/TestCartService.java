@@ -187,6 +187,41 @@ public class TestCartService {
 			return set;
 		});
 		
+		lenient().when(cartRepo.findCartByCartID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(CART_ID)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> set = new HashSet<Artwork>();
+			set.add(artwork);
+			
+			user.setArtwork(set);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Cart cart = new Cart();
+			cart.setCartID(CART_ID);
+			
+			cart.setUser(user);
+			cart.setArtwork(set);
+			
+			return cart;
+			} else {
+				return null;
+			}
+		});
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
@@ -247,10 +282,40 @@ public class TestCartService {
 	}
 	
 	@Test
-	
-	public void testAddSingleValid() {
+	public void testInvalidCreateCartSingleArt() {
+		Cart cart = null; 
+		String error = null;
+		User user = userRepo.findUserByUsername(USERNAME);
+		Artwork art =null;
+		try {
+			cart = cartService.createCart(user, art);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
 		
+		assertEquals(error, "invalid argument");
+		assertNull(cart);
 	}
+	
+	@Test
+	
+	public void testAddSetValid() {
+		Cart cart = null; 
+		String error = null;
+		User user = userRepo.findUserByUsername(USERNAME);
+		Artwork art =artworkRepo.findArtworkByArtworkID(ARTWORK_ID);
+		HashSet<Artwork> set = new HashSet<Artwork>();
+		set.add(art);
+		try {
+			cart = cartService.createCart(user, set);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, null);
+		assertNotNull(cart);
+	}
+	
 	@Test
 	public void testAddMultipleValid() {
 		
@@ -260,6 +325,13 @@ public class TestCartService {
 	public void testRemoveMultipleInvalid() {
 		
 		
+	}
+	
+	@Test
+	public void testGetCart() {
+		Cart cart = cartService.getCart(CART_ID);
+		assertNotNull(cart);
+		assertEquals( cart.getUser().getUsername(), USERNAME);
 	}
 	
 	@Test
