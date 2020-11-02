@@ -93,7 +93,7 @@ public class TestServiceUser {
 		
 		lenient().when(userRepository.save(any(User.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
-        lenient().when(userRepository.findUserByEmail(any(String.class))).thenAnswer(returnParameterAsAnswer);
+      
         
 	}
 	
