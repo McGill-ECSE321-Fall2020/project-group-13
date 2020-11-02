@@ -94,12 +94,12 @@ public class ProjectGroup13Controller {
 //			throw new IllegalArgumentException("There is no such artwork!");
 		}
 
-		Set<UserDto> artists = new HashSet<UserDto>();
-		for (User artist : artwork.getArtist()) {
-			artists.add(convertToDto(artist));
-		}
+//		Set<UserDto> artists = new HashSet<UserDto>();
+//		for (User artist : artwork.getArtist()) {
+//			artists.add(convertToDto(artist));
+//		}
 
-		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), artists,  convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
+		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
 		return dto;
 	}
 
@@ -533,14 +533,39 @@ public class ProjectGroup13Controller {
 	}
 	
 // ---------------------------------------------- CART CONTROLLER METHODS
+
+
+
 	//public Cart createCart(User user)
-	@PostMapping(value = { "/user/{username}/new/cart/empty", "/user/{username}/new/cart/empty/" })
-	public CartDto createCart(@PathVariable String username){
+//	@PostMapping(value = { "/user/{username}/new/cart/empty", "/user/{username}/new/cart/empty/" })
+//	public CartDto createCart(@PathVariable String username){
+//		User user = userService.getUserByUsername(username);
+//		Cart cart = cartService.createCart(user);
+//		CartDto cartDto = convertToDto(cart);
+//		return cartDto;
+//	}
+
+	//public boolean addToCart(Cart cart, Artwork art)
+	@PutMapping(value = { "/user/{username}/edit+/cart", "/user/{username}/edit+/cart/" })
+	public CartDto addToCart(@PathVariable("username") String username, @RequestParam(name="artid") Integer artId){
 		User user = userService.getUserByUsername(username);
-		Cart cart = cartService.createCart(user);
-		CartDto cartDto = convertToDto(cart);
-		return cartDto;
+		Artwork artwork = artworkService.getArtworkByID(artId);
+
+		Cart cart;
+		if(user.getCart() == null){			//if no cart existed
+			cart = cartService.createCart(user);
+			cart.setArtwork(new HashSet<Artwork>());
+			Set<Artwork> artworks = cart.getArtwork();
+			artworks.add(artwork);
+			cart.setArtwork(artworks);
+			CartDto cartDto = convertToDto(cart);
+		}else{								//if there was already a cart
+			cart = user.getCart();
+			cart.getArtwork().add(artwork);
+		}
+		return convertToDto(cart);
 	}
+
 	
 	//public Cart createCart(User user, Artwork art)
 	@PostMapping(value = { "/user/{username}/new/cart", "/user/{username}/new/cart/" })
@@ -611,23 +636,6 @@ public class ProjectGroup13Controller {
 		return cartService.removeFromCart(cart, art);
 	}
 	
-	//public boolean addToCart(Cart cart, Artwork art)
-	@PutMapping(value = { "/user/{username}/edit+/cart/{cartId}", "/user/{username}/edit+/cart/{cartId}/" })
-	public boolean addToCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id, @RequestParam(name="artid") Integer artId){
-		User user = userService.getUserByUsername(username);
-		Cart cart = null;
-
-		Cart userCart = cartService.getCartFromUser(user);
-		if (userCart.getCartID()==id)
-			cart = userCart;
-		
-		if (cart == null) 		//TODO: what to do if user is not authorized to add to cart
-			return false;		//there was nothing to add, therefore we successfully complete operation?
-		
-		Artwork art = artworkService.getArtworkByID(artId);
-		return cartService.addToCart(cart, art);
-	}
-	
 	//public Set<Artwork> removeFromCart(Cart cart, Set<Artwork> art)
 	
 	//public Set<Artwork> addToCart(Cart cart, Set<Artwork> art)
@@ -639,8 +647,9 @@ public class ProjectGroup13Controller {
 		
 	//public Artwork createArtwork(String Title, ArrayList<String> usernames, Double worth)
 	@PostMapping(value = { "/artwork/new", "/artwork/new/" })
-	public ArtworkDto createArtwork(@RequestParam(name="artid") String title, @RequestParam(name="usernames") String[] usernames , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
-		Artwork art = artworkService.createArtwork(title, usernames, worth);
+	public ArtworkDto createArtwork(@RequestParam(name="artid") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
+		//User artist = userService.getUserByUsername(username);
+		Artwork art = artworkService.createArtwork(title, artists, worth);
 		return convertToDto(art);
 	}
 	
@@ -657,7 +666,6 @@ public class ProjectGroup13Controller {
 	@GetMapping(value = { "artwork/{artId}", "artwork/{artId}/" })
 	public ArtworkDto getArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		Artwork art = artworkService.getArtworkByID(id);
-	
 		return convertToDto(art);
 	}
 	//public void deleteArtworkById(int artworkId)
