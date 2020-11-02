@@ -153,7 +153,8 @@ public class TestServiceShipping {
 			Shipment shipment = new Shipment();
 			shipment.setAddress(address);
 			shipment.setOrder(order);
-				
+			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
 			return shipment;
 			} else {
 				return null;
@@ -198,6 +199,9 @@ public class TestServiceShipping {
 			Shipment shipment = new Shipment();
 			shipment.setAddress(address);
 			shipment.setOrder(order);
+			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+			
 				
 			return user;
 			} else {
@@ -243,6 +247,8 @@ public class TestServiceShipping {
 			Shipment shipment = new Shipment();
 			shipment.setAddress(address);
 			shipment.setOrder(order);
+			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
 			return order;
 			} else {
 				return null;
@@ -328,16 +334,16 @@ public class TestServiceShipping {
 	 @Test
 	 public void testEditShipmentDate() {
 	 	//assertEquals(0, service.getAllPayments().size());
-	 	Shipment shipment = null;
+	 	Shipment shipment = shipmentRepo.findShipmentByShipmentID(SHIPMENTID);
 		
 	 	try {
-	 		shipment = shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("2020-12-31"),Time.valueOf("14:00:00"));   
-	 		shipmentService.editShipmentEstimatedDate(shipment, Date.valueOf("2020-12-25"));
+	 		
+	 		shipment = shipmentService.editShipmentEstimatedDate(shipment, Date.valueOf("2020-12-25"));
 	 	}catch (IllegalArgumentException e) {
 	 		error = e.getMessage();
 	 	}
 		
-	 	assertEquals(error,null);
+	 	assertEquals(error, null);
 	 	assertEquals(shipment.getEstimatedDateOfArrival(),Date.valueOf("2020-12-25"));
 		
 	 }
