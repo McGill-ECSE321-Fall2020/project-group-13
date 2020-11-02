@@ -4,9 +4,6 @@ package ca.mcgill.ecse321.projectgroup13.services;
 import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.CartRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
-import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
-import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
-import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.User;
@@ -16,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @Service

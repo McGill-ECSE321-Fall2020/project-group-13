@@ -187,7 +187,7 @@ public class CartService {
                 .filter(s -> artworkRepository.findArtworkByArtworkID(s.getArtworkID())!=null)
                 .collect(Collectors.toSet());
 		
-		boolean b = cart.getArtwork().removeAll(filteredSet);
+		cart.getArtwork().removeAll(filteredSet);
 		updateTotal(cart);
 		cartRepository.save(cart);
 		return filteredSet; //these are those which are removed

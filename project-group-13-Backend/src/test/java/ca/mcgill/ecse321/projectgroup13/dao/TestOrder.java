@@ -1,4 +1,5 @@
 package ca.mcgill.ecse321.projectgroup13.dao;
+
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,7 +74,6 @@ TestOrder {
 	    	orders.add(order);
 	    	
 	    //parameters for cart
-	    Integer cartID = "TESTcartID".hashCode();
 	    double totalCost = 100.1;
 	    Set<Artwork> artworksInCart = new HashSet<>();
 	    

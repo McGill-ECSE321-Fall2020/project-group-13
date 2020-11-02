@@ -5,7 +5,6 @@ import ca.mcgill.ecse321.projectgroup13.dao.AddressRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.ShipmentRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
-import ca.mcgill.ecse321.projectgroup13.dto.ShipmentDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,6 @@ public class ShipmentService {
     @Autowired
     private AddressRepository addressRepo;
     //import other services
-    @Autowired
-    private OrderService orderService;
     
     
 

@@ -1,13 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.dto;
 
-import ca.mcgill.ecse321.projectgroup13.model.Order;
-import ca.mcgill.ecse321.projectgroup13.model.User;
-
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import java.util.Set;
-import javax.persistence.ManyToMany;
+
 
 public class ArtworkDto {
     private int artworkID;

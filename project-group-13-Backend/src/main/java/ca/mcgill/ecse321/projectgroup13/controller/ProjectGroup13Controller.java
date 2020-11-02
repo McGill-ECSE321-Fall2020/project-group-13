@@ -1,13 +1,9 @@
 package ca.mcgill.ecse321.projectgroup13.controller;
 
-import java.sql.Date;
-import java.sql.Time;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import ca.mcgill.ecse321.projectgroup13.dto.*;
-import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
 import ca.mcgill.ecse321.projectgroup13.services.UserService;
@@ -21,22 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.Payment;
 import ca.mcgill.ecse321.projectgroup13.model.Shipment;
-import ca.mcgill.ecse321.projectgroup13.model.ShipmentStatus;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-import ca.mcgill.ecse321.projectgroup13.services.AddressService;
-import ca.mcgill.ecse321.projectgroup13.services.OrderService;
 import ca.mcgill.ecse321.projectgroup13.services.PaymentService;
-import ca.mcgill.ecse321.projectgroup13.services.ShipmentService;
-import ca.mcgill.ecse321.projectgroup13.services.UserService;
-
-import javax.persistence.PreUpdate;
 
 
 @CrossOrigin(origins = "*")
@@ -498,7 +486,6 @@ public class ProjectGroup13Controller {
 	//public List<Address> getAddressesByUser(User user)
 	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
 	public Set<AddressDto> getAllAddressesOfUser(@PathVariable String username){
-		User user = userService.getUserByUsername(username);
 		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
 		for(Address address : addressService.getAddressesByUser(username)) {
 			addressesDto.add(convertToDto(address));
@@ -529,7 +516,6 @@ public class ProjectGroup13Controller {
 		if(user.getCart() == null){			//if no cart existed
 			cart = cartService.createCart(user);
 			cartService.addToCart(cart, artwork);
-			CartDto cartDto = convertToDto(cart);
 		}else{								//if there was already a cart
 			cart = user.getCart();
 			cartService.addToCart(cart, artwork);

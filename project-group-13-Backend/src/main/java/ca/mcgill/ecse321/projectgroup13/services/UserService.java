@@ -13,18 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 
-import java.sql.Date;
-import java.sql.Time;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import ca.mcgill.ecse321.projectgroup13.services.exception.*;
@@ -42,23 +36,14 @@ public class UserService {
     @Autowired
     private CartRepository cartRepository;
     @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
     private ArtworkRepository artworkRepository;
-    @Autowired
-	private PaymentService paymentService;
-	@Autowired
-	private ShipmentService shipmentService;
 	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private UserService userService;
-	@Autowired
 	private AddressService addressService;
 	@Autowired
-	private ArtworkService artworkService;
-	@Autowired
 	private CartService cartService;
+	
     //TODO must implement password encoder, was causing errors
     //@Autowired
     //private PasswordEncoder passwordEncoder;
