@@ -39,9 +39,6 @@ public class TestUser {
     //Remove ends here
     
 
-    // this is to clear database prior to every run
-   
-    
     /**
      *  Deletes all information from addressRepository, artoworkRepository and
      *  userRepository

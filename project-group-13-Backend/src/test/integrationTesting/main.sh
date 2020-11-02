@@ -6,238 +6,141 @@ yellow=$(tput setaf 3)
 red=$(tput setaf 1)
 powder_blue=$(tput setaf 153)
 
-username="eecfdddddfdd"
-username2="eedcfdddddw"
+username="ffdF"
+username2="eddFd"
+function curl-format() {
+	if [[ ! -z "$1" ]]
+	then
+		if [[ ! -z "$5" ]]	#have json body
+		then
+			currentLine=$(curl -i -s -H "Content-Type: application/json" --data $5 $2 "$3")
+		else
+			currentLine=$(curl -i -s $2 "$3")
+		fi
+		statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
+		printf "%s\t%s\n" "${powder_blue}RETURN STATUS CODE: [${yellow}$statusCode${powder_blue}]${normal}" "${blue}$1${normal}"
+		#currentLine=$(echo  "$currentLine" | grep -o "{.*")
+		currentLine=$(echo  "$currentLine" | awk 'c&&!--c;/Date:/{c=2}')
+		printf "$currentLine\n\n\n"
+		if [[ ! -z "$4" ]]	#need to save variable
+		then
+			tempVar=$(echo  "$currentLine" | grep -o "$4.*" | cut -f2- -d: | grep  -o "^[0-9]*")
+		fi
+	fi
+}
 
 #create user 1
-./curl-format "create user 1" POST "http://localhost:8080/newuser?username=$username&email=$username@no.com&password=passwor1dfd"
+curl-format "create user 1" "-X POST" "http://localhost:8080/newuser?username=$username&email=$username@no.com&password=passwor1dfd"
 
 #create user 2
-currentLine=$(curl -i -s -X POST "http://localhost:8080/newuser?username=$username2&email=$username@not.com&password=passwor1dfd")
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}create user 2${normal} ${powder_blue}RETURN STATUS CODE: [${yellow}$statusCode${powder_blue}]${normal}"
-currentLine=$(echo  "$currentLine" | grep -o "{.*")
-printf "$currentLine\n"
+curl-format "create user 2" "-X POST" "http://localhost:8080/newuser?username=$username2&email=$username@not.com&password=passwor1dfd"
 
 #create artwork and store artworkID
-currentLine=$(curl -s -X POST "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7")
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "\n%s\n" "${blue}create artwork and store artworkID${normal}"
-printf "$currentLine\n"
-artworkID=$(echo  "$currentLine" | grep -o "\"artworkID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+curl-format "create artwork and store artworkID" "-X POST" "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
+artworkID=$tempVar
 
 #add artwork to cart
-currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit+/cart/?artid=$artworkID")
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}add artwork to cart${normal}"
-printf "$currentLine\n"
-cartID=$(echo  "$currentLine" | grep -o "\"cartID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
-
+curl-format "add artwork to cart" "-X PUT" "http://localhost:8080/user/$username/edit+/cart/?artid=$artworkID"	"cartID"
+cartID=$tempVar
 
 #get cart by cart ID
-currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/cart/$cartID")
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get cart by cart ID${normal}"
-printf "$currentLine\n"
-
+curl-format "get cart by cart ID" "-X GET" "http://localhost:8080/user/$username/cart/$cartID"
 
 #get cart from user
-currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/cart")
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get cart from user${normal}"
-printf "\n$currentLine\n"
+curl-format "get cart from user" "-X GET" "http://localhost:8080/user/$username/cart"
 
 #create order and store orderId
-currentLine=$(curl -s -X POST "http://localhost:8080/user/$username/new/order")
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}create order and store orderId${normal}"
-printf "$currentLine\n"
-orderID=$(echo  "$currentLine" | grep -o "\"orderID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+curl-format "create order and store orderId" "-X POST" "http://localhost:8080/user/$username/new/order" "orderID"
+orderID=$tempVar
 
 #create another order and store orderId
-currentLine=$(curl -s -X POST "http://localhost:8080/user/$username/new/order")
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}create another order and store orderId${normal}"
-printf "$currentLine\n"
-orderID2=$(echo  "$currentLine" | grep -o "\"orderID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+curl-format "create another order and store orderId" "-X POST" "http://localhost:8080/user/$username/new/order" "orderID"
+orderID2=$tempVar
 
 #get orders from user
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get orders from user${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders")
-printf "\n$currentLine\n"
+curl-format "get orders from user" "-X GET" "http://localhost:8080/user/$username/orders"
 
 #get orders from user
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get orders from user${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders")
-printf "\n$currentLine\n"
-
+curl-format "get orders from user" "-X GET" "http://localhost:8080/user/$username/orders"
 
 #get order from orderId
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get order from orderId${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/order/$orderID")
-printf "$currentLine\n"
-
-
+curl-format "get order from orderId" "-X GET" "http://localhost:8080/user/$username/order/$orderID"
 
 #create payment and store paymentId
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}create payment and store paymentId${normal}"
-currentLine=$(curl -s -H "Content-Type: application/json" --data @payment.json -X POST "http://localhost:8080/order/$orderID/pay")
-printf "$currentLine\n"
-paymentID=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+curl-format "create payment and store paymentId" "-X POST" "http://localhost:8080/order/$orderID/pay" "paymentID" "@payment.json"
+paymentID=$tempVar
 
 printf "%s\n" "${blue}sleep for a second so that next order has a different time${normal}"
 sleep 2
 
-printf "%s\n" "${blue}create payment for other order and store paymentId${normal}"
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-currentLine=$(curl -s -H "Content-Type: application/json" --data @payment.json -X POST "http://localhost:8080/order/$orderID2/pay")
-printf "$currentLine\n"
-paymentID2=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+#create payment for order 2
+curl-format "create payment for other order and store paymentId" "-X POST" "http://localhost:8080/order/$orderID2/pay" "paymentID" "@payment.json"
+paymentID2=$tempVar
 
 #get payment from ID
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get payment from ID${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/payments/$paymentID")
-printf "$currentLine\n"
+curl-format "get payment from ID" "-X GET" "http://localhost:8080/payments/$paymentID"
 
 #get payments of artist
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get payments of artist${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/payments/$username/artist")
-printf "$currentLine\n"
+curl-format "get payments of artist" "-X GET" "http://localhost:8080/payments/$username/artist"
 
 #get payments of customer
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get payments of customer${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/payments/$username/customer")
-printf "$currentLine\n"
+curl-format "get payments of customer" "-X GET" "http://localhost:8080/payments/$username/customer"
 
 #calculate commission for gallery after Date
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}calculate commission for gallery after Date${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/payments/gallery?date=2019-03-28T01:30:00.000+07:00")
-printf "$currentLine\n"
+curl-format "calculate commission for gallery after Date" "-X GET" "http://localhost:8080/payments/gallery?date=2019-03-28T01:30:00.000+07:00"
 
 #get most recent order
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get most recent order${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders/most-recent")
-printf "\n$currentLine\n"
-
-
+curl-format "get most recent order" "-X GET" "http://localhost:8080/user/$username/orders/most-recent"
 
 #create address and store addressId
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}create address and store addressId${normal}"
-currentLine=$(curl -s -H "Content-Type: application/json" --data @address.json -X POST "http://localhost:8080/user/$username/new/address")
-printf "$currentLine\n"
-addressID=$(echo  "$currentLine" | grep -o "\"addressID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
-
-
+curl-format "create address and store addressId" "-X POST" "http://localhost:8080/user/$username/new/address" "addressID" "@address.json"
+addressID=$tempVar
 
 #update address
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}update address${normal}"
-currentLine=$(curl -s -H "Content-Type: application/json" --data @address-updated.json -X PUT "http://localhost:8080/address/$addressID/update")
-printf "$currentLine\n"
-
+curl-format "update address" "-X PUT" "http://localhost:8080/address/$addressID/update" "@address-updated.json" "@address-updated.json"
 
 #get all addresses of user
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get all addresses of user${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/addresses")
-printf "$currentLine\n"
-
+curl-format "get all addresses of user" "-X GET" "http://localhost:8080/user/$username/addresses"
 
 #set order to be delivered
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}set order to be delivered${normal}"
-currentLine=$(curl -s -H "Content-Type: application/json" --data @shipment.json -X PUT "http://localhost:8080/order/$orderID/delivery?delivery=true")
-printf "$currentLine\n"
+curl-format "set order to be delivered" "-X PUT" "http://localhost:8080/order/$orderID/delivery?delivery=true" "@shipment.json" "@shipment.json"
 
 #create shipment and store shipmentId
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}create shipment and store shipmentId${normal}"
-currentLine=$(curl -s -H "Content-Type: application/json" --data @shipment.json -X POST "http://localhost:8080/order/$orderID/shipping?address=$addressID")
-printf "$currentLine\n"
-shipmentID=$(echo  "$currentLine" | grep -o "\"shipmentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+curl-format "create shipment and store shipmentId" "-X POST" "http://localhost:8080/order/$orderID/shipping?address=$addressID" "shipmentID" "@shipment.json"
+shipmentID=$tempVar
 
 #get all shipments of user
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get all shipments of user${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/shipments")
-printf "$currentLine\n"
+curl-format "get all shipments of user" "-X GET" "http://localhost:8080/user/$username/shipments"
 
 #get artwork by ID
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}get artwork by ID${normal}"
-currentLine=$(curl -s -X GET "http://localhost:8080/artwork/$artworkID")
-printf "$currentLine\n"
+curl-format "get artwork by ID" "-X GET" "http://localhost:8080/artwork/$artworkID"
 
 #create a second artwork
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-currentLine=$(curl -s -X POST "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7")
-printf "$currentLine\n"
-artworkID2=$(echo  "$currentLine" | grep -o "\"artworkID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+curl-format "create a second artwork" "-X POST" "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
+artworkID2=$tempVar
 
 #add artwork to cart
+curl-format "add artwork to cart" "-X PUT" "http://localhost:8080/user/$username/edit+/cart/?artid=$artworkID2" "cartID"
 statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}add artwork to cart${normal}"
-currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit+/cart/?artid=$artworkID2")
-printf "$currentLine\n"
-cartID2=$(echo  "$currentLine" | grep -o "\"cartID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+cartID2=$tempVar
 
 #remove artwork from cart
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}remove artwork from cart${normal}"
-currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit-/cart/?artid=$artworkID2")
-printf "$currentLine\n"
-
+curl-format "remove artwork from cart" "-X PUT" "http://localhost:8080/user/$username/edit-/cart/?artid=$artworkID2"
 
 #update artwork
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}update artwork${normal}"
-currentLine=$(curl -s -X PUT "http://localhost:8080/artwork/$artworkID/update?description=A-beautiful-UPDATED-description")
-printf "$currentLine\n"
+curl-format "update artwork" "-X PUT" "http://localhost:8080/artwork/$artworkID/update?description=A-beautiful-UPDATED-description"
 
 #delete cart
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}delete cart${normal}"
-currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/cart/$cartID2")
-printf "$currentLine\n"
-
-
-#delete address by id
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}delete address by id${normal}"
-currentLine=$(curl -s -X DELETE "http://localhost:8080/address/$addressID/delete")
-printf "$currentLine\n"
+curl-format "delete cart" "-X DELETE" "http://localhost:8080/user/$username/delete/cart/$cartID2"
 
 #delete artwork by id
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}delete artwork by id${normal}"
-currentLine=$(curl -s -X DELETE "http://localhost:8080/artwork/$artworkID/delete")
-printf "$currentLine\n"
+curl-format "delete artwork by id" "-X DELETE" "http://localhost:8080/artwork/$artworkID/delete"
 
 #edit user fields
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}edit user fields${normal}"
-currentLine=$(curl -s -H "Content-Type: application/json" --data @user-update.json -X PUT "http://localhost:8080/user/$username/edit")
-printf "$currentLine\n"
+curl-format "edit user fields" "-X PUT" "http://localhost:8080/user/$username/edit" "@user-update.json" "@user-update.json"
 
 #delete second order (expected: false b/c we cannot delete an order that has been paid)
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}delete second order (expected: [${normal}false${blue}] b/c we cannot delete an order that has been paid)${normal}"
-currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/order/$orderID2")
-printf "$currentLine\n"
+curl-format "delete second order" "-X DELETE" "http://localhost:8080/user/$username/delete/order/$orderID2"
 
 #delete user by username
-statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-printf "%s\n" "${blue}delete user by username (expected: [${normal}true${blue}])${normal}"
-currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username2/delete")
-printf "$currentLine\n"
-
+curl-format "delete user by username" "-X DELETE" "http://localhost:8080/user/$username2/delete"
