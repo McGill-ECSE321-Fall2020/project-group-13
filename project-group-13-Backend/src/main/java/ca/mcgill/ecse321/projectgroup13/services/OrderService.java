@@ -161,7 +161,8 @@ public class OrderService {
 		
 		//remove order and user association
 		User user = order.getUser();
-		user.getOrder().remove(order);
+		Set<Order> orders = user.getOrder();
+		Boolean temp = orders.remove(order);
 		order.setUser(null);
 		if (order.getPayment() != null)
 			paymentRepository.delete(order.getPayment());

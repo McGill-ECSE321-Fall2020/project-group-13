@@ -170,10 +170,9 @@ public class TestServiceOrder {
 		Artwork art = new Artwork();
 		artworks.add(art);
 		Order order = new Order();
-		Payment payment1 = new Payment();
-		payment1.setPaymentDate(Date.valueOf("2020-01-01"));
-		order.setPayment(payment1);
+		
 		order.setArtwork(artworks);
+		order.setOrderStatus(OrderStatus.PaymentPending);
 		art.setOrder(order);
 		Order order2 = new Order();
 		Payment payment2 = new Payment();
@@ -275,6 +274,30 @@ public class TestServiceOrder {
 		}
 		
 		assertEquals(order.getArtwork().size(),1);
+	}
+	@Test
+	public void testAddSetToOrder() {
+		
+		Order order = new Order();
+		order.setOrderStatus(OrderStatus.PaymentPending);
+		Artwork art = new Artwork();
+		art.setArtworkID(ARTWORK_ID);
+		Artwork art2 = new Artwork();
+		art.setArtworkID(ARTWORK_ID2);
+		Set<Artwork> set = new HashSet<Artwork>();
+		set.add(art);
+		set.add(art2);
+		order.setArtwork(set);
+		orderRepo.save(order);
+		try {
+			orderService.addToOrder(order, set);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(order.getArtwork().size(),2);
+		assertEquals(art.getOrder(),order);
+		assertEquals(art2.getOrder(),order);
 	}
 	@Test
 	public void testAddPaymentToOrder() {
