@@ -10,8 +10,9 @@ ShareArt is an online artwork buy-and-sell platform targeted at local artists an
 * Jake Pogharian
 * Ibrahim Taseer
 
-Project Wiki: [Sprint 1 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/sprint1)
-<br>[Sprint 2 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/Sprint2)
+Project Wiki: 
+* [Sprint 1 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/sprint1)
+* [Sprint 2 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/Sprint2)
   
 ## Overview Tables
 ### Deliverable 1
