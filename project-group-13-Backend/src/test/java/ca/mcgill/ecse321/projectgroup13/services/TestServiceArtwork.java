@@ -157,6 +157,7 @@ public class TestServiceArtwork {
 				user.setEmail(USER_EMAIL);
 				user.setPassword(USER_PASSWORD);
 				
+				
 				Order order = new Order();
 				order.setOrderID(ORDERID);
 				order.setUser(user);
@@ -176,7 +177,34 @@ public class TestServiceArtwork {
 				
 				return set;
 			});
+			//findByArtist
 			
+			lenient().when(artworkRepo.findByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				
+				
+				HashSet<Artwork> set = new HashSet<Artwork>();
+				set.add(artwork);
+				
+				user.setArtwork(set);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				return set;
+			});
 			
 			lenient().when(userRepo.findUserByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 				if(((String)(invocation.getArgument(0))).contentEquals(USERNAME)) {
@@ -422,7 +450,7 @@ public class TestServiceArtwork {
 	 }
 	 @Test
 	 public void testIsSold() {
-		 Artwork art = new Artwork();
+		 	Artwork art = new Artwork();
 			artworkService.setArtwork_artworkSold(art);;
 			assertEquals(art.isArtworkSold(),true);
 	 }
