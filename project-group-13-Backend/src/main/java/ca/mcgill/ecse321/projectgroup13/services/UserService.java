@@ -136,11 +136,14 @@ public class UserService {
         Set<Address> userAddresses = user.getAddress();
         Cart cart = user.getCart();
         Set<Order> orders = user.getOrder();
+        Set<Artwork> Artwork = artworkRepository.findArtworkByArtist(user.getUsername());
         while(userAddresses.iterator().hasNext()) {
         	addressService.deleteAddress(userAddresses.iterator().next().getAddressID());
         }
         while(orders.iterator().hasNext()) {
-        	orderService.deleteOrder(orders.iterator().next());
+        	Order order = orders.iterator().next();
+        	if (order.getOrderStatus().equals(OrderStatus.PaymentPending))
+        		orderService.deleteOrder(order);
         }
         cartRepository.delete(cart);
         userRepository.delete(user);
@@ -164,7 +167,7 @@ public class UserService {
     @Transactional
     public User editEmail(String username, String newEmail) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
-            if(checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
+            if(!checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
                 throw new RegistrationException("invalid email");
             }
                 user.setEmail(newEmail);
@@ -278,7 +281,7 @@ public class UserService {
      *
      */
     private boolean checkIfValidEmail(String email) {
-    	String regex = "^(.+)@(.+)$";
+    	String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     	 Pattern pattern = Pattern.compile(regex);
     	 return pattern.matcher(email).matches();
 
