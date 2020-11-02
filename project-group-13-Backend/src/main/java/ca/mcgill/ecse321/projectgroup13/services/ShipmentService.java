@@ -35,7 +35,14 @@ public class ShipmentService {
 
     //create a new shipment
     @Transactional
-
+    /**
+     * creates shipment
+     * @param orderId
+     * @param addressId
+     * @param estimatedDateOfArrival
+     * @param estimatedTimeOfArrival
+     * @return
+     */
     public Shipment createShipment(int orderId, int addressId, Date estimatedDateOfArrival, Time estimatedTimeOfArrival) {
 
         Order order = orderRepo.findOrderByOrderID(orderId);
@@ -69,6 +76,11 @@ public class ShipmentService {
 
     //get shipment by id
     @Transactional
+    /**
+     * gets shipment
+     * @param shipmentID
+     * @return shipment
+     */
     public Shipment getShipment(int shipmentID){
         Shipment shipment = shipmentRepo.findShipmentByShipmentID(shipmentID);
         return shipment;
