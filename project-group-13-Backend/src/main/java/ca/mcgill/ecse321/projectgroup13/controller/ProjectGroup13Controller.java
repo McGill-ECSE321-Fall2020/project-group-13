@@ -567,9 +567,7 @@ public class ProjectGroup13Controller {
 		if (cart == null) 		//TODO: what to do if user is not authorized to delete cart
 			return true;		//there was nothing to delete, therefore we successfully complete operation?
 		
-		cartService.deleteCart(cart);
-		
-		return true;	//TODO: Method always return true. Check that out.
+		return cartService.deleteCart(cart);
 	}
 	
 	//public boolean removeFromCart(Cart cart, Artwork art)
