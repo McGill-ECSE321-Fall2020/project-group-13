@@ -4,7 +4,7 @@ services:
 before_install:
 - chmod +x gradlew
 before_script:
-- psql -c 'generate database for integration testing;' -U postgres
+- psql -c 'create database travis_ci_test;' -U postgres
 script:
 - ./gradlew build
 - ./gradlew integrationTest
