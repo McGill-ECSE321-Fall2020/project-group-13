@@ -25,6 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import java.util.*;
 
+import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
@@ -43,6 +44,8 @@ public class TestServicePayment {
 	@Mock
 	private PaymentRepository paymentRepo;
 	@Mock
+	private ArtworkRepository artworkRepo;
+	@Mock
 	private Order order;
 	@Mock
 	private Order order2;
@@ -57,6 +60,12 @@ public class TestServicePayment {
 	private static final int invalidID = 404;
 	private static final int order1ID = 1;
 	private static final int order2ID = 2;
+	private static final int artworkID = 11;
+
+	private static final String USERNAME = "person1";
+	private static final String USER_PASSWORD= "Thatguy123#";
+	private static final String USER_EMAIL= "person1@gmail.com";
+	private static final double PAYMENT_AMOUNT = 10.0;
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
@@ -68,6 +77,8 @@ public class TestServicePayment {
 		});
 		
 		lenient().when(paymentRepo.findByPaymentDateAfter(any(Date.class))).thenAnswer((InvocationOnMock invocation) -> {
+			
+			
 			Payment payment = new Payment();
 			payment.setTotalAmount(10);
 			Payment payment2 = new Payment();
@@ -91,6 +102,31 @@ public class TestServicePayment {
 			else {
 				return order;
 			}
+			
+		});
+		lenient().when(artworkRepo.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			Set<Artwork> set = new HashSet<Artwork>();
+			Artwork art = new Artwork();
+			art.setArtworkID(artworkID);
+			Order ord = new Order();
+			Payment payment = new Payment();
+			payment.setTotalAmount(PAYMENT_AMOUNT);
+			order.setPayment(payment);
+			art.setOrder(ord);
+			set.add(art);
+			return set;
+			
+		});
+		lenient().when(orderRepo.findOrdersByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			Set<Order> set = new HashSet<Order>();
+			Order order = new Order();
+			order.setOrderID(order1ID);
+			Payment payment = new Payment();
+			payment.setTotalAmount(PAYMENT_AMOUNT);
+			order.setPayment(payment);
+			set.add(order);
+			return set;
+			
 			
 		});
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -150,34 +186,19 @@ public class TestServicePayment {
 		assertEquals(error,"Expired card");
 		assertNull(payment);
 	}
-	/*
+	
 	@Test
 	public void testGetPaymentsByCustomer() {
 		//assertEquals(0, service.getAllPayments().size());
-		error = "";
-		User user = null;
-		Order order = null;
-		try{user = userService.createUser("david", "david@gmail.com", "aAbc123");}
-		catch(RegistrationException e) {
-			error = e.getMessage();
-		}
-		Payment payment = null;
-		try{order = orderService.createOrder(user);}
-		catch(Exception e) {
-			error += e.getMessage();
-		}
 		
-		try {
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order);
-		}catch (IllegalArgumentException e) {
-			error += e.getMessage();
-		}
-		
-		assertEquals(error,"");
-		assertEquals(service.getPaymentsForCustomer(user).contains(payment),true);
+		assertEquals(service.getPaymentsForCustomer(new User()).iterator().next().getTotalAmount(),PAYMENT_AMOUNT);
 		
 	}
-	*/
+	@Test
+	public void testGetPaymentArtist() {
+		assertEquals(service.getPaymentsForArtist(new User()).iterator().next().getTotalAmount(),PAYMENT_AMOUNT);
+	}
+	
 	@Test
 	public void testCalculateGalleryCommissionAfter() {
 		//assertEquals(0, service.getAllPayments().size());
@@ -188,6 +209,15 @@ public class TestServicePayment {
 		}catch (IllegalArgumentException e) {
 			error += e.getMessage();
 		}
+		assertEquals(service.calculateGalleryCommissionAfter(Date.valueOf("2020-01-01")),1.5); //$30*5% = $1.5
+	}
+	
+	@Test
+	public void testGetPaymentForCustomer() {
+		//assertEquals(0, service.getAllPayments().size());
+		Payment payment = null;
+		payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order1ID);
+		payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order2ID);
 		assertEquals(service.calculateGalleryCommissionAfter(Date.valueOf("2020-01-01")),1.5); //$30*5% = $1.5
 	}
 	
