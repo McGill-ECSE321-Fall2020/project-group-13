@@ -11,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.projectgroup13.dao.*;
-import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
@@ -23,7 +22,6 @@ import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class TestCartService {
-	
 	private static final String USERNAME = "person1";
 	private static final String USER_PASSWORD= "Thatguy123#";
 	private static final String USER_EMAIL= "person1@gmail.com";
@@ -31,7 +29,8 @@ public class TestCartService {
 	private static final String USERNAME2 = "person2";
 	private static final String USER_PASSWORD2= "Thatgirl123#";
 	private static final String USER_EMAIL2= "person2@gmail.com";
-	
+	private Integer CART_ID = 12342;
+	private boolean success = false;
 	@Mock
 	private UserRepository userRepository;
 	
@@ -39,29 +38,72 @@ public class TestCartService {
 	private ArtworkRepository artworkRepository;
 	
 	@InjectMocks
-	private UserService userService;
+	private CartService cartService;
+	
 	
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
 		lenient().when(userRepository.findUserByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 			if (invocation.getArgument(0).equals(USERNAME)) {
-			return null;
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				return user;
+			} else if (invocation.getArgument(0).equals(USERNAME2)){
+				User user = new User();
+				user.setUsername(USERNAME2);
+				user.setEmail(USER_EMAIL2);
+				user.setPassword(USER_PASSWORD2);
+				return user;
 			} else {
 				return null;
 			}
 		});
+		lenient().when(userRepository.findUserByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(USER_EMAIL)) {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				return user;
+			} else if (invocation.getArgument(0).equals(USER_EMAIL2)){
+				User user = new User();
+				user.setUsername(USERNAME2);
+				user.setEmail(USER_EMAIL2);
+				user.setPassword(USER_PASSWORD2);
+				return user;
+			} else {
+				return null;
+			}
+				
+		});
+		
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
 		
 		lenient().when(userRepository.save(any(User.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(userRepository.findUserByEmail(any(String.class))).thenAnswer(returnParameterAsAnswer);
+        
 	}
 	
+	
+	
 	@Test
-	public void testAddMultipleInvalid() {
+	public void testCreateCartMultipleArtwork() {
+		Cart cart = null; 
+		String error = null;
+		try {
+			cart = cartService.createCart("DOGGYTHEDOUG",USER_EMAIL2,USER_PASSWORD2);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
 		
+		assertEquals(error, null);
+		assertNotNull(cart);
 	}
 	
 	
