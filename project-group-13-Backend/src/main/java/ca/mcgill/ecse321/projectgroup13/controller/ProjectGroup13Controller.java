@@ -172,17 +172,23 @@ public class ProjectGroup13Controller {
 		userService.deleteUser(username);
 	}
 
-	//public void deleteUser(String username)
+
+	//edit user
+	@PutMapping(value = {"/user/{username}/edit" , "/user/{username}/edit/"})
+	public void editUser(@PathVariable("username") String username, @RequestBody User user) {
+		try{
+			userService.editEmail(username, user.getEmail());
+			userService.editBio(username, user.getBio());
+			userService.editProfilePictureUrl(username, user.getProfilePictureURL());
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}
+
+	}
+
 
 	//public User getUserByUsername(String username)
-	
-	//public void editEmail(String username, String newEmail)
-	
 	//public String login(LoginDto loginDto)
-	
-	//public void editBio(String username, String newBio)
-	
-	//public void editProfilePictureUrl(String username, String newUrl)
 
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS
@@ -466,7 +472,7 @@ public class ProjectGroup13Controller {
 	 */
 	//public List<Address> getAddressesByUser(User user)
 	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
-	public Set<AddressDto> getAllAddressesOfUser(@RequestParam String username){
+	public Set<AddressDto> getAllAddressesOfUser(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
 		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
 		for(Address address : addressService.getAddressesByUser(username)) {

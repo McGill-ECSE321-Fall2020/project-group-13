@@ -228,10 +228,6 @@ public class UserService {
         return user;
     }
 
-
-   // @Transactional
-    //public void editPassword(String username, )
-
     
     //TODO update token sophistication
     /**
