@@ -537,13 +537,13 @@ public class ProjectGroup13Controller {
 
 
 	//public Cart createCart(User user)
-//	@PostMapping(value = { "/user/{username}/new/cart/empty", "/user/{username}/new/cart/empty/" })
-//	public CartDto createCart(@PathVariable String username){
-//		User user = userService.getUserByUsername(username);
-//		Cart cart = cartService.createCart(user);
-//		CartDto cartDto = convertToDto(cart);
-//		return cartDto;
-//	}
+	@PostMapping(value = { "/user/{username}/new/cart/empty", "/user/{username}/new/cart/empty/" })
+	public CartDto createCart(@PathVariable String username){
+		User user = userService.getUserByUsername(username);
+		Cart cart = cartService.createCart(user);
+		CartDto cartDto = convertToDto(cart);
+		return cartDto;
+	}
 
 	//public boolean addToCart(Cart cart, Artwork art)
 	@PutMapping(value = { "/user/{username}/edit+/cart", "/user/{username}/edit+/cart/" })
@@ -621,7 +621,7 @@ public class ProjectGroup13Controller {
 	
 	//public boolean removeFromCart(Cart cart, Artwork art)
 	@PutMapping(value = { "/user/{username}/edit-/cart/{cartId}", "/user/{username}/edit-/cart/{cartId}/" })
-	public boolean removeFromCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id, @RequestParam(name="artid") Integer artId){
+	public CartDto removeFromCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id, @RequestParam(name="artid") Integer artId){
 		User user = userService.getUserByUsername(username);
 		Cart cart = null;
 
@@ -630,10 +630,11 @@ public class ProjectGroup13Controller {
 			cart = userCart;
 		
 		if (cart == null) 		//TODO: what to do if user is not authorized to delete from cart
-			return false;		//there was nothing to delete, therefore we successfully complete operation?
+			return null;		//there was nothing to delete, therefore we successfully complete operation?
 		
 		Artwork art = artworkService.getArtworkByID(artId);
-		return cartService.removeFromCart(cart, art);
+		cartService.removeFromCart(cart, art);
+		return convertToDto(cart);
 	}
 	
 	//public Set<Artwork> removeFromCart(Cart cart, Set<Artwork> art)
