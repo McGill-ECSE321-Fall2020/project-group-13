@@ -5,6 +5,7 @@ import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
 import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
+import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.User;
 import ca.mcgill.ecse321.projectgroup13.services.exception.illegalArgumentException;
@@ -117,6 +118,13 @@ public class ArtworkService {
      */
     @Transactional
     public void deleteArtwork(Artwork artwork){
+    	User user = null;
+    	while(artwork.getArtist().iterator().hasNext()) {
+    	user = artwork.getArtist().iterator().next();
+    	Set<Artwork> artworks = user.getArtwork();
+		artworks.remove(artwork);
+		user.setArtwork(artworks);
+		}
         artworkRepo.delete(artwork);
     }
 

@@ -122,6 +122,8 @@ public class CartService {
 	 */
 	@Transactional
 	public boolean deleteCart(int cartID) {
+		User user = cartRepository.findCartByCartID(cartID).getUser();
+		user.setCart(null);
 		return cartRepository.deleteCartByCartID(cartID);
 	}
 	
