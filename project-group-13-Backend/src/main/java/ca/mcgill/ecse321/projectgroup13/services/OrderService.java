@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.projectgroup13.services;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -151,27 +152,28 @@ public class OrderService {
 	 */
 	@Transactional
 	public boolean deleteOrder(Order order) {
-		order = orderRepository.findOrderByOrderID(order.getOrderID());
+		//order = orderRepository.findOrderByOrderID(order.getOrderID());
 		if (order == null)															//must check parameter is not null
 			throw new IllegalArgumentException("order cannot be null");
 		if (order.getOrderStatus() != OrderStatus.PaymentPending)					//must check that order hasn't been finalized. Cannot delete order that has payment and shipment
 			throw new IllegalArgumentException("Cannot delete a finalized order");
 		
 		boolean b = true;
-		
-		//remove order and artworks association
-		if (!order.getArtwork().isEmpty()) {
-			List<Artwork> arts = toList(order.getArtwork());
-			for (Artwork a: arts) 
-				a.setOrder(null);
-			b = b && order.getArtwork().removeAll(arts);
-		}
-		
-		//remove order and user association
 		User user = order.getUser();
 		Set<Order> orders = user.getOrder();
 		Boolean temp = orders.remove(order);
 		order.setUser(null);
+		//remove order and artworks association
+		if (!order.getArtwork().isEmpty()) {
+			List<Artwork> arts = toList(order.getArtwork());
+			b = b && order.getArtwork().removeAll(arts);
+			for (Artwork a: arts) 
+				a.setOrder(null);
+			
+		}
+		
+		//remove order and user association
+		
 		if (order.getPayment() != null)
 			paymentRepository.delete(order.getPayment());
 		orderRepository.delete(order);
@@ -235,7 +237,10 @@ public class OrderService {
 			throw new IllegalArgumentException("set<artwork> cannot be null");
 		if (order.getOrderStatus() != OrderStatus.PaymentPending)					//must check that order hasn't been finalized
 			throw new IllegalArgumentException("Cannot alter a finalized order");
-		
+		Iterator<Artwork> iter = art.iterator();
+		while(iter.hasNext()) {
+			iter.next().setOrder(order);
+		}
 		boolean b = order.getArtwork().addAll(art);
 		updateTotal(order);
 		orderRepository.save(order);
@@ -259,6 +264,7 @@ public class OrderService {
 			throw new IllegalArgumentException("Cannot alter a finalized order");
 		
 		boolean b = order.getArtwork().add(art);
+		art.setOrder(order);
 		updateTotal(order);
 		orderRepository.save(order);
 		return b;

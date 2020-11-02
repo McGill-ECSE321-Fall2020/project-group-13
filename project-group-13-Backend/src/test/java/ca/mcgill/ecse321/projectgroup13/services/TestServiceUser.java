@@ -437,7 +437,7 @@ public class TestServiceUser {
 	}
 	@Test
 	public void testDeleteUser() {
-		error = null;
+		error = "";
 		try {
 			
 			userService.deleteUser(USERNAME);
@@ -445,7 +445,7 @@ public class TestServiceUser {
 			error = e.getMessage();
 			System.out.println(error);
 		}
-		assertEquals(error,null);		
+		assertEquals(error,"");		
 		
 	}
 	

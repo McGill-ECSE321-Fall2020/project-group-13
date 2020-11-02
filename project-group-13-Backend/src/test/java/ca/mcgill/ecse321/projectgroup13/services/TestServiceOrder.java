@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.projectgroup13.services;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -59,20 +60,24 @@ public class TestServiceOrder {
 	private static final int ARTWORK_ID3 = 571428;
 	private static final int ORDER_ID = 852963;
 	private static final int ORDER_ID2 = 6484526;
+	private static final User INVALID_USER = new User();
 	private String error = "";
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
 		
 		lenient().when(orderRepo.findOrdersByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(INVALID_USER)) return null;
 			Set<Order> orders = new HashSet<Order>();
 			Order order = new Order();
 			Payment payment1 = new Payment();
 			payment1.setPaymentDate(Date.valueOf("2020-01-01"));
+			payment1.setPaymentTime(Time.valueOf("14:00:00"));
 			order.setPayment(payment1);
 			Order order2 = new Order();
 			Payment payment2 = new Payment();
 			payment2.setPaymentDate(Date.valueOf("2020-02-01"));
+			payment1.setPaymentTime(Time.valueOf("15:00:00"));
 			order2.setPayment(payment2);
 			order.setOrderID(111);
 			order2.setOrderID(222);
@@ -153,8 +158,9 @@ public class TestServiceOrder {
 	public void testGetMostRecentOrder() {
 		Order order = null;
 		try {
-			
-			order = orderService.getMostRecentOrder(new User());
+			User user= new User();
+			user.setUsername("hub");
+			order = orderService.getMostRecentOrder(user);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -237,7 +243,7 @@ public class TestServiceOrder {
 		Artwork art2 = new Artwork();
 		art2.setArtworkID(ARTWORK_ID2);
 		Artwork art3 = new Artwork();
-		art2.setArtworkID(ARTWORK_ID3);
+		art3.setArtworkID(ARTWORK_ID3);
 		Set<Artwork> set = new HashSet<Artwork>();
 		Set<Artwork> setToRemove = new HashSet<Artwork>();
 		set.add(art);
@@ -283,7 +289,7 @@ public class TestServiceOrder {
 		Artwork art = new Artwork();
 		art.setArtworkID(ARTWORK_ID);
 		Artwork art2 = new Artwork();
-		art.setArtworkID(ARTWORK_ID2);
+		art2.setArtworkID(ARTWORK_ID2);
 		Set<Artwork> set = new HashSet<Artwork>();
 		set.add(art);
 		set.add(art2);
@@ -385,12 +391,14 @@ public class TestServiceOrder {
 	}
 	@Test
 	public void testUserWithNoOrderGetMostRecentOrder() {
+		error = "";
+		
 		try {
-			orderService.getMostRecentOrder(new User());
+			orderService.getMostRecentOrder(INVALID_USER);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		assertNotEquals(error,"");
+		assertFalse(error.equals(""));
 	}
 	@Test
 	public void testNullOrderRemoveFromOrder() {
