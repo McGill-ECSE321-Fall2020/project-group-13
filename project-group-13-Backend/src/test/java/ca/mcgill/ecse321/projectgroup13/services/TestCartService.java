@@ -316,6 +316,43 @@ public class TestCartService {
 		assertNotNull(cart);
 	}
 	
+	
+@Test
+	
+	public void testInvalidUserAddSetValid() {
+		Cart cart = null; 
+		String error = null;
+		User user = userRepo.findUserByUsername("");
+		Artwork art =artworkRepo.findArtworkByArtworkID(ARTWORK_ID);
+		HashSet<Artwork> set = new HashSet<Artwork>();
+		set.add(art);
+		try {
+			cart = cartService.createCart(user, set);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, "invalid argument");
+		assertNull(cart);
+	}
+
+
+@Test
+public void testInvalidArtworkAddSetValid() {
+	Cart cart = null; 
+	String error = null;
+	User user = userRepo.findUserByUsername("");
+	HashSet<Artwork> set = null;
+	try {
+		cart = cartService.createCart(user, set);
+	} catch (Exception e) {
+		error=e.getMessage();
+	}
+	
+	assertEquals(error, "invalid argument");
+	assertNull(cart);
+}
+	
 	@Test
 	public void testAddMultipleValid() {
 		
