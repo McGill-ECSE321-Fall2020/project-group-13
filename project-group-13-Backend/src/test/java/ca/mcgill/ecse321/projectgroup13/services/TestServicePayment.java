@@ -171,6 +171,7 @@ public class TestServicePayment {
 				Payment payment = new Payment();
 				payment.setTotalAmount(PAYMENT_AMOUNT);
 				order.setPayment(payment);
+				order.setArtwork(sets);
 	
 				return user;
 				
@@ -181,6 +182,69 @@ public class TestServicePayment {
 			}
 			
 		});
+		
+		lenient().when(artworkRepo.findByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (((User)invocation.getArgument(0)).getUsername().contentEquals(USERNAME)) {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork);
+				
+				user.setArtwork(sets);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+				
+				
+
+
+
+
+				Payment payment = new Payment();
+				payment.setTotalAmount(PAYMENT_AMOUNT);
+				order.setPayment(payment);
+				order.setArtwork(sets);
+	
+				return sets;
+				
+				
+			} 
+			else {
+				return null;
+			}
+			
+		});
+		
 		
 		
 		lenient().when(artworkRepo.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
