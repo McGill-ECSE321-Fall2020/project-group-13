@@ -113,9 +113,10 @@ public class OrderService {
 		List<Order> orders = toList(orderRepository.findOrdersByUser(user));
 		
 		Order order = orders.get(0);
+		
 		for (Order o : orders) {
 			
-			if (o.getPayment()!=null && order.getPayment().getPaymentDate().before(o.getPayment().getPaymentDate())) 
+			if (o != null && o.getPayment()!=null && order.getPayment().getPaymentDate().before(o.getPayment().getPaymentDate())) 
 				order = o;
 		}
 		return order;
