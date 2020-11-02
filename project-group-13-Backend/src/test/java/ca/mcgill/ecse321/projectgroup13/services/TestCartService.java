@@ -305,6 +305,7 @@ public class TestCartService {
 	
 	
 	
+	
 	@Test
 	public void testCreateCartSingleArtwork() {
 		Cart cart = null; 
@@ -335,6 +336,51 @@ public class TestCartService {
 		assertNull(cart);
 	}
 	
+	@Test
+	public void testCreateCartNullArtwork() {
+		Cart cart = null; 
+		String error = null;
+		Set<Artwork> nullArtworkSet = null; 
+		
+		try {
+			cartService.createCart(userRepo.findUserByUsername(USERNAME), nullArtworkSet);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, "set<artwork> cannot be null");
+		assertNull(cart);
+	}
+	
+	@Test void testRemoveCartNullCart() {
+		Cart cart = null;
+		Artwork artwork = artworkRepo.findArtworkByArtworkID(ARTWORK_ID);
+		String error = null;
+		
+		try {
+			assertTrue(cartService.removeFromCart(cart, artwork));
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, "cart cannot be null");
+		
+	}
+	
+	@Test void testRemoveCartNullArtwork() {
+		Cart cart = cartRepo.findCartByCartID(CART_ID); 
+		Artwork artwork = null;
+		String error = null;
+		
+		try {
+			assertTrue(cartService.removeFromCart(cart, artwork));
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, "artwork cannot be null");
+		
+	}
 	
 	@Test
 	public void testCreateCartSingleArt() {
@@ -424,16 +470,6 @@ public void testInvalidArtworkAddSetValid() {
 	assertNull(cart);
 }
 	
-	@Test
-	public void testAddMultipleValid() {
-		
-	}
-	
-	@Test
-	public void testRemoveMultipleInvalid() {
-		
-		
-	}
 	
 	@Test
 	public void testGetCart() {
