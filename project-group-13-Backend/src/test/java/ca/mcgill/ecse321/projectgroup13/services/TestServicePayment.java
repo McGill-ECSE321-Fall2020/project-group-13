@@ -122,7 +122,7 @@ public class TestServicePayment {
 		});
 		
 		lenient().when(userRepo.findUserByUsername(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
-			if (invocation.getArgument(0).equals(invalidID)) {
+			if (invocation.getArgument(0).equals(USERNAME)) {
 				User user = new User();
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
@@ -177,7 +177,7 @@ public class TestServicePayment {
 				
 			} 
 			else {
-				return order;
+				return null;
 			}
 			
 		});
@@ -275,7 +275,8 @@ public class TestServicePayment {
 	}
 	@Test
 	public void testGetPaymentArtist() {
-		List<Payment> payments = service.getPaymentsForArtist(userRepo.findUserByUsername(USERNAME));
+		User user = userRepo.findUserByUsername(USERNAME);
+		List<Payment> payments = service.getPaymentsForArtist(user);
 		assertEquals(payments.iterator().next().getTotalAmount(),PAYMENT_AMOUNT);
 	}
 	
