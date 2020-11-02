@@ -1,9 +1,10 @@
 #!/bin/bash
+
 blue=$(tput setaf 4)
 normal=$(tput sgr0)
 
-username="aqf4sdf"
-username2="s4d"
+username="afdqasfee1"
+username2="s1fweferd4"
 
 #test the creation of users
 printf "%s\n" "${blue}test the creation of users${normal}"
@@ -46,9 +47,9 @@ currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders")
 printf "\n$currentLine\n"
 
 #delete second order
-printf "%s\n" "${blue}delete second order${normal}"
-currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/order/$orderID2")
-printf "$currentLine\n"
+#printf "%s\n" "${blue}delete second order${normal}"
+#currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/order/$orderID2")
+#printf "$currentLine\n"
 
 #get order from orderId
 printf "%s\n" "${blue}get order from orderId${normal}"
@@ -62,14 +63,31 @@ currentLine=$(curl -s -H "Content-Type: application/json" --data @payment.json -
 printf "$currentLine\n"
 paymentID=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
+#create payment and store paymentId
+printf "%s\n" "${blue}create payment and store paymentId${normal}"
+currentLine=$(curl -s -H "Content-Type: application/json" --data @payment.json -X POST "http://localhost:8080/order/$orderID2/pay")
+printf "$currentLine\n"
+paymentID2=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+
 #get payment from ID
+printf "%s\n" "${blue}get payment from ID${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/payments/$paymentID")
+printf "$currentLine\n"
 
 #get payments of artist
+printf "%s\n" "${blue}get payments of artist${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/payments/$username/artist")
+printf "$currentLine\n"
 
 #get payments of customer
+printf "%s\n" "${blue}get payments of customer${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/payments/$username/customer")
+printf "$currentLine\n"
 
 #calculate commission for gallery after Date
-
+printf "%s\n" "${blue}calculate commission for gallery after Date${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/payments/gallery?date=2019-03-28T01:30:00.000+07:00")
+printf "$currentLine\n"
 
 #get most recent order
 printf "%s\n" "${blue}get most recent order${normal}"
@@ -84,11 +102,14 @@ addressID=$(echo  "$currentLine" | grep -o "\"addressID\".*" | cut -f2- -d: | gr
 
 #update address
 printf "%s\n" "${blue}update address${normal}"
-currentLine=$(curl -s -X PUT "http://localhost:8080/address/$addressID/update?")
-
+currentLine=$(curl -s -H "Content-Type: application/json" --data @address-updated.json -X PUT "http://localhost:8080/address/$addressID/update")
 printf "$currentLine\n"
-#get all addresses of user
 
+
+#get all addresses of user
+printf "%s\n" "${blue}get all addresses of user${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/addresses")
+printf "$currentLine\n"
 
 #set order to be delivered
 printf "%s\n" "${blue}set order to be delivered${normal}"
@@ -124,7 +145,7 @@ currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit-/order/$
 printf "$currentLine\n"
 
 #remove artwork from cart
-printf "%s\n" "${blue}remove artwork to cart${normal}"
+printf "%s\n" "${blue}remove artwork from cart${normal}"
 currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit-/cart/$cartID?artid=$artworkID")
 printf "$currentLine\n"
 

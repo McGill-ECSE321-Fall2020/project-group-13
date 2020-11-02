@@ -472,26 +472,26 @@ public class ProjectGroup13Controller {
 	 * RESTful service that updates address by id
 	 */
 	@PutMapping(value = {"/address/{addressId}/update", "/address/{addressId}/update/"})
-	public AddressDto updateAddress(@PathVariable(name = "addressId") Integer addressId, @RequestParam String streetAddress1, @RequestParam String streetAddress2,
-			@RequestParam String city, @RequestParam String province, @RequestParam String country, @RequestParam String postalCode) throws IllegalArgumentException {
+	public AddressDto updateAddress(@PathVariable(name = "addressId") Integer addressId, @RequestBody Address address) throws IllegalArgumentException {
 		if (addressId == null) {
 			throw new IllegalArgumentException("There must be an addressID to update");
-		} else if (streetAddress1 == null){
+		} else if (address.getStreetAddress1() == null){
 			throw new IllegalArgumentException("streetAddress1 cannot be null");
-		} else if (streetAddress2 == null){
+		} else if (address.getStreetAddress2() == null){
 			throw new IllegalArgumentException("streetAddress2 cannot be null");
-		} else if (city == null){
+		} else if (address.getCity() == null){
 			throw new IllegalArgumentException("city cannot be null");
-		} else if (province == null){
+		} else if (address.getProvince() == null){
 			throw new IllegalArgumentException("province cannot be null");
-		} else if (country == null){
+		} else if (address.getCountry() == null){
 			throw new IllegalArgumentException("country cannot be null");
-		} else if (postalCode == null){
+		} else if (address.getPostalCode() == null){
 			throw new IllegalArgumentException("postalCode cannot be null");
 		} else {
 
 			
-			addressService.updateAddress(addressId, streetAddress1, streetAddress2, city, province, country, postalCode);
+			addressService.updateAddress(addressId, address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), 
+													address.getProvince(), address.getCountry(), address.getPostalCode());
 			Address oldAddress = addressService.getAddressById(addressId);
 
 			return convertToDto(oldAddress);
