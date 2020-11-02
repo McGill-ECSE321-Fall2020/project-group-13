@@ -3,8 +3,8 @@
 blue=$(tput setaf 4)
 normal=$(tput sgr0)
 
-username="rr3rf5rdedr"
-username2="aff3rtde5r"
+username="rsrr"
+username2="afsr"
 
 #test the creation of users
 printf "%s\n" "${blue}test the creation of users${normal}"
@@ -41,7 +41,6 @@ printf "%s\n" "${blue}create order and store orderId${normal}"
 currentLine=$(curl -s -X POST "http://localhost:8080/user/$username/new/order")
 printf "$currentLine\n"
 orderID=$(echo  "$currentLine" | grep -o "\"orderID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
-: '
 
 #create another order and store orderId
 printf "%s\n" "${blue}create another order and store orderId${normal}"
@@ -54,16 +53,24 @@ printf "%s\n" "${blue}get orders from user${normal}"
 currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders")
 printf "\n$currentLine\n"
 
+
 #delete second order
 printf "%s\n" "${blue}delete second order${normal}"
 currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/order/$orderID2")
 printf "$currentLine\n"
+
+#get orders from user
+printf "%s\n" "${blue}get orders from user${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders")
+printf "\n$currentLine\n"
+
 
 #get order from orderId
 printf "%s\n" "${blue}get order from orderId${normal}"
 currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/order/$orderID")
 printf "$currentLine\n"
 
+: '
 
 #create payment and store paymentId
 printf "%s\n" "${blue}create payment and store paymentId${normal}"

@@ -136,7 +136,7 @@ if (this == obj)
 @Override
 public String toString() {
 	return "Order [totalAmount=" + totalAmount + ", payment=" + payment + ", shipment=" + shipment + ", orderID="
-			+ orderID + ", artwork=" + artwork + ", user=" + user + ", orderStatus=" + orderStatus + ", isDelivery="
+			+ orderID + ", artwork=" + artwork + ", orderStatus=" + orderStatus + ", isDelivery="
 			+ isDelivery + "]";
 }
 
