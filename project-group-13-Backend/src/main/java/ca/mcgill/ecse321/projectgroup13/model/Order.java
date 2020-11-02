@@ -133,4 +133,12 @@ if (this == obj)
    		return false;
    	return true;
    }
+@Override
+public String toString() {
+	return "Order [totalAmount=" + totalAmount + ", payment=" + payment + ", shipment=" + shipment + ", orderID="
+			+ orderID + ", artwork=" + artwork + ", user=" + user + ", orderStatus=" + orderStatus + ", isDelivery="
+			+ isDelivery + "]";
+}
+
+	
 }
