@@ -487,6 +487,37 @@ public class TestServiceShipping {
 	 	
 	}
 	
+	@Test
+	public void testInvalidgetShipmentOfOrder() {
+		Shipment shipment = null;
+		String error = null;
+	 	try {
+	 		shipment=shipmentService.getShipmentOfOrder(orderRepo.findOrderByOrderID(8008135));
+	 	}catch (IllegalArgumentException e) {
+	 		error = e.getMessage();
+	 		System.out.print(error);
+	 	}
+	 	assertNull(shipment);
+	 	assertEquals(error,  "invalid order");
+	 	
+	}
+	
+	@Test
+	public void testgetAddressOfShipment() {
+		Address address = null;
+	 	try {
+	 		address=shipmentService.getAddressOfShipment(SHIPMENTID);
+	 	}catch (IllegalArgumentException e) {
+	 		error = e.getMessage();
+	 		System.out.print(error);
+	 	}
+	 	assertNotNull(address);
+	 	assertEquals(address.getCity(), CITY);
+	 	assertEquals(address.getAddressID(), ADDRESS_ID);
+	 	assertNull(error);
+	 	
+	}
+	
 	
 
 }
