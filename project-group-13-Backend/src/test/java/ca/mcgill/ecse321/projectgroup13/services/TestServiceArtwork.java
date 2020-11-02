@@ -52,6 +52,7 @@ public class TestServiceArtwork {
 	private static final String TITLE = "BEAUTY";
 	
 
+	
 
 	@Mock
 	private Order order;
@@ -402,18 +403,19 @@ public class TestServiceArtwork {
 	 public void testDeleteExistingArtwork()  {
 		 
 		 Artwork artwork = artworkRepo.findArtworkByArtworkID(ARTWORK_ID);
-
 		 Boolean test = false;
 		 String error = null;
 		try{
+			
 			test = artworkService.deleteArtwork(artwork);
+		
 		}
 		catch(Exception e) {
 			error = e.getMessage();
 			
 		}
 		
-		assertEquals(error,"");
+		assertNull(error);
 		assertTrue(test);
 		
 		
