@@ -166,6 +166,12 @@ public class ProjectGroup13Controller {
 		return null;
 	}
 
+	//delete a user from db
+	@DeleteMapping(value = {"/user/{username}/delete" , "/user/{username}/delete/"})
+	public void deleteUser(@PathVariable("username") String username) throws RegistrationException{
+		userService.deleteUser(username);
+	}
+
 	//public void deleteUser(String username)
 
 	//public User getUserByUsername(String username)
@@ -177,10 +183,7 @@ public class ProjectGroup13Controller {
 	//public void editBio(String username, String newBio)
 	
 	//public void editProfilePictureUrl(String username, String newUrl)
-	
-	//public String createToken(User user)
-	
-	//public String generateRandomPassword()
+
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS
 
@@ -373,7 +376,6 @@ public class ProjectGroup13Controller {
 	//public Shipment getShipmentOfOrder(Order order)
 	
 	//public Set<Shipment> getShipmentsOfUser(User user)
-
 	/**
 	 * RESTful service that gets all shipments of a user
 	 * @param username
@@ -591,14 +593,6 @@ public class ProjectGroup13Controller {
 		Artwork art = artworkService.createArtwork(title, artists, worth);
 		return convertToDto(art);
 	}
-	
-	//public void deleteArtwork(Artwork artwork)
-	//TODO: deleting an artwork => removing self from list of artists. If list of artists is empty, then delete artwork.
-//	@PostMapping(value = { "/user/{username}/remove/artist/{artId}", "/user/{username}/remove/artist/{artId}/" })
-//	public ArtworkDto deleteArtwork(@RequestParam(name="artid") String title, @RequestParam(name="usernames") String[] usernames , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
-//		Artwork art = artworkService.createArtwork(title, usernames, worth);
-//		return convertToDto(art);
-//	}
 	
 	
 	//public Artwork getArtworkByID(int artworkID)
