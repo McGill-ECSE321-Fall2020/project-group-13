@@ -136,11 +136,14 @@ public class UserService {
         Set<Address> userAddresses = user.getAddress();
         Cart cart = user.getCart();
         Set<Order> orders = user.getOrder();
+        Set<Artwork> Artwork = artworkRepository.findArtworkByArtist(user.getUsername());
         while(userAddresses.iterator().hasNext()) {
         	addressService.deleteAddress(userAddresses.iterator().next().getAddressID());
         }
         while(orders.iterator().hasNext()) {
-        	orderService.deleteOrder(orders.iterator().next());
+        	Order order = orders.iterator().next();
+        	if (order.getOrderStatus().equals(OrderStatus.PaymentPending))
+        		orderService.deleteOrder(order);
         }
         cartRepository.delete(cart);
         userRepository.delete(user);
