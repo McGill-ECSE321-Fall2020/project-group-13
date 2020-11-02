@@ -127,7 +127,7 @@ public class UserService {
      * @throws RegistrationException
      */
     @Transactional
-    public void deleteUser(String username) throws RegistrationException {
+    public Boolean deleteUser(String username) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
         if(user==null) throw new RegistrationException("User does not exist");
         Set<Address> userAddresses = user.getAddress();
@@ -162,6 +162,8 @@ public class UserService {
             }
         }
         userRepository.delete(user);
+        
+        return true;
     }
 
 
