@@ -274,25 +274,8 @@ public class TestServiceArtwork {
 	 
 	 @Test
 	 public void testDeleteExistingArtwork()  {
-		 ArtworkDto artworkDto = new ArtworkDto();
-		 UserDto userDto = new UserDto();
-		 userDto.setUsername(USERNAME);
-		 Set<UserDto> artDto= new HashSet<>();
-		 artDto.add(userDto);
-		 artworkDto.setArtist(artDto);
-		 artworkDto.setTitle("done with it");
-		 artworkDto.setWorth(23.99);
-		 Artwork checker=null;
-		 try {
-			 Artwork artwork=artworkService.createArtwork(artworkDto);
-			 checker = artworkRepository.findArtworkByArtworkID(ARTWORKID);
-		 } catch (IllegalArgumentException e) {
-			 assertNull(checker);
-		 }
-		 
-		 
-		 artworkService.deleteArtworkById(ARTWORKID);
-		 assertNull(artworkRepository.findArtworkByArtworkID(ARTWORKID));
+		
+		
 	 }
 	 
 	 public static <T> List<T> toList(Iterable<T> iterable) {
