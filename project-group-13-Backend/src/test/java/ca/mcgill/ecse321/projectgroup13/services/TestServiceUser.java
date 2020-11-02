@@ -52,6 +52,8 @@ public class TestServiceUser {
 	@Mock
 	private ArtworkRepository artworkRepository;
 	
+	@Mock
+	private AddressRepository addressRepository;
 	
 	@Mock
 	private ShipmentRepository shipmentRepository;
@@ -63,6 +65,11 @@ public class TestServiceUser {
 	@InjectMocks
 	private UserService userService;
 	
+	@InjectMocks
+	private OrderService orderService; 
+	
+	@InjectMocks
+	private AddressService addressService; 
 	
 	@BeforeEach
 	public void setMockOutput() {
@@ -173,6 +180,7 @@ public class TestServiceUser {
 				return null;
 			}
 		});
+		
 		lenient().when(shipmentRepository.findShipmentByShipmentID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
 			if (invocation.getArgument(0).equals(SHIPMENTID)) {
 			User user = new User();
@@ -218,6 +226,55 @@ public class TestServiceUser {
 			} else {
 				return null;
 			}
+		});
+			
+			lenient().when(addressRepository.findAddressByAddressID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+				if (invocation.getArgument(0).equals(SHIPMENTID)) {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork);
+				
+				user.setArtwork(sets);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+				return address;
+				} else {
+					return null;
+				}
+			
+			
 		});
 		
 		
@@ -268,6 +325,41 @@ public class TestServiceUser {
 			}
 		});
 		
+		lenient().when(cartRepo.deleteCartByCartID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(CART_ID)) {
+			return true;
+			} else {
+				return false;
+			}
+		});
+		
+		lenient().when(userRepository.deleteUserByUsername(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(USERNAME)) {
+			return true;
+			} else {
+				return false;
+			}
+		});
+//		lenient().when(addressService.deleteAddress(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+//			if (invocation.getArgument(0).equals(ADDRESS_ID)) {
+//			return true;
+//			} else {
+//				return false;
+//			}
+//		});
+		
+		
+		
+//		
+//		lenient().when(shipmentRepository.deleteShipmentByShipmentID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+//			if (invocation.getArgument(0).equals(USERNAME)) {
+//			return true;
+//			} else {
+//				return false;
+//			}
+//		});
+		
+		
 		
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
@@ -275,7 +367,8 @@ public class TestServiceUser {
 		
 		lenient().when(userRepository.save(any(User.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
-        lenient().when(userRepository.delete(any(User.class))).thenAnswer(returnParameterAsAnswer);
+//        lenient().when(userRepository.deleteUserByUsername(any(String.class))).thenAnswer(returnParameterAsAnswer);
+//        lenient().when(cartRepo.deleteCartByCartID(any(Integer.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
       
         
@@ -532,7 +625,7 @@ public class TestServiceUser {
 	
 	
 	@Test
-	public void testiNVALIDGetUserByUsername() {
+	public void testInvalidGetUserByUsername() {
 		String error= null;
 		User user = null;
 		try {
