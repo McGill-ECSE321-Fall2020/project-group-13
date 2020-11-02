@@ -2,14 +2,7 @@ package ca.mcgill.ecse321.projectgroup13.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnTransformer;
 
@@ -54,7 +47,7 @@ return this.profilePictureURL;
     }
 private Set<Artwork> artwork;
 
-@ManyToMany(mappedBy="artist")
+@ManyToMany(mappedBy="artist", fetch = FetchType.EAGER)
 public Set<Artwork> getArtwork() {
    return this.artwork;
 }
