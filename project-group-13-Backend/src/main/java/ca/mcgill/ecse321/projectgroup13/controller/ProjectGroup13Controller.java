@@ -94,12 +94,7 @@ public class ProjectGroup13Controller {
 //			throw new IllegalArgumentException("There is no such artwork!");
 		}
 
-//		Set<UserDto> artists = new HashSet<UserDto>();
-//		for (User artist : artwork.getArtist()) {
-//			artists.add(convertToDto(artist));
-//		}
-
-		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
+		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
 		return dto;
 	}
 
@@ -171,6 +166,12 @@ public class ProjectGroup13Controller {
 		return null;
 	}
 
+	//delete a user from db
+	@DeleteMapping(value = {"/user/{username}/delete" , "/user/{username}/delete/"})
+	public void deleteUser(@PathVariable("username") String username) throws RegistrationException{
+		userService.deleteUser(username);
+	}
+
 	//public void deleteUser(String username)
 
 	//public User getUserByUsername(String username)
@@ -182,10 +183,7 @@ public class ProjectGroup13Controller {
 	//public void editBio(String username, String newBio)
 	
 	//public void editProfilePictureUrl(String username, String newUrl)
-	
-	//public String createToken(User user)
-	
-	//public String generateRandomPassword()
+
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS
 
@@ -201,11 +199,13 @@ public class ProjectGroup13Controller {
 		System.out.println(order);
 		Payment p = paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId);
 		
-		try { orderService.addPaymentToOrder(order, p);}
+		try {
+			orderService.addPaymentToOrder(order, p);
+			cartService.deleteCart(order.getUser().getCart());
+		}
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
-			//TODO: Maybe return null?
 		}
 		PaymentDto paymentDto = convertToDto(p);
 		return paymentDto;
@@ -257,7 +257,9 @@ public class ProjectGroup13Controller {
 	@PostMapping(value = { "/user/{username}/new/order", "/user/{username}/new/order/" })
 	public OrderDto createOrder(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
+		Set<Artwork> artworks = user.getCart().getArtwork();
 		Order order = orderService.createOrder(user);
+		order.setArtwork(artworks);
 		OrderDto orderDto = convertToDto(order);
 		return orderDto;
 	}
@@ -272,10 +274,6 @@ public class ProjectGroup13Controller {
 			System.out.println("NOPE " + e.toString());
 		}
 	}
-
-
-	
-	//public Order createOrder(User user, Set<Artwork> art)
 
 
 	//public List<Order> getOrdersFromUser(User user)
@@ -312,6 +310,7 @@ public class ProjectGroup13Controller {
 		}
 		return convertToDto(order);
 	}
+
 	
 	//public boolean deleteOrder(Order order)
 	@DeleteMapping(value = { "/user/{username}/delete/order/{orderId}", "/user/{username}/delete/order/{orderId}/" })
@@ -331,48 +330,8 @@ public class ProjectGroup13Controller {
 		
 		return orderService.deleteOrder(order);
 	}
-	
-	//public boolean removeFromOrder(Order order, Artwork art)
-	@PutMapping(value = { "/user/{username}/edit-/order/{orderId}", "/user/{username}/edit-/order/{orderId}/" })
-	public boolean removeFromOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId){
-		Order order = null;
-		User user = userService.getUserByUsername(username);
-		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
-			if (o.getOrderID()==id) {
-				order = o;
-				break;
-			}
-		}
-		
-		if (order == null)
-			return false;
-		
-		Artwork art = artworkService.getArtworkByID(artId);
-		return orderService.removeFromOrder(order, art);
-	}
-	
-	//public boolean addToOrder(Order order, Artwork art)
-	@PutMapping(value = { "/user/{username}/edit+/order/{orderId}", "/user/{username}/edit+/order/{orderId}/" })
-	public boolean addToOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId) {
-		Order order = null;
-		User user = userService.getUserByUsername(username);
-		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
-			if (o.getOrderID()==id) {
-				order = o;
-				break;
-			}
-		}
-		
-		if (order == null)
-			return false;
-		
-		Artwork art = artworkService.getArtworkByID(artId);
-		return orderService.addToOrder(order, art);
-	}
-	
-	//TODO: Are these two methods necessary? If so, how do we implement their RESTful service controller methods?
-	//public boolean removeFromOrder(Order order, Set<Artwork> art)
-	//public boolean addToOrder(Order order, Set<Artwork> art)
+
+
 	
 	
 	
@@ -417,7 +376,6 @@ public class ProjectGroup13Controller {
 	//public Shipment getShipmentOfOrder(Order order)
 	
 	//public Set<Shipment> getShipmentsOfUser(User user)
-
 	/**
 	 * RESTful service that gets all shipments of a user
 	 * @param username
@@ -477,26 +435,26 @@ public class ProjectGroup13Controller {
 	 * RESTful service that updates address by id
 	 */
 	@PutMapping(value = {"/address/{addressId}/update", "/address/{addressId}/update/"})
-	public AddressDto updateAddress(@PathVariable(name = "addressId") Integer addressId, @RequestParam String streetAddress1, @RequestParam String streetAddress2,
-			@RequestParam String city, @RequestParam String province, @RequestParam String country, @RequestParam String postalCode) throws IllegalArgumentException {
+	public AddressDto updateAddress(@PathVariable(name = "addressId") Integer addressId, @RequestBody Address address) throws IllegalArgumentException {
 		if (addressId == null) {
 			throw new IllegalArgumentException("There must be an addressID to update");
-		} else if (streetAddress1 == null){
+		} else if (address.getStreetAddress1() == null){
 			throw new IllegalArgumentException("streetAddress1 cannot be null");
-		} else if (streetAddress2 == null){
+		} else if (address.getStreetAddress2() == null){
 			throw new IllegalArgumentException("streetAddress2 cannot be null");
-		} else if (city == null){
+		} else if (address.getCity() == null){
 			throw new IllegalArgumentException("city cannot be null");
-		} else if (province == null){
+		} else if (address.getProvince() == null){
 			throw new IllegalArgumentException("province cannot be null");
-		} else if (country == null){
+		} else if (address.getCountry() == null){
 			throw new IllegalArgumentException("country cannot be null");
-		} else if (postalCode == null){
+		} else if (address.getPostalCode() == null){
 			throw new IllegalArgumentException("postalCode cannot be null");
 		} else {
 
 			
-			addressService.updateAddress(addressId, streetAddress1, streetAddress2, city, province, country, postalCode);
+			addressService.updateAddress(addressId, address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), 
+													address.getProvince(), address.getCountry(), address.getPostalCode());
 			Address oldAddress = addressService.getAddressById(addressId);
 
 			return convertToDto(oldAddress);
@@ -539,14 +497,11 @@ public class ProjectGroup13Controller {
 		Cart cart;
 		if(user.getCart() == null){			//if no cart existed
 			cart = cartService.createCart(user);
-			cart.setArtwork(new HashSet<Artwork>());
-			Set<Artwork> artworks = cart.getArtwork();
-			artworks.add(artwork);
-			cart.setArtwork(artworks);
+			cartService.addToCart(cart, artwork);
 			CartDto cartDto = convertToDto(cart);
 		}else{								//if there was already a cart
 			cart = user.getCart();
-			cart.getArtwork().add(artwork);
+			cartService.addToCart(cart, artwork);
 		}
 		return convertToDto(cart);
 	}
@@ -638,14 +593,6 @@ public class ProjectGroup13Controller {
 		Artwork art = artworkService.createArtwork(title, artists, worth);
 		return convertToDto(art);
 	}
-	
-	//public void deleteArtwork(Artwork artwork)
-	//TODO: deleting an artwork => removing self from list of artists. If list of artists is empty, then delete artwork.
-//	@PostMapping(value = { "/user/{username}/remove/artist/{artId}", "/user/{username}/remove/artist/{artId}/" })
-//	public ArtworkDto deleteArtwork(@RequestParam(name="artid") String title, @RequestParam(name="usernames") String[] usernames , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
-//		Artwork art = artworkService.createArtwork(title, usernames, worth);
-//		return convertToDto(art);
-//	}
 	
 	
 	//public Artwork getArtworkByID(int artworkID)

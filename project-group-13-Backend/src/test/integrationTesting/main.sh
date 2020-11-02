@@ -1,9 +1,10 @@
 #!/bin/bash
+
 blue=$(tput setaf 4)
 normal=$(tput sgr0)
 
-username="aqf4sdf"
-username2="s4d"
+username="rs1"
+username2="d4"
 
 #test the creation of users
 printf "%s\n" "${blue}test the creation of users${normal}"
@@ -15,6 +16,17 @@ printf "\n%s\n" "${blue}create cart and store cartId${normal}"
 currentLine=$(curl -s -X POST "http://localhost:8080/user/$username/new/cart/empty")
 printf "$currentLine\n"
 cartID=$(echo  "$currentLine" | grep -o "\"cartID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+
+#create artwork and store artworkID
+printf "%s\n" "${blue}create artwork and store artworkID${normal}"
+currentLine=$(curl -s -X POST "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7")
+printf "$currentLine\n"
+artworkID=$(echo  "$currentLine" | grep -o "\"artworkID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+
+#add artwork to cart
+printf "%s\n" "${blue}add artwork to cart${normal}"
+currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit+/cart/?artid=$artworkID")
+printf "$currentLine\n"
 
 #get cart by cart ID
 printf "%s\n" "${blue}get cart by cart ID${normal}"
@@ -63,13 +75,24 @@ printf "$currentLine\n"
 paymentID=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
 #get payment from ID
+printf "%s\n" "${blue}get payment from ID${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/payments/$paymentID")
+printf "$currentLine\n"
 
 #get payments of artist
+printf "%s\n" "${blue}get payments of artist${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/payments/$username/artist")
+printf "$currentLine\n"
 
 #get payments of customer
+printf "%s\n" "${blue}get payments of customer${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/payments/$username/customer")
+printf "$currentLine\n"
 
 #calculate commission for gallery after Date
-
+printf "%s\n" "${blue}calculate commission for gallery after Date${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/payments/gallery?date=2019-03-28T01:30:00.000+07:00")
+printf "$currentLine\n"
 
 #get most recent order
 printf "%s\n" "${blue}get most recent order${normal}"
@@ -84,11 +107,14 @@ addressID=$(echo  "$currentLine" | grep -o "\"addressID\".*" | cut -f2- -d: | gr
 
 #update address
 printf "%s\n" "${blue}update address${normal}"
-currentLine=$(curl -s -X PUT "http://localhost:8080/address/$addressID/update?")
-
+currentLine=$(curl -s -H "Content-Type: application/json" --data @address-updated.json -X PUT "http://localhost:8080/address/$addressID/update")
 printf "$currentLine\n"
-#get all addresses of user
 
+
+#get all addresses of user
+printf "%s\n" "${blue}get all addresses of user${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/addresses")
+printf "$currentLine\n"
 
 #set order to be delivered
 printf "%s\n" "${blue}set order to be delivered${normal}"
@@ -101,30 +127,29 @@ currentLine=$(curl -s -H "Content-Type: application/json" --data @shipment.json 
 printf "$currentLine\n"
 shipmentID=$(echo  "$currentLine" | grep -o "\"shipmentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
+#get all shipments of user
+printf "%s\n" "${blue}get all shipments of user${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/shipments")
+printf "$currentLine\n"
+
 #create artwork and store artworkID
 printf "%s\n" "${blue}create artwork and store artworkID${normal}"
 currentLine=$(curl -s -X POST "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7")
 printf "$currentLine\n"
 artworkID=$(echo  "$currentLine" | grep -o "\"artworkID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
-#add artwork to order
-printf "%s\n" "${blue}add artwork to order${normal}"
-currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit+/order/$orderID?artid=$artworkID")
+#get artwork by ID
+printf "%s\n" "${blue}get artwork by ID${normal}"
+currentLine=$(curl -s -X GET "http://localhost:8080/artwork/$artworkID")
 printf "$currentLine\n"
-
 
 #add artwork to cart
 printf "%s\n" "${blue}add artwork to cart${normal}"
 currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit+/cart/?artid=$artworkID")
 printf "$currentLine\n"
 
-#remove artwork from order
-printf "%s\n" "${blue}remove artwork from order${normal}"
-currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit-/order/$orderID?artid=$artworkID")
-printf "$currentLine\n"
-
 #remove artwork from cart
-printf "%s\n" "${blue}remove artwork to cart${normal}"
+printf "%s\n" "${blue}remove artwork from cart${normal}"
 currentLine=$(curl -s -X PUT "http://localhost:8080/user/$username/edit-/cart/$cartID?artid=$artworkID")
 printf "$currentLine\n"
 
@@ -147,5 +172,10 @@ cartID=$(echo  "$currentLine" | grep -o "\"cartID\".*" | cut -f2- -d: | grep  -o
 #delete address by id
 printf "%s\n" "${blue}delete address by id${normal}"
 currentLine=$(curl -s -X DELETE "http://localhost:8080/address/$addressID/delete")
+printf "$currentLine\n"
+
+#delete artwork by id
+printf "%s\n" "${blue}delete artwork by id${normal}"
+currentLine=$(curl -s -X DELETE "http://localhost:8080artwork/$artworkID/delete")
 printf "$currentLine\n"
 

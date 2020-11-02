@@ -58,16 +58,32 @@ public class TestServiceUser {
 				user.setEmail(USER_EMAIL);
 				user.setPassword(USER_PASSWORD);
 				return user;
+			} else if (invocation.getArgument(0).equals(USERNAME2)){
+				User user = new User();
+				user.setUsername(USERNAME2);
+				user.setEmail(USER_EMAIL2);
+				user.setPassword(USER_PASSWORD2);
+				return user;
 			} else {
 				return null;
 			}
 		});
 		lenient().when(userRepository.findUserByEmail(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(USER_EMAIL)) {
 				User user = new User();
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
 				user.setPassword(USER_PASSWORD);
 				return user;
+			} else if (invocation.getArgument(0).equals(USER_EMAIL2)){
+				User user = new User();
+				user.setUsername(USERNAME2);
+				user.setEmail(USER_EMAIL2);
+				user.setPassword(USER_PASSWORD2);
+				return user;
+			} else {
+				return null;
+			}
 				
 		});
 		
@@ -83,10 +99,6 @@ public class TestServiceUser {
 	
 	@Test
 	public void testValidRegistration() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
 		User newUser = null; 
 		try {
 			newUser = userService.createUser(USERNAME2,USER_EMAIL2,USER_PASSWORD2);
@@ -95,18 +107,13 @@ public class TestServiceUser {
 		}
 		
 		assertNotNull(newUser);
-		assertEquals(userDto.getEmail(),newUser.getEmail());
-		assertEquals(userDto.getUsername(),newUser.getUsername());
-		assertEquals(userDto.getPassword(),newUser.getPassword());
+		assertEquals(newUser.getUsername(), USERNAME2);
+		assertEquals(newUser.getPassword(), USER_PASSWORD2);
 	}
 	
 	
 	@Test
 	public void testCreateWithInvalidUsername() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME); //this is the username of the first user that's already been populated in the database
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
 		User newUser = null; 
 		try {
 			newUser = userService.createUser(USERNAME,USER_PASSWORD2,USER_EMAIL2);
@@ -119,10 +126,6 @@ public class TestServiceUser {
 	@Test
 	
 	public void testCreateWithEmptyPassword() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword("");
-		userDto.setEmail(USER_EMAIL2);
 		User newUser = null; 
 		try {
 			newUser = userService.createUser(USERNAME,USER_EMAIL2,"");
@@ -133,10 +136,6 @@ public class TestServiceUser {
 	}
 	@Test
 	public void testCreateNoUsername() {
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername("");
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(USER_EMAIL2);
 		User newUser = null; 
 		try {
 			newUser = userService.createUser("",USER_EMAIL2,USER_PASSWORD2);
@@ -149,13 +148,9 @@ public class TestServiceUser {
 	public void testCreateInvalidEmail() {
 		
 		String email = "jokesOnYou";
-		UserDto userDto = new UserDto(); 
-		userDto.setUsername(USERNAME2);
-		userDto.setPassword(USER_PASSWORD2);
-		userDto.setEmail(email);
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(USERNAME2,email,USER_PASSWORD2);
+			newUser = userService.createUser("ANOTHERTEST",email,USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid email", e.getMessage());
@@ -164,6 +159,7 @@ public class TestServiceUser {
 	@Test
 	public void testDeleteUser() {
 		User user = null;
+		error = null;
 		try {
 			
 			userService.deleteUser(USERNAME);
@@ -171,27 +167,32 @@ public class TestServiceUser {
 			error = e.getMessage();
 			System.out.println(error);
 		}
-		assertEquals(error,"");		
+		assertEquals(error,null);		
 		
 	}
 	@Test
 	public void testGetUserByNullUsername() {
-		
-		assertNull(userService.getUserByUsername(null));	
+		User user = null;
+		try {
+			user = userService.getUserByUsername(null);
+		}catch (Exception e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "invalid username");
+		assertNull(user);
 	}
 	@Test
 	public void testEditEmail() {
 		User user = null;
 		try {
-			user = userService.getUserByUsername(USERNAME);
-			userService.editEmail(USERNAME, USER_EMAIL2);
+			user = userService.editEmail(USERNAME, "doyou@jakom.com");
 		}catch (Exception e) {
 			error = e.getMessage();
-			System.out.println(error);
 		}
 		assertNotNull(user);
-		assertEquals(user.getEmail(),USER_EMAIL2);	
+		assertEquals(user.getEmail(),"doyou@jakom.com");	
 	}
+	
 	@Test
 	public void testLoginSuccess() {
 		LoginDto dto = new LoginDto();
@@ -208,6 +209,7 @@ public class TestServiceUser {
 		assertNotEquals(token,"");
 		
 	}
+	
 	@Test
 	public void testLoginInvalidPassword() {
 		LoginDto dto = new LoginDto();
@@ -219,7 +221,7 @@ public class TestServiceUser {
 			token = userService.login(dto);
 		}catch (Exception e) {
 			error = e.getMessage();
-			System.out.println(error);
+			assertEquals(error, "invalid password");
 		}
 		assertEquals(token,"");
 		

@@ -13,7 +13,6 @@ public class ArtworkDto {
     private boolean isOnPremise;
     private Set<UserDto> artist;
     private int artworkID;
-    private OrderDto order;
     private double worth;
     private boolean artworkSold;
     private String description;
@@ -28,11 +27,10 @@ public class ArtworkDto {
     }
 
 
-    public ArtworkDto( int artworkID, boolean isOnPremise, OrderDto order, double worth, boolean artworkSold, String description, String title, String creationDate, String dimensions, String medium, String collection, String imageUrl) {
+    public ArtworkDto( int artworkID, boolean isOnPremise, double worth, boolean artworkSold, String description, String title, String creationDate, String dimensions, String medium, String collection, String imageUrl) {
         this.isOnPremise = isOnPremise;
         //this.artist = artist;
         this.artworkID = artworkID;
-        this.order = order;
         this.worth = worth;
         this.artworkSold = artworkSold;
         this.description = description;

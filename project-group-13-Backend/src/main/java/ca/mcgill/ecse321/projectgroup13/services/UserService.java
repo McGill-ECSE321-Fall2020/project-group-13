@@ -162,13 +162,14 @@ public class UserService {
      * @throws RegistrationException
      */
     @Transactional
-    public void editEmail(String username, String newEmail) throws RegistrationException {
+    public User editEmail(String username, String newEmail) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
-            if(checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
+            if(!checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
                 throw new RegistrationException("invalid email");
             }
                 user.setEmail(newEmail);
                 userRepository.save(user);
+                return user;
     }
 
     @Transactional
@@ -207,7 +208,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    
+
    // @Transactional
     //public void editPassword(String username, )
 
