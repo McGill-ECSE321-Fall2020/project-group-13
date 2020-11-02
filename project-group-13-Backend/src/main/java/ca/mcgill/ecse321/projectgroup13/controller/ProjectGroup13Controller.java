@@ -252,7 +252,9 @@ public class ProjectGroup13Controller {
 	@PostMapping(value = { "/user/{username}/new/order", "/user/{username}/new/order/" })
 	public OrderDto createOrder(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
+		Set<Artwork> artworks = user.getCart().getArtwork();
 		Order order = orderService.createOrder(user);
+		order.setArtwork(artworks);
 		OrderDto orderDto = convertToDto(order);
 		return orderDto;
 	}
@@ -267,10 +269,6 @@ public class ProjectGroup13Controller {
 			System.out.println("NOPE " + e.toString());
 		}
 	}
-
-
-	
-	//public Order createOrder(User user, Set<Artwork> art)
 
 
 	//public List<Order> getOrdersFromUser(User user)
@@ -307,6 +305,7 @@ public class ProjectGroup13Controller {
 		}
 		return convertToDto(order);
 	}
+
 	
 	//public boolean deleteOrder(Order order)
 	@DeleteMapping(value = { "/user/{username}/delete/order/{orderId}", "/user/{username}/delete/order/{orderId}/" })
@@ -326,48 +325,8 @@ public class ProjectGroup13Controller {
 		
 		return orderService.deleteOrder(order);
 	}
-	
-	//public boolean removeFromOrder(Order order, Artwork art)
-	@PutMapping(value = { "/user/{username}/edit-/order/{orderId}", "/user/{username}/edit-/order/{orderId}/" })
-	public boolean removeFromOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId){
-		Order order = null;
-		User user = userService.getUserByUsername(username);
-		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
-			if (o.getOrderID()==id) {
-				order = o;
-				break;
-			}
-		}
-		
-		if (order == null)
-			return false;
-		
-		Artwork art = artworkService.getArtworkByID(artId);
-		return orderService.removeFromOrder(order, art);
-	}
-	
-	//public boolean addToOrder(Order order, Artwork art)
-	@PutMapping(value = { "/user/{username}/edit+/order/{orderId}", "/user/{username}/edit+/order/{orderId}/" })
-	public boolean addToOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId) {
-		Order order = null;
-		User user = userService.getUserByUsername(username);
-		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
-			if (o.getOrderID()==id) {
-				order = o;
-				break;
-			}
-		}
-		
-		if (order == null)
-			return false;
-		
-		Artwork art = artworkService.getArtworkByID(artId);
-		return orderService.addToOrder(order, art);
-	}
-	
-	//TODO: Are these two methods necessary? If so, how do we implement their RESTful service controller methods?
-	//public boolean removeFromOrder(Order order, Set<Artwork> art)
-	//public boolean addToOrder(Order order, Set<Artwork> art)
+
+
 	
 	
 	
