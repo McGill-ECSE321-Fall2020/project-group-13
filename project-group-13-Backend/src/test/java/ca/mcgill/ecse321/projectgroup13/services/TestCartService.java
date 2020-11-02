@@ -305,6 +305,7 @@ public class TestCartService {
 	
 	
 	
+	
 	@Test
 	public void testCreateCartSingleArtwork() {
 		Cart cart = null; 
@@ -332,6 +333,22 @@ public class TestCartService {
 		}
 		
 		assertEquals(error, "invalid user");
+		assertNull(cart);
+	}
+	
+	@Test
+	public void testCreateCartNullArtwork() {
+		Cart cart = null; 
+		String error = null;
+		Set<Artwork> nullArtworkSet = null; 
+		
+		try {
+			cartService.createCart(userRepo.findUserByUsername(USERNAME), nullArtworkSet);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, "set<artwork> cannot be null");
 		assertNull(cart);
 	}
 	

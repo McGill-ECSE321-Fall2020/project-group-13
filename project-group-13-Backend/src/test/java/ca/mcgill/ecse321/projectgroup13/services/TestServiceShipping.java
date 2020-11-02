@@ -325,13 +325,14 @@ public class TestServiceShipping {
 	 	//assertEquals(0, service.getAllPayments().size());
 	 	Shipment shipment = null;
 	 	try {
-	 		shipment = shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("2020-12-31"),Time.valueOf("14:00"));   
-	 		shipmentService.editShipmentEstimatedTime(null, Time.valueOf("01:00"));
+	 		shipment = shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("2020-12-31"),Time.valueOf("14:00:00"));   
+	 		shipmentService.editShipmentEstimatedTime(shipment, null);
 	 	}catch (IllegalArgumentException e) {
 	 		error = e.getMessage();
-	 		assertEquals(error, "shipment cannot be null");
+	 		System.out.print(error);
 	 	}
 	
+	 	assertEquals("estimatedTime cannot be null", error);
 		
 	 }
 	
