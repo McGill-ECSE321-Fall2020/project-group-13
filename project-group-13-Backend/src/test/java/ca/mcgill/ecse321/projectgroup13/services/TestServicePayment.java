@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,9 +29,11 @@ import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
+import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.Payment;
+import ca.mcgill.ecse321.projectgroup13.model.Shipment;
 import ca.mcgill.ecse321.projectgroup13.model.User;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
@@ -61,11 +63,25 @@ public class TestServicePayment {
 	private static final int order1ID = 1;
 	private static final int order2ID = 2;
 	private static final int artworkID = 11;
+	private static final String USERNAME2 = "person2";
+	private static final String USER_PASSWORD2= "Thatgirl123#";
+	private static final String USER_EMAIL2= "person2@gmail.com";
+	private static final String ARTWORK_TITLE= "BEAUTY";
+	private static final String COUNTRY= "CANADA";
+	private static final String CITY= "MONTREAL";
+	private static final Integer ARTWORK_ID= 1234;
+	private static final Integer ORDERID= 999;
+	private static final Integer ADDRESS_ID= 111;
 
+	private static final Integer SHIPMENTID = 200;
+
+	private static final Double WORTH = 100.00;
+	private static final String TITLE = "BEAUTY";
 	private static final String USERNAME = "person1";
 	private static final String USER_PASSWORD= "Thatguy123#";
 	private static final String USER_EMAIL= "person1@gmail.com";
 	private static final double PAYMENT_AMOUNT = 10.0;
+	private static final String[] ARTISTS = {USERNAME};
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
@@ -104,6 +120,69 @@ public class TestServicePayment {
 			}
 			
 		});
+		
+		lenient().when(userRepo.findUserByUsername(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(invalidID)) {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork);
+				
+				user.setArtwork(sets);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+				
+				
+
+
+
+
+				Payment payment = new Payment();
+				payment.setTotalAmount(PAYMENT_AMOUNT);
+				order.setPayment(payment);
+	
+				return user;
+				
+				
+			} 
+			else {
+				return order;
+			}
+			
+		});
+		
+		
 		lenient().when(artworkRepo.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 			Set<Artwork> set = new HashSet<Artwork>();
 			Artwork art = new Artwork();
@@ -190,13 +269,14 @@ public class TestServicePayment {
 	@Test
 	public void testGetPaymentsByCustomer() {
 		//assertEquals(0, service.getAllPayments().size());
-		
-		assertEquals(service.getPaymentsForCustomer(new User()).iterator().next().getTotalAmount(),PAYMENT_AMOUNT);
+		List<Payment> payments = service.getPaymentsForCustomer(userRepo.findUserByUsername(USERNAME));
+		assertEquals( payments.iterator().next().getTotalAmount(),PAYMENT_AMOUNT);
 		
 	}
 	@Test
 	public void testGetPaymentArtist() {
-		assertEquals(service.getPaymentsForArtist(new User()).iterator().next().getTotalAmount(),PAYMENT_AMOUNT);
+		List<Payment> payments = service.getPaymentsForArtist(userRepo.findUserByUsername(USERNAME));
+		assertEquals(payments.iterator().next().getTotalAmount(),PAYMENT_AMOUNT);
 	}
 	
 	@Test
