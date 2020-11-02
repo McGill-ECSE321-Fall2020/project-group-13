@@ -499,7 +499,7 @@ public class ProjectGroup13Controller {
 			CartDto cartDto = convertToDto(cart);
 		}else{								//if there was already a cart
 			cart = user.getCart();
-			cart.getArtwork().add(artwork);
+			cartService.addToCart(cart, artwork);
 		}
 		return convertToDto(cart);
 	}
