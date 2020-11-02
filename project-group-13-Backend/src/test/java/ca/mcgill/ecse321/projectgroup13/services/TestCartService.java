@@ -352,6 +352,35 @@ public class TestCartService {
 		assertNull(cart);
 	}
 	
+	@Test void testRemoveCartNullCart() {
+		Cart cart = null;
+		Artwork artwork = artworkRepo.findArtworkByArtworkID(ARTWORK_ID);
+		String error = null;
+		
+		try {
+			assertTrue(cartService.removeFromCart(cart, artwork));
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, "cart cannot be null");
+		
+	}
+	
+	@Test void testRemoveCartNullArtwork() {
+		Cart cart = cartRepo.findCartByCartID(CART_ID); 
+		Artwork artwork = null;
+		String error = null;
+		
+		try {
+			assertTrue(cartService.removeFromCart(cart, artwork));
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, "artwork cannot be null");
+		
+	}
 	
 	@Test
 	public void testCreateCartSingleArt() {
