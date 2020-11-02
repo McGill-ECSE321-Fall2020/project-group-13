@@ -59,7 +59,7 @@ public class TestCartService {
 	@InjectMocks
 	private CartService cartService;
 	
-	
+	//findCartByUserUsername(user.getUsername())
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
@@ -249,7 +249,7 @@ public class TestCartService {
 			}
 		});
 		
-		lenient().when(cartRepo.findCartByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(cartRepo.findCartByUserUsername(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
 			if (invocation.getArgument(0).equals(USERNAME)) {
 			User user = new User();
 			user.setUsername(USERNAME);
