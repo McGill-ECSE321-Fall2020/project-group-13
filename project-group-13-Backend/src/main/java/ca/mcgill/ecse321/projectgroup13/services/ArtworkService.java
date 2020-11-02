@@ -27,17 +27,21 @@ public class ArtworkService {
     private UserRepository userRepo;
 
 
-    /**
-     * service method to create artwork with a single artist
-     * @param artist
-     * @return
-     */
+//    /**
+//     * service method to create artwork with a single artist
+//     * @param artist
+//     * @return
+//     */
 //    @Transactional
-//    public Artwork createArtwork(User artist) {
-//        Artwork artwork = new Artwork();
-//        artwork.setArtist(new HashSet<User>());
-//        artwork.getArtist().add(artist);
+//    public Artwork createArtwork(String artistUsername, String title, Double worth ) {
+//        User user = userRepo.findUserByUsername(artistUsername);
+//        if(artistUsername==null) throw new illegalArgumentException("invalid user");
+//        artwork.setArtist(newartists);
+//        Set<Artwork> works= user.getArtwork();
+//        works.add(artwork);
+//        user.setArtwork(works);
 //        artworkRepo.save(artwork);
+//        userRepo.save(user);
 //        return artwork;
 //    }
     
@@ -71,20 +75,31 @@ public class ArtworkService {
     	return artwork;
     	
     }
-    
+
+    /**
+     * service method to create artwork with many artists
+     * @param Title
+     * @param usernames
+     * @param worth
+     * @return
+     * @throws illegalArgumentException
+     */
     public Artwork createArtwork(String Title, String[] usernames, Double worth) throws illegalArgumentException {
     	if( Title.trim()==null ) throw new illegalArgumentException("invalid title");
     	if(usernames == null || usernames.length==0) throw new illegalArgumentException("invalid user") ;
     	if(worth==null||worth==0) throw new illegalArgumentException("invalid worth") ;
-    	
+
     	Artwork artwork = new Artwork();
     	for(int i = 0; i < usernames.length; i++){
     		String name = usernames[i];
     		User user = userRepo.findUserByUsername(name);
     		if(user==null) throw new illegalArgumentException("invalid user");
-    		Set<User> artists=artwork.getArtist();
+    		artwork.setArtist(new HashSet<>());
+    		Set<User> artists= artwork.getArtist();
     		artists.add(user);
     		artwork.setArtist(artists);
+    		artwork.setTitle(Title);
+    		artwork.setWorth(worth);
     		Set<Artwork> works= user.getArtwork();
     		works.add(artwork);
     		user.setArtwork(works);
