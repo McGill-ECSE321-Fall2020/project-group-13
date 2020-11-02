@@ -10,12 +10,12 @@ import java.util.Set;
 import javax.persistence.ManyToMany;
 
 public class ArtworkDto {
-    private boolean isOnPremise;
     private int artworkID;
+    private String title;
+    private boolean isOnPremise;
     private double worth;
     private boolean artworkSold;
     private String description;
-    private String title;
     private String creationDate;
     private String dimensions;
     private String medium;

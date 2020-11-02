@@ -97,22 +97,20 @@ public class ArtworkService {
     	if(worth==null||worth==0) throw new IllegalArgumentException("invalid worth") ;
 
     	Artwork artwork = new Artwork();
-    	for(int i = 0; i < usernames.length; i++){
-    		String name = usernames[i];
-    		User user = userRepo.findUserByUsername(name);
+        artwork.setArtist(new HashSet<>());
+        Set<User> artists = artwork.getArtist();
+    	for(String username : usernames){
+    		User user = userRepo.findUserByUsername(username);
     		if(user==null) throw new IllegalArgumentException("invalid user");
-    		artwork.setArtist(new HashSet<>());
-    		//Set<User> artists= artwork.getArtist();
-            artwork.getArtist().add(user);
-    		//artists.add(user);
-    		//artwork.setArtist(artists);
+            artists.add(user);
+    		artwork.setArtist(artists);
+            System.out.println(artists);
+            System.out.println("works "+artwork.getArtist());
     		artwork.setTitle(Title);
     		artwork.setWorth(worth);
     		Set<Artwork> works= user.getArtwork();
     		works.add(artwork);
-    		//user.setArtwork(works);
     		artworkRepo.save(artwork);
-    		//userRepo.save(user);
     	}
     	return artwork;
     }
