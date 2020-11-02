@@ -211,11 +211,9 @@ public class ProjectGroup13Controller {
 	@PostMapping(value = { "/order/{orderId}/pay", "/order/{orderId}/pay/" })
 	public PaymentDto PayForOrder(@PathVariable("orderId") int orderId, @RequestBody Payment payment) throws IllegalArgumentException {
 
-		System.out.println(payment);
 		Order order = orderService.getOrder(orderId);
-		System.out.println(order);
 		Payment p = paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId);
-		System.out.println(p.getTotalAmount());
+		
 		try {
 			orderService.addPaymentToOrder(order, p);
 			Cart cart = order.getUser().getCart();
@@ -225,7 +223,6 @@ public class ProjectGroup13Controller {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
 		}
-		System.out.println(p.getTotalAmount());
 		PaymentDto paymentDto = convertToDto(p);
 		return paymentDto;
 	}
