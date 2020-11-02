@@ -38,6 +38,7 @@ public class TestServiceUser {
 	private static final String USER_PASSWORD2= "Thatgirl123#";
 	private static final String USER_EMAIL2= "person2@gmail.com";
 	private static final Integer ARTWORK_ID= 1234;
+	private static final Integer ARTWORK_ID2= 13234;
 	private static final Integer ORDERID= 999;
 	private static final Integer ADDRESS_ID= 111;
 	private static Integer CART_ID = 12342;
@@ -79,7 +80,8 @@ public class TestServiceUser {
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
 				user.setPassword(USER_PASSWORD);
-				
+				User artist2 = new User();
+				artist2.setUsername(USERNAME2);
 				Address address = new Address();
 				
 				address.setAddressID(ADDRESS_ID);
@@ -87,6 +89,10 @@ public class TestServiceUser {
 				address.setCountry(COUNTRY);
 				address.setPostalCode("H4C2C4");
 				address.setUser(user);
+				
+				Artwork artwork2 = new Artwork();
+			
+				artwork2.setArtworkID(ARTWORK_ID2);
 				
 				HashSet<Address> set = new HashSet<Address>();
 				set.add(address);
@@ -110,12 +116,14 @@ public class TestServiceUser {
 				
 				
 				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork2);
 				sets.add(artwork);
 				cart.setArtwork(sets);
 				user.setArtwork(sets);
 				user.setCart(cart);
 				HashSet<User> artistss = new HashSet<User>();
 				artistss.add(user);
+				artistss.add(artist2);
 				artwork.setArtist(artistss);
 				
 				Shipment shipment = new Shipment();
@@ -123,7 +131,7 @@ public class TestServiceUser {
 				shipment.setOrder(order);
 				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
 				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
-			
+				artwork2.setArtist(artistss);
 				return user;
 			} else if (invocation.getArgument(0).equals(USERNAME2)){
 				User user = new User();
@@ -135,6 +143,71 @@ public class TestServiceUser {
 				return null;
 			}
 		});
+		
+		lenient().when(artworkRepository.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (((User)invocation.getArgument(0)).getUsername().contentEquals(USERNAME)) {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				User artist2 = new User();
+				artist2.setUsername(USERNAME2);
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				Artwork artwork2 = new Artwork();
+			
+				artwork2.setArtworkID(ARTWORK_ID2);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				HashSet<Order> setOrder = new HashSet<Order>();
+				
+				
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				setOrder.add(order);
+				user.setOrder(setOrder);
+				order.setOrderStatus(OrderStatus.PaymentPending);
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				Cart cart = new Cart();
+				cart.setCartID(CART_ID);
+				cart.setUser(user);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork2);
+				sets.add(artwork);
+				cart.setArtwork(sets);
+				user.setArtwork(sets);
+				user.setCart(cart);
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artistss.add(artist2);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+				artwork2.setArtist(artistss);
+				return sets;
+			} else {
+				return null;
+			}
+		});
+		
 		lenient().when(userRepository.findUserByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 			if (invocation.getArgument(0).equals(USER_EMAIL)) {
 				User user = new User();
@@ -295,6 +368,70 @@ public class TestServiceUser {
 		});
 		
 		
+			lenient().when(cartRepo.findCartsByArtwork(any(Artwork.class))).thenAnswer((InvocationOnMock invocation) -> {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				User artist2 = new User();
+				artist2.setUsername(USERNAME2);
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				Artwork artwork2 = new Artwork();
+			
+				artwork2.setArtworkID(ARTWORK_ID2);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				HashSet<Order> setOrder = new HashSet<Order>();
+				
+				
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				setOrder.add(order);
+				user.setOrder(setOrder);
+				order.setOrderStatus(OrderStatus.PaymentPending);
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				Cart cart = new Cart();
+				cart.setCartID(CART_ID);
+				cart.setUser(user);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork2);
+				sets.add(artwork);
+				cart.setArtwork(sets);
+				user.setArtwork(sets);
+				user.setCart(cart);
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artistss.add(artist2);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+			
+				artwork2.setArtist(artistss);
+				
+				
+				return cart;
+				
+			});
+			
 		lenient().when(artworkRepository.findArtworkByArtworkID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
 			if (invocation.getArgument(0).equals(ARTWORK_ID)) {
 			User user = new User();
@@ -504,6 +641,18 @@ public class TestServiceUser {
 		}
 		assertNotNull(user);
 		assertEquals(user.getEmail(),"doma@jakom.com");	
+	}
+	
+	@Test
+	public void testInvalidEditEmail() {
+		User user = null;
+		try {
+			user = userService.editEmail(USERNAME, "domam.com");
+		}catch (Exception e) {
+			error = e.getMessage();
+		}
+		assertNull(user);
+		assertEquals(error,"invalid email");	
 	}
 	
 	@Test
