@@ -77,6 +77,9 @@ public class TestServiceArtwork {
 		@InjectMocks
 		private ArtworkService artworkService;
 		
+		@Mock
+		private CartService cartService;
+		
 		
 		
 		@BeforeEach
@@ -109,6 +112,11 @@ public class TestServiceArtwork {
 				user.setAddress(set);
 				return address;
 			});
+			
+			lenient().when(cartService.deleteCart(any(Cart.class))).thenAnswer((InvocationOnMock invocation) -> {
+				return true;
+			});
+			
 			lenient().when(orderRepo.findOrderByOrderID(ORDERID)).thenAnswer((InvocationOnMock invocation) -> {
 				User user = new User();
 				user.setUsername(USERNAME);
