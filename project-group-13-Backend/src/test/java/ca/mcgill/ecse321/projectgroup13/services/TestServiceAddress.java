@@ -16,6 +16,7 @@ import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -78,28 +79,36 @@ public class TestServiceAddress {
 				return new User();
 			});
 	        
+	        
 	    }
 	 
 	@Test
 	public void testCreateAddressValid() {
 		
+		
+		
 		Address address = null;
 		String error = null;
 		try{
-
-			address = addressService.createAddress(USERNAME ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
-		}catch(IllegalArgumentException e){
+			User user = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			address = addressService.createAddress("jake",ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
+		}catch(IllegalArgumentException | RegistrationException e){
 			error = e.getMessage();
 		}
-		assertTrue(address==null);
-		assertTrue(error.contentEquals("invalid user"));
+		System.out.print(address.getStreetAddress1());
+		System.out.print(address.getCity());
+		System.out.print(address.getProvince());
+		System.out.print(address.getCountry());
+		System.out.print(address.getPostalCode());
+
+//		assertTrue(error.contentEquals("invalid user"));
 	}
 
 	@Test
 	public void testCreateAddressInvalidUser() {
 		
 		Address address = null;
-		String error = null;
+		String error = "poop";
 		try{
 
 			address = addressService.createAddress("jokesonyoubaby" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
@@ -107,6 +116,7 @@ public class TestServiceAddress {
 			error = e.getMessage();
 		}
 		//assertTrue(address==null);
+		System.out.print(address);
 		assertTrue(error.contentEquals("invalid user"));
 	}
 
@@ -215,11 +225,12 @@ public class TestServiceAddress {
 	
 		
 		try {
-			add = addressService.getAddressesByUser("johndahoe");
+			add = addressService.getAddressesByUser(null);
 			
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
+		
 		assertNull(add);
 		assertTrue(error.contentEquals("invalid user"));
 	}

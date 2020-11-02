@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
+import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.OrderStatus;
@@ -25,6 +26,8 @@ public class OrderService {
 	OrderRepository orderRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	PaymentRepository paymentRepository;
 	
 	
 	/**
@@ -146,7 +149,7 @@ public class OrderService {
 		User user = order.getUser();
 		user.getOrder().remove(order);
 		order.setUser(null);
-		
+		paymentRepository.delete(order.getPayment());
 		orderRepository.delete(order);
 		
 		return b;
