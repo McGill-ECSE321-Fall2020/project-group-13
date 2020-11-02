@@ -162,13 +162,14 @@ public class UserService {
      * @throws RegistrationException
      */
     @Transactional
-    public void editEmail(String username, String newEmail) throws RegistrationException {
+    public User editEmail(String username, String newEmail) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
             if(checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
                 throw new RegistrationException("invalid email");
             }
                 user.setEmail(newEmail);
                 userRepository.save(user);
+                return user;
     }
 
     @Transactional
@@ -277,7 +278,7 @@ public class UserService {
      *
      */
     private boolean checkIfValidEmail(String email) {
-    	String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    	String regex = "^(.+)@(.+)$";
     	 Pattern pattern = Pattern.compile(regex);
     	 return pattern.matcher(email).matches();
 
