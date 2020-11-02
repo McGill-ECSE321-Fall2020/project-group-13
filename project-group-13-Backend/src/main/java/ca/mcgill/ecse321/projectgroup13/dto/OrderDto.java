@@ -13,12 +13,13 @@ public class OrderDto{
     //private PaymentDto payment;
     //private ShipmentDto shipment;
     private UserDto user;
-
+    private boolean isDelivery;
+    
     public OrderDto() {
 
     }
 
-    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, UserDto user){
+    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, UserDto user, boolean isDelivery){
         this.totalAmount = totalAmount;
         this.orderID = orderID;
         this.orderStatus = orderStatus;
@@ -26,6 +27,7 @@ public class OrderDto{
 //        this.payment = payment;
 //        this.shipment = shipment;
         this.user = user;
+        this.isDelivery = isDelivery;
     }
 
 
@@ -89,6 +91,10 @@ public class OrderDto{
 //    public void setShipment(Set<Shipment> shipments) {
 //        this.shipment = shipments;
 //    }
+    
+	public boolean isShipmentMethodIsDelivery() {
+		return this.isDelivery;
+	}
 
 
 }
