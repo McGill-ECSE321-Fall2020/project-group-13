@@ -3,11 +3,6 @@ package ca.mcgill.ecse321.projectgroup13.dto;
 import java.sql.Date;
 import java.sql.Time;
 
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import ca.mcgill.ecse321.projectgroup13.model.Order;
-
 public class PaymentDto {
 	private int paymentID;
 	private double totalAmount;

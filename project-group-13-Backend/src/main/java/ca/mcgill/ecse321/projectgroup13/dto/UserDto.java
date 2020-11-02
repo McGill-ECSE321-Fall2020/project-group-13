@@ -1,9 +1,5 @@
 package ca.mcgill.ecse321.projectgroup13.dto;
 
-import javax.persistence.*;
-import java.util.Set;
-
-
 public class UserDto{
 
     private String username;

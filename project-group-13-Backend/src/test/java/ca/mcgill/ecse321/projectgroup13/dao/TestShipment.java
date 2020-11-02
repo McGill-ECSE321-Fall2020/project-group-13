@@ -102,7 +102,8 @@ public class TestShipment {
         //order.setOrderID(orderID);
         order.setTotalAmount(totalAmount);
         order.setUser(user);
-
+        order.setOrderStatus(orderStatus);
+        
         //set address parameters
         address.setCity(city);
         address.setCountry(country);

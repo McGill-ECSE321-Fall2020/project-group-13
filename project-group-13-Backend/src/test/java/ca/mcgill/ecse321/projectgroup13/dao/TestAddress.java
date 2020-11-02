@@ -102,7 +102,7 @@ public class TestAddress {
 	    
 	    
 	    //set user parameters
-	    user.setUsername("duhedhuegud");
+	    user.setUsername(username);
 	    user.setPassword(password);
 	    user.setEmail(email);
 	    user.setProfilePictureURL(profilePicURL);

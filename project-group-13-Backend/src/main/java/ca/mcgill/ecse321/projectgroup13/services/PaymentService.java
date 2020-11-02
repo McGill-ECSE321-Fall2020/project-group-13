@@ -29,9 +29,6 @@ public class PaymentService {
     
     private double commissionRate = 0.05;
     
-    //import other services
-    private OrderService orderService;
-    
     
     /**
      * Creates a payment

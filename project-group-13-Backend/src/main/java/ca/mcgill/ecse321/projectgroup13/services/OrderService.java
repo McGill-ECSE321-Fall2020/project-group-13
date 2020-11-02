@@ -57,10 +57,6 @@ public class OrderService {
 		newOrder.setUser(user);
 		newOrder.setArtwork(artworks);
 		
-		for (Artwork a : newOrder.getArtwork()) {
-			
-		}
-		
 		updateTotal(newOrder);
 		
 		newOrder = orderRepository.save(newOrder);
@@ -161,7 +157,7 @@ public class OrderService {
 		boolean b = true;
 		User user = order.getUser();
 		Set<Order> orders = user.getOrder();
-		Boolean temp = orders.remove(order);
+		b = orders.remove(order);
 		order.setUser(null);
 		//remove order and artworks association
 		if (!order.getArtwork().isEmpty()) {

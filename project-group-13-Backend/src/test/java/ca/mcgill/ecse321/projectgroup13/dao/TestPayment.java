@@ -60,7 +60,6 @@ class TestPayment {
 	public void persistAndLoadPayment() {
 		//Integer orderID = "456".hashCode();
 		double totalAmount = 11.5;
-		Integer paymentID = "123".hashCode();
 		User user = new User();
 		user.setUsername("David");
 		userRepository.save(user);
@@ -75,8 +74,8 @@ class TestPayment {
 		orderRepository.save(order);
 
 		Payment payment = new Payment();
-		//payment.setPaymentID(paymentID);
 		payment.setOrder(order);
+		payment.setTotalAmount(totalAmount);
 		paymentRepository.save(payment);
 
 		Payment paymentTest = payment;

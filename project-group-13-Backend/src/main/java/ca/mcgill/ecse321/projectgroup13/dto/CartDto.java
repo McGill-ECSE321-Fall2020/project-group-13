@@ -1,7 +1,4 @@
 package ca.mcgill.ecse321.projectgroup13.dto;
-import ca.mcgill.ecse321.projectgroup13.model.Artwork;
-import ca.mcgill.ecse321.projectgroup13.model.User;
-
 
 import java.util.Set;
 
