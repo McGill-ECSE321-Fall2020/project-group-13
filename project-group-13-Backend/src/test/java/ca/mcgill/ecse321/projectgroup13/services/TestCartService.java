@@ -69,6 +69,31 @@ public class TestCartService {
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
 				user.setPassword(USER_PASSWORD);
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				
+				
+				HashSet<Artwork> set = new HashSet<Artwork>();
+				set.add(artwork);
+				
+				user.setArtwork(set);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				Cart cart = new Cart();
+				cart.setCartID(CART_ID);
+				
+				cart.setUser(user);
+				cart.setArtwork(set);
+				
+		
 				return user;
 			} else if (invocation.getArgument(0).equals(USERNAME2)){
 				User user = new User();
@@ -223,6 +248,51 @@ public class TestCartService {
 				return null;
 			}
 		});
+		
+		lenient().when(cartRepo.findCartByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(USERNAME)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> set = new HashSet<Artwork>();
+			set.add(artwork);
+			
+			user.setArtwork(set);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Cart cart = new Cart();
+			cart.setCartID(CART_ID);
+			
+			cart.setUser(user);
+			cart.setArtwork(set);
+			
+			return cart;
+			} else {
+				return null;
+			}
+		});
+		
+		
+		lenient().when(cartRepo.deleteCartByCartID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0)==CART_ID) {
+				return true;
+			} else {
+				return false;
+			}
+		});
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
@@ -350,7 +420,7 @@ public class TestCartService {
 			error=e.getMessage();
 		}
 		
-		assertEquals(error, "invalid argument");
+		assertEquals(error, "user cannot be null");
 		assertNull(cart);
 	}
 
@@ -367,7 +437,7 @@ public void testInvalidArtworkAddSetValid() {
 		error=e.getMessage();
 	}
 	
-	assertEquals(error, "invalid argument");
+	assertEquals(error, "user cannot be null");
 	assertNull(cart);
 }
 	
@@ -390,11 +460,83 @@ public void testInvalidArtworkAddSetValid() {
 	}
 	
 	@Test
-	public void testDeleteCart() {
+	public void testGetCartFromUser() {
+		Cart cart = null; 
+		String error = null;
+		User user = userRepo.findUserByUsername(USERNAME);
+		try {
+			cart = cartService.getCartFromUser(user);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
 		
+		assertEquals(error, null);
+		assertNotNull(cart);
+	}
+	
+	@Test
+	public void testDeleteCartfromCartID() {
+		String error = null;
+		try {
+			assertTrue(cartService.deleteCart(CART_ID));
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, null);
 		
 	}
 	
+	@Test
+	public void testDeleteCart() {
+		Cart cart = cartRepo.findCartByCartID(CART_ID); 
+		String error = null;
+		
+		try {
+			assertTrue(cartService.deleteCart(cart));
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, null);
+		
+	}
+	
+	@Test
+	public void testRemoveFromCart() {
+		Cart cart = cartRepo.findCartByCartID(CART_ID); 
+		Artwork artwork = artworkRepo.findArtworkByArtworkID(ARTWORK_ID);
+		String error = null;
+		
+		try {
+			assertTrue(cartService.removeFromCart(cart, artwork));
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, null);
+		
+	}
+	
+	@Test
+	public void testRemoveSetFromCart() {
+		Cart cart = cartRepo.findCartByCartID(CART_ID); 
+		Set<Artwork> set = cart.getArtwork();
+		String error = null;
+		Set<Artwork> removed = null;
+		
+		try {
+			removed = cartService.removeFromCart(cart, set);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, null);
+		assertTrue(removed.equals(set));
+		
+	}
+	
+
 	
 		
 		

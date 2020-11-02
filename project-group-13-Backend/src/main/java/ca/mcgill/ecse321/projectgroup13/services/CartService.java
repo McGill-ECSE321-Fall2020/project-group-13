@@ -109,7 +109,7 @@ public class CartService {
 	@Transactional
 	public Cart getCartFromUser(User user) {
 		if (user == null)
-			throw new IllegalArgumentException("user cannot be null");
+			throw new IllegalArgumentException("invalid user");
 		return cartRepository.findCartByUser(user);
 	}
 	
@@ -130,13 +130,13 @@ public class CartService {
 	 * @param cart cart object to delete
 	 */
 	@Transactional
-	public void deleteCart(Cart cart) {
+	public boolean deleteCart(Cart cart) {
 		if (cart == null)
 			throw new IllegalArgumentException("cart cannot be null");
 		
 		cart.getUser().setCart(null);
 		cart.setUser(null);
-		cartRepository.delete(cart);
+		return cartRepository.deleteCartByCartID(cart.getCartID());
 	}
 	
 	/**
@@ -168,11 +168,9 @@ public class CartService {
 	 */
 	@Transactional
 	public Set<Artwork> removeFromCart(Cart cart, Set<Artwork> art) {
-		if (cart == null)															//must check parameter is not null
-			throw new IllegalArgumentException("cart cannot be null");
-		if (art == null)															//must check parameter is not null
-			throw new IllegalArgumentException("set<artwork> cannot be null");	
-		
+		if (cart == null||art==null)															//must check parameter is not null
+			throw new IllegalArgumentException("invalid argument");
+	
 		//this will only add valid artworks
 		Set<Artwork> filteredSet = art.stream()
                 .filter(s -> artworkRepository.findArtworkByArtworkID(s.getArtworkID())!=null)
@@ -244,6 +242,7 @@ public class CartService {
 			total += a.getWorth();
 		}
 		cart.setTotalCost(total);
+		return;
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){
