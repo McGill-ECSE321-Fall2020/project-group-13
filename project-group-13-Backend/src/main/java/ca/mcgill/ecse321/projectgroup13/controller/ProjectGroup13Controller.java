@@ -472,7 +472,7 @@ public class ProjectGroup13Controller {
 	 */
 	//public List<Address> getAddressesByUser(User user)
 	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
-	public Set<AddressDto> getAllAddressesOfUser(@RequestParam String username){
+	public Set<AddressDto> getAllAddressesOfUser(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
 		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
 		for(Address address : addressService.getAddressesByUser(username)) {
