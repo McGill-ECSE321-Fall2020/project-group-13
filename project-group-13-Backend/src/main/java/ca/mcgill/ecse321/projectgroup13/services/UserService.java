@@ -81,9 +81,11 @@ public class UserService {
         if(userRepository.findUserByUsername(username) != null) throw new RegistrationException("Username already in use");
         //checking if email syntax is valid
         //TODO: validate email
+
         if(checkIfValidEmail(email) || userRepository.findUserByEmail(email) != null) {
             throw new RegistrationException("invalid email");
         }
+
         //if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
         //ALL CONDITIONS HAVE PASSED
         user.setUsername(username);

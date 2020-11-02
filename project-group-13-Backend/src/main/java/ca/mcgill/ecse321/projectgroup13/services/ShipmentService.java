@@ -61,6 +61,7 @@ public class ShipmentService {
         shipment.setShipmentInfo(status);
         shipment.setEstimatedDateOfArrival(estimatedDateOfArrival);
         shipment.setEstimatedTimeOfArrival(estimatedTimeOfArrival);
+
         shipmentRepo.save(shipment);
         return shipment;
     }

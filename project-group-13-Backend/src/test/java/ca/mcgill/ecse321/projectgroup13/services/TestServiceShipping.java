@@ -60,16 +60,13 @@ public class TestServiceShipping {
 	private AddressRepository addressRepo;
 	@InjectMocks
 	private UserService userService;
-	
 	@InjectMocks
 	private ShipmentService shipmentService;
-
 	@InjectMocks
 	private AddressService addressService;
 	@InjectMocks
 	private OrderService orderService;
 
-	private String error = "";
 	
 	private static final int invalidID = 404;
 
@@ -135,6 +132,7 @@ public class TestServiceShipping {
 		
 		
 
+
 	// 	lenient().when(orderRepo.findOrdersByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 	// 		Set<Order> orders = new HashSet<Order>();
 	// 		Order order = new Order();
@@ -181,18 +179,20 @@ public class TestServiceShipping {
     //     lenient().when(shipmentRepo.save(any(Shipment.class))).thenAnswer(returnParameterAsAnswer);
 	// }
 
+
 	}
 	@Test
 	public void testCreateShipmentSuccess() {
 		//assertEquals(0, service.getAllPayments().size());
 		Shipment shipment = null;
+
 		String error = null;
 		//address.setAddressID(111);
+
 		try {
 			shipment = shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("1997-03-10"),Time.valueOf("10:59:59"));   
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
-			System.out.println(error);
 		}
 		
 		assertNotNull(shipment);
@@ -333,6 +333,7 @@ public class TestServiceShipping {
 	 }
 	
 	@Test 
+
 	 public void testGetUserOfShipment() {
 	 	try {
 	 		
@@ -348,6 +349,7 @@ public class TestServiceShipping {
 			
 	 	}
 	 }
+
 	
 
 }

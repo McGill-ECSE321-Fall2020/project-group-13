@@ -210,12 +210,13 @@ public class ProjectGroup13Controller {
 	//public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, Order order) 
 	@PostMapping(value = { "/order/{orderId}/pay", "/order/{orderId}/pay/" })
 	public PaymentDto PayForOrder(@PathVariable("orderId") int orderId, @RequestBody Payment payment) throws IllegalArgumentException {
+
 		System.out.println(payment);
 		Order order = orderService.getOrder(orderId);
 		System.out.println(order);
 		Payment p = paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId);
 		
-		try { orderService.addPaymentToOrder(order, p);} 
+		try { orderService.addPaymentToOrder(order, p);}
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
@@ -399,29 +400,30 @@ public class ProjectGroup13Controller {
 	 * @return shipment dto
 	 */
 	//public Shipment createShipment(Order order, Address address, ShipmentStatus status, Date estimatedDateOfArrival, Time estimatedTimeOfArrival, boolean isDelivery)
+
 	@PostMapping(value = { "/order/{id}/shipping", "/order/{id}/shipping/"})
-	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestParam(name="status") ShipmentStatus status){
+	public ShipmentDto createShipment(@PathVariable("id") int orderId, @RequestParam(name="address") int addressId, @RequestBody Shipment shipment){
 		System.out.println("reached");
 		Order order = orderService.getOrder(orderId);
 //		Address address = addressService.getAddressById(addressId);
-		
-		ShipmentDto shipmentDto = null;
-		Shipment shipment = null;
+
+		Shipment newShipment = null;
 		if (order.isShipmentMethodIsDelivery() == true) {
-			shipment = shipmentService.createShipment(orderId, addressId, Date.valueOf("2020-8-04"), Time.valueOf("18:07"));
-			shipmentDto = convertToDto(shipment);
+			newShipment = shipmentService.createShipment(orderId, addressId, shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival());
+			try {
+				orderService.addShipmentToOrder(order, newShipment);
+			} catch (IllegalArgumentException e) {
+				System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
+				throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
+				//TODO: Maybe we should return a null value instead of throwing an exception???
+			}
 		}else{
 			System.out.println("order is not to be delivered");
 		}
-		try {
-            orderService.addShipmentToOrder(order, shipment);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Could not create shipment! Error : [" + e.toString() + "]");
-            throw new IllegalArgumentException("Could not create shipment! Error : [" + e.toString() + "]");
-            //TODO: Maybe we should return a null value instead of throwing an exception???
-        }
-		return shipmentDto;
+		return convertToDto(newShipment);
 	}
+
+
 
 	//public Shipment getShipment(int shipmentID)
 	
