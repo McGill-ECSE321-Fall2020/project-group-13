@@ -349,15 +349,7 @@ public class TestServiceArtwork {
 		
 		
 	 }
-	 @Test
-	 public void testDeleteExistingArtworkByID()  {
-		try{artworkService.deleteArtworkById(ARTWORK_ID);}
-		catch(Exception e) {
-			fail();
-		}
-		
-		
-	 }
+	
 	 @Test
 	 public void testGetArtworkByID()  {
 		 Artwork art = null;
