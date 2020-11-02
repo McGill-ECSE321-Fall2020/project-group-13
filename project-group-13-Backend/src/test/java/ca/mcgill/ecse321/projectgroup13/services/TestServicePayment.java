@@ -172,7 +172,7 @@ public class TestServicePayment {
 				payment.setTotalAmount(PAYMENT_AMOUNT);
 				order.setPayment(payment);
 				order.setArtwork(sets);
-	
+				artwork.setOrder(order);
 				return user;
 				
 				
@@ -234,7 +234,7 @@ public class TestServicePayment {
 				payment.setTotalAmount(PAYMENT_AMOUNT);
 				order.setPayment(payment);
 				order.setArtwork(sets);
-	
+				artwork.setOrder(order);
 				return sets;
 				
 				
