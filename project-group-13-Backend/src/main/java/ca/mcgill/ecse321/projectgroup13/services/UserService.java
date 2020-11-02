@@ -38,6 +38,26 @@ public class UserService {
 	
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CartRepository cartRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private ArtworkRepository artworkRepository;
+    @Autowired
+	private PaymentService paymentService;
+	@Autowired
+	private ShipmentService shipmentService;
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private AddressService addressService;
+	@Autowired
+	private ArtworkService artworkService;
+	@Autowired
+	private CartService cartService;
     //TODO must implement password encoder, was causing errors
     //@Autowired
     //private PasswordEncoder passwordEncoder;
@@ -114,6 +134,15 @@ public class UserService {
         User user = userRepository.findUserByUsername(username);
         if(user==null) throw new RegistrationException("User does not exist");
         Set<Address> userAddresses = user.getAddress();
+        Cart cart = user.getCart();
+        Set<Order> orders = user.getOrder();
+        while(userAddresses.iterator().hasNext()) {
+        	addressService.deleteAddress(userAddresses.iterator().next().getAddressID());
+        }
+        while(orders.iterator().hasNext()) {
+        	orderService.deleteOrder(orders.iterator().next());
+        }
+        cartRepository.delete(cart);
         userRepository.delete(user);
     }
 
@@ -177,6 +206,7 @@ public class UserService {
         user.setProfilePictureURL(newUrl);
         userRepository.save(user);
     }
+
     
    // @Transactional
     //public void editPassword(String username, )

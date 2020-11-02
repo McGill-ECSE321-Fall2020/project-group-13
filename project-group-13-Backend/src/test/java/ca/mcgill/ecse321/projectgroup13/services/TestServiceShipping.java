@@ -269,7 +269,7 @@ public class TestServiceShipping {
 	 		error = e.getMessage();
 	 	}
 		
-	 	assertEquals(error,"");
+	 	assertEquals(error,null);
 	 	assertEquals(shipment.getEstimatedDateOfArrival(),Date.valueOf("2020-12-25"));
 		
 	 }
@@ -295,12 +295,13 @@ public class TestServiceShipping {
 	 	Shipment shipment = null;
 		String error = null;
 	 	try {
-	 		shipment = shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("2020-12-31"),Time.valueOf("14:00"));   
+	 		shipment = shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("2020-12-31"),Time.valueOf("14:00:00"));   
 	 		shipmentService.editShipmentStatus(shipment, ShipmentStatus.Delivered);
 	 	}catch (IllegalArgumentException e) {
-	 		error = e.getMessage();
+	 		System.out.print(e.getMessage());
 	 	}
 		
+	 	System.out.print(shipment);
 	 	assertEquals(error,null);
 	 	assertEquals(shipment.getShipmentInfo(),ShipmentStatus.Delivered);
 		
