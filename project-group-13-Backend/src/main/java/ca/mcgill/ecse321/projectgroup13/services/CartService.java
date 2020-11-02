@@ -139,6 +139,7 @@ public class CartService {
 		if (cart == null)
 			return true;
 		cart.setArtwork(null);
+		
 		cart.getUser().setCart(null);
 		cart.setUser(null);
 		try{

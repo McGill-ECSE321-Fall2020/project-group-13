@@ -52,8 +52,7 @@ public class TestServiceArtwork {
 	
 
 	
-	@Mock
-	private ArtworkRepository artworkRepository;
+	
 	@Mock
 	private Order order;
 	@Mock
@@ -331,20 +330,19 @@ public class TestServiceArtwork {
 	 @Test
 	 public void testDeleteExistingArtwork()  {
 		 
-		 Artwork artwork = artworkRepository.findArtworkByArtworkID(ARTWORK_ID);
+		 Artwork artwork = artworkRepo.findArtworkByArtworkID(ARTWORK_ID);
+		 Set<User> user = artwork.getArtist();
 		 Boolean test = false;
-		 String error = null;
+		 String error = "";
 		try{
-			
 			test = artworkService.deleteArtwork(artwork);
-		
 		}
 		catch(Exception e) {
 			error = e.getMessage();
 			fail();
 		}
-		
-		assertNull(error);
+		assertTrue(user.iterator().next().getArtwork().isEmpty());
+		assertEquals(error,"");
 		assertTrue(test);
 		
 		

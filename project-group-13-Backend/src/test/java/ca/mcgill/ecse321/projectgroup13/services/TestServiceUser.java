@@ -57,19 +57,18 @@ public class TestServiceUser {
 	
 	@Mock
 	private ShipmentRepository shipmentRepository;
-	
-	
+	@Mock
+	private AddressService addressService; 
 	@Mock
 	private CartRepository cartRepo;
 	
 	@InjectMocks
 	private UserService userService;
 	
-	@InjectMocks
+	@Mock
 	private OrderService orderService; 
 	
-	@InjectMocks
-	private AddressService addressService; 
+	
 	
 	@BeforeEach
 	public void setMockOutput() {
@@ -142,6 +141,14 @@ public class TestServiceUser {
 			} else {
 				return null;
 			}
+				
+		});
+		lenient().when(addressService.deleteAddress(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			return true;
+				
+		});
+		lenient().when(orderService.deleteOrder(any(Order.class))).thenAnswer((InvocationOnMock invocation) -> {
+			return true;
 				
 		});
 

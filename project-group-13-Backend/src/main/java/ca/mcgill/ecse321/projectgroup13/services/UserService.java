@@ -19,6 +19,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -148,11 +149,11 @@ public class UserService {
         Cart cart = user.getCart();
         Set<Order> orders = user.getOrder();
         Set<Artwork> Artworks = artworkRepository.findArtworkByArtist(user);
-        while(userAddresses.iterator().hasNext()) {
-        	addressService.deleteAddress(userAddresses.iterator().next().getAddressID());
+        
+        for(Address address:userAddresses) {
+        	addressService.deleteAddress(address.getAddressID());
         }
-        while(orders.iterator().hasNext()) {
-        	Order order = orders.iterator().next();
+        for(Order order:orders) {
         	if (order.getOrderStatus().equals(OrderStatus.PaymentPending))
         		orderService.deleteOrder(order);
         }
