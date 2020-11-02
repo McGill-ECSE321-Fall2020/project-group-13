@@ -159,11 +159,24 @@ public class TestServiceShipping {
 				return null;
 			}
 		});
-		lenient().when(orderRepo.findOrderByOrderID(ORDERID)).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(userRepository.findUserByUsername(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(USERNAME)) {
 			User user = new User();
 			user.setUsername(USERNAME);
 			user.setEmail(USER_EMAIL);
 			user.setPassword(USER_PASSWORD);
+			
+			Address address = new Address();
+			
+			address.setAddressID(ADDRESS_ID);
+			address.setCity(CITY);
+			address.setCountry(COUNTRY);
+			address.setPostalCode("H4C2C4");
+			address.setUser(user);
+			
+			HashSet<Address> set = new HashSet<Address>();
+			set.add(address);
+			user.setAddress(set);
 			
 			Order order = new Order();
 			order.setOrderID(ORDERID);
@@ -172,10 +185,69 @@ public class TestServiceShipping {
 			Artwork artwork = new Artwork();
 			artwork.setArtworkID(ARTWORK_ID);
 			
-			HashSet<Artwork> set = new HashSet<Artwork>();
-			set.add(artwork);
 			
+			HashSet<Artwork> sets = new HashSet<Artwork>();
+			sets.add(artwork);
+			
+			user.setArtwork(sets);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Shipment shipment = new Shipment();
+			shipment.setAddress(address);
+			shipment.setOrder(order);
+				
+			return user;
+			} else {
+				return null;
+			}
+		});
+		lenient().when(orderRepo.findOrderByOrderID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(ORDERID)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Address address = new Address();
+			
+			address.setAddressID(ADDRESS_ID);
+			address.setCity(CITY);
+			address.setCountry(COUNTRY);
+			address.setPostalCode("H4C2C4");
+			address.setUser(user);
+			
+			HashSet<Address> set = new HashSet<Address>();
+			set.add(address);
+			user.setAddress(set);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> sets = new HashSet<Artwork>();
+			sets.add(artwork);
+			
+			user.setArtwork(sets);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Shipment shipment = new Shipment();
+			shipment.setAddress(address);
+			shipment.setOrder(order);
 			return order;
+			} else {
+				return null;
+			}
+			
 		});
 		
 	}
@@ -352,17 +424,63 @@ public class TestServiceShipping {
 	
 	
 	@Test
-	public void testEditShipmentStatus() {
-		Shipment shipment = null;
+	public void testgetAllShipments() {
+		Set<Shipment> shipment = null;
 	 	try {
-	 		shipment = shipmentService.editShipmentStatus(shipmentRepo.findShipmentByShipmentID(SHIPMENT_ID));   
-	 		shipmentService.editShipmentEstimatedTime(shipment, null);
+	 		shipment=shipmentService.getAllShipments();
 	 	}catch (IllegalArgumentException e) {
 	 		error = e.getMessage();
 	 		System.out.print(error);
 	 	}
+	 	assertNotNull(shipment);
+	 	assertNull(error);
+	}
+	//TODO find way to make it assert more
 	
-	 	assertEquals("estimatedTime cannot be null", error);
+	@Test
+	public void testgetShipmentsOfUser() {
+		Set<Shipment> shipment = null;
+	 	try {
+	 		shipment=shipmentService.getShipmentsOfUser(userRepository.findUserByUsername(USERNAME));
+	 	}catch (IllegalArgumentException e) {
+	 		error = e.getMessage();
+	 		System.out.print(error);
+	 	}
+	 	assertNotNull(shipment);
+	 	assertNull(error);
+	 	
+	}
+	
+	@Test
+	public void testgetInvalidShipmentsOfUser() {
+		Set<Shipment> shipment = null;
+	 	try {
+	 		shipment=shipmentService.getShipmentsOfUser(userRepository.findUserByUsername("hellokitty"));
+	 	}catch (IllegalArgumentException e) {
+	 		error = e.getMessage();
+	 		System.out.print(error);
+	 	}
+	 	assertNull(shipment);
+	 	assertEquals(error,"invalid user");
+	 	
+	}
+	
+	@Test
+	public void testgetShipmentOfOrder() {
+		Shipment shipment = null;
+		String error = null;
+	 	try {
+	 		shipment=shipmentService.getShipmentOfOrder(orderRepo.findOrderByOrderID(ORDERID));
+	 	}catch (IllegalArgumentException e) {
+	 		error = e.getMessage();
+	 		System.out.print(error);
+	 	}
+	 	assertNotNull(shipment);
+	 	assertEquals(shipment.getShipmentID(), SHIPMENTID);
+	 	assertNull(error);
+	 	
+	}
+	
 	
 
 }
