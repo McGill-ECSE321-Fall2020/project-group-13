@@ -118,7 +118,7 @@ public class ArtworkService {
      * @param artwork
      */
     @Transactional
-    public void deleteArtwork(Artwork artwork){
+    public Boolean deleteArtwork(Artwork artwork){
     	User user = null;
     	while(artwork.getArtist().iterator().hasNext()) {
     	user = artwork.getArtist().iterator().next();
@@ -127,6 +127,7 @@ public class ArtworkService {
 		user.setArtwork(artworks);
 		}
         artworkRepo.delete(artwork);
+        return true; 
     }
 
 
