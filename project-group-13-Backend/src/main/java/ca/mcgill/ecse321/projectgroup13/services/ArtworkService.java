@@ -42,10 +42,10 @@ public class ArtworkService {
 //    }
     
     @Transactional
-    public Artwork createArtwork(ArtworkDto artworkDto) throws illegalArgumentException {
-    	if( artworkDto.getTitle().trim()==null ) throw new illegalArgumentException("no title for artwork");
-    	if(artworkDto.getArtist().isEmpty()) throw new illegalArgumentException("no artist for artwork") ;
-    	if(artworkDto.getWorth()==0) throw new illegalArgumentException("no worth specified") ;
+    public Artwork createArtwork(ArtworkDto artworkDto) throws IllegalArgumentException {
+    	if(artworkDto.getTitle().trim()==null ) throw new IllegalArgumentException("no title for artwork");
+    	if(artworkDto.getArtist().isEmpty()) throw new IllegalArgumentException("no artist for artwork") ;
+    	if(artworkDto.getWorth()==0) throw new IllegalArgumentException("no worth specified") ;
     	
     	//must convert set of userDTO into set of Users, find them in the database one by one 
     	Set<UserDto> allArtistsDto = artworkDto.getArtist();
@@ -62,7 +62,7 @@ public class ArtworkService {
     	while (artistsDto.hasNext()) {
     		//for each user
     		User user = userRepo.findUserByUsername(((UserDto)artistsDto.next()).getUsername());
-    		if(user==null) throw new illegalArgumentException("artist not found");
+    		if(user==null) throw new IllegalArgumentException("artist not found");
     		user.getArtwork().add(artwork);
     		artwork.getArtist().add(user);
     		artworkRepo.save(artwork);
