@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -52,8 +53,7 @@ public class TestServiceArtwork {
 	
 
 	
-	@Mock
-	private ArtworkRepository artworkRepository;
+
 	@Mock
 	private Order order;
 	@Mock
@@ -70,6 +70,9 @@ public class TestServiceArtwork {
 	private AddressRepository addressRepo;
 	@Mock
 	private ArtworkRepository artworkRepo;
+	
+	@Mock
+	private CartRepository cartRepo;
 	 
 		@InjectMocks
 		private ArtworkService artworkService;
@@ -125,30 +128,51 @@ public class TestServiceArtwork {
 				return order;
 			});
 			
-			lenient().when(artworkRepo.findArtworkByArtworkID(ARTWORK_ID)).thenAnswer((InvocationOnMock invocation) -> {
-				User user = new User();
-				user.setUsername(USERNAME);
-				user.setEmail(USER_EMAIL);
-				user.setPassword(USER_PASSWORD);
-				
-				Order order = new Order();
-				order.setOrderID(ORDERID);
-				order.setUser(user);
-				
-				Artwork artwork = new Artwork();
-				artwork.setArtworkID(ARTWORK_ID);
-				
-				
-				HashSet<Artwork> set = new HashSet<Artwork>();
-				set.add(artwork);
-				
-				user.setArtwork(set);
-				
-				HashSet<User> artistss = new HashSet<User>();
-				artistss.add(user);
-				artwork.setArtist(artistss);
-				
-				return artwork;
+			lenient().when(artworkRepo.findArtworkByArtworkID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+				if (invocation.getArgument(0).equals(ARTWORK_ID)) {
+					User user = new User();
+					user.setUsername(USERNAME);
+					user.setEmail(USER_EMAIL);
+					user.setPassword(USER_PASSWORD);
+					
+					Address address = new Address();
+					
+					address.setAddressID(ADDRESS_ID);
+					address.setCity(CITY);
+					address.setCountry(COUNTRY);
+					address.setPostalCode("H4C2C4");
+					address.setUser(user);
+					
+					HashSet<Address> set = new HashSet<Address>();
+					set.add(address);
+					user.setAddress(set);
+					
+					Order order = new Order();
+					order.setOrderID(ORDERID);
+					order.setUser(user);
+					
+					Artwork artwork = new Artwork();
+					artwork.setArtworkID(ARTWORK_ID);
+					
+					
+					HashSet<Artwork> sets = new HashSet<Artwork>();
+					sets.add(artwork);
+					
+					user.setArtwork(sets);
+					
+					HashSet<User> artistss = new HashSet<User>();
+					artistss.add(user);
+					artwork.setArtist(artistss);
+					
+					Shipment shipment = new Shipment();
+					shipment.setAddress(address);
+					shipment.setOrder(order);
+					shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+					shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+					return artwork;
+					} else {
+						return null;
+					}
 			});
 			
 			lenient().when(artworkRepo.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
@@ -232,9 +256,48 @@ public class TestServiceArtwork {
 				
 				return user;
 				} else {
-					throw new IllegalArgumentException("invalid user");
+					return null;
 				}
 			});
+			
+			
+			lenient().when(cartRepo.findCartsByArtwork(any(Artwork.class))).thenAnswer((InvocationOnMock invocation) -> {
+				if(((Artwork)(invocation.getArgument(0))).getArtworkID()==ARTWORK_ID) {
+					User user = new User();
+					user.setUsername(USERNAME);
+					user.setEmail(USER_EMAIL);
+					user.setPassword(USER_PASSWORD);
+					
+					Order order = new Order();
+					order.setOrderID(ORDERID);
+					order.setUser(user);
+					
+					Artwork artwork = new Artwork();
+					artwork.setArtworkID(ARTWORK_ID);
+					artwork.setWorth(WORTH);
+					
+
+					HashSet<Artwork> set = new HashSet<Artwork>();
+					set.add(artwork);
+					
+					user.setArtwork(set);
+					
+					HashSet<User> artistss = new HashSet<User>();
+					artistss.add(user);
+					artwork.setArtist(artistss);
+		
+					Cart cart = new Cart();
+					cart.setArtwork(set);
+					cart.setUser(user);
+					
+					HashSet<Cart> carts = new HashSet<Cart>();
+					carts.add(cart);
+				return carts;
+				} else {
+					return null;
+				}
+			});
+			
 			
 			
 			
@@ -331,7 +394,7 @@ public class TestServiceArtwork {
 	 @Test
 	 public void testDeleteExistingArtwork()  {
 		 
-		 Artwork artwork = artworkRepository.findArtworkByArtworkID(ARTWORK_ID);
+		 Artwork artwork = artworkRepo.findArtworkByArtworkID(ARTWORK_ID);
 		 Boolean test = false;
 		 String error = null;
 		try{
@@ -341,7 +404,7 @@ public class TestServiceArtwork {
 		}
 		catch(Exception e) {
 			error = e.getMessage();
-			fail();
+			
 		}
 		
 		assertNull(error);
