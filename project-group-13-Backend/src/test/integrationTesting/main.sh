@@ -3,8 +3,8 @@
 blue=$(tput setaf 4)
 normal=$(tput sgr0)
 
-username="rs1"
-username2="d4"
+username="rsdfs1"
+username2="dsdf"
 
 #test the creation of users
 printf "%s\n" "${blue}test the creation of users${normal}"
@@ -176,6 +176,10 @@ printf "$currentLine\n"
 
 #delete artwork by id
 printf "%s\n" "${blue}delete artwork by id${normal}"
-currentLine=$(curl -s -X DELETE "http://localhost:8080artwork/$artworkID/delete")
+currentLine=$(curl -s -X DELETE "http://localhost:8080/artwork/$artworkID/delete")
 printf "$currentLine\n"
 
+#delete user by username
+printf "%s\n" "${blue}delete user by username${normal}"
+currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete")
+printf "$currentLine\n"
