@@ -33,8 +33,8 @@ public class CartService {
 	 */
 	@Transactional
 	public Cart createCart(User user) {
-		if (user == null)
-			throw new IllegalArgumentException("user cannot be null");
+		if (user == null||userRepository.findUserByUsername(user.username()==null))
+			throw new IllegalArgumentException("invalid user");
 		
 		Cart cart = new Cart();
 		cart.setUser(user);
