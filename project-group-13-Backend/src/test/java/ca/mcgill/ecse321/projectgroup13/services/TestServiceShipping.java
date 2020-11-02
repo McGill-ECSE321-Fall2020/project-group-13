@@ -269,7 +269,7 @@ public class TestServiceShipping {
 	 		error = e.getMessage();
 	 	}
 		
-	 	assertEquals(error,"");
+	 	assertEquals(error,null);
 	 	assertEquals(shipment.getEstimatedDateOfArrival(),Date.valueOf("2020-12-25"));
 		
 	 }
