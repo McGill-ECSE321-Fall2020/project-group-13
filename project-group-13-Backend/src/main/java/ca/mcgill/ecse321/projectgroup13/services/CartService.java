@@ -136,7 +136,8 @@ public class CartService {
 		
 		cart.getUser().setCart(null);
 		cart.setUser(null);
-		return cartRepository.deleteCartByCartID(cart.getCartID());
+		cartRepository.delete(cart);
+		return true;
 	}
 	
 	/**
