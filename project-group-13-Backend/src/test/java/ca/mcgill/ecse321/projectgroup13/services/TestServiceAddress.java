@@ -21,29 +21,35 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.doAnswer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
 public class TestServiceAddress {
 	@Mock
 	private AddressRepository addressRepository;
 	
-	
+	@Mock
+	private User user1;
 	@Mock
 	private UserRepository userRepository;
 	
 	@Mock
 	private ArtworkRepository artworkRepository;
 	
+	
 	@InjectMocks
 	private AddressService addressService;
 	
 	@InjectMocks
 	private UserService userService;
-	
+	private static final int INVALID_ID = 404;
+	private static final int ADDRESS_ID = 428571;
+	private static final int ADDRESS_ID2 = 285714;
 	private static final String ADDRESS="47 Cesar Avenue";
 	private static final String ADDRESS2="47 Cesar Avenue";
 	private static final String CITY="Montreal";
@@ -56,24 +62,47 @@ public class TestServiceAddress {
 	private static final String TITLE = "Beauty of the times";
 	private static final Integer ADDRESSID = 12312324 ;
 	private static final String TITLE2 = "Beauty of the times";
-	
+	private boolean isDeleted = false;
 	 @BeforeEach
 	    public void setMockOutput() {
 	        lenient().when(addressRepository.save(any(Address.class))).thenAnswer((InvocationOnMock invocation) -> {
 	            Address address = new Address();
-	            address.setCity(ADDRESS);
+	            address.setCity(CITY);
 	            address.setAddressID(ADDRESSID);
 	            return address;
 	        });
 	        lenient().when(addressRepository.findAddressByAddressID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
-	            Address address = new Address();
-	            address.setCity(ADDRESS);
-	            address.setAddressID(ADDRESSID);
+	        	Set<Address> set = new HashSet<Address>();
+	        	
+	        	Address address = new Address();
+	            address.setCity(CITY);
+	            address.setAddressID(invocation.getArgument(0));
+	            address.setUser(user1);
+	            set.add(address);
+	            user1.setAddress(set);
+	            if(invocation.getArgument(0).equals(INVALID_ID)) return null;
 	            return address;
 	        });
+	        lenient().when(addressRepository.findAddressesByUserUsername(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
+	            List<Address> list = new ArrayList<Address>();
+	        	Address address = new Address();
+	            address.setCity(CITY);
+	            address.setAddressID(ADDRESSID);
+	            Address address2 = new Address();
+	            address2.setCity(CITY);
+	            address2.setAddressID(ADDRESS_ID2);
+	            list.add(address);
+
+	            return list;
+	        });
+	        doAnswer(new Answer<Void>() {
+	        	  @Override public Void answer(InvocationOnMock invocation) {
+	        		   isDeleted = true;
+	        		   return null;
+	        		  }
+	        }).when(addressRepository).delete(any(Address.class));
 	        lenient().when(userRepository.save(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
-				
-				User user = new User();
+				 User user = new User();
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
 				user.setPassword(USER_PASSWORD);
@@ -95,20 +124,19 @@ public class TestServiceAddress {
 		
 		
 		Address address = null;
-		String error = null;
+		String error = "";
+		User user = null;
 		try{
-			User user = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			user = userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
 			address = addressService.createAddress("jake",ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 		}catch(IllegalArgumentException | RegistrationException e){
 			error = e.getMessage();
 		}
-		System.out.print(address.getStreetAddress1());
-		System.out.print(address.getCity());
-		System.out.print(address.getProvince());
-		System.out.print(address.getCountry());
-		System.out.print(address.getPostalCode());
+		assertNotNull(address);
+		assertEquals(address.getStreetAddress1(),ADDRESS);
+		assertEquals(address.getCity(),"MONTREAL");
+		assertEquals(error,"");
 
-//		assertTrue(error.contentEquals("invalid user"));
 	}
 
 	@Test
@@ -117,14 +145,12 @@ public class TestServiceAddress {
 		Address address = null;
 		String error = "poop";
 		try{
-
 			address = addressService.createAddress("jokesonyoubaby" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 		}catch(IllegalArgumentException e){
 			error = e.getMessage();
 		}
-		//assertTrue(address==null);
-		System.out.print(address);
-		assertTrue(error.contentEquals("invalid user"));
+		assertNull(address);
+		assertEquals(error,"invalid user");
 	}
 
 	@Test
@@ -133,30 +159,25 @@ public class TestServiceAddress {
 		Address address = null;
 		String error = null;
 		try{
-			
 			address = addressService.createAddress(USERNAME, null, null, null,"QUEBEC", "CANADA", "H4C2C4" );
 		}catch(IllegalArgumentException e){
 			error = e.getMessage();
 		}
 		
 		assertNull(address);
-		assertTrue(error.contentEquals("missing parameter"));
+		assertEquals(error,"missing parameter");
 	}
 	
 	@Test 
 	public void testGetUserOfAddress() {
-		
+		User user = null;
 		try {
-			userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
-			Address address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
-			Integer ID = address.getAddressID();
+			user = addressService.getUserOfAddress(ADDRESS_ID);
 			
-			
-			User user = addressService.getUserOfAddress(ID);
-			assertTrue(user.getUsername().contentEquals("jake"));
-		} catch (IllegalArgumentException | RegistrationException e) {
-			
+		} catch (IllegalArgumentException e) {
+			fail();
 		}
+		assertEquals(user.getUsername(),"jake");
 	}
 	
 	@Test 
@@ -165,36 +186,31 @@ public class TestServiceAddress {
 		User user = null;
 		
 		try {
-			user = addressService.getUserOfAddress(1);
+			user = addressService.getUserOfAddress(INVALID_ID);
 			
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		assertNull(user);
-		assertTrue(error.contentEquals("invalid address"));
+		assertEquals(error,"invalid address");
 	}
 	
 	@Test 
 	public void testGetAddressByAddressID() {
+		Address add = null;
 		try {
-			User juser = userService.createUser("bigjohnson", "joh24nny@godfsogle.com", "wellsaidwellsaid");
-			Address address = addressService.createAddress(juser.getUsername(),ADDRESS, "104", "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
-			Address checkAdd = addressRepository.findAddressByAddressID(ADDRESSID);
-			Address add = addressService.getAddressById(address.getAddressID());
-			assertTrue(checkAdd.getCity().contentEquals(add.getCity()) && checkAdd.getAddressID()==add.getAddressID());
-		} catch (IllegalArgumentException | RegistrationException e) {
-
+			add = addressService.getAddressById(ADDRESS_ID);
+			
+		} catch (IllegalArgumentException e) {
 			fail();
-
 		}
+		assertEquals(add.getAddressID(),ADDRESS_ID);
 	}
 	
 	@Test 
-	public void testGetAddressByAddressIDInvalid() {
+	public void testGetAddressByAddressIDNull() {
 		Address add = null;
 		String error = "";
-	
-		
 		try {
 			add = addressService.getAddressById(null);
 			
@@ -205,21 +221,15 @@ public class TestServiceAddress {
 		assertTrue(error.contentEquals("invalid address"));
 	}
 	
-	
-	
 	@Test 
 	public void testGetAddressesByUser() {
 		List<Address> result = null;
 		try {
-			
-			
 			result = addressService.getAddressesByUser("Jake");
-			
-			
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
-		
+		assertNotNull(result);
 	}
 	
 	@Test 
@@ -246,19 +256,16 @@ public class TestServiceAddress {
 		
 		Integer addressID = null;
 		
-		try {
-			User juser = userService.createUser("jake", "ibrahim@gmail.com", "wellsaidwellsaid");
-			Address address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
-			addressID = address.getAddressID();
-			Address checkAdd = addressRepository.findAddressByAddressID(addressID);
 		
-		addressService.deleteAddress(address.getAddressID());
-		assertTrue(checkAdd!=null);
-		} catch(IllegalArgumentException | RegistrationException e) {
+		try {
+			isDeleted = false;
+		addressService.deleteAddress(ADDRESS_ID);
+		} catch(IllegalArgumentException e) {
 			//Throws an invalid email error for some reason, but address gets added and deleted
-			System.out.print(e.getMessage());
+			fail();
 		}
-		assertNull(addressRepository.findAddressByAddressID(addressID));
+		assertTrue(user1.getAddress().isEmpty());
+		assertTrue(isDeleted);
 		
 	}
 	
