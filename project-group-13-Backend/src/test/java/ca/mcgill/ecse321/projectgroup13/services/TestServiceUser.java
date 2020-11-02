@@ -378,7 +378,7 @@ public class TestServiceUser {
 	public void testValidRegistration() {
 		User newUser = null; 
 		try {
-			newUser = userService.createUser("DOGGYTHEDOUG",USER_EMAIL2,USER_PASSWORD2);
+			newUser = userService.createUser("DOGGYTHEDOUG","doogy@bones.com",USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			e.printStackTrace();
 		}
@@ -407,7 +407,7 @@ public class TestServiceUser {
 	public void testCreateWithEmptyPassword() {
 		User newUser = null; 
 		try {
-			newUser = userService.createUser("DOGGYMAN",USER_EMAIL2,"");
+			newUser = userService.createUser("DOGGYMAN","email@email.com","");
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid password", e.getMessage());
@@ -417,7 +417,7 @@ public class TestServiceUser {
 	public void testCreateNoUsername() {
 		User newUser = null; 
 		try {
-			newUser = userService.createUser("",USER_EMAIL2,USER_PASSWORD2);
+			newUser = userService.createUser("","be@mymay.com",USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid username", e.getMessage());
