@@ -352,7 +352,12 @@ public class ProjectGroup13Controller {
 		if (order == null) 		//TODO: what to do if user is not authorized to delete order
 			return true;		//there was nothing to delete, therefore we successfully complete operation?
 		
-		return orderService.deleteOrder(order);
+		try {
+			return orderService.deleteOrder(order);
+		} catch (Exception e) {
+			System.out.println(e.toString()); 
+			return false;
+		}
 	}
 
 

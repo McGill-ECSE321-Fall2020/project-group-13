@@ -92,7 +92,7 @@ public class ArtworkService {
      * @throws IllegalArgumentException
      */
     public Artwork createArtwork(String Title, String[] usernames, Double worth) throws IllegalArgumentException {
-    	if( Title.trim()==null ) throw new IllegalArgumentException("invalid title");
+    	if( Title==null || Title.trim()=="" ) throw new IllegalArgumentException("invalid title");
     	if(usernames == null || usernames.length==0) throw new IllegalArgumentException("invalid user") ;
     	if(worth==null||worth==0) throw new IllegalArgumentException("invalid worth") ;
 
