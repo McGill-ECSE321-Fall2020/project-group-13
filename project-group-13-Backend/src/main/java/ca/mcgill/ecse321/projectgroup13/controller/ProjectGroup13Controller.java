@@ -177,10 +177,6 @@ public class ProjectGroup13Controller {
 	//public void editBio(String username, String newBio)
 	
 	//public void editProfilePictureUrl(String username, String newUrl)
-	
-	//public String createToken(User user)
-	
-	//public String generateRandomPassword()
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS
 
@@ -373,7 +369,6 @@ public class ProjectGroup13Controller {
 	//public Shipment getShipmentOfOrder(Order order)
 	
 	//public Set<Shipment> getShipmentsOfUser(User user)
-
 	/**
 	 * RESTful service that gets all shipments of a user
 	 * @param username
