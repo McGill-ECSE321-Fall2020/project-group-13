@@ -218,7 +218,8 @@ public class ProjectGroup13Controller {
 		
 		try {
 			orderService.addPaymentToOrder(order, p);
-			cartService.deleteCart(order.getUser().getCart());
+			Cart cart = order.getUser().getCart();
+			cartService.deleteCart(cart);
 		}
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");

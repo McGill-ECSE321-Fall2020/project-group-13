@@ -3,8 +3,8 @@
 blue=$(tput setaf 4)
 normal=$(tput sgr0)
 
-username="rsrr"
-username2="afsr"
+username="a"
+username2="b"
 
 #test the creation of users
 printf "%s\n" "${blue}test the creation of users${normal}"
@@ -17,6 +17,10 @@ printf "\n%s\n" "${blue}create artwork and store artworkID${normal}"
 currentLine=$(curl -s -X POST "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7")
 printf "$currentLine\n"
 artworkID=$(echo  "$currentLine" | grep -o "\"artworkID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+#create a second artwork
+currentLine=$(curl -s -X POST "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7")
+printf "$currentLine\n"
+artworkID2=$(echo  "$currentLine" | grep -o "\"artworkID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
 #add artwork to cart
 printf "%s\n" "${blue}add artwork to cart${normal}"
@@ -70,13 +74,14 @@ printf "%s\n" "${blue}get order from orderId${normal}"
 currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/order/$orderID")
 printf "$currentLine\n"
 
-: '
 
+: '
 #create payment and store paymentId
 printf "%s\n" "${blue}create payment and store paymentId${normal}"
 currentLine=$(curl -s -H "Content-Type: application/json" --data @payment.json -X POST "http://localhost:8080/order/$orderID/pay")
 printf "$currentLine\n"
 paymentID=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
+
 
 #get payment from ID
 printf "%s\n" "${blue}get payment from ID${normal}"
@@ -182,9 +187,9 @@ printf "%s\n" "${blue}edit user fields${normal}"
 currentLine=$(curl -s -H "Content-Type: application/json" --data @user-update.json -X PUT "http://localhost:8080/user/$username/edit")
 printf "$currentLine\n"
 
-
+'
 #delete user by username
 printf "%s\n" "${blue}delete user by username${normal}"
 currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username2/delete")
 printf "$currentLine\n"
-'
+
