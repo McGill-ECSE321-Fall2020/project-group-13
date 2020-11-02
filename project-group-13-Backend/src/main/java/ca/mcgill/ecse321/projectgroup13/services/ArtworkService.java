@@ -178,27 +178,51 @@ public class ArtworkService {
         artwork.setDescription(description);
         artwork = artworkRepo.save(artwork);
     }
+    /**
+     * edits title
+     * @param artwork
+     * @param title
+     */
     @Transactional
     public void editArtwork_title(Artwork artwork, String title){
         artwork.setTitle(title);
         artwork = artworkRepo.save(artwork);
     }
+    /**
+     * Edits creation date. 
+     * @param artwork
+     * @param date
+     */
     @Transactional
     public void editArtwork_creationDate(Artwork artwork, String date){
         artwork.setCreationDate(date);
         artwork = artworkRepo.save(artwork);
     }
+    /**
+     * edits dimention
+     * @param artwork
+     * @param dimensions
+     */
     @Transactional
     public void editArtwork_dimensions(Artwork artwork, String dimensions){
         artwork.setDimensions(dimensions);
         artwork = artworkRepo.save(artwork);
     }
-    
+    /**
+     * edits medium of selected artwork
+     * @param artwork
+     * @param medium
+     */
     @Transactional
     public void editArtwork_medium(Artwork artwork, String medium){
         artwork.setMedium(medium);
         artwork = artworkRepo.save(artwork);
     }
+    /**
+     * edits the collection field. Whose artwork is it?
+     * @param artwork
+     * @param collection
+     */
     @Transactional
     public void editArtwork_collection(Artwork artwork, String collection){
         artwork.setCollection(collection);

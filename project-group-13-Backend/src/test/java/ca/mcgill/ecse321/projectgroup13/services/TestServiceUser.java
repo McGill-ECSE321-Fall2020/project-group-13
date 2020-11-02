@@ -68,7 +68,7 @@ public class TestServiceUser {
 				return null;
 			}
 		});
-		lenient().when(userRepository.findUserByEmail(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(userRepository.findUserByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 			if (invocation.getArgument(0).equals(USER_EMAIL)) {
 				User user = new User();
 				user.setUsername(USERNAME);
@@ -93,7 +93,7 @@ public class TestServiceUser {
 		
 		lenient().when(userRepository.save(any(User.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
-        lenient().when(userRepository.findUserByEmail(any(String.class))).thenAnswer(returnParameterAsAnswer);
+      
         
 	}
 	
@@ -101,13 +101,13 @@ public class TestServiceUser {
 	public void testValidRegistration() {
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(USERNAME2,USER_EMAIL2,USER_PASSWORD2);
+			newUser = userService.createUser("DOGGYTHEDOUG",USER_EMAIL2,USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			e.printStackTrace();
 		}
 		
 		assertNotNull(newUser);
-		assertEquals(newUser.getUsername(), USERNAME2);
+		assertEquals(newUser.getUsername(), "DOGGYTHEDOUG");
 		assertEquals(newUser.getPassword(), USER_PASSWORD2);
 	}
 	
@@ -128,7 +128,7 @@ public class TestServiceUser {
 	public void testCreateWithEmptyPassword() {
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(USERNAME,USER_EMAIL2,"");
+			newUser = userService.createUser("DOGGYMAN",USER_EMAIL2,"");
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid password", e.getMessage());
@@ -185,12 +185,12 @@ public class TestServiceUser {
 	public void testEditEmail() {
 		User user = null;
 		try {
-			user = userService.editEmail(USERNAME, "doyou@jakom.com");
+			user = userService.editEmail(USERNAME, "doma@jakom.com");
 		}catch (Exception e) {
 			error = e.getMessage();
 		}
 		assertNotNull(user);
-		assertEquals(user.getEmail(),"doyou@jakom.com");	
+		assertEquals(user.getEmail(),"doma@jakom.com");	
 	}
 	
 	@Test
@@ -229,37 +229,87 @@ public class TestServiceUser {
 	@Test
 	public void testEditBio() {
 		String bio = "I am a busy artist that programs and writes readable tests";
+		User user = null;
 		try {
 			
-			userService.editBio(USERNAME, bio);
+			user = userService.editBio(USERNAME, bio);
 		}catch (Exception e) {
 			error = e.getMessage();
 			System.out.println(error);
 		}
-		assertEquals(userService.getUserByUsername(USERNAME).getBio(),bio);
+		assertEquals(user.getBio(),bio);
 		
-	}
-	@Test
-	public void testEditUrl() {
-		String url = "www.google.ca/coolPeople";
-		try {
-			
-			userService.editProfilePictureUrl(USERNAME, url);
-		}catch (Exception e) {
-			error = e.getMessage();
-			System.out.println(error);
-		}
-		assertEquals(userService.getUserByUsername(USERNAME).getProfilePictureURL(),url);
-		
-	}
-	@Test
-	public void testGenerateRandomPassword() {
-		assertNotEquals(userService.generateRandomPassword(),"");
 	}
 	
 	@Test
-	public void testChangePasswordToInvalid() {
+	public void testInvalidEditBio() {
+		String bio = "I am a busy artist that programs and writes readable tests";
+		User user = null;
+		try {
+			
+			user = userService.editBio("megapipi123", bio);
+		}catch (Exception e) {
+			error = e.getMessage();
+			System.out.println(error);
+		}
+		assertEquals(error,"invalid username");
+		assertNull(user);
 		
+	}
+	
+	@Test
+	public void testEditUrl() {
+		String url = "www.google.ca/coolPeople";
+		User user = null;
+		try {
+			
+			user = userService.editProfilePictureUrl(USERNAME, url);
+		}catch (Exception e) {
+			error = e.getMessage();
+			System.out.println(error);
+		}
+		assertEquals(user.getProfilePictureURL(),url);
+		
+	}
+	@Test
+	public void testInvalidResetPassword() {
+		User user = null;
+		try {
+			user = userService.resetPassword("doggyboy");
+		}catch (Exception e) {
+			error = e.getMessage();
+			System.out.println(error);
+		}
+		assertEquals(error,"invalid username");
+		assertNull(user);
+	}
+	
+	@Test
+	public void testResetPassword() {
+		User user = null;
+		try {
+			user = userService.resetPassword(USERNAME);
+		}catch (Exception e) {
+			error = e.getMessage();
+			System.out.println(error);
+		}
+		assertNotNull(user);
+	}
+	
+	
+	@Test
+	public void testChangePasswordToInvalid() {
+		String bio = "I am a busy artist that programs and writes readable tests";
+		User user = null;
+		try {
+			
+			user = userService.editBio("megapipi123", bio);
+		}catch (Exception e) {
+			error = e.getMessage();
+			System.out.println(error);
+		}
+		assertEquals(error,"invalid username");
+		assertNull(user);
 		
 	}
 	

@@ -98,7 +98,7 @@ public class UserService {
     @Transactional
     public User createUser(String username, String email, String password) throws RegistrationException {
         User user = new User();
-        if(userRepository.findUserByUsername(username) != null) throw new RegistrationException("Username already in use");
+        if(userRepository.findUserByUsername(username) != null) throw new RegistrationException("invalid username");
         //checking if email syntax is valid
         //TODO: validate email
 
@@ -120,7 +120,20 @@ public class UserService {
         return user;
     }
     
+    
+    
+    
     //TODO make class to do password stuff
+    
+    @Transactional
+    public User resetPassword(String username) {
+        User user = userRepository.findUserByUsername(username);
+        if(user==null) throw new IllegalArgumentException("invalid username");
+    	String password = UserService.generateRandomPassword();
+    	user.setPassword(password);
+    	userRepository.save(user);
+    	return user;
+    }
 
     /**
      * service method to delete a certain user from Database
@@ -136,13 +149,17 @@ public class UserService {
         Set<Address> userAddresses = user.getAddress();
         Cart cart = user.getCart();
         Set<Order> orders = user.getOrder();
+        Set<Artwork> Artwork = artworkRepository.findArtworkByArtist(user.getUsername());
         while(userAddresses.iterator().hasNext()) {
         	addressService.deleteAddress(userAddresses.iterator().next().getAddressID());
         }
         while(orders.iterator().hasNext()) {
-        	orderService.deleteOrder(orders.iterator().next());
+        	Order order = orders.iterator().next();
+        	if (order.getOrderStatus().equals(OrderStatus.PaymentPending))
+        		orderService.deleteOrder(order);
         }
-        cartRepository.delete(cart);
+        if (user.getCart() != null)
+            cartRepository.delete(cart);
         userRepository.delete(user);
     }
 
@@ -164,7 +181,7 @@ public class UserService {
     @Transactional
     public User editEmail(String username, String newEmail) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
-            if(!checkIfValidEmail(newEmail) || userRepository.findUserByEmail(newEmail) != null) {
+            if(!checkIfValidEmail(newEmail) || (userRepository.findUserByEmail(newEmail) != null)) {
                 throw new RegistrationException("invalid email");
             }
                 user.setEmail(newEmail);
@@ -189,10 +206,12 @@ public class UserService {
      * @param newBio
      */
     @Transactional
-    public void editBio(String username, String newBio){
+    public User editBio(String username, String newBio){
         User user = userRepository.findUserByUsername(username);
+        if(user==null) throw new IllegalArgumentException("invalid username");
         user.setBio(newBio);
         userRepository.save(user);
+        return user;
     }
 
 
@@ -202,15 +221,12 @@ public class UserService {
      * @param newUrl
      */
     @Transactional
-    public void editProfilePictureUrl(String username, String newUrl){
+    public User editProfilePictureUrl(String username, String newUrl){
         User user = userRepository.findUserByUsername(username);
         user.setProfilePictureURL(newUrl);
         userRepository.save(user);
+        return user;
     }
-
-
-   // @Transactional
-    //public void editPassword(String username, )
 
     
     //TODO update token sophistication
@@ -233,7 +249,7 @@ public class UserService {
      * @return randomly generated password
      */
     //TODO: should this be a public method?
-    public String generateRandomPassword() {
+    private static String generateRandomPassword() {
         String upperCaseLetters = RandomStringUtils.random(1, 65, 90, true, true);
         String lowerCaseLetters = RandomStringUtils.random(1, 97, 122, true, true);
         String numbers = RandomStringUtils.randomNumeric(1);

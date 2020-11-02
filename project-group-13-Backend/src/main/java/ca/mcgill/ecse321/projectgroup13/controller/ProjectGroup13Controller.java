@@ -172,17 +172,23 @@ public class ProjectGroup13Controller {
 		userService.deleteUser(username);
 	}
 
-	//public void deleteUser(String username)
+
+	//edit user
+	@PutMapping(value = {"/user/{username}/edit" , "/user/{username}/edit/"})
+	public UserDto editUser(@PathVariable("username") String username, @RequestBody User user) {
+		try{
+			userService.editEmail(username, user.getEmail());
+			userService.editBio(username, user.getBio());
+			userService.editProfilePictureUrl(username, user.getProfilePictureURL());
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return convertToDto(userService.getUserByUsername(username));
+	}
+
 
 	//public User getUserByUsername(String username)
-	
-	//public void editEmail(String username, String newEmail)
-	
 	//public String login(LoginDto loginDto)
-	
-	//public void editBio(String username, String newBio)
-	
-	//public void editProfilePictureUrl(String username, String newUrl)
 
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS
@@ -267,12 +273,13 @@ public class ProjectGroup13Controller {
 
 	//set method of delivery for order
 	@PutMapping(value = { "/order/{orderId}/delivery", "/order/{orderId}/delivery/" })
-	public void editIsDelivery(@PathVariable int orderId, @RequestParam(name = "delivery") boolean isDelivery){
+	public OrderDto editIsDelivery(@PathVariable int orderId, @RequestParam(name = "delivery") boolean isDelivery){
 		try{
 			orderService.editIsDelivery(orderId, isDelivery);
 		}catch(Exception e){
 			System.out.println("NOPE " + e.toString());
 		}
+		return convertToDto(orderService.getOrder(orderId));
 	}
 
 
@@ -466,7 +473,7 @@ public class ProjectGroup13Controller {
 	 */
 	//public List<Address> getAddressesByUser(User user)
 	@GetMapping(value = { "/user/{username}/addresses", "/user/{username}/addresses/"})
-	public Set<AddressDto> getAllAddressesOfUser(@RequestParam String username){
+	public Set<AddressDto> getAllAddressesOfUser(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
 		Set<AddressDto> addressesDto = new HashSet<AddressDto>();
 		for(Address address : addressService.getAddressesByUser(username)) {
@@ -573,8 +580,12 @@ public class ProjectGroup13Controller {
 			return null;		//there was nothing to delete, therefore we successfully complete operation?
 		
 		Artwork art = artworkService.getArtworkByID(artId);
-		cartService.removeFromCart(cart, art);
-		return convertToDto(cart);
+		try{
+			cartService.removeFromCart(cart, art);
+			return convertToDto(cart);
+		}catch(Exception e){
+			return convertToDto(cart);
+		}
 	}
 	
 	//public Set<Artwork> removeFromCart(Cart cart, Set<Artwork> art)
@@ -602,7 +613,7 @@ public class ProjectGroup13Controller {
 		return convertToDto(art);
 	}
 	//public void deleteArtworkById(int artworkId)
-	@GetMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
+	@DeleteMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
 	public boolean deleteArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		artworkService.deleteArtworkById(id);
 	
@@ -622,7 +633,7 @@ public class ProjectGroup13Controller {
 	//public void editArtwork_isOnPremise(Artwork artwork, boolean onPremise)
 	//public void editArtwork_worth(Artwork artwork, double worth)
 	@PutMapping(value={"/artwork/{id}/update", "/artwork/{id}/update/"})
-	public boolean updateArtwork(@PathVariable("id") Integer artId, @RequestParam(name="description", required=false) String description, 
+	public ArtworkDto updateArtwork(@PathVariable("id") Integer artId, @RequestParam(name="description", required=false) String description,
 			@RequestParam(name="title", required=false) String title, @RequestParam(name="creationDate", required=false) String creationDate,
 			@RequestParam(name="dimensions", required=false) String dimensions, @RequestParam(name="medium", required=false) String medium,
 			@RequestParam(name="collection", required=false) String collection, @RequestParam(name="imageURL", required=false) String imageURL,
@@ -651,7 +662,7 @@ public class ProjectGroup13Controller {
 			artworkService.editArtwork_isOnPremise(artwork, OnPremise);
 		if (worth >= 0)
 			artworkService.editArtwork_worth(artwork, worth);
-		return true;
+		return convertToDto(artwork);
 	}
 	
 	

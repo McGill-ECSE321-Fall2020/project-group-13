@@ -17,13 +17,7 @@ import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
 
 @Service
 public class PaymentService {
-	public <T> List<T> toList(Iterable<T> iterable) {
-        List<T> resultList = new ArrayList<T>();
-        for (T t : iterable) {
-            resultList.add(t);
-        }
-        return resultList;
-    }
+	
 
     //IMPORT REPOSITORIES ---> private UserRepository userRepository;
     @Autowired
@@ -39,7 +33,15 @@ public class PaymentService {
     private OrderService orderService;
     
     
-    
+    /**
+     * Creates a payment
+     * @param cardNumber
+     * @param expirationDate
+     * @param nameOnCard
+     * @param cvv
+     * @param orderId
+     * @return
+     */
     @Transactional
 	public Payment createPayment(long cardNumber, Date expirationDate, String nameOnCard, int cvv, int orderId) {
     	Order order = orderRepo.findOrderByOrderID(orderId);
@@ -67,7 +69,11 @@ public class PaymentService {
 		payment = paymentRepo.save(payment);
 		return payment;
 	}
-
+    /**
+     * Calcualtes amount allocated to gallery in dollars
+     * @param date
+     * @return
+     */
 	@Transactional
 	public double calculateGalleryCommissionAfter(Date date) {
 		if (date == null)
@@ -80,11 +86,14 @@ public class PaymentService {
 		}
 		return result;
 	}
-	
+	/**
+	 * see payments associated with a customer
+	 * @param user
+	 * @return a list of payments
+	 */
 	@Transactional
 	public List<Payment> getPaymentsForCustomer(User user){
-		if (user == null)
-			throw new IllegalArgumentException("user cannot be null");
+		
 		
 		List<Payment> result = new ArrayList<Payment>();
 		for (Order order:orderRepo.findOrdersByUser(user)) {
@@ -92,11 +101,13 @@ public class PaymentService {
 		}
 		return result;
 	}
-	
+	/**
+	 * get payments associated with artist, including commision
+	 * @param user
+	 * @return a list of payments
+	 */
 	@Transactional
 	public List<Payment> getPaymentsForArtist(User user){
-		if (user == null)
-			throw new IllegalArgumentException("user cannot be null");
 		
 		List<Payment> result = new ArrayList<Payment>();
 		for (Artwork art:artworkRepository.findByArtist(user)) {
@@ -106,7 +117,11 @@ public class PaymentService {
 		}
 		return result;
 	}
-	
+	/**
+	 * get payment
+	 * @param paymentID
+	 * @return payment
+	 */
 	@Transactional
 	public Payment getPayment(int paymentID) {
 		Payment payment = paymentRepo.findPaymentByPaymentID(paymentID);

@@ -34,7 +34,7 @@ public class CartService {
 	@Transactional
 	public Cart createCart(User user) {
 		if (user == null)
-			throw new IllegalArgumentException("user cannot be null");
+			throw new IllegalArgumentException("invalid user");
 		
 		Cart cart = new Cart();
 		cart.setUser(user);
@@ -52,10 +52,8 @@ public class CartService {
 	 */
 	@Transactional
 	public Cart createCart(User user, Artwork art) {
-		if (user == null)
-			throw new IllegalArgumentException("user cannot be null");
-		if (art == null)
-			throw new IllegalArgumentException("art cannot be null");
+		if (art == null||user==null)
+			throw new IllegalArgumentException("invalid argument");
 		
 		Cart cart = new Cart();
 		cart.setUser(user);

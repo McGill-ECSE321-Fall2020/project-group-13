@@ -107,7 +107,7 @@ public class OrderService {
 	public Order getMostRecentOrder(User user) {
 		if (user == null) 																//must check parameter is not null
 			throw new IllegalArgumentException("user cannot be null");
-		if (orderRepository.findOrdersByUser(user).isEmpty())							//user needs to have orders to get recent order
+		if (orderRepository.findOrdersByUser(user) == null || orderRepository.findOrdersByUser(user).isEmpty())							//user needs to have orders to get recent order
 			throw new IllegalArgumentException("user has no orders associated to it");
 		
 		List<Order> orders = toList(orderRepository.findOrdersByUser(user));
@@ -149,7 +149,8 @@ public class OrderService {
 		User user = order.getUser();
 		user.getOrder().remove(order);
 		order.setUser(null);
-		paymentRepository.delete(order.getPayment());
+		if (order.getPayment() != null)
+			paymentRepository.delete(order.getPayment());
 		orderRepository.delete(order);
 		
 		return b;
