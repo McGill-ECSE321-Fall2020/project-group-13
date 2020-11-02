@@ -302,16 +302,23 @@ public class TestServiceArtwork {
 	 
 	 @Test
 	 public void testDeleteExistingArtwork()  {
-		 User user = new User();
+		 
+		 Artwork artwork = artworkRepository.findArtworkByArtworkID(ARTWORK_ID);
+		 Boolean test = false;
+		 String error = null;
+		try{
 			
-			Artwork artwork = new Artwork();
-			HashSet<User> artistss = new HashSet<User>();
-			artistss.add(user);
-			artwork.setArtist(artistss);
-		try{artworkService.deleteArtwork(artwork);}
+			test = artworkService.deleteArtwork(artwork);
+		
+		
+		}
 		catch(Exception e) {
+			error = e.getMessage();
 			fail();
 		}
+		
+		assertNull(error);
+		assertTrue(test);
 		
 		
 	 }
@@ -337,12 +344,14 @@ public class TestServiceArtwork {
 	 @Test
 	 public void testGetArtworksOfArtist()  {
 		 Set<Artwork> artworks = null;
+		 String error = null;
 		try{artworks = artworkService.getArtworksOfArtist(USERNAME);}
 		catch(Exception e) {
-			fail();
+			error = e.getMessage();
 		}
-		assertEquals(artworks.iterator().next().getArtworkID(),ARTWORK_ID);
-		
+		assertNotNull(artworks);
+		assertNull(error);
+		assertTrue(!artworks.isEmpty());
 		
 	 }
 	 @Test
