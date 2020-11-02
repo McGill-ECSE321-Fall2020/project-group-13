@@ -150,12 +150,16 @@ public class UserService {
         Set<Order> orders = user.getOrder();
         Set<Artwork> Artworks = artworkRepository.findArtworkByArtist(user);
         
-        for(Address address:userAddresses) {
-        	addressService.deleteAddress(address.getAddressID());
+        if(userAddresses!=null) {
+	        for(Address address:userAddresses) {
+	        	addressService.deleteAddress(address.getAddressID());
+	        }
         }
-        for(Order order:orders) {
-        	if (order.getOrderStatus().equals(OrderStatus.PaymentPending))
-        		orderService.deleteOrder(order);
+        if(orders!=null) {
+	        for(Order order:orders) {
+	        	if (order.getOrderStatus().equals(OrderStatus.PaymentPending))
+	        		orderService.deleteOrder(order);
+	        }
         }
         if (user.getCart() != null)
             cartRepository.delete(cart);

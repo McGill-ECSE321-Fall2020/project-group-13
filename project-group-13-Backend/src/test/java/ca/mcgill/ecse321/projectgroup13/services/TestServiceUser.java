@@ -92,9 +92,15 @@ public class TestServiceUser {
 				set.add(address);
 				user.setAddress(set);
 				
+				HashSet<Order> setOrder = new HashSet<Order>();
+				
+				
+				
 				Order order = new Order();
 				order.setOrderID(ORDERID);
 				order.setUser(user);
+				setOrder.add(order);
+				user.setOrder(setOrder);
 				
 				Artwork artwork = new Artwork();
 				artwork.setArtworkID(ARTWORK_ID);
