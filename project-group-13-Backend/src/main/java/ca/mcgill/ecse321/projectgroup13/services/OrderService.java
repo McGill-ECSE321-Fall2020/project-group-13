@@ -288,17 +288,6 @@ public class OrderService {
 	}
 
 
-	/**
-	 * service method to change isDelivery boolean of order
-	 * @param order
-	 * @param isDelivery
-	 */
-	@Transactional
-	public void editIsDelivery(Order order, boolean isDelivery){
-		order.setShipmentMethodIsDelivery(isDelivery);
-		order = orderRepository.save(order);
-	}
-
 	
 	/**
 	 * iterate through all artwork associated with an order and sum up all their costs. This sum is used to update the order.totalAmount attribute

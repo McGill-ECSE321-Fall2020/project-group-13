@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.projectgroup13.services;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -53,7 +54,11 @@ public class TestServiceOrder {
 	private PaymentService paymentService;
 	@InjectMocks
 	private UserService userService;
-	
+	private static final int ARTWORK_ID = 142857;
+	private static final int ARTWORK_ID2 = 857142;
+	private static final int ARTWORK_ID3 = 571428;
+	private static final int ORDER_ID = 852963;
+	private static final int ORDER_ID2 = 6484526;
 	private String error = "";
 	@BeforeEach
 	public void setMockOutput() {
@@ -74,6 +79,17 @@ public class TestServiceOrder {
 			orders.add(order);
 			orders.add(order2);
 			return orders;
+			
+		});
+		lenient().when(orderRepo.findOrderByOrderID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			
+			Order order = new Order();
+			order.setOrderID(invocation.getArgument(0));
+			Payment payment1 = new Payment();
+			payment1.setPaymentDate(Date.valueOf("2020-01-01"));
+			order.setPayment(payment1);
+			
+			return order;
 			
 		});
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -146,6 +162,42 @@ public class TestServiceOrder {
 		assertEquals(order.getOrderID(),222);
 	}
 	@Test
+	public void testDeleteOrder() {
+		boolean isDeleted = false;
+		User user = new User(); 
+		Set<Order> orders = new HashSet<Order>();
+		Set<Artwork> artworks = new HashSet<Artwork>();
+		Artwork art = new Artwork();
+		artworks.add(art);
+		Order order = new Order();
+		Payment payment1 = new Payment();
+		payment1.setPaymentDate(Date.valueOf("2020-01-01"));
+		order.setPayment(payment1);
+		order.setArtwork(artworks);
+		art.setOrder(order);
+		Order order2 = new Order();
+		Payment payment2 = new Payment();
+		payment2.setPaymentDate(Date.valueOf("2020-02-01"));
+		order2.setPayment(payment2);
+		order.setOrderID(ORDER_ID);
+		order2.setOrderID(ORDER_ID2);
+		order.setUser(user);
+		order2.setUser(user);
+		orders.add(order);
+		orders.add(order2);
+		user.setOrder(orders);
+		try {
+			isDeleted = false;
+			isDeleted = orderService.deleteOrder(order);
+		} catch(IllegalArgumentException e) {
+			//Throws an invalid email error for some reason, but address gets added and deleted
+			fail();
+		}
+		assertEquals(user.getOrder().size(),1);
+		assertTrue(isDeleted);
+		assertNull(art.getOrder());
+	}
+	@Test
 	public void testDeleteNullOrder() {
 		
 		try {
@@ -175,6 +227,34 @@ public class TestServiceOrder {
 		}
 		
 		assertTrue(order.getArtwork().isEmpty());
+	}
+	@Test
+	public void testRemoveSetFromOrder() {
+		
+		Order order = new Order();
+		order.setOrderStatus(OrderStatus.PaymentPending);
+		Artwork art = new Artwork();
+		art.setArtworkID(ARTWORK_ID);
+		Artwork art2 = new Artwork();
+		art2.setArtworkID(ARTWORK_ID2);
+		Artwork art3 = new Artwork();
+		art2.setArtworkID(ARTWORK_ID3);
+		Set<Artwork> set = new HashSet<Artwork>();
+		Set<Artwork> setToRemove = new HashSet<Artwork>();
+		set.add(art);
+		set.add(art2);
+		set.add(art3);
+		setToRemove.add(art);
+		setToRemove.add(art2);
+		order.setArtwork(set);
+		orderRepo.save(order);
+		try {
+			orderService.removeFromOrder(order, setToRemove);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error,"");
+		assertEquals(order.getArtwork().iterator().next().getArtworkID(),ARTWORK_ID3);
 	}
 	
 	@Test
@@ -230,6 +310,86 @@ public class TestServiceOrder {
 		assertEquals(order.getShipment(),ship);
 		assertEquals(order.getOrderStatus(),OrderStatus.Shipped);
 	}
+	@Test
+	public void testEditIsDelivery() {
+		orderService.editIsDelivery(ORDER_ID, true);
+		
+	}
+	@Test
+	public void testNullUserCreateOrder() {
+		try {
+			orderService.createOrder(null,new HashSet<Artwork>());
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotEquals(error,"");
+	}
+	@Test
+	public void testNullArtworkCreateOrder() {
+		try {
+			orderService.createOrder(new User(),null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotEquals(error,"");
+	}
+	@Test
+	public void testNullUserCreateOrder2() {
+		try {
+			orderService.createOrder(null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotEquals(error,"");
+	}
+	@Test
+	public void testNullUserGetOrderFromUser() {
+		try {
+			orderService.getOrdersFromUser(null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotEquals(error,"");
+	}
+	@Test
+	public void testNullUserGetMostRecentOrder() {
+		try {
+			orderService.getMostRecentOrder(null);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotEquals(error,"");
+	}
+	@Test
+	public void testUserWithNoOrderGetMostRecentOrder() {
+		try {
+			orderService.getMostRecentOrder(new User());
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotEquals(error,"");
+	}
+	@Test
+	public void testNullOrderRemoveFromOrder() {
+		try {
+			orderService.removeFromOrder(null, new Artwork());
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotEquals(error,"");
+	}
+	@Test
+	public void testNullOrderRemoveArtworksFromOrder() {
+		try {
+			orderService.removeFromOrder(null, new HashSet<Artwork>());
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotEquals(error,"");
+	}
+	
+	
+	
 
 	
 	
