@@ -59,7 +59,6 @@ public class PaymentService {
     	Payment payment = new Payment();
 		
 		payment.setTotalAmount(order.getTotalAmount());
-		System.out.println(payment.getTotalAmount());
 		payment.setPaymentDate(new Date(System.currentTimeMillis()));
 		payment.setPaymentTime(new Time(System.currentTimeMillis()));
 		payment.setCardNumber(cardNumber);
@@ -68,7 +67,6 @@ public class PaymentService {
 		payment.setCvv(cvv);
 		payment.setOrder(order);
 		payment = paymentRepo.save(payment);
-		System.out.println(payment.getTotalAmount());
 		return payment;
 	}
     /**

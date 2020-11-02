@@ -137,7 +137,7 @@ public class CartService {
 	@Transactional
 	public boolean deleteCart(Cart cart) {
 		if (cart == null)
-			throw new IllegalArgumentException("cart cannot be null");
+			return true;
 		cart.setArtwork(null);
 		cart.getUser().setCart(null);
 		cart.setUser(null);
