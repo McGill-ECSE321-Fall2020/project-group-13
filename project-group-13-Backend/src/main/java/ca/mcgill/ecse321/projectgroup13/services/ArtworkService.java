@@ -8,7 +8,7 @@ import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-import ca.mcgill.ecse321.projectgroup13.services.exception.illegalArgumentException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class ArtworkService {
 //    @Transactional
 //    public Artwork createArtwork(String artistUsername, String title, Double worth ) {
 //        User user = userRepo.findUserByUsername(artistUsername);
-//        if(artistUsername==null) throw new illegalArgumentException("invalid user");
+//        if(artistUsername==null) throw new IllegalArgumentException("invalid user");
 //        artwork.setArtist(newartists);
 //        Set<Artwork> works= user.getArtwork();
 //        works.add(artwork);
@@ -46,36 +46,36 @@ public class ArtworkService {
 //        return artwork;
 //    }
     
-    @Transactional
-    public Artwork createArtwork(ArtworkDto artworkDto) throws IllegalArgumentException {
-    	if(artworkDto.getTitle().trim()==null ) throw new IllegalArgumentException("no title for artwork");
-    	if(artworkDto.getArtist().isEmpty()) throw new IllegalArgumentException("no artist for artwork") ;
-    	if(artworkDto.getWorth()==0) throw new IllegalArgumentException("no worth specified") ;
-    	
-    	//must convert set of userDTO into set of Users, find them in the database one by one 
-    	Set<UserDto> allArtistsDto = artworkDto.getArtist();
-    	Iterator<UserDto> artistsDto = allArtistsDto.iterator();
-    	
-    	Artwork artwork = new Artwork();
-    	artwork.setTitle(artworkDto.getTitle());
-    	artwork.setDescription(artworkDto.getDescription());
-    	artwork.setCreationDate(artworkDto.getCreationDate());
-    	artwork.setDimensions(artworkDto.getDimensions());
-    	artwork.setIsOnPremise(artworkDto.isIsOnPremise());
-    	//TODO might be problematic saving user before saving artwork 
-    	//now must add users and maintain referential integrity
-    	while (artistsDto.hasNext()) {
-    		//for each user
-    		User user = userRepo.findUserByUsername(((UserDto)artistsDto.next()).getUsername());
-    		if(user==null) throw new IllegalArgumentException("artist not found");
-    		user.getArtwork().add(artwork);
-    		artwork.getArtist().add(user);
-    		artworkRepo.save(artwork);
-    		userRepo.save(user);
-    	}
-    	return artwork;
-    	
-    }
+//    @Transactional
+//    public Artwork createArtwork(ArtworkDto artworkDto) throws IllegalArgumentException {
+//    	if(artworkDto.getTitle().trim()==null ) throw new IllegalArgumentException("no title for artwork");
+//    	if(artworkDto.getArtist().isEmpty()) throw new IllegalArgumentException("no artist for artwork") ;
+//    	if(artworkDto.getWorth()==0) throw new IllegalArgumentException("no worth specified") ;
+//    	
+//    	//must convert set of userDTO into set of Users, find them in the database one by one 
+//    	Set<UserDto> allArtistsDto = artworkDto.getArtist();
+//    	Iterator<UserDto> artistsDto = allArtistsDto.iterator();
+//    	
+//    	Artwork artwork = new Artwork();
+//    	artwork.setTitle(artworkDto.getTitle());
+//    	artwork.setDescription(artworkDto.getDescription());
+//    	artwork.setCreationDate(artworkDto.getCreationDate());
+//    	artwork.setDimensions(artworkDto.getDimensions());
+//    	artwork.setIsOnPremise(artworkDto.isIsOnPremise());
+//    	//TODO might be problematic saving user before saving artwork 
+//    	//now must add users and maintain referential integrity
+//    	while (artistsDto.hasNext()) {
+//    		//for each user
+//    		User user = userRepo.findUserByUsername(((UserDto)artistsDto.next()).getUsername());
+//    		if(user==null) throw new IllegalArgumentException("artist not found");
+//    		user.getArtwork().add(artwork);
+//    		artwork.getArtist().add(user);
+//    		artworkRepo.save(artwork);
+//    		userRepo.save(user);
+//    	}
+//    	return artwork;
+//    	
+//    }
 
     /**
      * service method to create artwork with many artists
@@ -83,18 +83,18 @@ public class ArtworkService {
      * @param usernames
      * @param worth
      * @return
-     * @throws illegalArgumentException
+     * @throws IllegalArgumentException
      */
-    public Artwork createArtwork(String Title, String[] usernames, Double worth) throws illegalArgumentException {
-    	if( Title.trim()==null ) throw new illegalArgumentException("invalid title");
-    	if(usernames == null || usernames.length==0) throw new illegalArgumentException("invalid user") ;
-    	if(worth==null||worth==0) throw new illegalArgumentException("invalid worth") ;
+    public Artwork createArtwork(String Title, String[] usernames, Double worth) throws IllegalArgumentException {
+    	if( Title.trim()==null ) throw new IllegalArgumentException("invalid title");
+    	if(usernames == null || usernames.length==0) throw new IllegalArgumentException("invalid user") ;
+    	if(worth==null||worth==0) throw new IllegalArgumentException("invalid worth") ;
 
     	Artwork artwork = new Artwork();
     	for(int i = 0; i < usernames.length; i++){
     		String name = usernames[i];
     		User user = userRepo.findUserByUsername(name);
-    		if(user==null) throw new illegalArgumentException("invalid user");
+    		if(user==null) throw new IllegalArgumentException("invalid user");
     		artwork.setArtist(new HashSet<>());
     		//Set<User> artists= artwork.getArtist();
             artwork.getArtist().add(user);
