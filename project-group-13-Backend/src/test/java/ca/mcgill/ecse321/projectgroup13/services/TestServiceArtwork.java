@@ -151,7 +151,7 @@ public class TestServiceArtwork {
 				return artwork;
 			});
 			
-			lenient().when(artworkRepo.findArtworkByArtist(USERNAME)).thenAnswer((InvocationOnMock invocation) -> {
+			lenient().when(artworkRepo.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 				User user = new User();
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
@@ -309,7 +309,6 @@ public class TestServiceArtwork {
 		try{
 			
 			test = artworkService.deleteArtwork(artwork);
-		
 		
 		}
 		catch(Exception e) {
