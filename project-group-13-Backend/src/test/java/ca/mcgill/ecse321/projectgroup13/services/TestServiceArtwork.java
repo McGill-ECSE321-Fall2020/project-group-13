@@ -20,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -150,6 +151,33 @@ public class TestServiceArtwork {
 				return artwork;
 			});
 			
+			lenient().when(artworkRepo.findArtworkByArtist(USERNAME)).thenAnswer((InvocationOnMock invocation) -> {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				
+				
+				HashSet<Artwork> set = new HashSet<Artwork>();
+				set.add(artwork);
+				
+				user.setArtwork(set);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				return set;
+			});
+			
+			
 			lenient().when(userRepo.findUserByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 				if(((String)(invocation.getArgument(0))).contentEquals(USERNAME)) {
 					User user = new User();
@@ -274,18 +302,123 @@ public class TestServiceArtwork {
 	 
 	 @Test
 	 public void testDeleteExistingArtwork()  {
+		 User user = new User();
+			
+			Artwork artwork = new Artwork();
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+		try{artworkService.deleteArtwork(artwork);}
+		catch(Exception e) {
+			fail();
+		}
+		
+		
+	 }
+	 @Test
+	 public void testDeleteExistingArtworkByID()  {
+		try{artworkService.deleteArtworkById(ARTWORK_ID);}
+		catch(Exception e) {
+			fail();
+		}
+		
+		
+	 }
+	 @Test
+	 public void testGetArtworkByID()  {
+		 Artwork art = null;
+		art = artworkService.getArtworkByID(ARTWORK_ID);
+		
+		assertNotNull(art);
 		
 		
 	 }
 	 
-	 public static <T> List<T> toList(Iterable<T> iterable) {
-	        List<T> lst = new ArrayList<T>();
-	        for (T t : iterable) {
-	            lst.add(t);
-	        }
-	        
-	        return lst;
-	    }
+	 @Test
+	 public void testGetArtworksOfArtist()  {
+		 Set<Artwork> artworks = null;
+		try{artworks = artworkService.getArtworksOfArtist(USERNAME);}
+		catch(Exception e) {
+			fail();
+		}
+		assertEquals(artworks.iterator().next().getArtworkID(),ARTWORK_ID);
+		
+		
+	 }
+	 @Test
+	 public void testEditCollection()  {
+		
+		try{artworkService.editArtwork_collection(new Artwork(), "McGill");}
+		catch(Exception e) {
+			fail();
+		}
+	 }
+	 @Test
+	 public void testEditDate()  {
+		
+		try{artworkService.editArtwork_creationDate(new Artwork(), "2020-02-02");}
+		catch(Exception e) {
+			fail();
+		}
+	 }
+	 @Test
+	 public void testEditDescription()  {
+		
+		try{artworkService.editArtwork_description(new Artwork(), "very nice paint");}
+		catch(Exception e) {
+			fail();
+		}
+	 }
+	 @Test
+	 public void testEditDimension()  {
+		
+		try{artworkService.editArtwork_dimensions(new Artwork(), "large");}
+		catch(Exception e) {
+			fail();
+		}
+	 }
+	 @Test
+	 public void testEditUrl()  {
+		
+		try{artworkService.editArtwork_imageURL(new Artwork(), "www.notreal.com/d");}
+		catch(Exception e) {
+			fail();
+		}
+	 }
+	 @Test
+	 public void testEditIsOnPremise()  {
+		Artwork art = new Artwork();
+		artworkService.editArtwork_isOnPremise(art,true);
+		assertEquals(art.isIsOnPremise(),true);
+		
+	 }
+	 @Test
+	 public void testEditMedium()  {
+		Artwork art = new Artwork();
+		artworkService.editArtwork_medium(art, "universe dust");
+		assertEquals(art.getMedium(),"universe dust");
+		
+	 }
+	 @Test
+	 public void testEditTitle()  {
+		Artwork art = new Artwork();
+		artworkService.editArtwork_title(art, TITLE);
+		assertEquals(art.getTitle(),TITLE);
+		
+	 }
+	 @Test
+	 public void testEditWorth()  {
+		Artwork art = new Artwork();
+		artworkService.editArtwork_worth(art, 1500.0);
+		assertEquals(art.getWorth(),1500.0);
+	 }
+	 @Test
+	 public void testIsSold() {
+		 Artwork art = new Artwork();
+			artworkService.setArtwork_artworkSold(art);;
+			assertEquals(art.isArtworkSold(),true);
+	 }
+	
 	 
 	 
 	

@@ -149,7 +149,8 @@ public class OrderService {
 		User user = order.getUser();
 		user.getOrder().remove(order);
 		order.setUser(null);
-		paymentRepository.delete(order.getPayment());
+		if (order.getPayment() != null)
+			paymentRepository.delete(order.getPayment());
 		orderRepository.delete(order);
 		
 		return b;

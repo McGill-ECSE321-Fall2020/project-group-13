@@ -602,7 +602,7 @@ public class ProjectGroup13Controller {
 		return convertToDto(art);
 	}
 	//public void deleteArtworkById(int artworkId)
-	@GetMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
+	@DeleteMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
 	public boolean deleteArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		artworkService.deleteArtworkById(id);
 	
