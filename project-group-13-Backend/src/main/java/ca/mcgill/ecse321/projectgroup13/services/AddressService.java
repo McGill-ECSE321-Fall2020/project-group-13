@@ -124,10 +124,7 @@ public class AddressService {
 		Set<Address> addressUserAddresses = addressUser.getAddress();
 		addressUserAddresses.remove(address);
 		addressUser.setAddress(addressUserAddresses);
-		
-		//Deleting from repository
-		addressRepo.delete(address);
-		
+
 		return true;
 	}
 	
