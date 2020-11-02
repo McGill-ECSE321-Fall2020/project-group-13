@@ -160,17 +160,21 @@ public class UserService {
         		orderService.deleteOrder(order);
         }
         if (user.getCart() != null)
-            cartRepository.deleteCartByCartID(cart.getCartID());
-//        for(Artwork artwork: Artworks){
-//            if(artwork.getArtist().size() == 1){
-//
-//                artworkRepository.delete(artwork);
-//            }else{
-//                artwork.getArtist().remove(user);
-//                artworkRepository.save(artwork);
-//            }
-//        }
-        userRepository.deleteUserByUsername(username);
+            cartRepository.delete(cart);
+
+        for(Artwork artwork: Artworks){
+            if(artwork.getArtist().size() == 1){
+                Set<Cart> carts = cartRepository.findCartsByArtwork(artwork);
+                for(Cart c : carts){
+                    cartService.removeFromCart(c, artwork);
+                }
+                artworkRepository.delete(artwork);
+            }else{
+                artwork.getArtist().remove(user);
+                artworkRepository.save(artwork);
+            }
+        }
+        userRepository.delete(user);
     }
 
 

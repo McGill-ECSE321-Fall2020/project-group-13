@@ -133,7 +133,7 @@ public class CartService {
 	public boolean deleteCart(Cart cart) {
 		if (cart == null)
 			throw new IllegalArgumentException("cart cannot be null");
-		
+		cart.setArtwork(null);
 		cart.getUser().setCart(null);
 		cart.setUser(null);
 		return cartRepository.deleteCartByCartID(cart.getCartID());
