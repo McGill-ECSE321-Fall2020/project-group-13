@@ -113,6 +113,52 @@ public class TestServiceShipping {
 			user.setAddress(set);
 			return address;
 		});
+		
+		lenient().when(shipmentRepo.findShipmentByShipmentID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(SHIPMENTID)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Address address = new Address();
+			
+			address.setAddressID(ADDRESS_ID);
+			address.setCity(CITY);
+			address.setCountry(COUNTRY);
+			address.setPostalCode("H4C2C4");
+			address.setUser(user);
+			
+			HashSet<Address> set = new HashSet<Address>();
+			set.add(address);
+			user.setAddress(set);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> sets = new HashSet<Artwork>();
+			sets.add(artwork);
+			
+			user.setArtwork(sets);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Shipment shipment = new Shipment();
+			shipment.setAddress(address);
+			shipment.setOrder(order);
+				
+			return shipment;
+			} else {
+				return null;
+			}
+		});
 		lenient().when(orderRepo.findOrderByOrderID(ORDERID)).thenAnswer((InvocationOnMock invocation) -> {
 			User user = new User();
 			user.setUsername(USERNAME);
@@ -132,56 +178,6 @@ public class TestServiceShipping {
 			return order;
 		});
 		
-		
-
-
-	// 	lenient().when(orderRepo.findOrdersByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
-	// 		Set<Order> orders = new HashSet<Order>();
-	// 		Order order = new Order();
-	// 		Payment payment1 = new Payment();
-	// 		payment1.setPaymentDate(Date.valueOf("2020-01-01"));
-	// 		order.setPayment(payment1);
-	// 		Order order2 = new Order();
-	// 		Payment payment2 = new Payment();
-	// 		payment2.setPaymentDate(Date.valueOf("2020-02-01"));
-	// 		order2.setPayment(payment2);
-	// 		order.setOrderID(111);
-	// 		order2.setOrderID(222);
-	// 		orders.add(order);
-	// 		orders.add(order2);
-	// 		return orders;
-	// 	});
-	// 	lenient().when(orderRepo.findOrderByOrderID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
-	// 		if (invocation.getArgument(0).equals(invalidID)) {
-	// 			return null;
-	// 		} else {
-	// 			return order;
-	// 		}
-			
-	// 	});
-	// 	lenient().when(addressRepo.findAddressByAddressID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
-	// 		if (invocation.getArgument(0).equals(invalidID)) {
-	// 			return null;
-	// 		} else {
-	// 			return address;
-	// 		}
-	// 	});
-	// 	lenient().when(shipmentRepo.findShipmentByOrder(any(Order.class))).thenAnswer((InvocationOnMock invocation) -> {
-	// 		Shipment res = new Shipment();
-	// 		return res;
-	// 	});
-	// 	Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-	// 		return invocation.getArgument(0);
-	// 	};
-		
-	// 	lenient().when(userRepository.save(any(User.class))).thenAnswer(returnParameterAsAnswer);
-    //     lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
-    //     lenient().when(orderRepo.save(any(Order.class))).thenAnswer(returnParameterAsAnswer);
-    //     lenient().when(addressRepo.save(any(Address.class))).thenAnswer(returnParameterAsAnswer);
-    //     lenient().when(shipmentRepo.save(any(Shipment.class))).thenAnswer(returnParameterAsAnswer);
-	// }
-
-
 	}
 	@Test
 	public void testCreateShipmentSuccess() {
@@ -353,7 +349,20 @@ public class TestServiceShipping {
 			
 	 	}
 	 }
-
+	
+	
+	@Test
+	public void testEditShipmentStatus() {
+		Shipment shipment = null;
+	 	try {
+	 		shipment = shipmentService.editShipmentStatus(shipmentRepo.findShipmentByShipmentID(SHIPMENT_ID));   
+	 		shipmentService.editShipmentEstimatedTime(shipment, null);
+	 	}catch (IllegalArgumentException e) {
+	 		error = e.getMessage();
+	 		System.out.print(error);
+	 	}
+	
+	 	assertEquals("estimatedTime cannot be null", error);
 	
 
 }
