@@ -10,21 +10,22 @@ public class OrderDto{
     private int orderID;
     private OrderStatus orderStatus;
     private Set<ArtworkDto> artwork;
+    //private PaymentDto payment;
+    //private ShipmentDto shipment;
     private UserDto user;
-    private PaymentDto payment;
-    private ShipmentDto shipment;
 
     public OrderDto() {
 
     }
 
-    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, PaymentDto payment, ShipmentDto shipment){
+    public OrderDto(int orderID, double totalAmount, OrderStatus orderStatus, Set<ArtworkDto> artwork, UserDto user){
         this.totalAmount = totalAmount;
         this.orderID = orderID;
         this.orderStatus = orderStatus;
         this.artwork = artwork;
-        this.payment = payment;
-        this.shipment = shipment;
+//        this.payment = payment;
+//        this.shipment = shipment;
+        this.user = user;
     }
 
 
@@ -72,18 +73,18 @@ public class OrderDto{
         return totalAmount;
     }
 
-    public PaymentDto getPayment() {
-        return payment;
-    }
+//    public PaymentDto getPayment() {
+//        return payment;
+//    }
 
 //    public void setPayment(Payment payment) {
 //        this.payment = payment;
 //    }
 
 
-    public ShipmentDto getShipment() {
-        return shipment;
-    }
+//    public ShipmentDto getShipment() {
+//        return shipment;
+//    }
 
 //    public void setShipment(Set<Shipment> shipments) {
 //        this.shipment = shipments;

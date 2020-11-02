@@ -65,7 +65,7 @@ public class ProjectGroup13Controller {
 			return null;
 //			throw new IllegalArgumentException("There is no such payment!");
 		}
-		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv());
+		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(), e.getPaymentDate(), e.getPaymentTime(), convertToDto(e.getOrder()));
 		return dto;
 	}
 
@@ -81,9 +81,9 @@ public class ProjectGroup13Controller {
 			artworksDto.add(convertToDto(artwork));
 		}
 
-		ShipmentDto shipmentsDto = convertToDto(order.getShipment());
+//		ShipmentDto shipmentsDto = convertToDto(order.getShipment());
 
-		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getPayment()), shipmentsDto);
+		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getUser()));
 		return dto;
 	}
 
@@ -111,22 +111,7 @@ public class ProjectGroup13Controller {
 //			throw new IllegalArgumentException("There is no such user!");
 		}
 
-		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
-		for (Artwork artwork : user.getArtwork()) {
-			artworksDto.add(convertToDto(artwork));
-		}
-
-		Set<AddressDto> addressDtos = new HashSet<AddressDto>();
-		for (Address address : user.getAddress()) {
-			addressDtos.add(convertToDto(address));
-		}
-
-		Set<OrderDto> ordersDto = new HashSet<OrderDto>();
-		for (Order order : user.getOrder()) {
-			ordersDto.add(convertToDto(order));
-		}
-
-		UserDto dto = new UserDto(convertToDto(user.getCart()), artworksDto, user.getBio(), addressDtos, ordersDto ,user.getUsername(), user.getEmail(), user.getProfilePictureURL());
+		UserDto dto = new UserDto(user.getUsername(), user.getEmail(), user.getBio(), user.getProfilePictureURL());
 		return dto;
 	}
 
@@ -159,7 +144,7 @@ public class ProjectGroup13Controller {
 			//throw new IllegalArgumentException("There is no such address!");
 			return null;
 		}
-		AddressDto dto = new AddressDto(address.getAddressID(), address.getUser().getUsername(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode());
+		AddressDto dto = new AddressDto(address.getAddressID(), address.getUser().getUsername(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode(), convertToDto(address.getUser()));
 		return dto;
 	}
 

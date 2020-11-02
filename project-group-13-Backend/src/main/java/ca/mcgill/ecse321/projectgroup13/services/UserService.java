@@ -44,7 +44,7 @@ public class UserService {
 
     /**
      * service method to create a new user
-     * @param userDto
+     * @param
      * @return user
      * @throws RegistrationException
      */
@@ -82,9 +82,9 @@ public class UserService {
         //checking if email syntax is valid
         //TODO: validate email
 
-        if(checkIfValidEmail(email) || userRepository.findUserByEmail(email) != null) {
-            throw new RegistrationException("invalid email");
-        }
+//        if(checkIfValidEmail(email) || userRepository.findUserByEmail(email) != null) {
+//            throw new RegistrationException("invalid email");
+//        }
 
         //if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
         //ALL CONDITIONS HAVE PASSED
@@ -178,13 +178,6 @@ public class UserService {
         userRepository.save(user);
     }
     
-    @Transactional
-    public UserDto getInfo(String username) {
-    	User user = userRepository.findUserByUsername(username);
-    	if(user == null) return null;
-    	return convertToDto(user);
-    }
-    
    // @Transactional
     //public void editPassword(String username, )
 
@@ -259,106 +252,4 @@ public class UserService {
     	 return pattern.matcher(email).matches();
 
     }
-    private PaymentDto convertToDto(Payment e) {
-		if (e == null) {
-			return null;
-//			throw new IllegalArgumentException("There is no such payment!");
-		}
-		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv());
-		return dto;
-	}
-
-
-	private OrderDto convertToDto(Order order) {
-		if (order == null) {
-			return null;
-		//throw new IllegalArgumentException("There is no such order!");
-		}
-
-		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
-		for (Artwork artwork : order.getArtwork()) {
-			artworksDto.add(convertToDto(artwork));
-		}
-
-		ShipmentDto shipmentsDto = convertToDto(order.getShipment());
-
-		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getPayment()), shipmentsDto);
-		return dto;
-	}
-
-
-	private ArtworkDto convertToDto(Artwork artwork) {
-		if (artwork == null) {
-			return null;
-//			throw new IllegalArgumentException("There is no such artwork!");
-		}
-
-		Set<UserDto> artists = new HashSet<UserDto>();
-		for (User artist : artwork.getArtist()) {
-			artists.add(convertToDto(artist));
-		}
-
-		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(),  convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
-		return dto;
-	}
-
-
-
-	private UserDto convertToDto(User user) {
-		if (user == null) {
-			return null;
-//			throw new IllegalArgumentException("There is no such user!");
-		}
-
-		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
-		for (Artwork artwork : user.getArtwork()) {
-			artworksDto.add(convertToDto(artwork));
-		}
-
-		Set<AddressDto> addressDtos = new HashSet<AddressDto>();
-		for (Address address : user.getAddress()) {
-			addressDtos.add(convertToDto(address));
-		}
-
-		Set<OrderDto> ordersDto = new HashSet<OrderDto>();
-		for (Order order : user.getOrder()) {
-			ordersDto.add(convertToDto(order));
-		}
-
-		UserDto dto = new UserDto(convertToDto(user.getCart()), artworksDto, user.getBio(), addressDtos, ordersDto ,user.getUsername(), user.getEmail(), user.getProfilePictureURL());
-		return dto;
-	}
-
-
-	private CartDto convertToDto(Cart cart) {
-		if (cart == null) {
-			return null;
-		}
-
-		Set<ArtworkDto> artworksDto = new HashSet<ArtworkDto>();
-		for (Artwork artwork : cart.getArtwork()) {
-			artworksDto.add(convertToDto(artwork));
-		}
-
-		CartDto dto = new CartDto(cart.getCartID(), cart.getTotalCost(), artworksDto);
-		return dto;
-	}
-
-
-	private ShipmentDto convertToDto(Shipment shipment) {
-		if (shipment == null) {
-			return null;
-		}
-		ShipmentDto dto = new ShipmentDto(shipment.getShipmentID(), shipment.getShipmentInfo(), shipment.getEstimatedDateOfArrival(), shipment.getEstimatedTimeOfArrival(), convertToDto(shipment.getAddress()));
-		return dto;
-	}
-
-	private AddressDto convertToDto(Address address) {
-		if (address == null) {
-			//throw new IllegalArgumentException("There is no such address!");
-			return null;
-		}
-		AddressDto dto = new AddressDto(address.getAddressID(), address.getUser().getUsername(), address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode());
-		return dto;
-	}
 }
