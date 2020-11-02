@@ -182,12 +182,13 @@ public class ShipmentService {
      * @return
      */
     @Transactional
-    public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime){
-        if (shipment == null) 														//must check parameter is not null
+    public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime) throws IllegalArgumentException {
+        if (shipment == null) {														//must check parameter is not null
             throw new IllegalArgumentException("shipment cannot be null");
-        if (estimatedTime == null) 														//must check parameter is not null
+        }
+        if (estimatedTime == null) {					//must check parameter is not null
             throw new IllegalArgumentException("estimatedTime cannot be null");
-
+        }
         shipment.setEstimatedTimeOfArrival(estimatedTime);
         shipmentRepo.save(shipment);
         return shipment;
