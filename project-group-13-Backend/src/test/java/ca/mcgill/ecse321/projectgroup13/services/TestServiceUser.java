@@ -150,7 +150,7 @@ public class TestServiceUser {
 		String email = "jokesOnYou";
 		User newUser = null; 
 		try {
-			newUser = userService.createUser(USERNAME2,email,USER_PASSWORD2);
+			newUser = userService.createUser("ANOTHERTEST",email,USER_PASSWORD2);
 		} catch (RegistrationException e) {
 			assertNull(newUser);
 			assertEquals("invalid email", e.getMessage());
@@ -159,6 +159,7 @@ public class TestServiceUser {
 	@Test
 	public void testDeleteUser() {
 		User user = null;
+		error = null;
 		try {
 			
 			userService.deleteUser(USERNAME);
@@ -166,13 +167,19 @@ public class TestServiceUser {
 			error = e.getMessage();
 			System.out.println(error);
 		}
-		assertEquals(error,"");		
+		assertEquals(error,null);		
 		
 	}
 	@Test
 	public void testGetUserByNullUsername() {
-		
-		assertNull(userService.getUserByUsername(null));	
+		User user = null;
+		try {
+			user = userService.getUserByUsername(null);
+		}catch (Exception e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "invalid username");
+		assertNull(user);
 	}
 	@Test
 	public void testEditEmail() {
