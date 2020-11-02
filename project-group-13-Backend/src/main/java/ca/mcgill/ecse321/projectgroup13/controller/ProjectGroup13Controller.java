@@ -94,12 +94,7 @@ public class ProjectGroup13Controller {
 //			throw new IllegalArgumentException("There is no such artwork!");
 		}
 
-//		Set<UserDto> artists = new HashSet<UserDto>();
-//		for (User artist : artwork.getArtist()) {
-//			artists.add(convertToDto(artist));
-//		}
-
-		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
+		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
 		return dto;
 	}
 

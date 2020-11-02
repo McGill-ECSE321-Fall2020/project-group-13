@@ -15,10 +15,7 @@ public class ShipmentDto {
     private ShipmentStatus shipmentInfo;
     private Date estimatedDateOfArrival;
     private Time estimatedTimeOfArrival;
-    private OrderDto order;
     private AddressDto address;
-    private boolean shipmentMethodIsDelivery;
-
 
 
     public ShipmentDto(){
@@ -42,25 +39,11 @@ public class ShipmentDto {
         return this.shipmentInfo;
     }
 
-    public void setShipmentMethodIsDelivery(boolean value) {
-        this.shipmentMethodIsDelivery = value;
-    }
-
-    public boolean isShipmentMethodIsDelivery() {
-        return this.shipmentMethodIsDelivery;
-    }
 
     public Integer getShipmentID() {
         return this.shipmentID;
     }
 
-    public OrderDto getOrder() {
-        return this.order;
-    }
-
-    public void setOrder(OrderDto order) {
-        this.order = order;
-    }
 
     public AddressDto getAddress() {
         return this.address;
