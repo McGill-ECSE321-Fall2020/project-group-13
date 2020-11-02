@@ -75,14 +75,14 @@ currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/order/$orderI
 printf "$currentLine\n"
 
 
-: '
+
 #create payment and store paymentId
 printf "%s\n" "${blue}create payment and store paymentId${normal}"
 currentLine=$(curl -s -H "Content-Type: application/json" --data @payment.json -X POST "http://localhost:8080/order/$orderID/pay")
 printf "$currentLine\n"
 paymentID=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
-
+: '
 #get payment from ID
 printf "%s\n" "${blue}get payment from ID${normal}"
 currentLine=$(curl -s -X GET "http://localhost:8080/payments/$paymentID")

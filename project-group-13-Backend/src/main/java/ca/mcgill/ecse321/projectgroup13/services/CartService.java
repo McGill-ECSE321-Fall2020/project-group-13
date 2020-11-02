@@ -122,7 +122,12 @@ public class CartService {
 	public boolean deleteCart(int cartID) {
 		User user = cartRepository.findCartByCartID(cartID).getUser();
 		user.setCart(null);
-		return cartRepository.deleteCartByCartID(cartID);
+		try{
+			cartRepository.delete(cartRepository.findCartByCartID(cartID));
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 	
 	/**
@@ -136,8 +141,12 @@ public class CartService {
 		cart.setArtwork(null);
 		cart.getUser().setCart(null);
 		cart.setUser(null);
-		cartRepository.delete(cart);
-		return true;
+		try{
+			cartRepository.delete(cart);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 	
 	/**
