@@ -85,6 +85,8 @@ public class TestServiceShipping {
 	private static final Integer ADDRESS_ID= 111;
 
 	private static final Integer SHIPMENTID = 200;
+	
+	private static String error = null;
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
