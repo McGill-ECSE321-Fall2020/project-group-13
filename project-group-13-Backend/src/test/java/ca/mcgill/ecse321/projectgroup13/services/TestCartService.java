@@ -515,7 +515,7 @@ public void testInvalidArtworkAddSetValid() {
 		}
 		
 		assertEquals(error, null);
-		assertEquals(removed, set);
+		assertTrue(removed.equals(set));
 		
 	}
 	
