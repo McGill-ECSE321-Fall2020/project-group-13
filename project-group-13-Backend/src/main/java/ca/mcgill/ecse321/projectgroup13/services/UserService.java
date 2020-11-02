@@ -145,7 +145,8 @@ public class UserService {
         	if (order.getOrderStatus().equals(OrderStatus.PaymentPending))
         		orderService.deleteOrder(order);
         }
-        cartRepository.delete(cart);
+        if (user.getCart() != null)
+            cartRepository.delete(cart);
         userRepository.delete(user);
     }
 
