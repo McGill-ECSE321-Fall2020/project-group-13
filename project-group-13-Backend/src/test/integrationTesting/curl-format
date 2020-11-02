@@ -1,0 +1,17 @@
+#!/bin/bash
+
+blue=$(tput setaf 4)
+normal=$(tput sgr0)
+yellow=$(tput setaf 3)
+red=$(tput setaf 1)
+powder_blue=$(tput setaf 153)
+
+if [[ ! -z "$1" ]]
+then
+currentLine=$(curl -i -s -X $2 "$3")
+statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
+printf "%s\n" "${blue}$1${normal} ${powder_blue}RETURN STATUS CODE: [${yellow}$statusCode${powder_blue}]${normal}"
+currentLine=$(echo  "$currentLine" | grep -o "{.*")
+printf "$currentLine\n"
+fi
+
