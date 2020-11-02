@@ -159,15 +159,15 @@ public class UserService {
         		orderService.deleteOrder(order);
         }
         if (user.getCart() != null)
-            cartRepository.delete(cart);
-        userRepository.delete(user);
+            cartRepository.deleteCartByCartID(cart.getCartID());
+        userRepository.deleteUserByUsername(username);
     }
 
 
     @Transactional
     public User getUserByUsername(String username){
-        if(username ==null) throw new IllegalArgumentException("invalid username");
         User user = userRepository.findUserByUsername(username);
+        if(user ==null) throw new IllegalArgumentException("invalid username");
         return user;
     }
 
@@ -277,16 +277,6 @@ public class UserService {
 
 
     //*************** HELPER METHODS ***************//
-    
-    //iterable to list
-    public <T> List<T> toList(Iterable<T> iterable) {
-        List<T> lst = new ArrayList<T>();
-        for (T t : iterable) {
-            lst.add(t);
-        }
-        
-        return lst;
-    }
 
     /*
      * Checks for a valid email using regex from
