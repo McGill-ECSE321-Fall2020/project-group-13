@@ -424,16 +424,6 @@ public void testInvalidArtworkAddSetValid() {
 	assertNull(cart);
 }
 	
-	@Test
-	public void testAddMultipleValid() {
-		
-	}
-	
-	@Test
-	public void testRemoveMultipleInvalid() {
-		
-		
-	}
 	
 	@Test
 	public void testGetCart() {
