@@ -234,7 +234,7 @@ public class TestServiceUser {
 			error = e.getMessage();
 			System.out.println(error);
 		}
-		assertEquals(userService.getInfo(USERNAME).getBio(),bio);
+		assertEquals(userService.getUserByUsername(USERNAME).getBio(),bio);
 		
 	}
 	@Test
@@ -247,7 +247,7 @@ public class TestServiceUser {
 			error = e.getMessage();
 			System.out.println(error);
 		}
-		assertEquals(userService.getInfo(USERNAME).getProfilePictureURL(),url);
+		assertEquals(userService.getUserByUsername(USERNAME).getProfilePictureURL(),url);
 		
 	}
 	@Test

@@ -190,7 +190,7 @@ public class TestServiceArtwork {
 		 try {
 			 Artwork artwork=artworkService.createArtwork(artworkDto);
 			 checker = artworkRepository.findArtworkByArtworkID(ARTWORKID);
-		 } catch (illegalArgumentException e) {
+		 } catch (IllegalArgumentException e) {
 			 assertNull(checker);
 		 }
 		 

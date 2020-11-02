@@ -207,12 +207,7 @@ public class UserService {
         userRepository.save(user);
     }
     
-    @Transactional
-    public UserDto getInfo(String username) {
-    	User user = userRepository.findUserByUsername(username);
-    	if(user == null) return null;
-    	return convertToDto(user);
-    }
+    
     
    // @Transactional
     //public void editPassword(String username, )
