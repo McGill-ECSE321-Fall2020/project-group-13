@@ -175,7 +175,7 @@ public class ProjectGroup13Controller {
 
 	//edit user
 	@PutMapping(value = {"/user/{username}/edit" , "/user/{username}/edit/"})
-	public void editEmail(@PathVariable("username") String username, @RequestBody User user) {
+	public void editUser(@PathVariable("username") String username, @RequestBody User user) {
 		try{
 			userService.editEmail(username, user.getEmail());
 			userService.editBio(username, user.getBio());
