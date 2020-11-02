@@ -114,7 +114,6 @@ public class TestServiceUser {
 	
 	@Test
 	public void testCreateWithInvalidUsername() {
-
 		User newUser = null; 
 		try {
 			newUser = userService.createUser(USERNAME,USER_PASSWORD2,USER_EMAIL2);

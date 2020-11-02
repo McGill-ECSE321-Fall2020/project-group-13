@@ -196,11 +196,13 @@ public class ProjectGroup13Controller {
 		System.out.println(order);
 		Payment p = paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId);
 		
-		try { orderService.addPaymentToOrder(order, p);}
+		try {
+			orderService.addPaymentToOrder(order, p);
+			cartService.deleteCart(order.getUser().getCart());
+		}
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
-			//TODO: Maybe return null?
 		}
 		PaymentDto paymentDto = convertToDto(p);
 		return paymentDto;
@@ -252,7 +254,9 @@ public class ProjectGroup13Controller {
 	@PostMapping(value = { "/user/{username}/new/order", "/user/{username}/new/order/" })
 	public OrderDto createOrder(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
+		Set<Artwork> artworks = user.getCart().getArtwork();
 		Order order = orderService.createOrder(user);
+		order.setArtwork(artworks);
 		OrderDto orderDto = convertToDto(order);
 		return orderDto;
 	}
@@ -267,10 +271,6 @@ public class ProjectGroup13Controller {
 			System.out.println("NOPE " + e.toString());
 		}
 	}
-
-
-	
-	//public Order createOrder(User user, Set<Artwork> art)
 
 
 	//public List<Order> getOrdersFromUser(User user)
@@ -307,6 +307,7 @@ public class ProjectGroup13Controller {
 		}
 		return convertToDto(order);
 	}
+
 	
 	//public boolean deleteOrder(Order order)
 	@DeleteMapping(value = { "/user/{username}/delete/order/{orderId}", "/user/{username}/delete/order/{orderId}/" })
@@ -326,48 +327,8 @@ public class ProjectGroup13Controller {
 		
 		return orderService.deleteOrder(order);
 	}
-	
-	//public boolean removeFromOrder(Order order, Artwork art)
-	@PutMapping(value = { "/user/{username}/edit-/order/{orderId}", "/user/{username}/edit-/order/{orderId}/" })
-	public boolean removeFromOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId){
-		Order order = null;
-		User user = userService.getUserByUsername(username);
-		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
-			if (o.getOrderID()==id) {
-				order = o;
-				break;
-			}
-		}
-		
-		if (order == null)
-			return false;
-		
-		Artwork art = artworkService.getArtworkByID(artId);
-		return orderService.removeFromOrder(order, art);
-	}
-	
-	//public boolean addToOrder(Order order, Artwork art)
-	@PutMapping(value = { "/user/{username}/edit+/order/{orderId}", "/user/{username}/edit+/order/{orderId}/" })
-	public boolean addToOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id, @RequestParam(name="artid") Integer artId) {
-		Order order = null;
-		User user = userService.getUserByUsername(username);
-		for(Order o: orderService.getOrdersFromUser(user)){		//cannot get order with only the orderId, also need to userId
-			if (o.getOrderID()==id) {
-				order = o;
-				break;
-			}
-		}
-		
-		if (order == null)
-			return false;
-		
-		Artwork art = artworkService.getArtworkByID(artId);
-		return orderService.addToOrder(order, art);
-	}
-	
-	//TODO: Are these two methods necessary? If so, how do we implement their RESTful service controller methods?
-	//public boolean removeFromOrder(Order order, Set<Artwork> art)
-	//public boolean addToOrder(Order order, Set<Artwork> art)
+
+
 	
 	
 	
@@ -534,14 +495,11 @@ public class ProjectGroup13Controller {
 		Cart cart;
 		if(user.getCart() == null){			//if no cart existed
 			cart = cartService.createCart(user);
-			cart.setArtwork(new HashSet<Artwork>());
-			Set<Artwork> artworks = cart.getArtwork();
-			artworks.add(artwork);
-			cart.setArtwork(artworks);
+			cartService.addToCart(cart, artwork);
 			CartDto cartDto = convertToDto(cart);
 		}else{								//if there was already a cart
 			cart = user.getCart();
-			cart.getArtwork().add(artwork);
+			cartService.addToCart(cart, artwork);
 		}
 		return convertToDto(cart);
 	}
