@@ -126,13 +126,12 @@ public class ArtworkService {
      */
     @Transactional
     public Boolean deleteArtwork(Artwork artwork){
-    	User user = null;
-    	while(artwork.getArtist().iterator().hasNext()) {
-            user = artwork.getArtist().iterator().next();
-            Set<Artwork> artworks = user.getArtwork();
+        Set<User> artists = artwork.getArtist();
+        for(User artist : artists){
+            Set<Artwork> artworks = artist.getArtwork();
             artworks.remove(artwork);
-            user.setArtwork(artworks);
-		}
+            artist.setArtwork(artworks);
+        }
         Set<Cart> carts = cartRepo.findCartsByArtwork(artwork);
         for(Cart c : carts){
             cartService.removeFromCart(c, artwork);

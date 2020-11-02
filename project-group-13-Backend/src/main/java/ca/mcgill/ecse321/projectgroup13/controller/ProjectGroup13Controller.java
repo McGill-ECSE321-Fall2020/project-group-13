@@ -626,6 +626,7 @@ public class ProjectGroup13Controller {
 	@DeleteMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
 	public boolean deleteArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		Artwork artwork = artworkService.getArtworkByID(id);
+		System.out.println(artwork.getTitle());
 		try{
 			artworkService.deleteArtwork(artwork);
 			return true;
