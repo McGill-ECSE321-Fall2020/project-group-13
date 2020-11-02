@@ -110,7 +110,7 @@ public class CartService {
 	public Cart getCartFromUser(User user) {
 		if (user == null)
 			throw new IllegalArgumentException("invalid user");
-		return cartRepository.findCartByUser(user);
+		return cartRepository.findCartByUserUsername(user.getUsername());
 	}
 	
 	/**

@@ -12,4 +12,5 @@ public interface CartRepository extends CrudRepository<Cart, Long>{
     Cart findCartByCartID(Integer cartID);
     Set<Cart> findCartsByArtwork(Artwork artwork);
     boolean deleteCartByCartID(Integer cartID);
+	Cart findCartByUserUsername(String username);
 }
