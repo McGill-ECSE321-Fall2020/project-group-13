@@ -17,13 +17,7 @@ import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
 
 @Service
 public class PaymentService {
-	public <T> List<T> toList(Iterable<T> iterable) {
-        List<T> resultList = new ArrayList<T>();
-        for (T t : iterable) {
-            resultList.add(t);
-        }
-        return resultList;
-    }
+	
 
     //IMPORT REPOSITORIES ---> private UserRepository userRepository;
     @Autowired
@@ -83,8 +77,7 @@ public class PaymentService {
 	
 	@Transactional
 	public List<Payment> getPaymentsForCustomer(User user){
-		if (user == null)
-			throw new IllegalArgumentException("user cannot be null");
+		
 		
 		List<Payment> result = new ArrayList<Payment>();
 		for (Order order:orderRepo.findOrdersByUser(user)) {
@@ -95,8 +88,6 @@ public class PaymentService {
 	
 	@Transactional
 	public List<Payment> getPaymentsForArtist(User user){
-		if (user == null)
-			throw new IllegalArgumentException("user cannot be null");
 		
 		List<Payment> result = new ArrayList<Payment>();
 		for (Artwork art:artworkRepository.findByArtist(user)) {
