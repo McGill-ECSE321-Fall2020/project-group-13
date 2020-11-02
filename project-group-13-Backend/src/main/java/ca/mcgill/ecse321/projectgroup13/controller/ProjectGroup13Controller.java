@@ -173,8 +173,14 @@ public class ProjectGroup13Controller {
 
 	//delete a user from db
 	@DeleteMapping(value = {"/user/{username}/delete" , "/user/{username}/delete/"})
-	public void deleteUser(@PathVariable("username") String username) throws RegistrationException{
-		userService.deleteUser(username);
+	public boolean deleteUser(@PathVariable("username") String username) throws RegistrationException{
+		try{
+			userService.deleteUser(username);
+			return true;
+		}catch(Exception e){
+			System.out.println(e.toString());
+			return false;
+		}
 	}
 
 
