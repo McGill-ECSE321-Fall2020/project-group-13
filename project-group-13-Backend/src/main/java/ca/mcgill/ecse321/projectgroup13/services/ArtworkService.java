@@ -141,17 +141,6 @@ public class ArtworkService {
     }
 
 
-    //TODO: maybe delete this method - not used
-    /**
-     * service method to delete given artwork from database
-     * @param artworkId
-     */
-    @Transactional
-    public void deleteArtworkById(int artworkId){
-        artworkRepo.deleteArtworkByArtworkID(artworkId);
-    }
-
-
     /**
      * service method to return artwork given ID
      * @param artworkID
