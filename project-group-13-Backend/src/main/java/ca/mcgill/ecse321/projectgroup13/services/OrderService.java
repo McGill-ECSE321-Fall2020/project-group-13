@@ -44,10 +44,24 @@ public class OrderService {
 			throw new IllegalArgumentException("set<artwork> cannot be null");	//must check parameter is not null
 		
 		Order newOrder = new Order();
+		
+		Set<Artwork> artworks = new HashSet<Artwork>();
+		for (Artwork a : art) {
+			artworks.add(a);
+			a.setOrder(newOrder);
+		}
+		
 		newOrder.setOrderStatus(OrderStatus.PaymentPending);
+		
 		newOrder.setUser(user);
-		newOrder.setArtwork(art);
+		newOrder.setArtwork(artworks);
+		
+		for (Artwork a : newOrder.getArtwork()) {
+			
+		}
+		
 		updateTotal(newOrder);
+		
 		newOrder = orderRepository.save(newOrder);
 		return newOrder;
 	}
@@ -67,7 +81,7 @@ public class OrderService {
 		newOrder.setOrderStatus(OrderStatus.PaymentPending);
 		newOrder.setUser(user);
 		newOrder.setArtwork(new HashSet<Artwork>());
-		newOrder.setTotalAmount(0);
+		updateTotal(newOrder);
 		newOrder = orderRepository.save(newOrder);
 		return newOrder;
 	}

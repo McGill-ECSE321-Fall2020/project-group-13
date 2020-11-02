@@ -25,6 +25,7 @@ import static org.mockito.Mockito.lenient;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashSet;
 
 @ExtendWith(MockitoExtension.class)
 public class TestServiceUser {
@@ -36,6 +37,13 @@ public class TestServiceUser {
 	private static final String USERNAME2 = "person2";
 	private static final String USER_PASSWORD2= "Thatgirl123#";
 	private static final String USER_EMAIL2= "person2@gmail.com";
+	private static final Integer ARTWORK_ID= 1234;
+	private static final Integer ORDERID= 999;
+	private static final Integer ADDRESS_ID= 111;
+	private static Integer CART_ID = 12342;
+	private static final String COUNTRY= "CANADA";
+	private static final String CITY= "MONTREAL";
+	private static final Integer SHIPMENTID = 200;
 	private String error = "";
 	private boolean success = false;
 	@Mock
@@ -44,9 +52,24 @@ public class TestServiceUser {
 	@Mock
 	private ArtworkRepository artworkRepository;
 	
+	@Mock
+	private AddressRepository addressRepository;
+	
+	@Mock
+	private ShipmentRepository shipmentRepository;
+	
+	
+	@Mock
+	private CartRepository cartRepo;
+	
 	@InjectMocks
 	private UserService userService;
 	
+	@InjectMocks
+	private OrderService orderService; 
+	
+	@InjectMocks
+	private AddressService addressService; 
 	
 	@BeforeEach
 	public void setMockOutput() {
@@ -57,6 +80,41 @@ public class TestServiceUser {
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
 				user.setPassword(USER_PASSWORD);
+				
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork);
+				
+				user.setArtwork(sets);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
 				return user;
 			} else if (invocation.getArgument(0).equals(USERNAME2)){
 				User user = new User();
@@ -86,12 +144,231 @@ public class TestServiceUser {
 			}
 				
 		});
+
+		lenient().when(cartRepo.findCartByCartID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(CART_ID)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> set = new HashSet<Artwork>();
+			set.add(artwork);
+			
+			user.setArtwork(set);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Cart cart = new Cart();
+			cart.setCartID(CART_ID);
+			
+			cart.setUser(user);
+			cart.setArtwork(set);
+			
+			return cart;
+			} else {
+				return null;
+			}
+		});
+		
+		lenient().when(shipmentRepository.findShipmentByShipmentID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(SHIPMENTID)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Address address = new Address();
+			
+			address.setAddressID(ADDRESS_ID);
+			address.setCity(CITY);
+			address.setCountry(COUNTRY);
+			address.setPostalCode("H4C2C4");
+			address.setUser(user);
+			
+			HashSet<Address> set = new HashSet<Address>();
+			set.add(address);
+			user.setAddress(set);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> sets = new HashSet<Artwork>();
+			sets.add(artwork);
+			
+			user.setArtwork(sets);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Shipment shipment = new Shipment();
+			shipment.setAddress(address);
+			shipment.setOrder(order);
+			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+			return shipment;
+			} else {
+				return null;
+			}
+		});
+			
+			lenient().when(addressRepository.findAddressByAddressID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+				if (invocation.getArgument(0).equals(SHIPMENTID)) {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork);
+				
+				user.setArtwork(sets);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+				return address;
+				} else {
+					return null;
+				}
+			
+			
+		});
+		
+		
+		lenient().when(artworkRepository.findArtworkByArtworkID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(ARTWORK_ID)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Address address = new Address();
+			
+			address.setAddressID(ADDRESS_ID);
+			address.setCity(CITY);
+			address.setCountry(COUNTRY);
+			address.setPostalCode("H4C2C4");
+			address.setUser(user);
+			
+			HashSet<Address> set = new HashSet<Address>();
+			set.add(address);
+			user.setAddress(set);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> sets = new HashSet<Artwork>();
+			sets.add(artwork);
+			
+			user.setArtwork(sets);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Shipment shipment = new Shipment();
+			shipment.setAddress(address);
+			shipment.setOrder(order);
+			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+			return artwork;
+			} else {
+				return null;
+			}
+		});
+		
+		lenient().when(cartRepo.deleteCartByCartID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(CART_ID)) {
+			return true;
+			} else {
+				return false;
+			}
+		});
+		
+		lenient().when(userRepository.deleteUserByUsername(any(String.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(USERNAME)) {
+			return true;
+			} else {
+				return false;
+			}
+		});
+//		lenient().when(addressService.deleteAddress(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+//			if (invocation.getArgument(0).equals(ADDRESS_ID)) {
+//			return true;
+//			} else {
+//				return false;
+//			}
+//		});
+		
+		
+		
+//		
+//		lenient().when(shipmentRepository.deleteShipmentByShipmentID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+//			if (invocation.getArgument(0).equals(USERNAME)) {
+//			return true;
+//			} else {
+//				return false;
+//			}
+//		});
+		
+		
 		
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
 		
 		lenient().when(userRepository.save(any(User.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
+//        lenient().when(userRepository.deleteUserByUsername(any(String.class))).thenAnswer(returnParameterAsAnswer);
+//        lenient().when(cartRepo.deleteCartByCartID(any(Integer.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(artworkRepository.save(any(Artwork.class))).thenAnswer(returnParameterAsAnswer);
       
         
@@ -110,6 +387,8 @@ public class TestServiceUser {
 		assertEquals(newUser.getUsername(), "DOGGYTHEDOUG");
 		assertEquals(newUser.getPassword(), USER_PASSWORD2);
 	}
+	
+	
 	
 	
 	@Test
@@ -158,7 +437,6 @@ public class TestServiceUser {
 	}
 	@Test
 	public void testDeleteUser() {
-		User user = null;
 		error = null;
 		try {
 			
@@ -170,6 +448,22 @@ public class TestServiceUser {
 		assertEquals(error,null);		
 		
 	}
+	
+	@Test
+	public void testDeleteNullUser() {
+		error = null;
+		try {
+			
+			userService.deleteUser("NotIExist");
+		}catch (Exception e) {
+			error = e.getMessage();
+			System.out.println(error);
+		}
+		assertEquals(error,"User does not exist");		
+		
+	}
+	
+	
 	@Test
 	public void testGetUserByNullUsername() {
 		User user = null;
@@ -314,40 +608,37 @@ public class TestServiceUser {
 	}
 	
 	@Test
-	public void testChangePasswordToEmpty() {
-		
-		
-	}
-	
-	@Test
-	public void testResetPasswordGenerated() {
-		
-		
-	}
-	
-	@Test
-	public void testPasswordNoNumber() {
-		
+	public void testGetUserByUsername() {
+		String error= null;
+		User user = null;
+		try {
+			user = userService.getUserByUsername(USERNAME);
+		}catch (Exception e) {
+			error = e.getMessage();
+			System.out.println(error);
+		}
+		assertEquals(error,null);
+		assertNotNull(user);
+		assertEquals(user.getUsername(),USERNAME);
 		
 	}
 	
+	
 	@Test
-	public void testPasswordNoAlphabet() {
-		
+	public void testInvalidGetUserByUsername() {
+		String error= null;
+		User user = null;
+		try {
+			user = userService.getUserByUsername("DONTEXIST");
+		}catch (Exception e) {
+			error = e.getMessage();
+			System.out.println(error);
+		}
+		assertEquals(error,"invalid username");
+		assertNull(user);
 		
 	}
 	
-	@Test
-	public void testDeleteInvalidUser() {
-		
-		
-	}
-	
-	@Test
-	public void testEditDescription() {
-		
-		
-	}
 		
 		
 	

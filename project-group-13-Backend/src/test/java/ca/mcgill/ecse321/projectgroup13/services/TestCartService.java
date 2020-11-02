@@ -32,7 +32,7 @@ public class TestCartService {
 	private static final String USERNAME2 = "person2";
 	private static final String USER_PASSWORD2= "Thatgirl123#";
 	private static final String USER_EMAIL2= "person2@gmail.com";
-	private Integer CART_ID = 12342;
+	private static Integer CART_ID = 12342;
 	private boolean success = false;
 	private static final String ARTWORK_TITLE= "BEAUTY";
 	private static final String COUNTRY= "CANADA";

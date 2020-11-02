@@ -269,8 +269,15 @@ public class ProjectGroup13Controller {
 	public OrderDto createOrder(@PathVariable String username){
 		User user = userService.getUserByUsername(username);
 		Set<Artwork> artworks = user.getCart().getArtwork();
-		Order order = orderService.createOrder(user);
-		order.setArtwork(artworks);
+		
+		Order order = null;
+		try {
+			order = orderService.createOrder(user, artworks);
+		}
+		catch (Exception e) {
+			System.out.println("exception is: " + e.toString());
+		}
+
 		OrderDto orderDto = convertToDto(order);
 		return orderDto;
 	}

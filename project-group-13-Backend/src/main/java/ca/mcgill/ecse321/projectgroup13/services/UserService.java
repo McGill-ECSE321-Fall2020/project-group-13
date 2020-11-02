@@ -106,7 +106,7 @@ public class UserService {
 //            throw new RegistrationException("invalid email");
 //        }
 
-        //if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
+        if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
         //ALL CONDITIONS HAVE PASSED
         user.setUsername(username);
         user.setEmail(email);
@@ -137,19 +137,20 @@ public class UserService {
 
     /**
      * service method to delete a certain user from Database
+     * if user doesn't have artworks to his name, just delete
+     * else, remove user from list of artists
+     * if user is the only artist, delete artwork too
      * @param username
      * @throws RegistrationException
      */
-    //TODO make sure it checks that its admin
     @Transactional
     public void deleteUser(String username) throws RegistrationException {
-    	//TODO: must ensure that objects associated with user get deleted (cart, order, address)
         User user = userRepository.findUserByUsername(username);
         if(user==null) throw new RegistrationException("User does not exist");
         Set<Address> userAddresses = user.getAddress();
         Cart cart = user.getCart();
         Set<Order> orders = user.getOrder();
-        Set<Artwork> Artwork = artworkRepository.findArtworkByArtist(user.getUsername());
+        Set<Artwork> Artworks = artworkRepository.findArtworkByArtist(user);
         while(userAddresses.iterator().hasNext()) {
         	addressService.deleteAddress(userAddresses.iterator().next().getAddressID());
         }
@@ -159,15 +160,24 @@ public class UserService {
         		orderService.deleteOrder(order);
         }
         if (user.getCart() != null)
-            cartRepository.delete(cart);
-        userRepository.delete(user);
+            cartRepository.deleteCartByCartID(cart.getCartID());
+//        for(Artwork artwork: Artworks){
+//            if(artwork.getArtist().size() == 1){
+//
+//                artworkRepository.delete(artwork);
+//            }else{
+//                artwork.getArtist().remove(user);
+//                artworkRepository.save(artwork);
+//            }
+//        }
+        userRepository.deleteUserByUsername(username);
     }
 
 
     @Transactional
     public User getUserByUsername(String username){
-        if(username ==null) throw new IllegalArgumentException("invalid username");
         User user = userRepository.findUserByUsername(username);
+        if(user ==null) throw new IllegalArgumentException("invalid username");
         return user;
     }
 
@@ -277,16 +287,6 @@ public class UserService {
 
 
     //*************** HELPER METHODS ***************//
-    
-    //iterable to list
-    public <T> List<T> toList(Iterable<T> iterable) {
-        List<T> lst = new ArrayList<T>();
-        for (T t : iterable) {
-            lst.add(t);
-        }
-        
-        return lst;
-    }
 
     /*
      * Checks for a valid email using regex from
