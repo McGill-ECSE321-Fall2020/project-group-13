@@ -212,10 +212,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-
-   // @Transactional
-    //public void editPassword(String username, )
-
     
     //TODO update token sophistication
     /**
