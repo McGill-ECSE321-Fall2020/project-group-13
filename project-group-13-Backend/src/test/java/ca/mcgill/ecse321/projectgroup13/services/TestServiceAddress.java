@@ -16,6 +16,7 @@ import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -207,7 +208,7 @@ public class TestServiceAddress {
 	}
 	
 	@Test 
-	public void testInvalidGetAddressesByUser() {
+	public void testNullGetAddressesByUser() {
 
 		
 		List<Address> add = null;
@@ -215,11 +216,12 @@ public class TestServiceAddress {
 	
 		
 		try {
-			add = addressService.getAddressesByUser("johndahoe");
+			add = addressService.getAddressesByUser(null);
 			
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
+		
 		assertNull(add);
 		assertTrue(error.contentEquals("invalid user"));
 	}
