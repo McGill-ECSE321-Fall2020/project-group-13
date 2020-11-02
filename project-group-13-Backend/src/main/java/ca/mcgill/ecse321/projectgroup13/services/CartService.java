@@ -242,6 +242,7 @@ public class CartService {
 			total += a.getWorth();
 		}
 		cart.setTotalCost(total);
+		return;
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){
