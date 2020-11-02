@@ -352,7 +352,12 @@ public class ProjectGroup13Controller {
 		if (order == null) 		//TODO: what to do if user is not authorized to delete order
 			return true;		//there was nothing to delete, therefore we successfully complete operation?
 		
-		return orderService.deleteOrder(order);
+		try {
+			return orderService.deleteOrder(order);
+		} catch (Exception e) {
+			System.out.println(e.toString()); 
+			return false;
+		}
 	}
 
 
@@ -610,9 +615,14 @@ public class ProjectGroup13Controller {
 	//public void deleteArtworkById(int artworkId)
 	@DeleteMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
 	public boolean deleteArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
-		artworkService.deleteArtworkById(id);
-	
-		return true;
+		Artwork artwork = artworkService.getArtworkByID(id);
+		try{
+			artworkService.deleteArtwork(artwork);
+			return true;
+		}catch(Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}
 	}
 	
 	//public Set<Artwork> getArtworksOfArtist(String username)
