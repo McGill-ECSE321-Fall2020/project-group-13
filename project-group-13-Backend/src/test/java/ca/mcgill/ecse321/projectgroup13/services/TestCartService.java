@@ -249,8 +249,45 @@ public class TestCartService {
 			}
 		});
 		
-		lenient().when(cartRepo.findCartByCartID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
-			if (invocation.getArgument(0).equals(CART_ID)) {
+		lenient().when(cartRepo.findCartByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(USERNAME)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> set = new HashSet<Artwork>();
+			set.add(artwork);
+			
+			user.setArtwork(set);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Cart cart = new Cart();
+			cart.setCartID(CART_ID);
+			
+			cart.setUser(user);
+			cart.setArtwork(set);
+			
+			return cart;
+			} else {
+				return null;
+			}
+		});
+		
+		
+		lenient().when(cartRepo.deleteCartByCartID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0)==CART_ID) {
 				return true;
 			} else {
 				return false;
@@ -383,7 +420,7 @@ public void testInvalidArtworkAddSetValid() {
 		error=e.getMessage();
 	}
 	
-	assertEquals(error, "set<artwork> cannot be null");
+	assertEquals(error, "user cannot be null");
 	assertNull(cart);
 }
 	
@@ -422,7 +459,6 @@ public void testInvalidArtworkAddSetValid() {
 	
 	@Test
 	public void testDeleteCartfromCartID() {
-		Cart cart = null; 
 		String error = null;
 		try {
 			assertTrue(cartService.deleteCart(CART_ID));
@@ -479,10 +515,11 @@ public void testInvalidArtworkAddSetValid() {
 		}
 		
 		assertEquals(error, null);
-		assertEquals(removed, set);
+		assertTrue(removed.equals(set));
 		
 	}
 	
+
 	
 		
 		

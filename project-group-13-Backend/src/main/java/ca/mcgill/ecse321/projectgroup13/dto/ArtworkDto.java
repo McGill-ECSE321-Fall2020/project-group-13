@@ -11,7 +11,6 @@ import javax.persistence.ManyToMany;
 
 public class ArtworkDto {
     private boolean isOnPremise;
-    private Set<UserDto> artist;
     private int artworkID;
     private double worth;
     private boolean artworkSold;
@@ -22,14 +21,15 @@ public class ArtworkDto {
     private String medium;
     private String collection;
     private String imageUrl;
+    private Set<UserDto> artists;
 
     public ArtworkDto() {
     }
 
 
-    public ArtworkDto( int artworkID, boolean isOnPremise, double worth, boolean artworkSold, String description, String title, String creationDate, String dimensions, String medium, String collection, String imageUrl) {
+    public ArtworkDto( int artworkID, boolean isOnPremise, double worth, boolean artworkSold, String description, String title, String creationDate, String dimensions, String medium, String collection, String imageUrl, Set<UserDto> artists) {
         this.isOnPremise = isOnPremise;
-        //this.artist = artist;
+        this.artists = artists;
         this.artworkID = artworkID;
         this.worth = worth;
         this.artworkSold = artworkSold;
@@ -53,12 +53,12 @@ public class ArtworkDto {
     }
 
     public Set<UserDto> getArtist() {
-        return artist;
+        return artists;
     }
 
 
     public void setArtist(Set<UserDto> artists) {
-        this.artist = artists;
+        this.artists = artists;
     }
 
 //    public void setArtworkID(String value) {

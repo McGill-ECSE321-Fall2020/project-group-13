@@ -94,7 +94,12 @@ public class ProjectGroup13Controller {
 //			throw new IllegalArgumentException("There is no such artwork!");
 		}
 
-		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
+		Set<UserDto> artistsDto = new HashSet<UserDto>();
+		for (User artist : artwork.getArtist()) {
+			artistsDto.add(convertToDto(artist));
+		}
+
+		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl(), artistsDto);
 		return dto;
 	}
 
@@ -121,7 +126,7 @@ public class ProjectGroup13Controller {
 			artworksDto.add(convertToDto(artwork));
 		}
 
-		CartDto dto = new CartDto(cart.getCartID(), cart.getTotalCost(), artworksDto);
+		CartDto dto = new CartDto(cart.getCartID(), cart.getTotalCost(), artworksDto, convertToDto(cart.getUser()));
 		return dto;
 	}
 
@@ -486,14 +491,14 @@ public class ProjectGroup13Controller {
 
 
 
-	//public Cart createCart(User user)
-	@PostMapping(value = { "/user/{username}/new/cart/empty", "/user/{username}/new/cart/empty/" })
-	public CartDto createCart(@PathVariable String username){
-		User user = userService.getUserByUsername(username);
-		Cart cart = cartService.createCart(user);
-		CartDto cartDto = convertToDto(cart);
-		return cartDto;
-	}
+//	//public Cart createCart(User user)
+//	@PostMapping(value = { "/user/{username}/new/cart/empty", "/user/{username}/new/cart/empty/" })
+//	public CartDto createCart(@PathVariable String username){
+//		User user = userService.getUserByUsername(username);
+//		Cart cart = cartService.createCart(user);
+//		CartDto cartDto = convertToDto(cart);
+//		return cartDto;
+//	}
 
 	//public boolean addToCart(Cart cart, Artwork art)
 	@PutMapping(value = { "/user/{username}/edit+/cart", "/user/{username}/edit+/cart/" })
@@ -513,19 +518,6 @@ public class ProjectGroup13Controller {
 		return convertToDto(cart);
 	}
 
-	
-	//public Cart createCart(User user, Artwork art)
-	@PostMapping(value = { "/user/{username}/new/cart", "/user/{username}/new/cart/" })
-	public CartDto createCartWithArt(@PathVariable String username, @RequestParam(name="artid") Integer artId){
-		User user = userService.getUserByUsername(username);
-		Cart cart = cartService.createCart(user);
-		Artwork art = artworkService.getArtworkByID(artId);
-		cartService.addToCart(cart, art);
-		
-		CartDto cartDto = convertToDto(cart);
-		return cartDto;
-	}
-	//public Cart createCart(User user, Set<Artwork> art)
 	
 	//public Cart getCart(int cartID)
 	@GetMapping(value = { "/user/{username}/cart/{cartId}", "/user/{username}/cart/{cartId}/" })
@@ -567,30 +559,23 @@ public class ProjectGroup13Controller {
 	}
 	
 	//public boolean removeFromCart(Cart cart, Artwork art)
-	@PutMapping(value = { "/user/{username}/edit-/cart/{cartId}", "/user/{username}/edit-/cart/{cartId}/" })
-	public CartDto removeFromCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id, @RequestParam(name="artid") Integer artId){
+	@PutMapping(value = { "/user/{username}/edit-/cart", "/user/{username}/edit-/cart/" })
+	public CartDto removeFromCart(@PathVariable("username") String username, @RequestParam(name="artid") Integer artId){
 		User user = userService.getUserByUsername(username);
-		Cart cart = null;
 
 		Cart userCart = cartService.getCartFromUser(user);
-		if (userCart.getCartID()==id)
-			cart = userCart;
 		
-		if (cart == null) 		//TODO: what to do if user is not authorized to delete from cart
+		if (userCart == null)
 			return null;		//there was nothing to delete, therefore we successfully complete operation?
 		
 		Artwork art = artworkService.getArtworkByID(artId);
 		try{
-			cartService.removeFromCart(cart, art);
-			return convertToDto(cart);
+			cartService.removeFromCart(userCart, art);
+			return convertToDto(userCart);
 		}catch(Exception e){
-			return convertToDto(cart);
+			return convertToDto(userCart);
 		}
 	}
-	
-	//public Set<Artwork> removeFromCart(Cart cart, Set<Artwork> art)
-	
-	//public Set<Artwork> addToCart(Cart cart, Set<Artwork> art)
 	
 	
 	

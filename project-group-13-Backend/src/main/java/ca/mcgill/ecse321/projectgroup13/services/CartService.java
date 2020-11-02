@@ -136,7 +136,7 @@ public class CartService {
 		
 		cart.getUser().setCart(null);
 		cart.setUser(null);
-		return cartRepository.delete(cart);
+		return cartRepository.deleteCartByCartID(cart.getCartID());
 	}
 	
 	/**
@@ -242,6 +242,7 @@ public class CartService {
 			total += a.getWorth();
 		}
 		cart.setTotalCost(total);
+		return;
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){
