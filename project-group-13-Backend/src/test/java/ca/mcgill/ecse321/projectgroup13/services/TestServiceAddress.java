@@ -74,6 +74,10 @@ public class TestServiceAddress {
 				user.setAddress(set);
 				return user;
 	        });
+	        lenient().when(userRepository.findUserByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+				return new User();
+			});
+	        
 	    }
 	 
 	@Test
@@ -162,7 +166,7 @@ public class TestServiceAddress {
 			Address add = addressService.getAddressById(address.getAddressID());
 			assertTrue(checkAdd.getCity().contentEquals(add.getCity()) && checkAdd.getAddressID()==add.getAddressID());
 		} catch (IllegalArgumentException | RegistrationException e) {
-			assertTrue(false);
+			fail();
 		}
 	}
 	
@@ -244,7 +248,7 @@ public class TestServiceAddress {
 		
 		
 		try {
-			userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			
 			address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 			ID = address.getAddressID();
 			origCity = address.getCity();
@@ -252,10 +256,10 @@ public class TestServiceAddress {
 		
 			addressService.updateAddress(ADDRESSID, ADDRESS,null, "SuckyToronto", "QUEBEC", "CANADA", "H4C2C4");
 			
-		}catch(IllegalArgumentException | RegistrationException e) {
-			
+		}catch(Exception e) {
+			fail();
 		}
-		assertFalse(addressRepository.findAddressByAddressID(ID).getCity().contentEquals(origCity));
+		assertFalse(addressService.getAddressById(ADDRESSID).getCity().equals(origCity));
 		
 		
 	}
