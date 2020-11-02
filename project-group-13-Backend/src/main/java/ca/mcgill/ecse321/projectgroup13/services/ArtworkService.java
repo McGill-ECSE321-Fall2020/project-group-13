@@ -2,11 +2,13 @@ package ca.mcgill.ecse321.projectgroup13.services;
 
 
 import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
+import ca.mcgill.ecse321.projectgroup13.dao.CartRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
 import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
+import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.User;
 
 
@@ -26,6 +28,10 @@ public class ArtworkService {
     private ArtworkRepository artworkRepo;
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private CartRepository cartRepo;
+    @Autowired
+    private CartService cartService;
 
 
 //    /**
@@ -115,22 +121,28 @@ public class ArtworkService {
 
     /**
      * service method to delete given artwork from database
+     * also removes it from cart to which it belongs
      * @param artwork
      */
     @Transactional
     public Boolean deleteArtwork(Artwork artwork){
     	User user = null;
     	while(artwork.getArtist().iterator().hasNext()) {
-    	user = artwork.getArtist().iterator().next();
-    	Set<Artwork> artworks = user.getArtwork();
-		artworks.remove(artwork);
-		user.setArtwork(artworks);
+            user = artwork.getArtist().iterator().next();
+            Set<Artwork> artworks = user.getArtwork();
+            artworks.remove(artwork);
+            user.setArtwork(artworks);
 		}
+        Set<Cart> carts = cartRepo.findCartsByArtwork(artwork);
+        for(Cart c : carts){
+            cartService.removeFromCart(c, artwork);
+        }
         artworkRepo.delete(artwork);
         return true; 
     }
 
 
+    //TODO: maybe delete this method - not used
     /**
      * service method to delete given artwork from database
      * @param artworkId
@@ -179,6 +191,7 @@ public class ArtworkService {
         artwork.setDescription(description);
         artwork = artworkRepo.save(artwork);
     }
+
     /**
      * edits title
      * @param artwork
