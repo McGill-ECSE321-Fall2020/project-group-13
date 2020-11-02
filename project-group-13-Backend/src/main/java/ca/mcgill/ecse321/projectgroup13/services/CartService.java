@@ -110,7 +110,7 @@ public class CartService {
 	public Cart getCartFromUser(User user) {
 		if (user == null)
 			throw new IllegalArgumentException("invalid user");
-		return cartRepository.findCartByUser(user);
+		return cartRepository.findCartByUserUsername(user.getUsername());
 	}
 	
 	/**
@@ -122,7 +122,12 @@ public class CartService {
 	public boolean deleteCart(int cartID) {
 		User user = cartRepository.findCartByCartID(cartID).getUser();
 		user.setCart(null);
-		return cartRepository.deleteCartByCartID(cartID);
+		try{
+			cartRepository.delete(cartRepository.findCartByCartID(cartID));
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 	
 	/**
@@ -132,11 +137,16 @@ public class CartService {
 	@Transactional
 	public boolean deleteCart(Cart cart) {
 		if (cart == null)
-			throw new IllegalArgumentException("cart cannot be null");
+			return true;
 		cart.setArtwork(null);
 		cart.getUser().setCart(null);
 		cart.setUser(null);
-		return cartRepository.deleteCartByCartID(cart.getCartID());
+		try{
+			cartRepository.delete(cart);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 	
 	/**

@@ -130,8 +130,15 @@ public class OrderService {
 		
 		for (Order o : orders) {
 			
-			if (o != null && o.getPayment()!=null && order.getPayment().getPaymentDate().before(o.getPayment().getPaymentDate())) 
-				order = o;
+			if (o != null && o.getPayment()!=null) {
+				if (order.getPayment().getPaymentDate().before(o.getPayment().getPaymentDate())) 
+					order = o;
+				else if (!order.getPayment().getPaymentDate().after(o.getPayment().getPaymentDate())) {
+					if (order.getPayment().getPaymentTime().before(o.getPayment().getPaymentTime())) 
+						order = o;
+				}
+			}
+				
 		}
 		return order;
 	}
@@ -144,6 +151,7 @@ public class OrderService {
 	 */
 	@Transactional
 	public boolean deleteOrder(Order order) {
+		order = orderRepository.findOrderByOrderID(order.getOrderID());
 		if (order == null)															//must check parameter is not null
 			throw new IllegalArgumentException("order cannot be null");
 		if (order.getOrderStatus() != OrderStatus.PaymentPending)					//must check that order hasn't been finalized. Cannot delete order that has payment and shipment

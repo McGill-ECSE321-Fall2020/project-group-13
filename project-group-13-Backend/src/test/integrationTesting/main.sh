@@ -3,8 +3,8 @@
 blue=$(tput setaf 4)
 normal=$(tput sgr0)
 
-username="a"
-username2="b"
+username="eewaf"
+username2="eewfb"
 
 #test the creation of users
 printf "%s\n" "${blue}test the creation of users${normal}"
@@ -57,12 +57,6 @@ printf "%s\n" "${blue}get orders from user${normal}"
 currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders")
 printf "\n$currentLine\n"
 
-
-#delete second order
-printf "%s\n" "${blue}delete second order${normal}"
-currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/order/$orderID2")
-printf "$currentLine\n"
-
 #get orders from user
 printf "%s\n" "${blue}get orders from user${normal}"
 currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders")
@@ -75,13 +69,17 @@ currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/order/$orderI
 printf "$currentLine\n"
 
 
-: '
+
 #create payment and store paymentId
 printf "%s\n" "${blue}create payment and store paymentId${normal}"
 currentLine=$(curl -s -H "Content-Type: application/json" --data @payment.json -X POST "http://localhost:8080/order/$orderID/pay")
 printf "$currentLine\n"
 paymentID=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
+printf "%s\n" "${blue}create payment and store paymentId${normal}"
+currentLine=$(curl -s -H "Content-Type: application/json" --data @payment.json -X POST "http://localhost:8080/order/$orderID2/pay")
+printf "$currentLine\n"
+paymentID2=$(echo  "$currentLine" | grep -o "\"paymentID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
 #get payment from ID
 printf "%s\n" "${blue}get payment from ID${normal}"
@@ -107,6 +105,8 @@ printf "$currentLine\n"
 printf "%s\n" "${blue}get most recent order${normal}"
 currentLine=$(curl -s -X GET "http://localhost:8080/user/$username/orders/most-recent")
 printf "\n$currentLine\n"
+
+: '
 
 #create address and store addressId
 printf "%s\n" "${blue}create address and store addressId${normal}"
@@ -188,6 +188,11 @@ currentLine=$(curl -s -H "Content-Type: application/json" --data @user-update.js
 printf "$currentLine\n"
 
 '
+#delete second order
+printf "%s\n" "${blue}delete second order${normal}"
+currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/order/$orderID2")
+printf "$currentLine\n"
+
 #delete user by username
 printf "%s\n" "${blue}delete user by username${normal}"
 currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username2/delete")

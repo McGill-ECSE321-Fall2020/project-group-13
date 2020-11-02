@@ -54,9 +54,9 @@ public class PaymentService {
     	if(cardNumber<100000000000L) throw new IllegalArgumentException("Invalid card");
     	if(expirationDate.toLocalDate().isBefore(new Date(System.currentTimeMillis()).toLocalDate())) 
     		throw new IllegalArgumentException("Expired card");
-		Payment payment = new Payment();
 		
-		
+    	
+    	Payment payment = new Payment();
 		
 		payment.setTotalAmount(order.getTotalAmount());
 		payment.setPaymentDate(new Date(System.currentTimeMillis()));

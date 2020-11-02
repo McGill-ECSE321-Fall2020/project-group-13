@@ -65,7 +65,7 @@ public class ProjectGroup13Controller {
 			return null;
 //			throw new IllegalArgumentException("There is no such payment!");
 		}
-		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(), e.getPaymentDate(), e.getPaymentTime(), convertToDto(e.getOrder()));
+		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getTotalAmount(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(), e.getPaymentDate(), e.getPaymentTime(), convertToDto(e.getOrder()));
 		return dto;
 	}
 
@@ -211,9 +211,7 @@ public class ProjectGroup13Controller {
 	@PostMapping(value = { "/order/{orderId}/pay", "/order/{orderId}/pay/" })
 	public PaymentDto PayForOrder(@PathVariable("orderId") int orderId, @RequestBody Payment payment) throws IllegalArgumentException {
 
-		System.out.println(payment);
 		Order order = orderService.getOrder(orderId);
-		System.out.println(order);
 		Payment p = paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId);
 		
 		try {
@@ -567,9 +565,7 @@ public class ProjectGroup13Controller {
 		if (cart == null) 		//TODO: what to do if user is not authorized to delete cart
 			return true;		//there was nothing to delete, therefore we successfully complete operation?
 		
-		cartService.deleteCart(cart);
-		
-		return true;	//TODO: Method always return true. Check that out.
+		return cartService.deleteCart(cart);
 	}
 	
 	//public boolean removeFromCart(Cart cart, Artwork art)
