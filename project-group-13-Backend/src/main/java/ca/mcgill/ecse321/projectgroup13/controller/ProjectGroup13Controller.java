@@ -83,7 +83,7 @@ public class ProjectGroup13Controller {
 
 //		ShipmentDto shipmentsDto = convertToDto(order.getShipment());
 
-		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getUser()));
+		OrderDto dto = new OrderDto(order.getOrderID(), order.getTotalAmount(), order.getOrderStatus(), artworksDto, convertToDto(order.getUser()), order.isShipmentMethodIsDelivery());
 		return dto;
 	}
 
@@ -338,7 +338,7 @@ public class ProjectGroup13Controller {
 	
 	//public boolean deleteOrder(Order order)
 	@DeleteMapping(value = { "/user/{username}/delete/order/{orderId}", "/user/{username}/delete/order/{orderId}/" })
-	public boolean deleteOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id){
+	public String deleteOrder(@PathVariable("username") String username, @PathVariable("orderId") Integer id){
 		User user = userService.getUserByUsername(username);
 		Order order = null;
 
@@ -349,14 +349,16 @@ public class ProjectGroup13Controller {
 			}
 		}
 		
-		if (order == null) 		//TODO: what to do if user is not authorized to delete order
-			return true;		//there was nothing to delete, therefore we successfully complete operation?
+		if (order == null) 		
+			return "Cannot delete order: Order does not belong to User!";
 		
 		try {
-			return orderService.deleteOrder(order);
+			if (orderService.deleteOrder(order))
+				return "Success!";
+			else
+				return "Cannot delete order. Please contact IT at 777-777-HELP";
 		} catch (Exception e) {
-			System.out.println(e.toString()); 
-			return false;
+			return "Cannot delete order: " + e.getMessage();
 		}
 	}
 
@@ -559,7 +561,7 @@ public class ProjectGroup13Controller {
 	
 	//public void deleteCart(Cart cart) 
 	@DeleteMapping(value = { "/user/{username}/delete/cart/{cartId}", "/user/{username}/delete/cart/{cartId}/" })
-	public boolean deleteCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id){
+	public String deleteCart(@PathVariable("username") String username, @PathVariable("cartId") Integer id){
 		User user = userService.getUserByUsername(username);
 		Cart cart = null;
 
@@ -567,10 +569,18 @@ public class ProjectGroup13Controller {
 		if (userCart.getCartID()==id)
 			cart = userCart;
 		
-		if (cart == null) 		//TODO: what to do if user is not authorized to delete cart
-			return true;		//there was nothing to delete, therefore we successfully complete operation?
+		if (cart == null) 		
+			return "Cannot delete cart: Cart does not belong to User!";
 		
-		return cartService.deleteCart(cart);
+		try {
+			if (cartService.deleteCart(cart))
+				return "Success!";
+			else
+				return "Cannot delete cart. Please contact IT at 777-777-HELP";
+		} catch (Exception e) {
+			System.out.println(e.toString()); 
+			return "Cannot delete cart: " + e.getMessage();
+		}
 	}
 	
 	//public boolean removeFromCart(Cart cart, Artwork art)
