@@ -96,16 +96,17 @@ public class ArtworkService {
     		User user = userRepo.findUserByUsername(name);
     		if(user==null) throw new illegalArgumentException("invalid user");
     		artwork.setArtist(new HashSet<>());
-    		Set<User> artists= artwork.getArtist();
-    		artists.add(user);
-    		artwork.setArtist(artists);
+    		//Set<User> artists= artwork.getArtist();
+            artwork.getArtist().add(user);
+    		//artists.add(user);
+    		//artwork.setArtist(artists);
     		artwork.setTitle(Title);
     		artwork.setWorth(worth);
     		Set<Artwork> works= user.getArtwork();
     		works.add(artwork);
-    		user.setArtwork(works);
+    		//user.setArtwork(works);
     		artworkRepo.save(artwork);
-    		userRepo.save(user);
+    		//userRepo.save(user);
     	}
     	return artwork;
     }

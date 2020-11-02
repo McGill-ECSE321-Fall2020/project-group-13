@@ -2,12 +2,7 @@ package ca.mcgill.ecse321.projectgroup13.model;
 
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Artwork{
@@ -77,7 +72,12 @@ return this.artworkSold;
     }
 private Set<User> artist;
 
-@ManyToMany
+@ManyToMany(fetch = FetchType.EAGER)
+@JoinTable(
+		name = "artwork_artist",
+		joinColumns = {@JoinColumn(name = "artwork_artworkid")},
+		inverseJoinColumns = {@JoinColumn(name = "artist_username")}
+)
 public Set<User> getArtist() {
    return this.artist;
 }
