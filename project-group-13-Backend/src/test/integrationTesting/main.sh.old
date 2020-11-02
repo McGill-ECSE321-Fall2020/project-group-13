@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+#test the creation of users
+numParameters=$(wc -l user-parameters | grep -o "[0-9]*")
+for (( c=1; c<=$numParameters; c++ ))
+do
+	userParameter=$(head -"$c" user-parameters | tail -1)
+	echo "Parameters used: $userParameter"
+	 url="http://localhost:8080/newuser?$userParameter"
+	curl -s -X POST $url
+done
+
+#currentLine=$(curl -s -X POST "http://localhost:8080/user/a/new/order")
+#echo "$currentLine"
+#orderId=$(echo  "$currentLine" | grep -o "\"orderID\".*" | cut -f2- -d: | grep  -o "[0-9]*")
+#echo "$orderId"
+#curl -s -H "Content-Type: application/json" --data @body.json -X POST "http://localhost:8080/order/$orderId/pay"

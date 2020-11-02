@@ -81,9 +81,11 @@ public class UserService {
         if(userRepository.findUserByUsername(username) != null) throw new RegistrationException("Username already in use");
         //checking if email syntax is valid
         //TODO: validate email
+
         if(checkIfValidEmail(email) || userRepository.findUserByEmail(email) != null) {
             throw new RegistrationException("invalid email");
         }
+
         //if(userRepository.findUserByEmail(email) != null) throw new RegistrationException("Email already in use");
         //ALL CONDITIONS HAVE PASSED
         user.setUsername(username);
@@ -296,7 +298,7 @@ public class UserService {
 			artists.add(convertToDto(artist));
 		}
 
-		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(), artists,  convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
+		ArtworkDto dto = new ArtworkDto(artwork.getArtworkID(), artwork.isIsOnPremise(),  convertToDto(artwork.getOrder()), artwork.getWorth(), artwork.isArtworkSold(), artwork.getDescription(), artwork.getTitle(), artwork.getCreationDate(), artwork.getDimensions(), artwork.getMedium(), artwork.getCollection(), artwork.getImageUrl());
 		return dto;
 	}
 

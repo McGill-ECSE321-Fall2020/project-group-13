@@ -97,12 +97,17 @@ public class TestServiceArtwork {
 		 artworkDto.setArtist(artDto);
 		 artworkDto.setTitle("done with it");
 		 artworkDto.setWorth(23.99);
-		 
 		 Artwork artwork = null;
+		 
+		 
+		 
+		 String[] artistArray = new String[] {USERNAME};
+		 
 		try {
-		 artwork=artworkService.createArtwork(artworkDto);
-		}catch(illegalArgumentException e) {
-			e.getMessage();
+			userService.createUser(USERNAME, "born2die@lameshoot.com", "actualpassword");
+			artwork = artworkService.createArtwork("artwork name", artistArray, 234.2);
+		}catch(illegalArgumentException | RegistrationException e) {
+			System.out.print(e.getMessage());
 		}
 		assertNotNull(artwork);
 		assertEquals(artwork.getTitle(), artworkDto.getTitle());
