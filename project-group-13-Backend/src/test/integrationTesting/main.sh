@@ -3,8 +3,8 @@
 blue=$(tput setaf 4)
 normal=$(tput sgr0)
 
-username="rrrrdr"
-username2="ardr"
+username="rr3rf5redr"
+username2="aff3rte5r"
 
 #test the creation of users
 printf "%s\n" "${blue}test the creation of users${normal}"
@@ -134,7 +134,7 @@ printf "$currentLine\n"
 
 #create artwork and store artworkID
 printf "%s\n" "${blue}create artwork and store artworkID${normal}"
-currentLine=$(curl -s -X POST "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7")
+currentLine=$(curl -s -X POST "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&worth=100.7")
 printf "$currentLine\n"
 artworkID=$(echo  "$currentLine" | grep -o "\"artworkID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
@@ -159,9 +159,9 @@ currentLine=$(curl -s -X PUT "http://localhost:8080/artwork/$artworkID/update?de
 printf "$currentLine\n"
 
 #delete cart
-#printf "%s\n" "${blue}delete cart${normal}"
-#currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/cart/$cartID")
-#printf "$currentLine\n"
+printf "%s\n" "${blue}delete cart${normal}"
+currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username/delete/cart/$cartID")
+printf "$currentLine\n"
 
 #create cart with artwork and store cartID
 printf "\n%s\n" "${blue}create cart with artwork and store cartID${normal}"
@@ -170,24 +170,22 @@ printf "$currentLine\n"
 cartID=$(echo  "$currentLine" | grep -o "\"cartID\".*" | cut -f2- -d: | grep  -o "^[0-9]*")
 
 #delete address by id
-#printf "%s\n" "${blue}delete address by id${normal}"
-#currentLine=$(curl -s -X DELETE "http://localhost:8080/address/$addressID/delete")
-#printf "$currentLine\n"
+printf "%s\n" "${blue}delete address by id${normal}"
+currentLine=$(curl -s -X DELETE "http://localhost:8080/address/$addressID/delete")
+printf "$currentLine\n"
 
 #delete artwork by id
-#printf "%s\n" "${blue}delete artwork by id${normal}"
-#currentLine=$(curl -s -X DELETE "http://localhost:8080/artwork/$artworkID/delete")
-#printf "$currentLine\n"
+printf "%s\n" "${blue}delete artwork by id${normal}"
+currentLine=$(curl -s -X DELETE "http://localhost:8080/artwork/$artworkID/delete")
+printf "$currentLine\n"
 
-#get user by username
+#edit user fields
+printf "%s\n" "${blue}edit user fields${normal}"
+currentLine=$(curl -s -H "Content-Type: application/json" --data @user-update.json -X PUT "http://localhost:8080/user/$username/edit")
+printf "$currentLine\n"
 
-#edit email
-
-#edit bio
-
-#edit profile picture
 
 #delete user by username
-#printf "%s\n" "${blue}delete user by username${normal}"
-#currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username2/delete")
-#printf "$currentLine\n"
+printf "%s\n" "${blue}delete user by username${normal}"
+currentLine=$(curl -s -X DELETE "http://localhost:8080/user/$username2/delete")
+printf "$currentLine\n"
