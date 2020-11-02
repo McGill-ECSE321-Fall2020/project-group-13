@@ -65,7 +65,7 @@ public class ProjectGroup13Controller {
 			return null;
 //			throw new IllegalArgumentException("There is no such payment!");
 		}
-		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(), e.getPaymentDate(), e.getPaymentTime(), convertToDto(e.getOrder()));
+		PaymentDto dto = new PaymentDto(e.getPaymentID(), e.getTotalAmount(), e.getCardNumber(),e.getExpirationDate(),e.getNameOnCard(),e.getCvv(), e.getPaymentDate(), e.getPaymentTime(), convertToDto(e.getOrder()));
 		return dto;
 	}
 
@@ -215,7 +215,7 @@ public class ProjectGroup13Controller {
 		Order order = orderService.getOrder(orderId);
 		System.out.println(order);
 		Payment p = paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId);
-		
+		System.out.println(p.getTotalAmount());
 		try {
 			orderService.addPaymentToOrder(order, p);
 			Cart cart = order.getUser().getCart();
@@ -225,6 +225,7 @@ public class ProjectGroup13Controller {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
 		}
+		System.out.println(p.getTotalAmount());
 		PaymentDto paymentDto = convertToDto(p);
 		return paymentDto;
 	}
