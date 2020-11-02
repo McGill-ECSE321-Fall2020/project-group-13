@@ -16,6 +16,7 @@ import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -74,6 +75,10 @@ public class TestServiceAddress {
 				user.setAddress(set);
 				return user;
 	        });
+	        lenient().when(userRepository.findUserByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+				return new User();
+			});
+	        
 	    }
 	 
 	@Test
@@ -162,8 +167,9 @@ public class TestServiceAddress {
 			Address add = addressService.getAddressById(address.getAddressID());
 			assertTrue(checkAdd.getCity().contentEquals(add.getCity()) && checkAdd.getAddressID()==add.getAddressID());
 		} catch (IllegalArgumentException | RegistrationException e) {
-			//throwing invalid user??
-			System.out.print(e.getMessage());
+
+			fail();
+
 		}
 	}
 	
@@ -202,7 +208,7 @@ public class TestServiceAddress {
 	}
 	
 	@Test 
-	public void testInvalidGetAddressesByUser() {
+	public void testNullGetAddressesByUser() {
 
 		
 		List<Address> add = null;
@@ -210,11 +216,12 @@ public class TestServiceAddress {
 	
 		
 		try {
-			add = addressService.getAddressesByUser("johndahoe");
+			add = addressService.getAddressesByUser(null);
 			
 		}catch(IllegalArgumentException e) {
 			error = e.getMessage();
 		}
+		
 		assertNull(add);
 		assertTrue(error.contentEquals("invalid user"));
 	}
@@ -250,7 +257,7 @@ public class TestServiceAddress {
 		
 		
 		try {
-			userService.createUser("jake", "jake@google.com", "wellsaidwellsaid");
+			
 			address = addressService.createAddress("jake" ,ADDRESS, null, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
 			ID = address.getAddressID();
 			origCity = address.getCity();
@@ -258,9 +265,11 @@ public class TestServiceAddress {
 		
 			addressService.updateAddress(ID, ADDRESS,null, "SuckyToronto", "QUEBEC", "CANADA", "H4C2C4");
 			
-		}catch(IllegalArgumentException | RegistrationException e) {
-			
+		}catch(Exception e) {
+			fail();
 		}
+
+
 		
 		Address modifiedAddress = addressRepository.findAddressByAddressID(ID);
 		
@@ -268,6 +277,7 @@ public class TestServiceAddress {
 //		System.out.print(origCity);
 		
 		assertFalse(modifiedAddress.getCity().contentEquals(origCity));
+
 		
 		
 	}

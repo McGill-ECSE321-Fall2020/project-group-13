@@ -5,6 +5,7 @@ import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
 import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
+import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.User;
 
@@ -95,16 +96,17 @@ public class ArtworkService {
     		User user = userRepo.findUserByUsername(name);
     		if(user==null) throw new IllegalArgumentException("invalid user");
     		artwork.setArtist(new HashSet<>());
-    		Set<User> artists= artwork.getArtist();
-    		artists.add(user);
-    		artwork.setArtist(artists);
+    		//Set<User> artists= artwork.getArtist();
+            artwork.getArtist().add(user);
+    		//artists.add(user);
+    		//artwork.setArtist(artists);
     		artwork.setTitle(Title);
     		artwork.setWorth(worth);
     		Set<Artwork> works= user.getArtwork();
     		works.add(artwork);
-    		user.setArtwork(works);
+    		//user.setArtwork(works);
     		artworkRepo.save(artwork);
-    		userRepo.save(user);
+    		//userRepo.save(user);
     	}
     	return artwork;
     }
@@ -117,6 +119,13 @@ public class ArtworkService {
      */
     @Transactional
     public void deleteArtwork(Artwork artwork){
+    	User user = null;
+    	while(artwork.getArtist().iterator().hasNext()) {
+    	user = artwork.getArtist().iterator().next();
+    	Set<Artwork> artworks = user.getArtwork();
+		artworks.remove(artwork);
+		user.setArtwork(artworks);
+		}
         artworkRepo.delete(artwork);
     }
 
