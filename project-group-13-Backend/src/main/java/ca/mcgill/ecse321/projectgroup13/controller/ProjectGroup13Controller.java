@@ -449,17 +449,17 @@ public class ProjectGroup13Controller {
 	//public Address getAddressById(Integer addressID)
 	
 	//public boolean deleteAddress(int addressId)
-	/**
-	 * RESTful service that deletes address by id
-	 */
-	@DeleteMapping(value = {"/address/{addressId}/delete", "/address/{addressId}/delete/"})
-	public boolean deleteAddress(@PathVariable(name = "addressId") Integer addressId) {
-		if (addressId == null) {
-			throw new IllegalArgumentException("There is no such Address Id!");
-		} else {
-			return addressService.deleteAddress(addressId);
-		}
-	}
+//	/**
+//	 * RESTful service that deletes address by id
+//	 */
+//	@DeleteMapping(value = {"/user/{userId}/address/{addressId}/delete", "//user/{userId}/address/{addressId}/delete/"})
+//	public boolean deleteAddressFromUser(@PathVariable(name = "addressId") Integer addressId) {
+//		if (addressId == null) {
+//			throw new IllegalArgumentException("There is no such Address Id!");
+//		} else {
+//			return addressService.deleteAddress(addressId);
+//		}
+//	}
 	
 	//public void updateAddress(Address oldAddress, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode)
 	/**
@@ -622,6 +622,8 @@ public class ProjectGroup13Controller {
 		Artwork art = artworkService.getArtworkByID(id);
 		return convertToDto(art);
 	}
+
+
 	//public void deleteArtworkById(int artworkId)
 	@DeleteMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
 	public boolean deleteArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
