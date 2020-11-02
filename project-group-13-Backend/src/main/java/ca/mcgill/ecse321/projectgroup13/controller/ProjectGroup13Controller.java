@@ -196,11 +196,13 @@ public class ProjectGroup13Controller {
 		System.out.println(order);
 		Payment p = paymentService.createPayment(payment.getCardNumber(), new java.sql.Date(payment.getExpirationDate().getTime()), payment.getNameOnCard(), payment.getCvv(), orderId);
 		
-		try { orderService.addPaymentToOrder(order, p);}
+		try {
+			orderService.addPaymentToOrder(order, p);
+			cartService.deleteCart(order.getUser().getCart());
+		}
 		catch (IllegalArgumentException e) {
 			System.out.println("Could not create payment! Error : [" + e.toString() + "]");
 			throw new IllegalArgumentException("Could not create payment! Error : [" + e.toString() + "]");
-			//TODO: Maybe return null?
 		}
 		PaymentDto paymentDto = convertToDto(p);
 		return paymentDto;
@@ -493,10 +495,7 @@ public class ProjectGroup13Controller {
 		Cart cart;
 		if(user.getCart() == null){			//if no cart existed
 			cart = cartService.createCart(user);
-			cart.setArtwork(new HashSet<Artwork>());
-			Set<Artwork> artworks = cart.getArtwork();
-			artworks.add(artwork);
-			cart.setArtwork(artworks);
+			cartService.addToCart(cart, artwork);
 			CartDto cartDto = convertToDto(cart);
 		}else{								//if there was already a cart
 			cart = user.getCart();
