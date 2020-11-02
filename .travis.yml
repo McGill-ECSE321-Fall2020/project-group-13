@@ -1,6 +1,10 @@
 language: java
+services:
+- postgresql
 before_install:
 - chmod +x gradlew
+before_script:
+- psql -c 'generate database for integration testing;' -U postgres
 script:
 - ./gradlew build
 - ./gradlew integrationTest
