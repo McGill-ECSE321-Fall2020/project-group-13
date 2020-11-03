@@ -367,24 +367,6 @@ public class TestServiceArtwork {
 	 }
 	 
 	 @Test
-	 public void testIsOnPremiseCreateArtwork() {
-		 
-	 }
-	 
-	 
-	 
-	 @Test
-	 public void testAddValidArtist() {
-		 
-		 
-	 }
-	 
-	 @Test
-	 public void testAddInvalidArtist() {
-		 
-	 }
-	 
-	 @Test
 	 public void testArtworkWithInvalidArtist() {
 		 Artwork artwork = null;
 		 String error ="";
@@ -446,43 +428,49 @@ public class TestServiceArtwork {
 	 }
 	 @Test
 	 public void testEditCollection()  {
-		
-		try{artworkService.editArtwork_collection(new Artwork(), "McGill");}
+		Artwork art = new Artwork();
+		try{artworkService.editArtwork_collection(art, "McGill");}
 		catch(Exception e) {
 			fail();
 		}
+		assertEquals(art.getCollection(),"McGill");
 	 }
 	 @Test
 	 public void testEditDate()  {
-		
-		try{artworkService.editArtwork_creationDate(new Artwork(), "2020-02-02");}
+		 Artwork art = new Artwork();
+		try{artworkService.editArtwork_creationDate(art, "2020-02-02");}
 		catch(Exception e) {
 			fail();
 		}
+		assertEquals(art.getCreationDate(),"2020-02-02");
 	 }
 	 @Test
 	 public void testEditDescription()  {
-		
-		try{artworkService.editArtwork_description(new Artwork(), "very nice paint");}
+		 Artwork art = new Artwork();
+		 String des = "very nice paint";
+		try{artworkService.editArtwork_description(art, des);}
 		catch(Exception e) {
 			fail();
 		}
+		assertEquals(art.getDescription(),des);
 	 }
 	 @Test
 	 public void testEditDimension()  {
-		
-		try{artworkService.editArtwork_dimensions(new Artwork(), "large");}
+		 Artwork art = new Artwork();
+		try{artworkService.editArtwork_dimensions(art, "large");}
 		catch(Exception e) {
 			fail();
 		}
+		assertEquals(art.getDimensions(),"large");
 	 }
 	 @Test
 	 public void testEditUrl()  {
-		
-		try{artworkService.editArtwork_imageURL(new Artwork(), "www.notreal.com/d");}
+		 Artwork art = new Artwork();
+		try{artworkService.editArtwork_imageURL(art, "www.notreal.com/d");}
 		catch(Exception e) {
 			fail();
 		}
+		assertEquals(art.getImageUrl(),"www.notreal.com/d");
 	 }
 	 @Test
 	 public void testEditIsOnPremise()  {
