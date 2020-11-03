@@ -13,7 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -37,14 +36,9 @@ public class TestUser {
     private ArtworkRepository artworkRepository;
     @Autowired
     private AddressRepository addressRepository;
-    @Autowired
-    private CartRepository cartRepository;
     //Remove ends here
     
 
-    // this is to clear database prior to every run
-   
-    
     /**
      *  Deletes all information from addressRepository, artoworkRepository and
      *  userRepository
@@ -64,13 +58,14 @@ public class TestUser {
      * populates them with test information, saves them to the database
      */
     
-    public void initDatabase() {
+    public User initDatabase() {
     	//    Artwork<---User-->Address
     	//create address
     	
     	User artist = new User();
     	artist.setUsername("Julius Cesar Arnouk");
     	artist.setEmail("JCesar@RussianBrides.com");
+    	artist.setOrder(new HashSet<>());
     	userRepository.save(artist);
     	
     	Address address = new Address();
@@ -78,14 +73,15 @@ public class TestUser {
     	address.setCity("Montreal");
     	address.setCountry("Canada");
     	address.setStreetAddress1("3302 St-Catherine");
-    	address.setAddressID("3732St-Catherine");
+    	//address.setAddressID("3732St-Catherine".hashCode());
     	Set<Address> addresss = new HashSet<>();
     	addresss.add(address);
+    	artist.setAddress(addresss);
     	
     	//create Artwork
     	Artwork artwork = new Artwork();
     	artwork.setTitle("Beauty");
-    	artwork.setArtworkID("Beauty");
+    	//artwork.setArtworkID("Beauty".hashCode());
     	Set<User> artists = new HashSet<User>();
     	
     	Set<Artwork> artworks = new HashSet<Artwork>();
@@ -97,9 +93,9 @@ public class TestUser {
     	
     	artwork.setArtist(artists);
     	artist.setArtwork(artworks);
-    	artworkRepository.save(artwork);
-    	userRepository.save(artist);
-    	
+    	artwork = artworkRepository.save(artwork);
+    	artist = userRepository.save(artist);
+    	return artist;
     	
     }
    
@@ -110,18 +106,21 @@ public class TestUser {
      */
     @Test
     public void testPersistAndLoadUser() {
-    	initDatabase();
+    	User user = initDatabase();
     	//get artwork beauty from repo
-    	Artwork artwork=artworkRepository.findArtworkByArtworkID("Beauty");
-    	Set<User> artists= artwork.getArtist();
-    	Iterator<User> iter = artists.iterator();
-        //assertEquals(user.getUsername(),"TestUser");
-    	User artist = iter.next();
-    	//now check if this username is same as the one it should be 
-    	String email = artist.getEmail();
-    	User querryUser = userRepository.findUserByEmail(email);
-    	assertEquals(querryUser.getUsername(),"Julius Cesar Arnouk");
-    	
+//    	Artwork artwork=artworkRepository.findArtworkByArtworkID((Artwork [])user.getArtwork().toArray())[0]);
+//    	Set<User> artists= artwork.getArtist();
+//    	Iterator<User> iter = artists.iterator();
+//        //assertEquals(user.getUsername(),"TestUser");
+//    	User artist = iter.next();
+//    	//now check if this username is same as the one it should be 
+//    	String email = artist.getEmail();
+    	User queryUser = userRepository.findUserByEmail(user.getEmail());
+    	assertEquals(queryUser.getUsername(),"Julius Cesar Arnouk");
+    	System.out.println(user);
+    	System.out.println(queryUser);
+  
+    	assertEquals(true, user.equals(queryUser));
     }
     
 }

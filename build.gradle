@@ -27,3 +27,7 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
 }
+
+task stage () {
+	dependsOn ':project-group-13-Backend:assemble'
+}

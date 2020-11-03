@@ -1,4 +1,6 @@
 package ca.mcgill.ecse321.projectgroup13.dao;
+
+
 import ca.mcgill.ecse321.projectgroup13.model.*;
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -53,14 +54,14 @@ public class TestCart {
      */
     
     @Test
-    public void testPersistAndLoadAddress() {
+    public void testPersistAndLoadCart() {
     	//need instances of these classes
 	    User user = new User();
 	    Cart cart = new Cart();
 	    
 	    
 	    //parameters for user
-	    String username = "testUser20";
+	    String username = "testUser21";
 	    String password = "passW0rd";
 	    String email = "me@home.com";
 	    String profilePicURL = "//yes.com/img.jpg";
@@ -70,7 +71,7 @@ public class TestCart {
 	    	
 	    	
 	    //parameters for cart
-	    String cartID = "TESTcartID";
+	    //Integer cartID = "TESTcartID".hashCode();
 	    double totalCost = 100.1;
 	    Set<Artwork> artworksInCart = new HashSet<>();
 	    
@@ -79,14 +80,14 @@ public class TestCart {
 	    user.setPassword(password);
 	    user.setEmail(email);
 	    user.setProfilePictureURL(profilePicURL);
-	    user.setCart(cart);
+	    //user.setCart(cart);
 	    user.setAddress(addrs);
 	    user.setOrder(orders);
 	    user.setArtwork(artworks);
 	    
 	    
 	    //set cart parameters
-	    cart.setCartID(cartID);
+	    //cart.setCartID(cartID);
 	    cart.setTotalCost(totalCost);
 	    cart.setUser(user);
 	    cart.setArtwork(artworksInCart);
@@ -95,9 +96,10 @@ public class TestCart {
 	    user = userRepository.save(user);
 	    cart = cartRepository.save(cart);
 
+		System.out.println(cart.getCartID());
         //restore address instance from database
-        Cart cartPersisted = cartRepository.findCartByCartID(cartID);
-
+        Cart cartPersisted = cartRepository.findCartByCartID(cart.getCartID());
+		System.out.println(cartPersisted.getCartID());
         //assert if instance retrieved from database equals the original
         assertEquals(true, cart.equals(cartPersisted));
     }

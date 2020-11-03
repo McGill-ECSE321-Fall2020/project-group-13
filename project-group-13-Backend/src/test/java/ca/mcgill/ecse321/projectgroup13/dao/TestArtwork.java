@@ -37,7 +37,7 @@ public class TestArtwork {
     // this is to clear database prior to every run
        
     /**
-     *  Deletes all information from addressRepository, artoworkRepository and
+     *  Deletes all information from addressRepository, artworkRepository and
      *  userRepository
      */
     
@@ -71,14 +71,14 @@ public class TestArtwork {
     	address.setCity("Montreal");
     	address.setCountry("Canada");
     	address.setStreetAddress1("3302 St-Catherine");
-    	address.setAddressID("3732St-Catherine");
+    	//address.setAddressID("3732St-Catherine".hashCode());
     	Set<Address> addresss = new HashSet<>();
     	addresss.add(address);
     	
     	//create Artwork
     	Artwork artwork = new Artwork();
     	artwork.setTitle("Beauty");
-    	artwork.setArtworkID("Beauty");
+    	//artwork.setArtworkID("Beauty".hashCode());
     	Set<User> artists = new HashSet<User>();
     	
     	Set<Artwork> artworks = new HashSet<Artwork>();
@@ -108,13 +108,13 @@ public class TestArtwork {
     	initializeDatabase();
     	//System.out.println(userRepository.findUserByUsername("Julius Cesar Arnouk"));
     	User artist = userRepository.findUserByUsername("Julius Cesar Arnouk");
-    	Artwork artwork = artworkRepository.findArtworkByArtist(artist); //test search using foreign keys
+    	Set<Artwork> artworks = artworkRepository.findArtworkByArtist(artist); //test search using foreign keys
+		Artwork artwork = artworks.iterator().next();
     	assertNotNull(artwork); // test reference of object
     	assertEquals(artwork.getTitle(),"Beauty"); // test attribute of object
-    	assertEquals("Beauty",artist.getArtwork().iterator().next().getArtworkID()); //test navigating association of object
-    	
-    	
-    	
+    	assertNotNull(artwork.getArtworkID());
+    	System.out.println("\n\n\n\n" + artwork.getArtworkID()+ "\n\n\n\n\n");
+    	//assertEquals(((Integer)"Beauty".hashCode()).equals(artist.getArtwork().iterator().next().getArtworkID()), true); //test navigating association of object
     }
     
     

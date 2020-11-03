@@ -71,7 +71,7 @@ public class TestShipment {
         Shipment shipment = new Shipment();
 
         //parameters for order
-        String orderID = "myOrderID";
+        //Integer orderID = "myOrderID".hashCode();
         OrderStatus orderStatus = OrderStatus.Shipped;
         Double totalAmount = 100.02;
 
@@ -82,7 +82,7 @@ public class TestShipment {
         String province = "province";
         String street1 = "street1";
         String street2 = "street2";
-        String addressID = "TESTaddressID";
+        //Integer addressID = "TESTaddressID".hashCode();
 
 
         //parameters for user
@@ -94,15 +94,16 @@ public class TestShipment {
 
 
         //parameters for shipment
-        String shipmentID = "myShipmentID";
+        //Integer shipmentID = "myShipmentID".hashCode();
         ShipmentStatus shipmentInfo = ShipmentStatus.OnRoute;
         Date date = Date.valueOf("2020-02-02");
 
         //set order parameters
-        order.setOrderID(orderID);
+        //order.setOrderID(orderID);
         order.setTotalAmount(totalAmount);
         order.setUser(user);
-
+        order.setOrderStatus(orderStatus);
+        
         //set address parameters
         address.setCity(city);
         address.setCountry(country);
@@ -110,7 +111,7 @@ public class TestShipment {
         address.setProvince(province);
         address.setStreetAddress1(street1);
         address.setStreetAddress2(street2);
-        address.setAddressID(addressID);
+        //address.setAddressID(addressID);
         address.setUser(user);
 
         //set user parameters
@@ -122,10 +123,9 @@ public class TestShipment {
 
 
         //set shipment parameters
-        shipment.setShipmentID(shipmentID);
+        //shipment.setShipmentID(shipmentID);
         shipment.setShipmentInfo(shipmentInfo);
         shipment.setEstimatedDateOfArrival(date);
-        shipment.setShipmentMethodIsDelivery(true);
         shipment.setOrder(order);
         shipment.setAddress(address);
 
@@ -136,10 +136,11 @@ public class TestShipment {
         order = orderRepository.save(order);
         shipment = shipmentRepository.save(shipment);
 
+
         //restore shipment instance from database
-        Shipment shipmentPersisted = shipmentRepository.findShipmentByOrder(order);
+        Shipment shipmentPersisted = shipmentRepository.findShipmentByShipmentID(shipment.getShipmentID());
 
         //assert if instance retrieved from database equals the original
-        assertEquals(true, shipment.equals(shipmentPersisted));
+        assertEquals(shipment.getShipmentID(), shipmentPersisted.getShipmentID());
     }
 }

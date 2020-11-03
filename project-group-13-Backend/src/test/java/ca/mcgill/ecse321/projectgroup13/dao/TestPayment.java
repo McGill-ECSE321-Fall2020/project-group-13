@@ -58,15 +58,14 @@ class TestPayment {
 	
 	@Test
 	public void persistAndLoadPayment() {
-		String orderID = "456";
+		//Integer orderID = "456".hashCode();
 		double totalAmount = 11.5;
-		String paymentID = "123";
 		User user = new User();
 		user.setUsername("David");
 		userRepository.save(user);
 
 		Order order = new Order();
-		order.setOrderID(orderID);
+		//order.setOrderID(orderID);
 		Set<Order> orders= new HashSet<>();
 		orders.add(order);
 
@@ -75,8 +74,8 @@ class TestPayment {
 		orderRepository.save(order);
 
 		Payment payment = new Payment();
-		payment.setPaymentID(paymentID);
 		payment.setOrder(order);
+		payment.setTotalAmount(totalAmount);
 		paymentRepository.save(payment);
 
 		Payment paymentTest = payment;
