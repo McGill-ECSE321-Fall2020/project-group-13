@@ -153,10 +153,8 @@ public class ShipmentService {
      */
     @Transactional
     public Shipment editShipmentStatus (Shipment shipment, ShipmentStatus status){
-        if (shipment == null) 														//must check parameter is not null
-            throw new IllegalArgumentException("shipment cannot be null");
-        if (status == null) 														//must check parameter is not null
-            throw new IllegalArgumentException("status cannot be null");
+        if (shipment == null||status == null) 														//must check parameter is not null
+            throw new IllegalArgumentException("null argument");
 
         shipment.setShipmentInfo(status);
         shipmentRepo.save(shipment);
@@ -173,10 +171,8 @@ public class ShipmentService {
      */
     @Transactional
     public Shipment editShipmentEstimatedDate (Shipment shipment, Date estimatedDate){
-        if (shipment == null) 														//must check parameter is not null
-            throw new IllegalArgumentException("shipment cannot be null");
-        if (estimatedDate == null) 														//must check parameter is not null
-            throw new IllegalArgumentException("estimatedDate cannot be null");
+        if (shipment == null||estimatedDate==null) 														//must check parameter is not null
+            throw new IllegalArgumentException("null argument");
 
         shipment.setEstimatedDateOfArrival(estimatedDate);
         shipmentRepo.save(shipment);
@@ -192,12 +188,10 @@ public class ShipmentService {
      */
     @Transactional
     public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime) throws IllegalArgumentException {
-        if (shipment == null) {														//must check parameter is not null
-            throw new IllegalArgumentException("shipment cannot be null");
+        if (shipment == null||estimatedTime==null) {														//must check parameter is not null
+            throw new IllegalArgumentException("null argument");
         }
-        if (estimatedTime == null) {					//must check parameter is not null
-            throw new IllegalArgumentException("estimatedTime cannot be null");
-        }
+     
         shipment.setEstimatedTimeOfArrival(estimatedTime);
         shipmentRepo.save(shipment);
         return shipment;

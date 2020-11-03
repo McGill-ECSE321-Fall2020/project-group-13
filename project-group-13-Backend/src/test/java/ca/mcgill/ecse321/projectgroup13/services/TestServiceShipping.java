@@ -256,6 +256,55 @@ public class TestServiceShipping {
 			
 		});
 		
+		lenient().when(shipmentRepo.findShipmentByOrder(any(Order.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if(invocation.getArgument(0).equals(ORDERID)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Address address = new Address();
+			
+			address.setAddressID(ADDRESS_ID);
+			address.setCity(CITY);
+			address.setCountry(COUNTRY);
+			address.setPostalCode("H4C2C4");
+			address.setUser(user);
+			
+			HashSet<Address> set = new HashSet<Address>();
+			set.add(address);
+			user.setAddress(set);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> sets = new HashSet<Artwork>();
+			sets.add(artwork);
+			
+			user.setArtwork(sets);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Shipment shipment = new Shipment();
+			shipment.setAddress(address);
+			shipment.setOrder(order);
+			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+			return shipment;
+			} else {
+				return null;
+			}
+			
+		});
+		
+		
 	}
 	@Test
 	public void testCreateShipmentSuccess() {
@@ -390,7 +439,7 @@ public class TestServiceShipping {
 	 		shipmentService.editShipmentStatus(null, ShipmentStatus.Delivered);
 	 	}catch (IllegalArgumentException e) {
 	 		error = e.getMessage();
-	 		assertEquals(error, "shipment cannot be null");
+	 		assertEquals(error, "null argument");
 	 	}
 		
 	 }
@@ -504,6 +553,7 @@ public class TestServiceShipping {
 	
 	@Test
 	public void testgetAddressOfShipment() {
+		String error = null;
 		Address address = null;
 	 	try {
 	 		address=shipmentService.getAddressOfShipment(SHIPMENTID);
