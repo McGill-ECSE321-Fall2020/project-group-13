@@ -203,7 +203,7 @@ public class TestServiceAddress {
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
-		assertEquals(add.getAddressID(),ADDRESS_ID);
+		assertTrue(add.getAddressID().equals(ADDRESS_ID));
 	}
 	
 	@Test 
