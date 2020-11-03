@@ -185,10 +185,9 @@ public class OrderService {
 	 */
 	@Transactional
 	public boolean removeFromOrder(Order order, Artwork art) {
-		if (order == null) 															//check that user parameter is not null
-			throw new IllegalArgumentException("order cannot be null");
-		if (art == null) 															//check that art parameter is not null
-			throw new IllegalArgumentException("artwork cannot be null");
+		if (order == null || art == null) 															//check that user parameter is not null
+			throw new IllegalArgumentException("parameters cannot be null");
+
 		if (order.getOrderStatus() != OrderStatus.PaymentPending)					//must check that order hasn't been finalized
 			throw new IllegalArgumentException("Cannot alter a finalized order");
 		

@@ -6,8 +6,8 @@ yellow=$(tput setaf 3)
 red=$(tput setaf 1)
 powder_blue=$(tput setaf 153)
 
-username="ffdF"
-username2="eddFd"
+username="fF"
+username2="edd"
 function curl-format() {
 	if [[ ! -z "$1" ]]
 	then
@@ -108,6 +108,9 @@ shipmentID=$tempVar
 
 #get all shipments of user
 curl-format "get all shipments of user" "-X GET" "http://localhost:8080/user/$username/shipments"
+
+#get shipment of order 1
+curl-format "get shipment of order 1" "-X GET" "http://localhost:8080/order/$orderID/shipment"
 
 #get artwork by ID
 curl-format "get artwork by ID" "-X GET" "http://localhost:8080/artwork/$artworkID"
