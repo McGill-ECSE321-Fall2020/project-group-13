@@ -555,7 +555,7 @@ public void testInvalidArtworkAddSetValid() {
 			error=e.getMessage();
 		}
 		
-		assertEquals(error, "arguments cannot be null");
+		assertEquals(error, "invalid user");
 		assertNull(cart);
 	}
 	
