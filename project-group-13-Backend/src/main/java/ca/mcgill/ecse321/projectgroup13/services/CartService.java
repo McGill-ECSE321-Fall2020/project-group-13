@@ -225,16 +225,16 @@ public class CartService {
 	 * @return whether the operation was successful
 	 */
 	@Transactional
-	public boolean addToCart(Cart cart, Artwork art) {
+	public Cart addToCart(Cart cart, Artwork art) {
 		if (cart == null) 															//must check parameter is not null
 			throw new IllegalArgumentException("cart cannot be null");
 		if (art == null) 															//must check parameter is not null
 			throw new IllegalArgumentException("artwork cannot be null");
 		
-		boolean b = cart.getArtwork().add(art);
+		cart.getArtwork().add(art);
 		updateTotal(cart);
-		cartRepository.save(cart);
-		return b;
+		Cart thisCart = cartRepository.save(cart);
+		return thisCart;
 	}
 	
 	/**
