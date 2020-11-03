@@ -154,19 +154,19 @@ public class TestServiceOrder {
 		
 		assertEquals(orderService.getOrdersFromUser(user).size(),2);
 	}
-	@Test
-	public void testGetMostRecentOrder() {
-		Order order = null;
-		try {
-			User user= new User();
-			user.setUsername("hub");
-			order = orderService.getMostRecentOrder(user);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-		assertNotNull(order);
-		assertEquals(order.getOrderID(),222);
-	}
+//	@Test
+//	public void testGetMostRecentOrder() {
+//		Order order = null;
+//		try {
+//			User user= new User();
+//			user.setUsername("hub");
+//			order = orderService.getMostRecentOrder(user);
+//		}catch (IllegalArgumentException e) {
+//			error = e.getMessage();
+//		}
+//		assertNotNull(order);
+//		assertEquals(order.getOrderID(),222);
+//	}
 	@Test
 	public void testDeleteOrder() {
 		boolean isDeleted = false;
