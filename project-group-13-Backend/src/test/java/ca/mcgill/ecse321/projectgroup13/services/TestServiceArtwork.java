@@ -1,9 +1,6 @@
 package ca.mcgill.ecse321.projectgroup13.services;
 
 import ca.mcgill.ecse321.projectgroup13.dao.*;
-import ca.mcgill.ecse321.projectgroup13.dto.ArtworkDto;
-import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
-import ca.mcgill.ecse321.projectgroup13.services.exception.*;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,23 +19,21 @@ import static org.mockito.Mockito.lenient;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
 public class TestServiceArtwork {
 	
-	private static final int invalidID = 404;
+//	private static final int invalidID = 404;
 
 	private static final String USERNAME = "person1";
 	private static final String USER_PASSWORD= "Thatguy123#";
 	private static final String USER_EMAIL= "person1@gmail.com";
 	
-	private static final String USERNAME2 = "person2";
-	private static final String USER_PASSWORD2= "Thatgirl123#";
-	private static final String USER_EMAIL2= "person2@gmail.com";
+//	private static final String USERNAME2 = "person2";
+//	private static final String USER_PASSWORD2= "Thatgirl123#";
+//	private static final String USER_EMAIL2= "person2@gmail.com";
 	private static final String ARTWORK_TITLE= "BEAUTY";
 	private static final String COUNTRY= "CANADA";
 	private static final String CITY= "MONTREAL";
@@ -46,7 +41,7 @@ public class TestServiceArtwork {
 	private static final Integer ORDERID= 999;
 	private static final Integer ADDRESS_ID= 111;
 
-	private static final Integer SHIPMENTID = 200;
+//	private static final Integer SHIPMENTID = 200;
 	private static final String[] ARTISTS = {USERNAME};
 	private static final Double WORTH = 100.00;
 	private static final String TITLE = "BEAUTY";
@@ -354,7 +349,7 @@ public class TestServiceArtwork {
 	 @Test
 	 public void testZeroWorthCreateArtwork() {
 		 Artwork artwork = null;
-		 String[] artists = {USERNAME};
+//		 String[] artists = {USERNAME};
 		 String error ="";
 		 try {
 			 artwork = artworkService.createArtwork(ARTWORK_TITLE, ARTISTS, 0.0);

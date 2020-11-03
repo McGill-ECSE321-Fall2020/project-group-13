@@ -2,8 +2,6 @@ package ca.mcgill.ecse321.projectgroup13.services;
 
 import ca.mcgill.ecse321.projectgroup13.dao.*;
 
-import ca.mcgill.ecse321.projectgroup13.dto.*;
-
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

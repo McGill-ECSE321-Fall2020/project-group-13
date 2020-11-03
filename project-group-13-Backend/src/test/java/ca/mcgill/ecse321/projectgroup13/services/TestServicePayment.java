@@ -1,27 +1,21 @@
 package ca.mcgill.ecse321.projectgroup13.services;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import java.util.*;
 
@@ -35,7 +29,6 @@ import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.Payment;
 import ca.mcgill.ecse321.projectgroup13.model.Shipment;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
 @ExtendWith(MockitoExtension.class)
 public class TestServicePayment {
@@ -63,25 +56,25 @@ public class TestServicePayment {
 	private static final int order1ID = 1;
 	private static final int order2ID = 2;
 	private static final int artworkID = 11;
-	private static final String USERNAME2 = "person2";
-	private static final String USER_PASSWORD2= "Thatgirl123#";
-	private static final String USER_EMAIL2= "person2@gmail.com";
-	private static final String ARTWORK_TITLE= "BEAUTY";
+//	private static final String USERNAME2 = "person2";
+//	private static final String USER_PASSWORD2= "Thatgirl123#";
+//	private static final String USER_EMAIL2= "person2@gmail.com";
+//	private static final String ARTWORK_TITLE= "BEAUTY";
 	private static final String COUNTRY= "CANADA";
 	private static final String CITY= "MONTREAL";
 	private static final Integer ARTWORK_ID= 1234;
 	private static final Integer ORDERID= 999;
 	private static final Integer ADDRESS_ID= 111;
 
-	private static final Integer SHIPMENTID = 200;
+//	private static final Integer SHIPMENTID = 200;
 
-	private static final Double WORTH = 100.00;
-	private static final String TITLE = "BEAUTY";
+//	private static final Double WORTH = 100.00;
+//	private static final String TITLE = "BEAUTY";
 	private static final String USERNAME = "person1";
 	private static final String USER_PASSWORD= "Thatguy123#";
 	private static final String USER_EMAIL= "person1@gmail.com";
 	private static final double PAYMENT_AMOUNT = 10.0;
-	private static final String[] ARTISTS = {USERNAME};
+//	private static final String[] ARTISTS = {USERNAME};
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
@@ -347,10 +340,10 @@ public class TestServicePayment {
 	@Test
 	public void testCalculateGalleryCommissionAfter() {
 		//assertEquals(0, service.getAllPayments().size());
-		Payment payment = null;
+//		Payment payment = null;
 		try {
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order1ID);
-			payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order2ID);
+			service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order1ID);
+			service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order2ID);
 		}catch (IllegalArgumentException e) {
 			error += e.getMessage();
 		}
@@ -360,9 +353,9 @@ public class TestServicePayment {
 	@Test
 	public void testGetPaymentForCustomer() {
 		//assertEquals(0, service.getAllPayments().size());
-		Payment payment = null;
-		payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order1ID);
-		payment = service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order2ID);
+//		Payment payment = null;
+		service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order1ID);
+		service.createPayment(6011871064009705L, Date.valueOf("2020-12-12"), "David", 111, order2ID);
 		assertEquals(service.calculateGalleryCommissionAfter(Date.valueOf("2020-01-01")),1.5); //$30*5% = $1.5
 	}
 	

@@ -5,23 +5,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.projectgroup13.dao.*;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
-import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
-import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.doAnswer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,17 +48,17 @@ public class TestServiceAddress {
 	private static final String ADDRESS="47 Cesar Avenue";
 	private static final String ADDRESS2="47 Cesar Avenue";
 	private static final String CITY="Montreal";
-	private static final String PROVINCE="Quebec";
-	private static final String COUNTRY="Canada";
+//	private static final String PROVINCE="Quebec";
+//	private static final String COUNTRY="Canada";
 	private static final String USERNAME = "person1";
 	private static final String USER_PASSWORD= "Thatguy123#";
 	private static final String USER_EMAIL= "person1@gmail.com";
-	private static final Integer ARTWORKID = 12324324 ;
-	private static final String TITLE = "Beauty of the times";
+//	private static final Integer ARTWORKID = 12324324 ;
+//	private static final String TITLE = "Beauty of the times";
 	private static final Integer ADDRESSID = 12312324 ;
-	private static final String TITLE2 = "Beauty of the times";
+//	private static final String TITLE2 = "Beauty of the times";
 	private static final String NONEXIST_USER = "jokes on you";
-	private boolean isDeleted = false;
+//	private boolean isDeleted = false;
 	private boolean isSaved = false;
 	 @BeforeEach
 	    public void setMockOutput() {
@@ -124,7 +119,7 @@ public class TestServiceAddress {
 		
 		Address address = null;
 		String error = "";
-		User user = null;
+//		User user = null;
 		try{
 			
 			address = addressService.createAddress("jake",ADDRESS, ADDRESS2, "MONTREAL", "QUEBEC", "CANADA", "H4C2C4");
@@ -253,7 +248,7 @@ public class TestServiceAddress {
 	@Test
 	public void testDeleteAddress() {
 		
-		Integer addressID = null;
+//		Integer addressID = null;
 		boolean isDeleted = false;
 		
 		try {

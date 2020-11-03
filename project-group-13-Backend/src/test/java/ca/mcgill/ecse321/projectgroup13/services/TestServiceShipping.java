@@ -1,18 +1,15 @@
 package ca.mcgill.ecse321.projectgroup13.services;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.lenient;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +19,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.projectgroup13.dao.AddressRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
@@ -34,12 +28,10 @@ import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
-import ca.mcgill.ecse321.projectgroup13.model.OrderStatus;
-import ca.mcgill.ecse321.projectgroup13.model.Payment;
 import ca.mcgill.ecse321.projectgroup13.model.Shipment;
 import ca.mcgill.ecse321.projectgroup13.model.ShipmentStatus;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
+
 public class TestServiceShipping {
 	@Mock
 	private UserRepository userRepository;
@@ -68,10 +60,10 @@ public class TestServiceShipping {
 	private static final String USER_PASSWORD= "Thatguy123#";
 	private static final String USER_EMAIL= "person1@gmail.com";
 	
-	private static final String USERNAME2 = "person2";
-	private static final String USER_PASSWORD2= "Thatgirl123#";
-	private static final String USER_EMAIL2= "person2@gmail.com";
-	private static final String ARTWORK_TITLE= "BEAUTY";
+//	private static final String USERNAME2 = "person2";
+//	private static final String USER_PASSWORD2= "Thatgirl123#";
+//	private static final String USER_EMAIL2= "person2@gmail.com";
+//	private static final String ARTWORK_TITLE= "BEAUTY";
 	private static final String COUNTRY= "CANADA";
 	private static final String CITY= "MONTREAL";
 	private static final Integer ARTWORK_ID= 1234;
@@ -541,10 +533,10 @@ public class TestServiceShipping {
 	 @Test
 	 public void testEditShipmentStatusNullInput() {
 	 	//assertEquals(0, service.getAllPayments().size());
-	 	Shipment shipment = null;
+//	 	Shipment shipment = null;
 		
 	 	try {
-	 		shipment = shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("2020-12-31"),Time.valueOf("14:00:00"));   
+	 		shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("2020-12-31"),Time.valueOf("14:00:00"));   
 	 		shipmentService.editShipmentStatus(null, ShipmentStatus.Delivered);
 	 	}catch (IllegalArgumentException e) {
 	 		error = e.getMessage();
