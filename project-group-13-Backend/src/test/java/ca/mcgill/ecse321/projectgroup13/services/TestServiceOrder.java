@@ -245,6 +245,7 @@ public class TestServiceOrder {
 		
 		assertEquals(orderService.getOrdersFromUser(user).size(),2);
 	}
+
 	
 	/**
      * test get most recent order for a user
@@ -264,6 +265,7 @@ public class TestServiceOrder {
 	/**
      * test deleting a given order
      */
+
 	@Test
 	public void testDeleteOrder() {
 		boolean isDeleted = false;

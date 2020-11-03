@@ -6,25 +6,27 @@ yellow=$(tput setaf 3)
 red=$(tput setaf 1)
 powder_blue=$(tput setaf 153)
 
-username="fF"
-username2="edd"
+#usernames used to create users during test
+username="aaa"
+username2="bbb"
+
 function curl-format() {
-	if [[ ! -z "$1" ]]
+	if [[ ! -z "$1" ]]	#Only run if parameters are given to the function
 	then
-		if [[ ! -z "$5" ]]	#have json body
+		if [[ ! -z "$5" ]]	#Check for json body
 		then
-			currentLine=$(curl -i -s -H "Content-Type: application/json" --data $5 $2 "$3")
+			currentLine=$(curl -i -s -H "Content-Type: application/json" --data $5 $2 "$3") # if json body
 		else
-			currentLine=$(curl -i -s $2 "$3")
+			currentLine=$(curl -i -s $2 "$3") # if no json body
 		fi
-		statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")
-		printf "%s\t%s\n" "${powder_blue}RETURN STATUS CODE: [${yellow}$statusCode${powder_blue}]${normal}" "${blue}$1${normal}"
-		#currentLine=$(echo  "$currentLine" | grep -o "{.*")
-		currentLine=$(echo  "$currentLine" | awk 'c&&!--c;/Date:/{c=2}')
+		statusCode=$(echo  "$currentLine" | grep -o "HTTP/.*" | cut -f2- -d: | xargs | grep  -o "[0-9]*$")  #get HTML return status code
+		printf "%s\t%s\n" "${powder_blue}RETURN STATUS CODE: [${yellow}$statusCode${powder_blue}]${normal}" "${blue}$1${normal}" #print return status code and description of request
+		
+		currentLine=$(echo  "$currentLine" | awk 'c&&!--c;/Date:/{c=2}') #parse and print HTML response
 		printf "$currentLine\n\n\n"
-		if [[ ! -z "$4" ]]	#need to save variable
+		if [[ ! -z "$4" ]]	#Check whether we need to parse for any Integer data in the response (i.e: object IDs)
 		then
-			tempVar=$(echo  "$currentLine" | grep -o "$4.*" | cut -f2- -d: | grep  -o "^[0-9]*")
+			tempVar=$(echo  "$currentLine" | grep -o "$4.*" | cut -f2- -d: | grep  -o "^[0-9]*") #store data in temporary global variable 
 		fi
 	fi
 }
@@ -33,7 +35,7 @@ function curl-format() {
 curl-format "create user 1" "-X POST" "http://localhost:8080/newuser?username=$username&email=$username@no.com&password=passwor1dfd"
 
 #create user 2
-curl-format "create user 2" "-X POST" "http://localhost:8080/newuser?username=$username2&email=$username@not.com&password=passwor1dfd"
+curl-format "create user 2" "-X POST" "http://localhost:8080/newuser?username=$username2&email=$username2@no.com&password=passwor1dfd"
 
 #create artwork and store artworkID
 curl-format "create artwork and store artworkID" "-X POST" "http://localhost:8080/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
@@ -67,8 +69,9 @@ curl-format "get order from orderId" "-X GET" "http://localhost:8080/user/$usern
 curl-format "create payment and store paymentId" "-X POST" "http://localhost:8080/order/$orderID/pay" "paymentID" "@payment.json"
 paymentID=$tempVar
 
-printf "%s\n" "${blue}sleep for a second so that next order has a different time${normal}"
+printf "%s\n" "${blue}sleep for a second so that the next order's payment has a different time${normal}"
 sleep 2
+printf "\n"
 
 #create payment for order 2
 curl-format "create payment for other order and store paymentId" "-X POST" "http://localhost:8080/order/$orderID2/pay" "paymentID" "@payment.json"
