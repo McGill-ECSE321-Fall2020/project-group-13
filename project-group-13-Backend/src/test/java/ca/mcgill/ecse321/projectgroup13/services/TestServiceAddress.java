@@ -194,12 +194,12 @@ public class TestServiceAddress {
 		assertEquals(error,"invalid address");
 	}
 	
-	@Test 
+	@Test
 	public void testGetAddressByAddressID() {
 		Address add = null;
 		try {
 			add = addressService.getAddressById(ADDRESS_ID);
-			
+
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
