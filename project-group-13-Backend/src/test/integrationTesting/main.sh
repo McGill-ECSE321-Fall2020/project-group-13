@@ -36,7 +36,7 @@ curl-format "create user 1" "-X POST" "http://localhost:8080/newuser?username=$u
 curl-format "create user 2" "-X POST" "http://localhost:8080/newuser?username=$username2&email=$username@not.com&password=passwor1dfd"
 
 #create artwork and store artworkID
-curl-format "create artwork and store artworkID" "-X POST" "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
+curl-format "create artwork and store artworkID" "-X POST" "http://localhost:8080/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
 artworkID=$tempVar
 
 #add artwork to cart
@@ -116,7 +116,7 @@ curl-format "get shipment of order 1" "-X GET" "http://localhost:8080/order/$ord
 curl-format "get artwork by ID" "-X GET" "http://localhost:8080/artwork/$artworkID"
 
 #create a second artwork
-curl-format "create a second artwork" "-X POST" "http://localhost:8080/artwork/new/?artid=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
+curl-format "create a second artwork" "-X POST" "http://localhost:8080/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
 artworkID2=$tempVar
 
 #add artwork to cart

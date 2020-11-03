@@ -479,10 +479,6 @@ public class ProjectGroup13Controller {
 		return shipmentsDto;
 	}
 
-
-
-
-
 // ---------------------------------------------- ADDRESS CONTROLLER METHODS
 
 	/**
@@ -574,7 +570,7 @@ public class ProjectGroup13Controller {
 	@GetMapping(value = { "/user/{username}/cart/{cartId}", "/user/{username}/cart/{cartId}/" })
 	public CartDto getCartDtoById(@PathVariable("cartId") Integer id, @PathVariable("username") String username) throws IllegalArgumentException {
 		Cart cart = null;
-		User user = userService.getUserByUsername(username);
+		User user = userService.getUserByUsername(username); 
 		Cart userCart = cartService.getCartFromUser(user);
 		if (userCart.getCartID()==id)
 			cart = userCart;
@@ -662,7 +658,7 @@ public class ProjectGroup13Controller {
 	 * @throws illegalArgumentException
 	 */
 	@PostMapping(value = { "/artwork/new", "/artwork/new/" })
-	public ArtworkDto createArtwork(@RequestParam(name="artid") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
+	public ArtworkDto createArtwork(@RequestParam(name="title") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
 		Artwork art = artworkService.createArtwork(title, artists, worth);
 		return convertToDto(art);
 	}
