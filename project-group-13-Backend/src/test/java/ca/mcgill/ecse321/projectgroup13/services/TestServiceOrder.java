@@ -31,7 +31,9 @@ import java.util.*;
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
+import ca.mcgill.ecse321.projectgroup13.model.Address;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
+import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.OrderStatus;
 import ca.mcgill.ecse321.projectgroup13.model.Payment;
@@ -61,11 +63,92 @@ public class TestServiceOrder {
 	private static final int ORDER_ID = 852963;
 	private static final int ORDER_ID2 = 6484526;
 	private static final User INVALID_USER = new User();
+	private static final String USERNAME = "person1";
+	private static final String USER_PASSWORD= "Thatguy123#";
+	private static final String USER_EMAIL= "person1@gmail.com";
+	
+	private static final String USERNAME2 = "person2";
+	private static final String USER_PASSWORD2= "Thatgirl123#";
+	private static final String USER_EMAIL2= "person2@gmail.com";
+	private static final Integer ORDERID= 999;
+	private static final Integer ADDRESS_ID= 111;
+	private static Integer CART_ID = 12342;
+	private static final String COUNTRY= "CANADA";
+	private static final String CITY= "MONTREAL";
+	private static final Integer SHIPMENTID = 200;
 	private String error = "";
 	@BeforeEach
 	public void setMockOutput() {
 		MockitoAnnotations.initMocks(this);
-		
+		lenient().when(userRepo.findUserByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(USERNAME)) {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				User artist2 = new User();
+				artist2.setUsername(USERNAME2);
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				Artwork artwork2 = new Artwork();
+			
+				artwork2.setArtworkID(ARTWORK_ID2);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				HashSet<Order> setOrder = new HashSet<Order>();
+				
+				
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				setOrder.add(order);
+				user.setOrder(setOrder);
+				order.setOrderStatus(OrderStatus.PaymentPending);
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				Cart cart = new Cart();
+				cart.setCartID(CART_ID);
+				cart.setUser(user);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork2);
+				sets.add(artwork);
+				cart.setArtwork(sets);
+				user.setArtwork(sets);
+				user.setCart(cart);
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artistss.add(artist2);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+				artwork2.setArtist(artistss);
+				return user;
+			} else if (invocation.getArgument(0).equals(USERNAME2)){
+				User user = new User();
+				user.setUsername(USERNAME2);
+				user.setEmail(USER_EMAIL2);
+				user.setPassword(USER_PASSWORD2);
+				return user;
+			} else {
+				return null;
+			}
+		});
 		lenient().when(orderRepo.findOrdersByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 			if(invocation.getArgument(0).equals(INVALID_USER)) return null;
 			Set<Order> orders = new HashSet<Order>();
@@ -104,6 +187,10 @@ public class TestServiceOrder {
 		lenient().when(paymentRepo.save(any(Payment.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(orderRepo.save(any(Order.class))).thenAnswer(returnParameterAsAnswer);
 	}
+	
+	/**
+     * Test create order succesfully 
+     */
 	@Test
 	public void testCreateOrderSuccess() {
 		//assertEquals(0, service.getAllPayments().size());
@@ -146,6 +233,10 @@ public class TestServiceOrder {
 		assertTrue(order.getArtwork().contains(art));
 		assertEquals(order.getTotalAmount(),250);
 	}
+	
+	/**
+     * retrieve all orders for a given user
+     */
 	@Test
 	public void testGetOrderFromUser() {
 		Order order = null;
@@ -154,12 +245,16 @@ public class TestServiceOrder {
 		
 		assertEquals(orderService.getOrdersFromUser(user).size(),2);
 	}
+
+	
+	/**
+     * test get most recent order for a user
+     */
 	@Test
 	public void testGetMostRecentOrder() {
 		Order order = null;
 		try {
-			User user= new User();
-			user.setUsername("hub");
+			User user= userRepo.findUserByUsername(USERNAME);
 			order = orderService.getMostRecentOrder(user);
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
@@ -167,6 +262,10 @@ public class TestServiceOrder {
 		assertNotNull(order);
 		assertEquals(order.getOrderID(),222);
 	}
+	/**
+     * test deleting a given order
+     */
+
 	@Test
 	public void testDeleteOrder() {
 		boolean isDeleted = false;
@@ -202,6 +301,10 @@ public class TestServiceOrder {
 		assertTrue(isDeleted);
 		assertNull(art.getOrder());
 	}
+	
+	/**
+     * test deleting when passed a null order
+     */
 	@Test
 	public void testDeleteNullOrder() {
 		
@@ -214,6 +317,11 @@ public class TestServiceOrder {
 		
 		assertEquals(error,"order cannot be null");
 	}
+	
+	
+	/**
+     * test removing from a given order
+     */
 	@Test
 	public void testRemoveFromOrder() {
 		
@@ -233,6 +341,10 @@ public class TestServiceOrder {
 		
 		assertTrue(order.getArtwork().isEmpty());
 	}
+	
+	/**
+     * test removing many items from a given order
+     */
 	@Test
 	public void testRemoveSetFromOrder() {
 		
@@ -262,6 +374,9 @@ public class TestServiceOrder {
 		assertEquals(order.getArtwork().iterator().next().getArtworkID(),ARTWORK_ID3);
 	}
 	
+	/**
+     * test adding items to an existing order
+     */
 	@Test
 	public void testAddToOrder() {
 		
@@ -281,6 +396,10 @@ public class TestServiceOrder {
 		
 		assertEquals(order.getArtwork().size(),1);
 	}
+	
+	/**
+     * test adding multiple items to an existing order
+     */
 	@Test
 	public void testAddSetToOrder() {
 		
@@ -305,6 +424,11 @@ public class TestServiceOrder {
 		assertEquals(art.getOrder(),order);
 		assertEquals(art2.getOrder(),order);
 	}
+	
+	
+	/**
+     * test adding payment to a given order succesfully adds payment to order
+     */
 	@Test
 	public void testAddPaymentToOrder() {
 		
@@ -322,9 +446,13 @@ public class TestServiceOrder {
 		assertEquals(order.getPayment(),pay);
 	}
 	
+	
+	/**
+     * test add a shipment to a given order does not throw any exceptions
+     */
 	@Test
 	public void testAddShipmentToOrder() {
-		
+		String error = null;
 		Order order = new Order();
 		order.setOrderStatus(OrderStatus.Placed);
 		Shipment ship = new Shipment();
@@ -335,15 +463,23 @@ public class TestServiceOrder {
 		}catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
-		
+		assertNull(error);
 		assertEquals(order.getShipment(),ship);
 		assertEquals(order.getOrderStatus(),OrderStatus.Shipped);
 	}
+	
+	/**
+     *test editing the delivery for a given order with valid arguments returns true
+     */
 	@Test
 	public void testEditIsDelivery() {
-		orderService.editIsDelivery(ORDER_ID, true);
+		assertTrue(orderService.editIsDelivery(ORDER_ID, true));
 		
 	}
+	
+	/**
+     *test creating order when passing a null user throws exception
+     */
 	@Test
 	public void testNullUserCreateOrder() {
 		try {
@@ -353,6 +489,10 @@ public class TestServiceOrder {
 		}
 		assertNotEquals(error,"");
 	}
+	
+	/**
+     *test passing null artwork throws exception
+     */
 	@Test
 	public void testNullArtworkCreateOrder() {
 		try {
@@ -371,6 +511,10 @@ public class TestServiceOrder {
 		}
 		assertNotEquals(error,"");
 	}
+	
+	/**
+     *test passing null user were getting orders throws exception
+     */
 	@Test
 	public void testNullUserGetOrderFromUser() {
 		try {
@@ -380,6 +524,7 @@ public class TestServiceOrder {
 		}
 		assertNotEquals(error,"");
 	}
+	
 	@Test
 	public void testNullUserGetMostRecentOrder() {
 		try {
