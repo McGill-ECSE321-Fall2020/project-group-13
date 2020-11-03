@@ -84,7 +84,11 @@ public class ShipmentService {
     }
 
 
-    //get user of shipment
+    /**
+     * get user of shipment
+     * @param shipmentID
+     * @return
+     */
     @Transactional
     public User getUserOfShipment(int shipmentID){
         Shipment shipment = shipmentRepo.findShipmentByShipmentID(shipmentID);
@@ -93,17 +97,25 @@ public class ShipmentService {
     }
 
 
-    //get address of shipment
+    /**
+     * get address of shipment
+     * @param shipmentID
+     * @return
+     */
     public Address getAddressOfShipment(int shipmentID){
         Shipment shipment = shipmentRepo.findShipmentByShipmentID(shipmentID);
         Address address = shipment.getAddress();
         return address;
     }
 
-    //get shipment of a single order
+    /**
+     * get shipment of an order
+     * @param order
+     * @return
+     */
     @Transactional
     public Shipment getShipmentOfOrder(Order order) {
-        if (order == null||orderRepo.findOrderByOrderID(order.getOrderID())==null) 														//must check parameter is not null
+        if (order == null||orderRepo.findOrderByOrderID(order.getOrderID())==null) 					//must check parameter is not null
             throw new IllegalArgumentException("invalid order");
 
         Shipment shipment = shipmentRepo.findShipmentByOrder(order);
@@ -120,7 +132,7 @@ public class ShipmentService {
      */
     @Transactional
     public Set<Shipment> getShipmentsOfUser(User user) {
-        if (user == null||userRepo.findUserByUsername(user.getUsername())==null) 														//must check parameter is not null
+        if (user == null||userRepo.findUserByUsername(user.getUsername())==null)                     //must check parameter is not null
             throw new IllegalArgumentException("invalid user");
 
         Set<Shipment> shipments = new HashSet<Shipment>();

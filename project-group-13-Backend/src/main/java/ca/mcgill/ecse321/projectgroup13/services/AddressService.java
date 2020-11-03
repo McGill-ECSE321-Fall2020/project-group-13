@@ -30,9 +30,7 @@ public class AddressService {
 	 * @param postalCode
 	 * @return
 	 */
-	
 	@Transactional
-		//TODO: validate parameters
 	public Address createAddress(String username, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		if(username==null||streetAddress1==null||city==null|province==null||country==null||postalCode==null) throw new IllegalArgumentException("missing parameter");
 		if(userRepo.findUserByUsername(username)==null) throw new IllegalArgumentException("invalid user");
@@ -54,9 +52,7 @@ public class AddressService {
 	 * @param addressID
 	 * @return
 	 */
-	
 	@Transactional
-	//TODO: cannot get user of address
 	public User getUserOfAddress(Integer addressID) {
 		Address address = addressRepo.findAddressByAddressID(addressID);
 		if(address == null) throw new IllegalArgumentException("invalid address");
@@ -66,11 +62,9 @@ public class AddressService {
 	
 	/**
 	 * GET address object given addressID
-	 * 
 	 * @param addressID
 	 * @return
 	 */
-	
 	@Transactional
 	public Address getAddressById(Integer addressID) {
 		if(addressID == null)
@@ -81,7 +75,6 @@ public class AddressService {
 	
 	/**
 	 * GET all addresses given userID
-	 * 
 	 * @param username
 	 * @return
 	 */
@@ -94,19 +87,14 @@ public class AddressService {
 	
 	/**
 	 * DELETE address given an addressID
-	 * 
 	 * @param addressId
 	 * @return
 	 */
-	
 	@Transactional
 	public boolean deleteAddress(int addressId) {
-		
 		Address address = addressRepo.findAddressByAddressID(addressId);
-		
 		//Removing user association
 		User addressUser = address.getUser();
-		
 		//Getting set of user addresses, remove address, set new list
 		Set<Address> addressUserAddresses = addressUser.getAddress();
 		addressUserAddresses.remove(address);
@@ -118,9 +106,7 @@ public class AddressService {
 	/**
 	 * UPDATE details of an existing address
 	 */
-	
-	@Transactional	
-
+	@Transactional
 	public void updateAddress(Integer addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		if (addressRepo.findAddressByAddressID(addressID)==null) throw new IllegalArgumentException("invalid address");
 		

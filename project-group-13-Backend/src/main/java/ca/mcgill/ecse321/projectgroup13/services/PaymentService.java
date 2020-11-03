@@ -66,6 +66,7 @@ public class PaymentService {
 		payment = paymentRepo.save(payment);
 		return payment;
 	}
+
     /**
      * Calcualtes amount allocated to gallery in dollars
      * @param date
@@ -83,6 +84,7 @@ public class PaymentService {
 		}
 		return result;
 	}
+
 	/**
 	 * see payments associated with a customer
 	 * @param user
@@ -98,6 +100,7 @@ public class PaymentService {
 		}
 		return result;
 	}
+
 	/**
 	 * get payments associated with artist, including commision
 	 * @param user
@@ -114,6 +117,7 @@ public class PaymentService {
 		}
 		return result;
 	}
+
 	/**
 	 * get payment
 	 * @param paymentID

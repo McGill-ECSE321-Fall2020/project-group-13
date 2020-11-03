@@ -7,7 +7,7 @@ import ca.mcgill.ecse321.projectgroup13.dto.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,6 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import ca.mcgill.ecse321.projectgroup13.services.exception.*;
-import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
 /**
  * Service to handle login and creation of user account.
@@ -54,7 +53,7 @@ public class UserService {
      * @param username
      * @param email
      * @param password
-     * @return
+     * @return User
      * @throws RegistrationException
      */
     @Transactional
@@ -83,7 +82,12 @@ public class UserService {
     
     
     //TODO make class to do password stuff
-    
+
+    /**
+     * service method to reset user password
+     * @param username
+     * @return
+     */
     @Transactional
     public User resetPassword(String username) {
         User user = userRepository.findUserByUsername(username);
@@ -143,6 +147,11 @@ public class UserService {
     }
 
 
+    /**
+     * service method th=o get a user by username
+     * @param username
+     * @return User
+     */
     @Transactional
     public User getUserByUsername(String username){
         User user = userRepository.findUserByUsername(username);
@@ -168,17 +177,19 @@ public class UserService {
                 return user;
     }
 
-    @Transactional
-    public String login(LoginDto loginDto) throws LoginException {
-    	//must validate login information
-    	//check if username exists
-    	User user = userRepository.findUserByUsername(loginDto.getUsername());
-    	if (user==null ) throw new LoginException("invalid username");
-    	//TODO must implement the password encoder
-    	//if (user.getPassword()!=passwordEncoder.encode(loginDto.getPassword())) throw new LoginException("invalid password");
-    	if (user.getPassword()!=loginDto.getPassword()) throw new LoginException("invalid password");
-    	return createToken(user);
-    }
+    //TODO: implement login for later
+//    @Transactional
+//    public String login(LoginDto loginDto) throws LoginException {
+//    	//must validate login information
+//    	//check if username exists
+//    	User user = userRepository.findUserByUsername(loginDto.getUsername());
+//    	if (user==null ) throw new LoginException("invalid username");
+//    	//TODO must implement the password encoder
+//    	//if (user.getPassword()!=passwordEncoder.encode(loginDto.getPassword())) throw new LoginException("invalid password");
+//    	if (user.getPassword()!=loginDto.getPassword()) throw new LoginException("invalid password");
+//    	return createToken(user);
+//    }
+
     /**
      * service method to edit user bio
      * @param username
@@ -222,9 +233,9 @@ public class UserService {
     	return token;
     }
 
+
     /**
      * Generates a strong temporary password to be used in case of password reset.
-     *
      * @return randomly generated password
      */
     //TODO: should this be a public method?
@@ -241,23 +252,11 @@ public class UserService {
 
 
 
-//    //To reset user password
-//    @Transactional
-//    public String resetPassword(String username) throws RegistrationException {
-//        User user = userRepository.findUserByUsername(username);
-//        if(user == null) throw new RegistrationException("No user found");
-//        //String tmpPassword = randomPassword();  //MUST COMPLETE IMPLEMENTATION
-//        String tmpPassword = "Mister1";
-//        user.setPassword(tmpPassword);
-//        return tmpPassword;
-//    }
-
-
 
 
     //*************** HELPER METHODS ***************//
 
-    /*
+    /**
      * Checks for a valid email using regex from
      * https://stackoverflow.com/questions/8204680/java-regex-email
      *
