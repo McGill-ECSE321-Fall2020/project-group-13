@@ -655,39 +655,7 @@ public class TestServiceUser {
 		assertEquals(error,"invalid email");	
 	}
 	
-	@Test
-	public void testLoginSuccess() {
-		LoginDto dto = new LoginDto();
-		dto.setUsername(USERNAME);
-		dto.setPassword(USER_PASSWORD);
-		String token = "";
-		try {
-			
-			token = userService.login(dto);
-		}catch (Exception e) {
-			error = e.getMessage();
-			System.out.println(error);
-		}
-		assertNotEquals(token,"");
-		
-	}
 	
-	@Test
-	public void testLoginInvalidPassword() {
-		LoginDto dto = new LoginDto();
-		dto.setUsername(USERNAME);
-		dto.setPassword(USER_PASSWORD2);
-		String token = "";
-		try {
-			
-			token = userService.login(dto);
-		}catch (Exception e) {
-			error = e.getMessage();
-			assertEquals(error, "invalid password");
-		}
-		assertEquals(token,"");
-		
-	}
 	@Test
 	public void testEditBio() {
 		String bio = "I am a busy artist that programs and writes readable tests";
