@@ -124,20 +124,8 @@ public class AddressService {
 	public void updateAddress(Integer addressID, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode) {
 		if (addressRepo.findAddressByAddressID(addressID)==null) throw new IllegalArgumentException("invalid address");
 		
-		if (addressID == null)
-            throw new IllegalArgumentException("addressID cannot be null");
-        if (streetAddress1 == null)
-            throw new IllegalArgumentException("streetAddress1 cannot be null");
-        if (streetAddress2 == null)
-            throw new IllegalArgumentException("streetAddress2 cannot be null");
-        if (city == null)
-            throw new IllegalArgumentException("city cannot be null");
-        if (province == null)
-            throw new IllegalArgumentException("province cannot be null");
-        if (country == null)
-            throw new IllegalArgumentException("country cannot be null");
-        if (postalCode == null)
-            throw new IllegalArgumentException("postalCode cannot be null");
+		if (addressID == null || streetAddress1 == null || streetAddress2 == null || city == null || province == null || country == null || postalCode == null)
+            throw new IllegalArgumentException("parameters cannot be null");
 		
 		Address oldAddress = addressRepo.findAddressByAddressID(addressID);
 
