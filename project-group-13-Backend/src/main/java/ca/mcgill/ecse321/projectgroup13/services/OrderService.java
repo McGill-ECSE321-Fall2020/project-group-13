@@ -305,10 +305,11 @@ public class OrderService {
 	 * @param isDelivery
 	 */
 	@Transactional
-	public void editIsDelivery(int orderId, boolean isDelivery){
+	public Boolean editIsDelivery(int orderId, boolean isDelivery){
 		Order order = orderRepository.findOrderByOrderID(orderId);
 		order.setShipmentMethodIsDelivery(isDelivery);
 		order = orderRepository.save(order);
+		return true;
 	}
 
 
