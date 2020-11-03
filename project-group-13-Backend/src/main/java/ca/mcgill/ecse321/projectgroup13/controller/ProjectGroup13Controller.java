@@ -386,12 +386,6 @@ public class ProjectGroup13Controller {
 		return convertToDto(newShipment);
 	}
 
-
-
-	//public Shipment getShipment(int shipmentID)
-	
-	//public User getUserOfShipment(int shipmentID)
-	
 	//public Shipment getShipmentOfOrder(Order order)
 	
 	//public Set<Shipment> getShipmentsOfUser(User user)
@@ -409,13 +403,6 @@ public class ProjectGroup13Controller {
 		}
 		return shipmentsDto;
 	}
-	
-	//public Shipment editShipmentStatus (Shipment shipment, ShipmentStatus status)
-	
-	//public Shipment editShipmentEstimatedDate (Shipment shipment, Date estimatedDate)
-	
-	//public Shipment editShipmentEstimatedTime (Shipment shipment, Time estimatedTime)
-
 
 
 	// ---------------------------------------------- ADDRESS CONTROLLER METHODS
@@ -431,23 +418,6 @@ public class ProjectGroup13Controller {
 		AddressDto addressDto = convertToDto(addressService.createAddress(username, address.getStreetAddress1(), address.getStreetAddress2(), address.getCity(), address.getProvince(), address.getCountry(), address.getPostalCode()));
 		return addressDto;
 	}
-
-	//public User getUserOfAddress(Integer addressID)
-	
-	//public Address getAddressById(Integer addressID)
-	
-	//public boolean deleteAddress(int addressId)
-//	/**
-//	 * RESTful service that deletes address by id
-//	 */
-//	@DeleteMapping(value = {"/user/{userId}/address/{addressId}/delete", "//user/{userId}/address/{addressId}/delete/"})
-//	public boolean deleteAddressFromUser(@PathVariable(name = "addressId") Integer addressId) {
-//		if (addressId == null) {
-//			throw new IllegalArgumentException("There is no such Address Id!");
-//		} else {
-//			return addressService.deleteAddress(addressId);
-//		}
-//	}
 	
 	//public void updateAddress(Address oldAddress, String streetAddress1, String streetAddress2, String city, String province, String country, String postalCode)
 	/**
@@ -491,20 +461,10 @@ public class ProjectGroup13Controller {
 			addressesDto.add(convertToDto(address));
 		}
 		return addressesDto;
-	}
+	} 
 	
 // ---------------------------------------------- CART CONTROLLER METHODS
 
-
-
-//	//public Cart createCart(User user)
-//	@PostMapping(value = { "/user/{username}/new/cart/empty", "/user/{username}/new/cart/empty/" })
-//	public CartDto createCart(@PathVariable String username){
-//		User user = userService.getUserByUsername(username);
-//		Cart cart = cartService.createCart(user);
-//		CartDto cartDto = convertToDto(cart);
-//		return cartDto;
-//	}
 
 	//public boolean addToCart(Cart cart, Artwork art)
 	@PutMapping(value = { "/user/{username}/edit+/cart", "/user/{username}/edit+/cart/" })
@@ -626,16 +586,7 @@ public class ProjectGroup13Controller {
 	
 	//public Set<Artwork> getArtworksOfArtist(String username)
 	
-	//public void editArtworkDescription(Artwork artwork, String description)
-	//public void editArtwork_title(Artwork artwork, String title)
-	//public void editArtwork_creationDate(Artwork artwork, String date)
-	//public void editArtwork_dimensions(Artwork artwork, String dimensions)
-	//public void editArtwork_medium(Artwork artwork, String medium)
-	//public void editArtwork_collection(Artwork artwork, String collection)
-	//public void editArtwork_imageURL(Artwork artwork, String image)
-	//public void setArtwork_artworkSold(Artwork artwork)
-	//public void editArtwork_isOnPremise(Artwork artwork, boolean onPremise)
-	//public void editArtwork_worth(Artwork artwork, double worth)
+
 	@PutMapping(value={"/artwork/{id}/update", "/artwork/{id}/update/"})
 	public ArtworkDto updateArtwork(@PathVariable("id") Integer artId, @RequestParam(name="description", required=false) String description,
 			@RequestParam(name="title", required=false) String title, @RequestParam(name="creationDate", required=false) String creationDate,

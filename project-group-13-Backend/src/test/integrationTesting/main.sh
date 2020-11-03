@@ -60,9 +60,6 @@ orderID2=$tempVar
 #get orders from user
 curl-format "get orders from user" "-X GET" "http://localhost:8080/user/$username/orders"
 
-#get orders from user
-curl-format "get orders from user" "-X GET" "http://localhost:8080/user/$username/orders"
-
 #get order from orderId
 curl-format "get order from orderId" "-X GET" "http://localhost:8080/user/$username/order/$orderID"
 

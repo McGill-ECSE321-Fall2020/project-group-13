@@ -122,12 +122,10 @@ public class CartService {
 	public boolean deleteCart(int cartID) {
 		User user = cartRepository.findCartByCartID(cartID).getUser();
 		user.setCart(null);
-		try{
-			cartRepository.delete(cartRepository.findCartByCartID(cartID));
-			return true;
-		}catch(Exception e){
-			return false;
-		}
+		
+		cartRepository.delete(cartRepository.findCartByCartID(cartID));
+		return true;
+		
 	}
 	
 	/**
@@ -142,12 +140,9 @@ public class CartService {
 		
 		cart.getUser().setCart(null);
 		cart.setUser(null);
-		try{
-			cartRepository.delete(cart);
-			return true;
-		}catch(Exception e){
-			return false;
-		}
+
+		cartRepository.delete(cart);
+		return true;
 	}
 	
 	/**
@@ -194,31 +189,6 @@ public class CartService {
 	}
 	
 	/**
-	 * add a collection of artwork to a cart
-	 * @param cart cart to add to 
-	 * @param art collection to add to cart
-	 * @return whether the operation was successful
-	 */
-	@Transactional
-	public Set<Artwork> addToCart(Cart cart, Set<Artwork> art) {
-		if (cart == null)															//must check parameter is not null
-			throw new IllegalArgumentException("cart cannot be null");
-		if (art == null)															//must check parameter is not null
-			throw new IllegalArgumentException("set<artwork> cannot be null");
-		//make sure all artwork are valid
-		
-		//this will only add valid artworks
-		Set<Artwork> filteredSet = art.stream()
-                .filter(s -> artworkRepository.findArtworkByArtworkID(s.getArtworkID())!=null)
-                .collect(Collectors.toSet());
-		
-		
-		updateTotal(cart);
-		cartRepository.save(cart);
-		return filteredSet;
-	}
-	
-	/**
 	 * add art to a cart
 	 * @param cart cart to add to
 	 * @param art art to add to cart
@@ -226,10 +196,8 @@ public class CartService {
 	 */
 	@Transactional
 	public boolean addToCart(Cart cart, Artwork art) {
-		if (cart == null) 															//must check parameter is not null
-			throw new IllegalArgumentException("cart cannot be null");
-		if (art == null) 															//must check parameter is not null
-			throw new IllegalArgumentException("artwork cannot be null");
+		if (cart == null || art == null) 															//must check parameter is not null
+			throw new IllegalArgumentException("arguments cannot be null");
 		
 		boolean b = cart.getArtwork().add(art);
 		updateTotal(cart);
