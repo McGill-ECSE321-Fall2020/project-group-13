@@ -257,7 +257,7 @@ public class TestServiceShipping {
 		});
 		
 		lenient().when(shipmentRepo.findShipmentByOrder(any(Order.class))).thenAnswer((InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(ORDERID)) {
+			if(((Order)invocation.getArgument(0)).getOrderID().equals(ORDERID)) {
 			User user = new User();
 			user.setUsername(USERNAME);
 			user.setEmail(USER_EMAIL);
@@ -293,11 +293,122 @@ public class TestServiceShipping {
 			artwork.setArtist(artistss);
 			
 			Shipment shipment = new Shipment();
+			shipment.setShipmentID(SHIPMENTID);
 			shipment.setAddress(address);
 			shipment.setOrder(order);
 			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
 			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
 			return shipment;
+			} else {
+				return null;
+			}
+			
+		});
+		
+		lenient().when(shipmentRepo.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+			
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Address address = new Address();
+			
+			address.setAddressID(ADDRESS_ID);
+			address.setCity(CITY);
+			address.setCountry(COUNTRY);
+			address.setPostalCode("H4C2C4");
+			address.setUser(user);
+			
+			HashSet<Address> set = new HashSet<Address>();
+			set.add(address);
+			user.setAddress(set);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			HashSet<Order> orders = new HashSet<Order>();
+			orders.add(order);
+			
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> sets = new HashSet<Artwork>();
+			sets.add(artwork);
+			
+			user.setArtwork(sets);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Shipment shipment = new Shipment();
+			shipment.setShipmentID(SHIPMENTID);
+			shipment.setAddress(address);
+			shipment.setOrder(order);
+			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+			
+			
+			
+			
+			HashSet<Shipment> shipments = new HashSet<Shipment>();
+			shipments.add(shipment);
+			return shipments;
+		});
+		lenient().when(orderRepo.findOrdersByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if(((User)invocation.getArgument(0)).getUsername().equals(USERNAME)) {
+			User user = new User();
+			user.setUsername(USERNAME);
+			user.setEmail(USER_EMAIL);
+			user.setPassword(USER_PASSWORD);
+			
+			Address address = new Address();
+			
+			address.setAddressID(ADDRESS_ID);
+			address.setCity(CITY);
+			address.setCountry(COUNTRY);
+			address.setPostalCode("H4C2C4");
+			address.setUser(user);
+			
+			HashSet<Address> set = new HashSet<Address>();
+			set.add(address);
+			user.setAddress(set);
+			
+			Order order = new Order();
+			order.setOrderID(ORDERID);
+			order.setUser(user);
+			
+			HashSet<Order> orders = new HashSet<Order>();
+			orders.add(order);
+			
+			
+			Artwork artwork = new Artwork();
+			artwork.setArtworkID(ARTWORK_ID);
+			
+			
+			HashSet<Artwork> sets = new HashSet<Artwork>();
+			sets.add(artwork);
+			
+			user.setArtwork(sets);
+			
+			HashSet<User> artistss = new HashSet<User>();
+			artistss.add(user);
+			artwork.setArtist(artistss);
+			
+			Shipment shipment = new Shipment();
+			shipment.setShipmentID(SHIPMENTID);
+			shipment.setAddress(address);
+			shipment.setOrder(order);
+			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+			
+			
+			
+			return orders;
 			} else {
 				return null;
 			}
@@ -525,7 +636,8 @@ public class TestServiceShipping {
 		Shipment shipment = null;
 		String error = null;
 	 	try {
-	 		shipment=shipmentService.getShipmentOfOrder(orderRepo.findOrderByOrderID(ORDERID));
+	 		Order order = orderRepo.findOrderByOrderID(ORDERID);
+	 		shipment=shipmentService.getShipmentOfOrder(order);
 	 	}catch (IllegalArgumentException e) {
 	 		error = e.getMessage();
 	 		System.out.print(error);
