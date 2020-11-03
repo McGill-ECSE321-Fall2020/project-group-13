@@ -38,6 +38,7 @@ public class TestCartService {
 	private static final String COUNTRY= "CANADA";
 	private static final String CITY= "MONTREAL";
 	private static final Integer ARTWORK_ID= 1234;
+	private static final Integer ARTWORK_ID2= 1243724;
 	private static final Integer ORDERID= 999;
 	private static final Integer ADDRESS_ID= 111;
 
@@ -161,7 +162,8 @@ public class TestCartService {
 			return order;
 		});
 		
-		lenient().when(artworkRepo.findArtworkByArtworkID(ARTWORK_ID)).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(artworkRepo.findArtworkByArtworkID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(ARTWORK_ID)) {
 			User user = new User();
 			user.setUsername(USERNAME);
 			user.setEmail(USER_EMAIL);
@@ -185,6 +187,36 @@ public class TestCartService {
 			artwork.setArtist(artistss);
 			
 			return artwork;
+			} else if ((invocation.getArgument(0).equals(ARTWORK_ID2)) ){
+				User user = new User();
+				user.setUsername(USERNAME2);
+				user.setEmail(USER_EMAIL2);
+				user.setPassword(USER_PASSWORD);
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID2);
+				
+				
+				HashSet<Artwork> set = new HashSet<Artwork>();
+				set.add(artwork);
+				
+				user.setArtwork(set);
+				
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artwork.setArtist(artistss);
+				
+				return artwork;
+				
+				
+				
+			} else {
+				return null;
+			}
 		});
 		
 		lenient().when(artworkRepo.findArtworkByArtist(USERNAME)).thenAnswer((InvocationOnMock invocation) -> {
@@ -491,6 +523,40 @@ public void testInvalidArtworkAddSetValid() {
 		
 		assertEquals(error, null);
 		assertNotNull(cart);
+	}
+	
+	@Test
+	public void testAddToCart() {
+		Cart cart = null;
+		
+		String error = null;
+		Cart getCart = cartRepo.findCartByCartID(CART_ID);
+		Artwork artwork = artworkRepo.findArtworkByArtworkID(ARTWORK_ID2);
+		try {
+			cart = cartService.addToCart(getCart, artwork);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, null);
+		assertTrue(cart.getArtwork().contains(artwork));
+		
+	}
+	
+	
+	@Test
+	public void testInvalidGetCartFromUser() {
+		Cart cart = null; 
+		String error = null;
+		User user = userRepo.findUserByUsername("otherGuyTime");
+		try {
+			cart = cartService.getCartFromUser(user);
+		} catch (Exception e) {
+			error=e.getMessage();
+		}
+		
+		assertEquals(error, "arguments cannot be null");
+		assertNull(cart);
 	}
 	
 	@Test
