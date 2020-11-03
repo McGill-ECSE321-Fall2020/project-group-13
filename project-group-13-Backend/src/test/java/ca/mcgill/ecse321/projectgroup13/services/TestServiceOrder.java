@@ -150,7 +150,67 @@ public class TestServiceOrder {
 			}
 		});
 		lenient().when(orderRepo.findOrdersByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
-			if(invocation.getArgument(0).equals(INVALID_USER)) return null;
+			if(invocation.getArgument(0).equals(INVALID_USER)) { return null; 
+			} else if (invocation.getArgument(0).equals(USERNAME)) {
+				User user = new User();
+				user.setUsername(USERNAME);
+				user.setEmail(USER_EMAIL);
+				user.setPassword(USER_PASSWORD);
+				User artist2 = new User();
+				artist2.setUsername(USERNAME2);
+				Address address = new Address();
+				
+				address.setAddressID(ADDRESS_ID);
+				address.setCity(CITY);
+				address.setCountry(COUNTRY);
+				address.setPostalCode("H4C2C4");
+				address.setUser(user);
+				
+				Artwork artwork2 = new Artwork();
+			
+				artwork2.setArtworkID(ARTWORK_ID2);
+				
+				HashSet<Address> set = new HashSet<Address>();
+				set.add(address);
+				user.setAddress(set);
+				
+				HashSet<Order> setOrder = new HashSet<Order>();
+				
+				
+				
+				Order order = new Order();
+				order.setOrderID(ORDERID);
+				order.setUser(user);
+				setOrder.add(order);
+				user.setOrder(setOrder);
+				order.setOrderStatus(OrderStatus.PaymentPending);
+				Artwork artwork = new Artwork();
+				artwork.setArtworkID(ARTWORK_ID);
+				Cart cart = new Cart();
+				cart.setCartID(CART_ID);
+				cart.setUser(user);
+				
+				
+				HashSet<Artwork> sets = new HashSet<Artwork>();
+				sets.add(artwork2);
+				sets.add(artwork);
+				cart.setArtwork(sets);
+				user.setArtwork(sets);
+				user.setCart(cart);
+				HashSet<User> artistss = new HashSet<User>();
+				artistss.add(user);
+				artistss.add(artist2);
+				artwork.setArtist(artistss);
+				
+				Shipment shipment = new Shipment();
+				shipment.setAddress(address);
+				shipment.setOrder(order);
+				shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
+				shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
+				artwork2.setArtist(artistss);
+				return order;
+				
+			}else {
 			Set<Order> orders = new HashSet<Order>();
 			Order order = new Order();
 			Payment payment1 = new Payment();
@@ -167,7 +227,7 @@ public class TestServiceOrder {
 			orders.add(order);
 			orders.add(order2);
 			return orders;
-			
+			}
 		});
 		lenient().when(orderRepo.findOrderByOrderID(any(Integer.class))).thenAnswer((InvocationOnMock invocation) -> {
 			
@@ -246,22 +306,22 @@ public class TestServiceOrder {
 		assertEquals(orderService.getOrdersFromUser(user).size(),2);
 	}
 
-//	
-//	/**
-//     * test get most recent order for a user
-//     */
-//	@Test
-//	public void testGetMostRecentOrder() {
-//		Order order = null;
-//		try {
-//			User user= userRepo.findUserByUsername(USERNAME);
-//			order = orderService.getMostRecentOrder(user);
-//		}catch (IllegalArgumentException e) {
-//			error = e.getMessage();
-//		}
-//		assertNotNull(order);
-//		assertEquals(order.getOrderID(),222);
-//	}
+	
+	/**
+     * test get most recent order for a user
+     */
+	@Test
+	public void testGetMostRecentOrder() {
+		Order order = null;
+		try {
+			User user= userRepo.findUserByUsername(USERNAME);
+			order = orderService.getMostRecentOrder(user);
+		}catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotNull(order);
+		assertEquals(order.getOrderID(),222);
+	}
 	/**
      * test deleting a given order
      */
