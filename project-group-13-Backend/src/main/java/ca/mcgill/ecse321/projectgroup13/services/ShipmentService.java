@@ -131,19 +131,6 @@ public class ShipmentService {
     }
 
 
-    /**
-     * service method to get all the shipments in database
-     * @return
-     */
-    @Transactional
-    public Set<Shipment> getAllShipments() {
-        Set<Shipment> shipments = new HashSet<Shipment>();
-        for (Shipment shipment : shipmentRepo.findAll()) {
-            shipments.add(shipment);
-        }
-        return shipments;
-    }
-
 
     /**
      * service method to edit shipment status

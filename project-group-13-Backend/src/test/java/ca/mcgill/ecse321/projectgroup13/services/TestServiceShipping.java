@@ -59,13 +59,7 @@ public class TestServiceShipping {
 	@Mock
 	private AddressRepository addressRepo;
 	@InjectMocks
-	private UserService userService;
-	@InjectMocks
 	private ShipmentService shipmentService;
-	@InjectMocks
-	private AddressService addressService;
-	@InjectMocks
-	private OrderService orderService;
 
 	
 	private static final int invalidID = 404;
@@ -305,60 +299,6 @@ public class TestServiceShipping {
 			
 		});
 		
-		lenient().when(shipmentRepo.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-			
-			User user = new User();
-			user.setUsername(USERNAME);
-			user.setEmail(USER_EMAIL);
-			user.setPassword(USER_PASSWORD);
-			
-			Address address = new Address();
-			
-			address.setAddressID(ADDRESS_ID);
-			address.setCity(CITY);
-			address.setCountry(COUNTRY);
-			address.setPostalCode("H4C2C4");
-			address.setUser(user);
-			
-			HashSet<Address> set = new HashSet<Address>();
-			set.add(address);
-			user.setAddress(set);
-			
-			Order order = new Order();
-			order.setOrderID(ORDERID);
-			order.setUser(user);
-			
-			HashSet<Order> orders = new HashSet<Order>();
-			orders.add(order);
-			
-			
-			Artwork artwork = new Artwork();
-			artwork.setArtworkID(ARTWORK_ID);
-			
-			
-			HashSet<Artwork> sets = new HashSet<Artwork>();
-			sets.add(artwork);
-			
-			user.setArtwork(sets);
-			
-			HashSet<User> artistss = new HashSet<User>();
-			artistss.add(user);
-			artwork.setArtist(artistss);
-			
-			Shipment shipment = new Shipment();
-			shipment.setShipmentID(SHIPMENTID);
-			shipment.setAddress(address);
-			shipment.setOrder(order);
-			shipment.setEstimatedTimeOfArrival(Time.valueOf("14:00:00"));
-			shipment.setEstimatedDateOfArrival(Date.valueOf("2020-12-20"));
-			
-			
-			
-			
-			HashSet<Shipment> shipments = new HashSet<Shipment>();
-			shipments.add(shipment);
-			return shipments;
-		});
 		lenient().when(orderRepo.findOrdersByUser(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 			if(((User)invocation.getArgument(0)).getUsername().equals(USERNAME)) {
 			User user = new User();
@@ -557,6 +497,7 @@ public class TestServiceShipping {
 	 @Test
 	 public void testEditEstimatedTimeNullInput() {
 	 	//assertEquals(0, service.getAllPayments().size());
+		 String error =null;
 	 	Shipment shipment = null;
 	 	try {
 	 		shipment = shipmentService.createShipment(ORDERID,ADDRESS_ID,Date.valueOf("2020-12-31"),Time.valueOf("14:00:00"));   
@@ -566,7 +507,7 @@ public class TestServiceShipping {
 	 		System.out.print(error);
 	 	}
 	
-	 	assertEquals("estimatedTime cannot be null", error);
+	 	assertEquals("null argument", error);
 		
 	 }
 	
@@ -588,20 +529,6 @@ public class TestServiceShipping {
 	 	}
 	 }
 	
-	
-	@Test
-	public void testgetAllShipments() {
-		Set<Shipment> shipment = null;
-	 	try {
-	 		shipment=shipmentService.getAllShipments();
-	 	}catch (IllegalArgumentException e) {
-	 		error = e.getMessage();
-	 		System.out.print(error);
-	 	}
-	 	assertNotNull(shipment);
-	 	assertNull(error);
-	}
-	//TODO find way to make it assert more
 	
 	@Test
 	public void testgetShipmentsOfUser() {
