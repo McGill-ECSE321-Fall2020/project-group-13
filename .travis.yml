@@ -8,7 +8,7 @@ deploy:
   provider: heroku
   api_key:
     secure: zSPri8xg8I0JLULTk0baND+YZ5KhkBrPc2XPM5n5BnFAJuSIJsKyXlgwSFdc6Zo1P64INUHUQocWGTYZhPx/loCNv7NhTPw6wLTDz68AByC5apMSVSY+8ZI6nKIa1JdTPvpQPgYEFyM/Ot7SslYWKjypp0wd/wmXxPAMq9lC9vUC+IGu4exok11Pz3f4xAMqDZASSZl8zPE4nIEhutqGw+c40urOu/aCIgekYQKthRUYAfyFigsLSmu06pz8wrjkoX3EFXtqY6o6Tx0YH9iQbT8SI2VpD+iSKhPtExPjoTMzgLDP6ukyW1NxAeA2b26T8SHOS8Mv8J1rYhoIZisMZkYPOhwyLLE/yffajQ4q3174pQ9V0E/RHVLREMsb3t5aQ6FPKg2kVNmd9o9DqxCfowq46XkgSJMqotCxxx0JIYTv+RxGDf/d5x/NTW9X/n6j7hgYTXvsIG4nSn0M4aWXnjU3DXMf9+T6VDUxZhBnUBxCgE5nYX5KGdD6G9uCQEtnHVN57Q/c7T4+KyrjILsnarIqvk3caPIdRZT9ylYM6ZKNlmrvEvVTAp/FMxZOf3pouT4suJlHaFEVHiLfnbIgytURg46LCwEUJcuIgElNbujOHXU/2AUFzngUnc1crSBRpdNIufnPLngXNJsinHIXOmvCXr5q0yl/73xaNq9jztY=
-  app: project-group-13
+  app: project-group-13-backend
   on:
     repo: McGill-ECSE321-Fall2020/project-group-13
     branch: master
