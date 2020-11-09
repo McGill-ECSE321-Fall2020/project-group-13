@@ -11,5 +11,5 @@ deploy:
   app: project-group-13
   on:
     repo: McGill-ECSE321-Fall2020/project-group-13
-    branch: cleanDTO
+    branch: master
   skip_cleanup: 'true'
