@@ -3,3 +3,4 @@
 
 # Ignore Gradle build output directory
 # potentially add /build and /node_modules
+/node_modules
