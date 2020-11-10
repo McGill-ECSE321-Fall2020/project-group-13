@@ -1,6 +1,6 @@
 # project-group-13-frontend
 
-> A Vue.js project
+> Front for class project
 
 ## Build Setup
 
