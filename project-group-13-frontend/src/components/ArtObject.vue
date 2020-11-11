@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-sm rounded pb-5 d-flex flex-column overflow-hidden">
+  <div class="bg-white shadow-sm rounded p-1 mb-3 d-flex flex-column overflow-hidden">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.thumbnail"
@@ -7,12 +7,12 @@
       />
     </div>
     <div class="px-3 flex-1">
-      <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
+      <h4 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h4>
       <p class="mb-3 text-lg font-bold">$ {{ artwork.price }}</p>
     </div>
-    <div class="px-3">
-      <router-link :to="`//Insert path with artwork.id here`" class="button button-orange w-full rounded-full">Buy</router-link>
-    </div>
+    <b-button class="px-3 w-50 align-self-center">
+      <router-link :to="`//Insert path with artwork.id here`" class="text-white">Buy</router-link>
+    </b-button>
   </div>
 </template>
 

@@ -1,6 +1,12 @@
 <template>
-  <div class="max-w-5xl mx-auto px-6 py-12">
-    <div class="d-flex flex-wrap m-3 justify-content-center">
+<div class="mt-2 pt-2">
+    <b-container class="shadow-lg rounded">
+        <b-row class="max-w-5xl mx-auto px-6 pt-3">
+            <div class=""><h4 class="d-inline">Featured Artists | </h4><p class="d-inline"> See more &rarr;</p></div>
+        </b-row>
+        <b-row>
+            <div class="max-w-5xl mx-auto px-6 py-12">
+    <div class="d-flex flex-wrap mx-0 mt-0 justify-content-center">
         <!-- The line below is for instantiating multiple artobjects -->
       <!-- <div
         v-for="artwork in artworks"
@@ -34,7 +40,26 @@
     price: 10,
     thumbnail: require('./artImage.jpg')
   }"></ArtObject>
+  <ArtObject v-bind:artwork="{
+    title: 'Veronica',
+    price: 10,
+    thumbnail: require('./artImage.jpg')
+  }"></ArtObject>
+  <ArtObject v-bind:artwork="{
+    title: 'Veronica',
+    price: 10,
+    thumbnail: require('./artImage.jpg')
+  }"></ArtObject>
+  <ArtObject v-bind:artwork="{
+    title: 'Veronica',
+    price: 10,
+    thumbnail: require('./artImage.jpg')
+  }"></ArtObject>
     </div>
+  </div>
+        </b-row>
+    </b-container>
+  
   </div>
 </template>
 
@@ -43,6 +68,12 @@ import ArtObject from './ArtObject.vue'
 export default {
   name: 'Home',
   components: { ArtObject },
+  props: {
+    displayHeading: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       artworks: []

@@ -1,7 +1,10 @@
 <template>
   <div>
     <Navbar />
-    <ArtObjectDisplay/>
+    <ArtObjectDisplay display/>
+    <ArtObjectDisplay display/>
+    <ArtObjectDisplay display/>
+
     </div>
 </template>
 
