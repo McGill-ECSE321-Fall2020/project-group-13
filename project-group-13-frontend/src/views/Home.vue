@@ -1,9 +1,10 @@
 <template>
   <div>
     <Navbar />
-    <ArtObjectDisplay display/>
-    <ArtObjectDisplay display/>
-    <ArtObjectDisplay display/>
+    <ArtObjectDisplay displayHeading="Featured Artwork"/>
+    <ArtObjectDisplay displayHeading="Featured Artists"/>
+    <ArtObjectDisplay displayHeading="Other Categories"/>
+
 
     </div>
 </template>
