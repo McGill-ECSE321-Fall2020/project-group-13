@@ -11,11 +11,13 @@
 <script>
 import Navbar from '../components/Navbar'
 import ArtObjectDisplay from '../components/ArtObjectDisplay'
+import ArtworkDetails from '../components/ArtworkDetails.vue'
 export default {
   name: 'Home',
   components: { Navbar, ArtObjectDisplay },
   data () {
-    return {
+    return 
+    ArtworkDetails{
       artworks: []
     }
   },
