@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-5xl mx-auto px-6 py-12">
-    <div class="d-flex flex-wrap -m-3">
+    <div class="d-flex flex-wrap m-3 justify-content-center">
         <!-- The line below is for instantiating multiple artobjects -->
       <!-- <div
         v-for="artwork in artworks"
@@ -15,8 +15,8 @@
     thumbnail: require('./artImage.jpg')
   }"></ArtObject>
    <ArtObject v-bind:artwork="{
-    title: 'Veronica',
-    price: 10,
+    title: 'Cesar',
+    price: 114225,
     thumbnail: require('./artImage.jpg')
   }"></ArtObject>
    <ArtObject v-bind:artwork="{
@@ -72,3 +72,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+    .max-w-5xl {
+        max-width: 64rem;
+    }
+</style>

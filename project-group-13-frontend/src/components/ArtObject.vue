@@ -3,15 +3,15 @@
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.thumbnail"
-        class="object-cover object-center w-100 h-100 block bg-gray-500"
+        class="object-cover object-center w-100 h-100 d-block bg-secondary"
       />
     </div>
     <div class="px-3 flex-1">
-      <h2 class="text-gray-900 text-base font-medium my-3">{{ artwork.title }}</h2>
-      <p class="mb-3 text-lg font-bold text-orange">$ {{ artwork.price }}</p>
+      <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
+      <p class="mb-3 text-lg font-bold">$ {{ artwork.price }}</p>
     </div>
     <div class="px-3">
-      <router-link :to="`//Insert path with artwork.id here`" class="button button-orange w-full rounded-full">View Details</router-link>
+      <router-link :to="`//Insert path with artwork.id here`" class="button button-orange w-full rounded-full">Buy</router-link>
     </div>
   </div>
 </template>
@@ -27,3 +27,16 @@ export default {
   }
 }
 </script>
+<style>
+  .object-cover {
+    object-fit: cover;
+  }
+
+  .object-center {
+    object-position: center;
+  }	
+
+  .flex-1 {
+    flex: 1 1 0%;
+  }
+</style>
