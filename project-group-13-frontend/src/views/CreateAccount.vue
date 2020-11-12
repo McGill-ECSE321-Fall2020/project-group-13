@@ -1,3 +1,4 @@
+ /* eslint-disable no-eval */ 
 <template>
   <div class="createAccount-page shadow-sm p-4">
     <b-row align-h="center">
@@ -73,16 +74,39 @@
   </div>
 </template>
 
-
-
 <script>
 
+import axios from 'axios'
+import Router from '../router'
+var config = require('../../config')
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
 export default {
-  name: 'CreateAccount'
+  name: 'CreateAccount',
+  data () {
+    return {
+      // user: {
+      //   type: Object
+      // },
+      // errorMsg:"",
+      // showError: false,
+      // pw: "",
+      // email: ""
+    }
+  },
+  methods: {
+    goLogin: function () {
+      Router.push({path: '/', name: 'Login'})
+    },
+    createAccount: function () {
+      AXIOS.post('/user/')
+    }
+  }
 }
+
 </script>
-
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
