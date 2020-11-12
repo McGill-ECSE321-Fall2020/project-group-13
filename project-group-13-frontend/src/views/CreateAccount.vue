@@ -1,5 +1,5 @@
 <template>
-  <div class="createAccount-page">
+  <div class="createAccount-page shadow-sm p-4">
     <b-row align-h="center">
       <h2 class="shareArt">ShareArt</h2>
     </b-row>
@@ -68,7 +68,7 @@
     </b-row>
     <b-row align-h="center">
             Have an account?&nbsp;<br>
-            <a href="/"> login</a>
+            <router-link to="login">Login</router-link>
     </b-row>
   </div>
 </template>

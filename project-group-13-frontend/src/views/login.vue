@@ -1,36 +1,39 @@
 <template>
-  <div class="login-page shadow-sm p-4">
+  <div class="createAccount-page shadow-sm p-4">
     <b-row align-h="center">
-      <h2 class='shareArt'>ShareArt</h2>
-      <!-- <img src="../components/artImage.jpg" width="50" height="50"/> -->
+      <h2 class="shareArt">ShareArt</h2>
     </b-row>
     <b-row align-h="center">
-      <span class="border"><table class="rounded">
-        <tr class='title'><h2>Login</h2></tr>
-          <tr class='text'><td> 
-            Username 
-
-          </td></tr>
-          <tr><td> 
-            <input type="text"/>
-          </td></tr>
-          <tr class='text'><td> 
-            Password
-          </td></tr>
-          <tr><td> 
-            <input type="text"/>
-          </td></tr>
-          <tr><td class='button'> 
-            <button>Login</button>
-          </td></tr>
-          <tr><td class='button'> 
-            Don't have an account?<br>
-            <a href="/">register here</a>
-          </td></tr>
-        <!-- <p>
-          <span style="color: red">Error: Message text comes here</span>
-        </p> -->
-        </table></span>
+      <h3>Login</h3>
+    </b-row>
+    <b-row align-h="center">
+      <span class="border"
+        ><form>
+            <div class="form-group">
+              <label for="InputUsername">Username</label>
+              <input
+                type="username"
+                class="form-control"
+                id="InputUsername"
+                placeholder="Enter Username"
+              />
+            </div>
+            <div class="form-group">
+              <label for="InputPassword1">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="InputPassword1"
+                placeholder="Password"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Continue</button>
+          </form></span
+      >
+    </b-row>
+    <b-row align-h="center">
+            Don't have an account?&nbsp;<br>
+            <router-link to="newAccount">Create account</router-link>
     </b-row>
   </div>
 </template>
@@ -51,7 +54,7 @@ td {
   padding: 2px;
   text-align: left;
 }
-td.button {
+button {
   padding: 5px;
   text-align: center;
 }
