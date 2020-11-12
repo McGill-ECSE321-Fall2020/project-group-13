@@ -5,7 +5,7 @@
             <div class=""><h4 class="d-inline">{{displayHeading}} | </h4><p class="d-inline"> See more &rarr;</p></div>
         </b-row>
         <b-row>
-            <div class="max-w-5xl mx-auto px-6 py-12">
+            <div class="max-w-5xl mx-auto px-1 py-1 mx-0">
     <div class="d-flex flex-wrap mx-0 mt-0 justify-content-center">
         <!-- The line below is for instantiating multiple artobjects -->
       <!-- <div

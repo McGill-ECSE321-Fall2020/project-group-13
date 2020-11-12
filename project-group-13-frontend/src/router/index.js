@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import ArtworkPage from '@/views/ArtworkPage'
 import Login from '@/views/login'
+import UploadArtowrk from '@/views/UploadArtwork'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/uploadArtwork',
+      name: 'UploadArtwork',
+      component: UploadArtowrk
     }
   ]
 })
