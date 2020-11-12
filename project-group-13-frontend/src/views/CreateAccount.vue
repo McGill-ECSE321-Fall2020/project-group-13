@@ -1,7 +1,7 @@
 <template>
   <div class="createAccount-page shadow-sm p-4">
     <b-row align-h="center">
-      <h2 class="shareArt">ShareArt</h2>
+      <router-link to="/" tag="h2">ShareArt</router-link>
     </b-row>
     <b-row align-h="center">
       <h3>Create Account</h3>
@@ -107,5 +107,8 @@ label.form-check-label {
   white-space:normal; 
   max-width: 250px;
   text-align: left;
+}
+h2 {
+    cursor: pointer;
 }
 </style>

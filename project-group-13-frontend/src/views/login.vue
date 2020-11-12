@@ -1,7 +1,7 @@
 <template>
   <div class="createAccount-page shadow-sm p-4">
     <b-row align-h="center">
-      <h2 class="shareArt">ShareArt</h2>
+      <router-link to="/" tag="h2">ShareArt</router-link>
     </b-row>
     <b-row align-h="center">
       <h3>Login</h3>
@@ -66,5 +66,8 @@ h2.shareArt {
 }
 .mt-0 {
   margin-top: 0 !important;
+}
+h2 {
+    cursor: pointer;
 }
 </style>
