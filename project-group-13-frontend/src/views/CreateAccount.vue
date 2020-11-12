@@ -100,8 +100,14 @@ export default {
     goLogin: function () {
       Router.push({path: '/', name: 'Login'})
     },
-    createAccount: function () {
-      AXIOS.post('/user/')
+    createAccount: function (username, password, email) {
+      this.errorMsg = "";
+      this.showError = false;
+      AXIOS.post('/newuser/?'+'username=' + username + '&' +'email=' + email + '?' + 'password='+ password )
+      .catch(e => { consol.log(e.message);
+                    this.errorMsg="invalid account creation";
+                    this.showError = true;
+                    })
     }
   }
 }
