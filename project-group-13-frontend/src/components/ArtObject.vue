@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-sm rounded pb-5 d-flex flex-column overflow-hidden">
+  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.thumbnail"
@@ -11,7 +11,9 @@
       <p class="mb-3 text-lg font-bold">$ {{ artwork.price }}</p>
     </div>
     <div class="px-3">
-      <router-link :to="`//Insert path with artwork.id here`" class="button button-orange w-full rounded-full">Buy</router-link>
+      <b-button>
+      <router-link :to="`/artwork`" class="text-light w-50 self-align-center">Buy</router-link>
+      </b-button>
     </div>
   </div>
 </template>
