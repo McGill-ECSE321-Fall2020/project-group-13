@@ -1,6 +1,5 @@
 <template>
-  <div class="login-page">
-    <!-- <NavbarBare /> -->
+  <div class="login-page shadow-sm p-4">
     <b-row align-h="center">
       <h2 class='shareArt'>ShareArt</h2>
       <!-- <img src="../components/artImage.jpg" width="50" height="50"/> -->
@@ -39,13 +38,8 @@
 
 
 <script>
-import NavbarBare from '../components/Navbar-bare'
-
 export default {
-  name: 'Login',
-  components: {
-    NavbarBare
-  }
+  name: 'Login'
 }
 </script>
 
@@ -67,7 +61,7 @@ span {
 h2.shareArt {
   padding-bottom: 20px;
 }
-div#app {
-  margin-top: 10px;
+.mt-0 {
+  margin-top: 0 !important;
 }
 </style>
