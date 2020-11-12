@@ -1,7 +1,7 @@
 <template>
 <div class="mt-2 pt-2">
     <b-container class="shadow-lg rounded">
-        <b-row class="max-w-5xl mx-auto px-6 pt-3 m-0">
+        <b-row class="max-w-5xl mx-auto px-1 pt-3 m-0">
             <div class=""><h4 class="d-inline">{{displayHeading}} | </h4><p class="d-inline"> See more &rarr;</p></div>
         </b-row>
         <b-row>
@@ -106,6 +106,6 @@ export default {
 
 <style scoped>
     .max-w-5xl {
-        max-width: 64rem;
+        max-width: 70rem;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-sm rounded pb-2 d-flex flex-column overflow-hidden">
+  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.thumbnail"
