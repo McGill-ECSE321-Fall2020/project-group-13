@@ -11,7 +11,7 @@
       <p class="mb-3 text-lg font-bold">$ {{ artwork.price }}</p>
     </div>
     <div class="px-3">
-      <router-link :to="`//Insert path with artwork.id here`" class="button button-orange w-full rounded-full">Buy</router-link>
+      <router-link :to="`/artwork`" class="button button-orange w-full rounded-full">Buy</router-link>
     </div>
   </div>
 </template>

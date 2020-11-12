@@ -1,10 +1,9 @@
 <template>
   <div>
     <Navbar />
-    <ArtObjectDisplay display/>
-    <ArtObjectDisplay display/>
-    <ArtObjectDisplay display/>
-
+    <ArtworkDetails />
+    <ArtObjectDisplay displayName="Similar Artwork"/>
+    
     </div>
 </template>
 
@@ -12,4 +11,8 @@
 import Navbar from '../components/Navbar'
 import ArtObjectDisplay from '../components/ArtObjectDisplay'
 import ArtworkDetails from '../components/ArtworkDetails.vue'
+export default {
+  name: 'Artwork',
+  components: { ArtworkDetails, Navbar, ArtObjectDisplay }
+}
 </script>
