@@ -7,19 +7,19 @@
     </b-row>
     <b-row align-h="center">
       <form>
-        <label for="file">Attachments</label><br />
-        <input type="file" name="file" id="file" multiple /><br />
-        <label for="title">Title</label><br />
+        <label for="file" class="mb-0">Attachments</label><br />
+        <input type="file" name="file" id="file" multiple /><br/>
+        <label for="title" class="mb-0 mt-1">Title</label><br />
         <input type="text" id="title" name="title" multiple /><br />
-        <label for="price">Price</label><br />
+        <label for="price" class="mb-0 mt-1">Price</label><br />
         <input type="number" id="price" name="price" multiple /><br />
-        <label for="descripion">Description</label><br />
-        <textarea id="description" name="description" rows="10" cols="30" multiple /><br />
-        <label for="collection">Collection</label><br />
+        <label for="descripion" class="mb-0 mt-1">Description</label><br />
+        <textarea id="description" name="description" rows="5" cols="23" multiple /><br />
+        <label for="collection" class="mb-0 mt-1">Collection</label><br />
         <input type="text" id="collection" name="collection" multiple /><br />
-        <label for="onpremises">On Premises</label><br />
+        <label for="onpremises" class="mb-0 mt-1">On Premises</label><br />
         <input type="checkbox" id="onpremises" name="onpremises" multiple /><br />
-        <label for="email">Email Address</label><br />
+        <label for="email" class="mb-0 mt-1">Email Address</label><br />
         <input type="email" id="email" name="email" multiple /><br />
 
         <input type="submit" value="Send" />
