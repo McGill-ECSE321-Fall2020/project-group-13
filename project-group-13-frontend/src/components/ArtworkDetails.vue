@@ -6,7 +6,7 @@
               <img :src="artwork.imageUrl" alt="No Images for Artwork" class="art-image rounded">
               <h4 style="margin-top: 2em;">Artists</h4>
               <div class="mb-4">
-                <router-link v-for="(artistn,i) in artwork.artist" v-bind:key="`artist-${i}`" :to="`/user/`+artistn.username"><b-avatar text="AA"></b-avatar></router-link>
+                <router-link v-for="(artistn,i) in artwork.artist" v-bind:key="`artist-${i}`" :to="`/user/`+artistn.username"><b-avatar :text="artistn.username.charAt(0)"></b-avatar></router-link>
               </div>
             </b-col>
             <b-col cols="5">
@@ -43,7 +43,7 @@
               </b-container>
             </b-col>
             <b-col cols="2" style="margin-top: 2em;">
-              <b-button v-on:click = "addToCart" variant="outline-primary">Add to Cart</b-button>
+              <b-button v-on:click = "addToCart" :class="buttonDisable" variant="outline-primary">{{ buttonLabel }}</b-button>
             </b-col>
           </b-row>
         </b-container>
@@ -59,11 +59,12 @@ var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPo
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
 
 export default {
-  name: 'Artwork Details',
+  name: 'ArtworkDetails',
   data () {
     return {
       artwork: '',
-      button: 'Add To Cart'
+      buttonDisable: '',
+      buttonLabel: 'Add to Cart'
     }
   },
   created: function () {
@@ -75,11 +76,26 @@ export default {
       // JSON responses are automatically parsed.
       this.artwork = response.data
       this.artwork.imageURL = decodeURI(this.artwork.imageURL)
+      // getting cart of user
+      const username = document.cookie.substring(6)
+      AXIOS.get('/user/' + username + '/cart')
+      .then(response => {
+      // JSON responses are automatically parsed.
+        const cart = response.data
+        var i
+        // checking if artwork was already in cart
+        for (i = 0; i < cart.artwork.length; i++) {
+          if (cart.artwork[i].artworkID === parseInt(id)) {
+            console.log('equal')
+            this.buttonDisable = 'disabled'
+            this.buttonLabel = 'In Cart'
+          } // otherwise button can be clicked
+        }
+      })
     })
   },
   methods: {
     addToCart: function () {
-      console.log('testing')
       if (document.cookie.length < 6) {
         Router.push({name: 'login'})
       } else {
@@ -87,7 +103,8 @@ export default {
         const id = url[url.length - 1] // artwork id
         AXIOS.put('/user/' + document.cookie.substring(6) + '/edit+/cart' + '?artid=' + id)
         .then((response) => {
-          this.button = 'Added'
+          this.buttonDisable = 'disabled'
+          this.buttonLabel = 'In Cart'
         })
       }
     }
