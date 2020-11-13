@@ -1,7 +1,10 @@
 <template>
   <div>
     <Navbar/>
-    //
+    
+    
+    
+    <ArtObjectDisplay displayHeading="Artworks"/>
     
     </div>
 </template>
@@ -11,6 +14,6 @@ import Navbar from '../components/Navbar'
 
 export default {
   name: 'Artwork',
-  components: { Navbar}
+  components: { Navbar, ArtObjectDisplay }
 }
 </script>

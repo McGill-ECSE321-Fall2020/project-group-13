@@ -184,7 +184,7 @@ public class ProjectGroup13Controller {
 		}
 	}
 
-
+	
 	/**
 	 * RESTful method to update certain inputed user parameters
 	 * @param username
@@ -218,6 +218,18 @@ public class ProjectGroup13Controller {
 	@GetMapping(value = { "/user/{username}/login", "/user/{username}/login/" })
 	public UserDto getUserByUsernameAndPassword(@PathVariable("username") String username, @RequestParam(name = "password") String password) throws IllegalArgumentException {
 		User user = userService.getUserByUsernameAndPassword(username, password);
+		return convertToDto(user);
+	}
+	/**
+	 * RESTful method to get a user by username
+	 * @param username
+	 * 
+	 * @return userDto
+	 * @throws IllegalArgumentException
+	 */
+	@GetMapping(value = { "/user/{username}/view", "/user/{username}/view/" })
+	public UserDto getUserByUsername(@PathVariable("username") String username) throws IllegalArgumentException {
+		User user = userService.getUserByUsername(username);
 		return convertToDto(user);
 	}
 
