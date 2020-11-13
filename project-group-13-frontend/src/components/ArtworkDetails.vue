@@ -3,7 +3,7 @@
         <b-container class="artwork info shadow-lg p-4">
           <b-row no-gutters align-v="stretch">
             <b-col cols="6">
-              <img src="./artImage.jpg" alt="Artwork image" class="art-image">
+              <img :src="artwork.imageUrl" alt="No Images for Artwork" class="art-image rounded">
               <h4 style="margin-top: 2em;">Artists</h4>
               <div class="mb-4">
                 <router-link v-for="(artistn,i) in artwork.artist" v-bind:key="`artist-${i}`" :to="`/user/`+artistn.username"><b-avatar text="AA"></b-avatar></router-link>
@@ -18,7 +18,7 @@
               <b-container style="margin-top: 5em;" class="shadow-sm">
                 <b-row>
                   <b-col><p>Creation Date</p></b-col>
-                  <b-col>{{ artwork.creation_date }}</b-col>
+                  <b-col>{{ artwork.creationDate }}</b-col>
                 </b-row>
                 <b-row>
                   <b-col><p>Dimensions</p></b-col>
@@ -26,19 +26,19 @@
                 </b-row>
                 <b-row>
                   <b-col><p>Medium</p></b-col>
-                  <b-col></b-col>
+                  <b-col>{{ artwork.medium }}</b-col>
                 </b-row>
                 <b-row>
-                  <b-col><p>Details</p></b-col>
-                  <b-col></b-col>
+                  <b-col><p>Collection</p></b-col>
+                  <b-col>{{ artwork.collection }}</b-col>
                 </b-row>
                 <b-row>
                   <b-col><p>Available</p></b-col>
-                  <b-col></b-col>
+                  <b-col>{{ artwork.artworkSold }}</b-col>
                 </b-row>
                 <b-row>
                   <b-col><p>On premise</p></b-col>
-                  <b-col></b-col>
+                  <b-col>{{ artwork.isOnPremise }}</b-col>
                 </b-row>
               </b-container>
             </b-col>
