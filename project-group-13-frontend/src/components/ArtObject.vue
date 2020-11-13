@@ -12,7 +12,7 @@
     </div>
     <div class="px-3">
       <b-button>
-      <router-link :to="`/artwork/2`" class="text-light w-50 self-align-center">Buy</router-link>
+      <router-link :to="`/artwork/61`" class="text-light w-50 self-align-center">Buy</router-link>
       </b-button>
     </div>
   </div>
