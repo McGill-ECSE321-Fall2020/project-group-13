@@ -1,3 +1,5 @@
+
+
 <template>
 <div class="mt-2 pt-2">
     <b-container class="shadow-lg rounded">
@@ -6,16 +8,28 @@
         </b-row>
         <b-row>
             <div class="max-w-5xl mx-auto px-1 py-1 m-0">
-
-        <!-- The line below is for instantiating multiple artobjects -->
-      <div
-        v-for="artwork in artworks"
-        :key="artwork.id"
-        class="d-flex flex-wrap mx-0 mt-0 justify-content-center"
-      >
-        <ArtObject :artwork="artwork"/>
-      </div>
-    
+    <div class="d-flex flex-wrap mx-0 mt-0 justify-content-center">
+      <ArtObject v-bind:artwork="{
+    title: 'Sculpture',
+    price: 10,
+    thumbnail: require('../assets/images/sculpture.jpg')
+  }"></ArtObject>
+   <ArtObject v-bind:artwork="{
+    title: 'Painting',
+    price: 0,
+    thumbnail: require('../assets/images/painting.jpg')
+  }"></ArtObject>
+   <ArtObject v-bind:artwork="{
+    title: 'Objects',
+    price: 0,
+    thumbnail: require('../assets/images/object.jpg')
+  }"></ArtObject>
+   <ArtObject v-bind:artwork="{
+    title: 'Drawing',
+    price: 0,
+    thumbnail: require('../assets/images/drawing.jpg')
+  }"></ArtObject>
+    </div>
   </div>
         </b-row>
     </b-container>
@@ -24,6 +38,9 @@
 </template>
 
 <script>
+
+/* eslint-disable */
+
 import ArtObject from './ArtObject.vue'
 export default {
   name: 'Home',
@@ -31,10 +48,6 @@ export default {
   props: {
     displayHeading: {
       type: String,
-      required: true
-    },
-    artworks: {
-      type: Array,
       required: true
     }
   }

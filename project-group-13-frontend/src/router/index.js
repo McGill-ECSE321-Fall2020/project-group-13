@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
@@ -6,6 +8,8 @@ import Login from '@/views/login'
 import CreateAccount from '@/views/CreateAccount'
 import UploadArtowrk from '@/views/UploadArtwork'
 import CheckoutPage from '@/views/CheckoutPage'
+
+
 
 Vue.use(Router)
 
