@@ -12,6 +12,7 @@ public interface ArtworkRepository extends CrudRepository<Artwork, Long>{
 
     Set<Artwork> getArtworkByArtist(User artist);
     Set<Artwork> getArtworkByArtist(String username);
+    Set<Artwork> getArtworkByMedium(String medium);
     Artwork findArtworkByArtworkID(int artworkID);
     Set<Artwork> findByArtist(User Artist);
     Set<Artwork> getArtworkByisOnPremise(boolean isOnPremise);

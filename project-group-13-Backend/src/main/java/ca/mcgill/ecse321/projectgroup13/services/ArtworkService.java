@@ -100,7 +100,7 @@ public class ArtworkService {
 
 
     /**
-     * service method to get all artworks of given user
+     * service method to get all artworks of given artist
      * @param username
      * @return
      */
@@ -110,6 +110,17 @@ public class ArtworkService {
         if (user == null)
             throw new IllegalArgumentException("Artist does not exist");
         Set<Artwork> artworks = artworkRepo.getArtworkByArtist(user);
+        return artworks;
+    }
+    
+    /**
+     * service method to get all artworks of a given category
+     * @param username
+     * @return
+     */
+    @Transactional
+    public Set<Artwork> getArtworkByCategory(String category){
+        Set<Artwork> artworks = artworkRepo.getArtworkByMedium(category);
         return artworks;
     }
 
