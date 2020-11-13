@@ -33,6 +33,7 @@
             <b-dropdown-item href="#">Orders</b-dropdown-item>
             <b-dropdown-item href="#">Artwork</b-dropdown-item>
             <b-dropdown-item v-on:click = "logout">Sign Out</b-dropdown-item>
+            <!-- <router-link to="/#/login" tag="b-dropdown-item">Sign Out</router-link> -->
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>

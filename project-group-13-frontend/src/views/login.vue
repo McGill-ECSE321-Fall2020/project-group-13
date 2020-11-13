@@ -32,7 +32,7 @@
                 v-model="inputPassword"
                 aria-describedby="errorInCredentials"
               > 
-              <small v-if="visible" id="userHelp" class="form-text" style="color:red"
+              <small v-if="error" id="userHelp" class="form-text" style="color:red"
                 >Username or password is incorrect</small
               >
             </div>
@@ -64,10 +64,11 @@ export default {
     return {
       inputPassword: '',
       inputUsername: '',
-      visible: false,
+      error: false,
       errorClass: ''
     }
   },
+
   /**
    * The login page should only be accessible when the user is logged out.
    * Redirect to landing page if user is already logged in
@@ -76,21 +77,24 @@ export default {
     if (document.cookie.length > 6) {
       Router.push({path: '/', name: ''})
     }
+  },
 
+  /**
+   * Set eventListeners for all input areas.
+   * All errors should be cleared when a user makes a change to their input
+   */
+  mounted () {
     var self = this
-    'use strict'
-    window.addEventListener('load', function () {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('form-control')
-      // Loop over them and make them reset errors whenever they are altered
-      Array.prototype.filter.call(forms, function (form) {
-        console.log(form)
-        form.addEventListener('input', function (event) {
-          self.visible = false
-          self.errorClass = ''
-        }, false)
-      })
-    }, false)
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('form-control')
+    // Loop over them and make them reset errors whenever they are altered
+    Array.prototype.filter.call(forms, function (form) {
+      form.addEventListener('input', function (event) {
+        self.error = false
+        self.errorClass = ''
+      }, false)
+    })
   },
 
   methods: {
@@ -102,34 +106,37 @@ export default {
     loginAttempt: function () {
       // User needs to input a nonempty username and password to login
       if (this.inputUsername === '' || this.inputPassword === '') {
-        this.visible = true
+        this.error = true
         this.errorClass = 'is-invalid'
         return
       }
 
       // User needs to fix their username/password before attempting to login
-      if (this.visible) {
+      if (this.error) {
         return
       }
 
       AXIOS.get('/user/' + this.inputUsername + '/login?password=' + this.inputPassword)
       .then((response) => {
-        this.visible = false
+        this.error = false
         this.errorClass = ''
         // Store username of logged in user inside a cookie.
         document.cookie = 'Token=' + response.data.username + ';path=/'
         Router.push({path: '/', name: ''})
       })
       .catch(error => {
-        this.visible = true
+        this.error = true
         this.errorClass = 'is-invalid'
         console.log(error)
       })
     },
 
+    /**
+     * This method is called by the input eventhandlers.
+     * Clears all errors from screen
+     */
     resetError: function () {
-      console.log('hello')
-      this.visible = false
+      this.error = false
       this.errorClass = ''
     }
   }
@@ -140,10 +147,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-td {
-  padding: 2px;
-  text-align: left;
-}
 button {
   padding: 5px;
   text-align: center;
@@ -159,9 +162,5 @@ h2.shareArt {
 }
 h2 {
     cursor: pointer;
-}
-.portfolio-item form .form-buffer.form-group .form-control {
-margin: 30px 0px;
-background: #bd0e1d;
 }
 </style>
