@@ -109,7 +109,7 @@ public class ArtworkService {
         User user = userRepo.findUserByUsername(username);
         if (user == null)
             throw new IllegalArgumentException("Artist does not exist");
-        Set<Artwork> artworks = artworkRepo.findArtworkByArtist(user);
+        Set<Artwork> artworks = artworkRepo.getArtworkByArtist(user);
         return artworks;
     }
 

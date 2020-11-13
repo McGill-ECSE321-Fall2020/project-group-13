@@ -52,6 +52,9 @@ artworkID=$tempVar
 #get all artwork on premise
 curl-format "get all artwork on premise" "-X GET" "$url/artwork/onPremise"
 
+#get all artwork of artist
+curl-format "get all artwork of artist" "-X GET" "$url/artwork/$username/all"
+
 #add artwork to cart
 curl-format "add artwork to cart" "-X PUT" "$url/user/$username/edit+/cart/?artid=$artworkID"	"cartID"
 cartID=$tempVar

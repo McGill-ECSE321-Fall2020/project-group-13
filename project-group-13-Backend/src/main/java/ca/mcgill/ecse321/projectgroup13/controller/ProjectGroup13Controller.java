@@ -727,7 +727,7 @@ public class ProjectGroup13Controller {
 	/**
 	 * RESTful service that returns all the artworks that are in the gallery premises
 	 */
-	@GetMapping(value = { "/artwork/{artist}", "/artwork/{artist}/"})
+	@GetMapping(value = { "/artwork/{artist}/all", "/artwork/{artist}/all/"})
 	public Set<ArtworkDto> getArtworkOfArtist(@PathVariable("artist") String artist) {
 		Set<ArtworkDto> artworksOfArtistDto = new HashSet<ArtworkDto>();
 		for(Artwork art : artworkService.getArtworksOfArtist(artist)) {
