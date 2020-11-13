@@ -34,10 +34,11 @@ public class ArtworkService {
      * @param Title
      * @param usernames
      * @param worth
+     * @param url
      * @return
      * @throws IllegalArgumentException
      */
-    public Artwork createArtwork(String Title, String[] usernames, Double worth) throws IllegalArgumentException {
+    public Artwork createArtwork(String Title, String[] usernames, Double worth, String url) throws IllegalArgumentException {
     	if( Title==null || Title.trim().contentEquals("") ) throw new IllegalArgumentException("invalid title");
     	if(usernames == null || usernames.length==0) throw new IllegalArgumentException("invalid user") ;
     	if(worth==null||worth==0) throw new IllegalArgumentException("invalid worth") ;
@@ -54,6 +55,7 @@ public class ArtworkService {
             System.out.println("works "+artwork.getArtist());
     		artwork.setTitle(Title);
     		artwork.setWorth(worth);
+    		artwork.setImageUrl(url);
     		Set<Artwork> works= user.getArtwork();
     		works.add(artwork);
     		artworkRepo.save(artwork);
@@ -107,11 +109,20 @@ public class ArtworkService {
         User user = userRepo.findUserByUsername(username);
         if (user == null)
             throw new IllegalArgumentException("Artist does not exist");
-        Set<Artwork> artworks = artworkRepo.findArtworkByArtist(user);
+        Set<Artwork> artworks = artworkRepo.getArtworkByArtist(user);
         return artworks;
     }
 
-
+    /**
+     * service method to get all artworks that are on the gallery premises
+     * @param isOnPremise
+     * @return
+     */
+    @Transactional
+    public Set<Artwork> getArtworksOnPremise(boolean isOnPremise){
+        Set<Artwork> artworks = artworkRepo.getArtworkByisOnPremise(isOnPremise);
+        return artworks;
+    }
 
     /**
      * service method to edit artwork description

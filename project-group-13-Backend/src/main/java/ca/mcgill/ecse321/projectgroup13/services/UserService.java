@@ -113,7 +113,7 @@ public class UserService {
         Set<Address> userAddresses = user.getAddress();
         Cart cart = user.getCart();
         Set<Order> orders = user.getOrder();
-        Set<Artwork> Artworks = artworkRepository.findArtworkByArtist(user);
+        Set<Artwork> Artworks = artworkRepository.getArtworkByArtist(user);
         
         if(userAddresses!=null) {
 	        for(Address address:userAddresses) {

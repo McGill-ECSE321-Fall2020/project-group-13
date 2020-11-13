@@ -1,16 +1,18 @@
 <template>
     <div class="root">
         <b-container class="artwork info shadow-lg p-4">
-          <b-row no-gutters align-v="stretch">
-            <b-card header="Items in cart:">
+          <b-row no-gutters align-h="center">
+            <b-col>
+              <b-card header="Items in cart:">
                 <b-list-group>
                 <b-list-group-item href="#">Veronica</b-list-group-item>
                 <b-list-group-item href="#">Cesar</b-list-group-item>
                 </b-list-group>
                 <p style="margin-top: 2em;"><strong>Total:   187$</strong></p>
-            </b-card>
+              </b-card>
+            </b-col>
           </b-row>
-          <b-row no-gutters align-v="stretch" style="margin-top: 7em;">
+          <b-row no-gutters align-h="center" style="margin-top: 7em;">
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <b-form-group
                     id="input-group-1"
