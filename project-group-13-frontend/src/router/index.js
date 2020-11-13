@@ -17,7 +17,7 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/artwork',
+      path: '/artwork/*',
       name: 'ArtworkPage',
       component: ArtworkPage
     },
