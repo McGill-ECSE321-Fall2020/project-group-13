@@ -32,12 +32,30 @@
             <b-dropdown-item href="#">Account</b-dropdown-item>
             <b-dropdown-item href="#">Orders</b-dropdown-item>
             <b-dropdown-item href="#">Artwork</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item v-on:click = "logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
-<script></script>
+
+<script>
+import Router from '../router'
+
+export default {
+  name: 'NavBar',
+
+  methods: {
+    /**
+     * delete the existing cookie, which is equivalent to logging a user out.
+     * Then, send them back to the log in page
+     */
+    logout: function () {
+      document.cookie = 'Token=; Max-Age=-99999999;'
+      Router.push({name: 'login'})
+    }
+  }
+}
+</script>
 <style></style>

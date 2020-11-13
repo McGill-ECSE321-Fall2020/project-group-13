@@ -186,7 +186,7 @@ public class ProjectGroup13Controller {
 
 
 	/**
-	 * RESTful method to update certain inputted user parameters
+	 * RESTful method to update certain inputed user parameters
 	 * @param username
 	 * @param user
 	 * @return UserDto
@@ -203,7 +203,23 @@ public class ProjectGroup13Controller {
 		return convertToDto(userService.getUserByUsername(username));
 	}
 
-
+	//getUsernameAlreadyExists
+	
+	//getEmailAlreadyExists
+	
+	//login
+	/**
+	 * RESTful method to get a user by username and password
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	@GetMapping(value = { "/user/{username}/login", "/user/{username}/login/" })
+	public UserDto getUserByUsernameAndPassword(@PathVariable("username") String username, @RequestParam(name = "password") String password) throws IllegalArgumentException {
+		User user = userService.getUserByUsernameAndPassword(username, password);
+		return convertToDto(user);
+	}
 
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS

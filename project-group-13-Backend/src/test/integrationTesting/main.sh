@@ -7,8 +7,8 @@ red=$(tput setaf 1)
 powder_blue=$(tput setaf 153)
 
 #usernames used to create users during test
-username="a"
-username2="b"
+username="aa"
+username2="bb"
 url="http://localhost:8080"
 
 
@@ -38,6 +38,14 @@ curl-format "create user 1" "-X POST" "$url/newuser?username=$username&email=$us
 
 #create user 2
 curl-format "create user 2" "-X POST" "$url/newuser?username=$username2&email=$username2@no.com&password=passwor1dfd"
+
+#get user 1 from database using correct username and password
+curl-format "get user 1 from database using correct username and password" "-X GET" "$url/user/$username/login?password=passwor1dfd"
+
+#get user 1 from database using incorrect username and password
+curl-format "get user 1 from database using incorrect username and password" "-X GET" "$url/user/$username/login?password=passwfh"
+
+: '
 
 #create artwork and store artworkID
 curl-format "create artwork and store artworkID" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"

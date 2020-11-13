@@ -158,6 +158,18 @@ public class UserService {
         if(user ==null) throw new IllegalArgumentException("invalid username");
         return user;
     }
+    
+    /**
+     * service method to get a user by username and password
+     * @param username
+     * @return User
+     */
+    @Transactional
+    public User getUserByUsernameAndPassword(String username, String password){
+        User user = userRepository.findUserByUsernameAndPassword(username, password);
+        if(user ==null) throw new IllegalArgumentException("invalid username or password");
+        return user;
+    }
 
 
     /**
