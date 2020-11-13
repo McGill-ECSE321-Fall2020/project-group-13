@@ -59,7 +59,7 @@ var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPo
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
 
 export default {
-  name: 'Artwork Details',
+  name: 'ArtworkDetails',
   data () {
     return {
       artwork: '',
@@ -81,7 +81,7 @@ export default {
     addToCart: function () {
       console.log('testing')
       if (document.cookie.length < 6) {
-        Router.push({name: 'login'})
+        Router.push({path: '/login?returnTo=' + window.location.href})
       } else {
         var url = window.location.href.split('/')
         const id = url[url.length - 1] // artwork id

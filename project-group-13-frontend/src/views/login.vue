@@ -60,12 +60,19 @@ var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-
 
 export default {
   name: 'Login',
+  // props: {
+  //   returnTo: {
+  //     type: String,
+  //     required: false
+  //   }
+  // },
   data () {
     return {
       inputPassword: '',
       inputUsername: '',
       error: false,
-      errorClass: ''
+      errorClass: '',
+      returnTo: ''
     }
   },
 
@@ -95,17 +102,25 @@ export default {
         self.errorClass = ''
       }, false)
     })
+    this.returnTo = this.$route.query.returnTo + this.$route.hash
+    console.log(this.returnTo)
   },
 
   methods: {
+    sleep: function (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    },
     /**
      * loginAttempt gathers the username and password input by the user and sends an authentication request to the backend.
      * Success: A cookie containing the logged-in user's username is created
      * Failure: An error message is displayed to the user notifying them that their username/password pair is invalid
      */
     loginAttempt: function () {
+      console.log('hello')
+      this.sleep(1000)
       // User needs to input a nonempty username and password to login
       if (this.inputUsername === '' || this.inputPassword === '') {
+        console.log('no request')
         this.error = true
         this.errorClass = 'is-invalid'
         return
@@ -113,6 +128,7 @@ export default {
 
       // User needs to fix their username/password before attempting to login
       if (this.error) {
+        console.log('no request')
         return
       }
 
@@ -122,7 +138,13 @@ export default {
         this.errorClass = ''
         // Store username of logged in user inside a cookie.
         document.cookie = 'Token=' + response.data.username + ';path=/'
-        Router.push({path: '/', name: ''})
+
+        // if need to return to a page, do so
+        if (this.returnTo !== 'undefined') {
+          window.location.href = this.returnTo
+        } else {
+          Router.push({name: 'Hello'})
+        }
       })
       .catch(error => {
         this.error = true
