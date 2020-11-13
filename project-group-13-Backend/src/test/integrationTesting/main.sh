@@ -49,6 +49,9 @@ curl-format "get user 1 from database using incorrect username and password" "-X
 curl-format "create artwork and store artworkID" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7&imageURL=urlBABY" "artworkID"
 artworkID=$tempVar
 
+#get all artwork on premise
+curl-format "get all artwork on premise" "-X GET" "$url/artwork/onPremise"
+
 #add artwork to cart
 curl-format "add artwork to cart" "-X PUT" "$url/user/$username/edit+/cart/?artid=$artworkID"	"cartID"
 cartID=$tempVar

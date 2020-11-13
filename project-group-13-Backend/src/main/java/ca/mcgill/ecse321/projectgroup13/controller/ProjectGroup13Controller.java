@@ -686,7 +686,7 @@ public class ProjectGroup13Controller {
 	 * @return ArtworkDto
 	 * @throws IllegalArgumentException
 	 */
-	@GetMapping(value = { "artwork/{artId}", "artwork/{artId}/" })
+	@GetMapping(value = { "/artwork/{artId}", "artwork/{artId}/" })
 	public ArtworkDto getArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		Artwork art = artworkService.getArtworkByID(id);
 		return convertToDto(art);
@@ -699,7 +699,7 @@ public class ProjectGroup13Controller {
 	 * @return boolean
 	 * @throws IllegalArgumentException
 	 */
-	@DeleteMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
+	@DeleteMapping(value = { "/artwork/{artId}/delete", "artwork/{artId}/delete/" })
 	public boolean deleteArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		Artwork artwork = artworkService.getArtworkByID(id);
 		System.out.println(artwork.getTitle());
@@ -712,7 +712,30 @@ public class ProjectGroup13Controller {
 		}
 	}
 
-
+	/**
+	 * RESTful service that returns all the artworks that are in the gallery premises
+	 */
+	@GetMapping(value = { "/artwork/onPremise", "/artwork/onPremise/"})
+	public Set<ArtworkDto> getArtworkOnPremise(){
+		Set<ArtworkDto> artworksOnPremiseDto = new HashSet<ArtworkDto>();
+		for(Artwork artOnPremise : artworkService.getArtworksOnPremise(true)) {
+			artworksOnPremiseDto.add(convertToDto(artOnPremise));
+		}
+		return artworksOnPremiseDto;
+	} 
+	
+	/**
+	 * RESTful service that returns all the artworks that are in the gallery premises
+	 */
+	@GetMapping(value = { "/artwork/{artist}", "/artwork/{artist}/"})
+	public Set<ArtworkDto> getArtworkOfArtist(@PathVariable("artist") String artist) {
+		Set<ArtworkDto> artworksOfArtistDto = new HashSet<ArtworkDto>();
+		for(Artwork art : artworkService.getArtworksOfArtist(artist)) {
+			artworksOfArtistDto.add(convertToDto(art));
+		}
+		return artworksOfArtistDto;
+	}
+	
 	/**
 	 * RESTful method to edit certain parameters of an artwork
 	 * @param artId

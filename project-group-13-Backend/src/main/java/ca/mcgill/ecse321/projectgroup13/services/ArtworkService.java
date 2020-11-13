@@ -113,7 +113,16 @@ public class ArtworkService {
         return artworks;
     }
 
-
+    /**
+     * service method to get all artworks that are on the gallery premises
+     * @param isOnPremise
+     * @return
+     */
+    @Transactional
+    public Set<Artwork> getArtworksOnPremise(boolean isOnPremise){
+        Set<Artwork> artworks = artworkRepo.getArtworkByisOnPremise(isOnPremise);
+        return artworks;
+    }
 
     /**
      * service method to edit artwork description
