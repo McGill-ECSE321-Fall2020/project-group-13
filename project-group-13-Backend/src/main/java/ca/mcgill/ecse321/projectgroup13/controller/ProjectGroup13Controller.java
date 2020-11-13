@@ -674,8 +674,8 @@ public class ProjectGroup13Controller {
 	 * @throws illegalArgumentException
 	 */
 	@PostMapping(value = { "/artwork/new", "/artwork/new/" })
-	public ArtworkDto createArtwork(@RequestParam(name="title") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
-		Artwork art = artworkService.createArtwork(title, artists, worth);
+	public ArtworkDto createArtwork(@RequestParam(name="title") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth, @RequestParam(name="imageURL") String url ) throws illegalArgumentException{
+		Artwork art = artworkService.createArtwork(title, artists, worth, url);
 		return convertToDto(art);
 	}
 

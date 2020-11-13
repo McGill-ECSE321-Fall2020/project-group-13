@@ -37,7 +37,7 @@ public class ArtworkService {
      * @return
      * @throws IllegalArgumentException
      */
-    public Artwork createArtwork(String Title, String[] usernames, Double worth) throws IllegalArgumentException {
+    public Artwork createArtwork(String Title, String[] usernames, Double worth, String url) throws IllegalArgumentException {
     	if( Title==null || Title.trim().contentEquals("") ) throw new IllegalArgumentException("invalid title");
     	if(usernames == null || usernames.length==0) throw new IllegalArgumentException("invalid user") ;
     	if(worth==null||worth==0) throw new IllegalArgumentException("invalid worth") ;
@@ -54,6 +54,7 @@ public class ArtworkService {
             System.out.println("works "+artwork.getArtist());
     		artwork.setTitle(Title);
     		artwork.setWorth(worth);
+    		artwork.setImageUrl(url);
     		Set<Artwork> works= user.getArtwork();
     		works.add(artwork);
     		artworkRepo.save(artwork);
