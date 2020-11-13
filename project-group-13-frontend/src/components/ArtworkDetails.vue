@@ -2,14 +2,14 @@
     <div id="artworkdetails">
         <b-container class="artwork info shadow-lg p-4">
           <b-row no-gutters align-v="stretch">
-            <b-col cols="6">
+            <b-col cols="5">
               <img :src="artwork.imageUrl" alt="No Images for Artwork" class="art-image rounded">
               <h4 style="margin-top: 2em;">Artists</h4>
               <div class="mb-4">
                 <router-link v-for="(artistn,i) in artwork.artist" v-bind:key="`artist-${i}`" :to="`/user/`+artistn.username"><b-avatar text="AA"></b-avatar></router-link>
               </div>
             </b-col>
-            <b-col cols="6">
+            <b-col cols="5">
               <h1 class="title">{{ artwork.title }}</h1>
               <h3 class="price"><span>$</span>{{ artwork.worth }}</h3>
               <p style="margin-top: 3.5em;"><u>Description</u></p>
@@ -42,6 +42,9 @@
                 </b-row>
               </b-container>
             </b-col>
+            <b-col cols="2" style="margin-top: 2em;">
+              <b-button v-on:click = "addToCart" variant="outline-primary">Add to Cart</b-button>
+            </b-col>
           </b-row>
         </b-container>
     </div>
@@ -49,6 +52,7 @@
 
 <script>
 import axios from 'axios'
+import Router from '../router'
 var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
@@ -58,7 +62,8 @@ export default {
   name: 'Artwork Details',
   data () {
     return {
-      artwork: ''
+      artwork: '',
+      button: 'Add To Cart'
     }
   },
   created: function () {
@@ -69,7 +74,23 @@ export default {
     .then(response => {
       // JSON responses are automatically parsed.
       this.artwork = response.data
+      this.artwork.imageURL = decodeURI(this.artwork.imageURL)
     })
+  },
+  methods: {
+    addToCart: function () {
+      console.log('testing')
+      if (document.cookie.length < 6) {
+        Router.push({name: 'login'})
+      } else {
+        var url = window.location.href.split('/')
+        const id = url[url.length - 1] // artwork id
+        AXIOS.put('/user/' + document.cookie.substring(6) + '/edit+/cart' + '?artid=' + id)
+        .then((response) => {
+          this.button = 'Added'
+        })
+      }
+    }
   }
 }
 </script>
