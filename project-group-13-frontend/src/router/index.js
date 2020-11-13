@@ -5,6 +5,7 @@ import ArtworkPage from '@/views/ArtworkPage'
 import Login from '@/views/login'
 import CreateAccount from '@/views/CreateAccount'
 import UploadArtowrk from '@/views/UploadArtwork'
+import CheckoutPage from '@/views/CheckoutPage'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/uploadArtwork',
       name: 'UploadArtwork',
       component: UploadArtowrk
+    },
+    {
+      path: '/checkout',
+      name: 'CheckoutPage',
+      component: CheckoutPage
     }
   ]
 })
