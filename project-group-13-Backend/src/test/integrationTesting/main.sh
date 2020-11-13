@@ -45,8 +45,6 @@ curl-format "get user 1 from database using correct username and password" "-X G
 #get user 1 from database using incorrect username and password
 curl-format "get user 1 from database using incorrect username and password" "-X GET" "$url/user/$username/login?password=passwfh"
 
-: '
-
 #create artwork and store artworkID
 curl-format "create artwork and store artworkID" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
 artworkID=$tempVar

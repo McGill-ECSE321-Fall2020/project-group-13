@@ -14,27 +14,29 @@
               <input
                 type="username"
                 class="form-control"
-                id="InputUsername"
+                :class="errorClass"
+                id="InputUsername1"
                 placeholder="Enter Username"
                 v-model="inputUsername"
+                onfocus=""
               >
             </div>
             <div class="form-group">
-              <label for="InputPassword1">Password</label>
+              <label for="InputPassword">Password</label>
               <input
                 type="password"
                 class="form-control"
-                id="InputPassword1"
+                :class="errorClass"
+                id="InputPassword"
                 placeholder="Password"
-                v-model="inputPassword1"
+                v-model="inputPassword"
+                aria-describedby="errorInCredentials"
               > 
+              <small v-if="visible" id="userHelp" class="form-text" style="color:red"
+                >Username or password is incorrect</small
+              >
             </div>
-            <div id="wrapper">
-              <span v-if="visible" style="color:red">Username or password is incorrect </span>
-              <span v-else style="color:red"></span>
-              <br>
-              <button v-on:click = "loginAttempt" type="submit" class="btn btn-primary">Continue</button>
-            </div>
+            <button v-on:click = "loginAttempt" type="submit" class="btn btn-primary">Continue</button>
           </form></span
       >
     </b-row>
@@ -42,6 +44,7 @@
             Don't have an account?&nbsp;<br>
             <router-link to="newAccount">Create account</router-link>
     </b-row>
+    <br>
   </div>
 </template>
 
@@ -49,7 +52,6 @@
 
 <script>
 import axios from 'axios'
-
 import Router from '../router'
 var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -60,12 +62,12 @@ export default {
   name: 'Login',
   data () {
     return {
-      inputPassword1: '',
+      inputPassword: '',
       inputUsername: '',
-      visible: false
+      visible: false,
+      errorClass: ''
     }
   },
-
   /**
    * The login page should only be accessible when the user is logged out.
    * Redirect to landing page if user is already logged in
@@ -74,6 +76,21 @@ export default {
     if (document.cookie.length > 6) {
       Router.push({path: '/', name: ''})
     }
+
+    var self = this
+    'use strict'
+    window.addEventListener('load', function () {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('form-control')
+      // Loop over them and make them reset errors whenever they are altered
+      Array.prototype.filter.call(forms, function (form) {
+        console.log(form)
+        form.addEventListener('input', function (event) {
+          self.visible = false
+          self.errorClass = ''
+        }, false)
+      })
+    }, false)
   },
 
   methods: {
@@ -83,17 +100,37 @@ export default {
      * Failure: An error message is displayed to the user notifying them that their username/password pair is invalid
      */
     loginAttempt: function () {
-      AXIOS.get('/user/' + this.inputUsername + '/login?password=' + this.inputPassword1)
+      // User needs to input a nonempty username and password to login
+      if (this.inputUsername === '' || this.inputPassword === '') {
+        this.visible = true
+        this.errorClass = 'is-invalid'
+        return
+      }
+
+      // User needs to fix their username/password before attempting to login
+      if (this.visible) {
+        return
+      }
+
+      AXIOS.get('/user/' + this.inputUsername + '/login?password=' + this.inputPassword)
       .then((response) => {
         this.visible = false
+        this.errorClass = ''
         // Store username of logged in user inside a cookie.
         document.cookie = 'Token=' + response.data.username + ';path=/'
         Router.push({path: '/', name: ''})
       })
       .catch(error => {
         this.visible = true
+        this.errorClass = 'is-invalid'
         console.log(error)
       })
+    },
+
+    resetError: function () {
+      console.log('hello')
+      this.visible = false
+      this.errorClass = ''
     }
   }
 }
@@ -122,5 +159,9 @@ h2.shareArt {
 }
 h2 {
     cursor: pointer;
+}
+.portfolio-item form .form-buffer.form-group .form-control {
+margin: 30px 0px;
+background: #bd0e1d;
 }
 </style>
