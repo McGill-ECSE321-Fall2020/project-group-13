@@ -101,13 +101,14 @@ export default {
       Router.push({path: '/', name: 'Login'})
     },
     createAccount: function (username, password, email) {
-      this.errorMsg = "";
-      this.showError = false;
-      AXIOS.post('/newuser/?'+'username=' + username + '&' +'email=' + email + '?' + 'password='+ password )
-      .catch(e => { consol.log(e.message);
-                    this.errorMsg="invalid account creation";
-                    this.showError = true;
-                    })
+      this.errorMsg = ''
+      this.showError = false
+      AXIOS.post('/newuser/?' + 'username=' + username + '&' + 'email=' + email + '?' + 'password=' + password)
+      .catch(e => {
+        console.log(e.message)
+        this.errorMsg = 'invalid account creation'
+        this.showError = true
+      })
     }
   }
 }
