@@ -183,7 +183,7 @@ public class TestServiceArtwork {
 					}
 			});
 			
-			lenient().when(artworkRepo.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+			lenient().when(artworkRepo.getArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 				User user = new User();
 				user.setUsername(USERNAME);
 				user.setEmail(USER_EMAIL);
@@ -324,7 +324,7 @@ public class TestServiceArtwork {
 			//address.setAddressID(111);
 
 			try {
-				artwork = artworkService.createArtwork(ARTWORK_TITLE, ARTISTS, WORTH);   
+				artwork = artworkService.createArtwork(ARTWORK_TITLE, ARTISTS, WORTH, "");   
 			}catch (IllegalArgumentException e) {
 				error = e.getMessage();
 			}
@@ -342,7 +342,7 @@ public class TestServiceArtwork {
 		 String error = null;
 		 
 		 try {
-			 artwork = artworkService.createArtwork(" ", ARTISTS, WORTH);
+			 artwork = artworkService.createArtwork(" ", ARTISTS, WORTH, "");
 			 
 		 }catch(IllegalArgumentException e) {
 			 error = e.getMessage();
@@ -357,7 +357,7 @@ public class TestServiceArtwork {
 		 String[] artists = {USERNAME};
 		 String error ="";
 		 try {
-			 artwork = artworkService.createArtwork(ARTWORK_TITLE, ARTISTS, 0.0);
+			 artwork = artworkService.createArtwork(ARTWORK_TITLE, ARTISTS, 0.0, "");
 			 
 		 }catch(IllegalArgumentException e) {
 			error=e.getLocalizedMessage();
@@ -372,7 +372,7 @@ public class TestServiceArtwork {
 		 String error ="";
 		 String[] artists = {"invisibleBoy"};
 		 try {
-			 artwork = artworkService.createArtwork(ARTWORK_TITLE, artists, 100.00);
+			 artwork = artworkService.createArtwork(ARTWORK_TITLE, artists, 100.00, "");
 			 
 		 }catch(IllegalArgumentException e) {
 			error = e.getMessage();
