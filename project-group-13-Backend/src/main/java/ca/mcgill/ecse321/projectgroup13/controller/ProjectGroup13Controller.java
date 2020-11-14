@@ -749,6 +749,18 @@ public class ProjectGroup13Controller {
 	}
 	
 	/**
+	 * RESTful service that returns all the artworks
+	 */
+	@GetMapping(value = { "/artwork/all", "/artwork/all/"})
+	public Set<ArtworkDto> getAllArtwork() {
+		Set<ArtworkDto> artworksOfArtistDto = new HashSet<ArtworkDto>();
+		for(Artwork art : artworkService.getAllArtworks()) {
+			artworksOfArtistDto.add(convertToDto(art));
+		}
+		return artworksOfArtistDto;
+	}
+	
+	/**
 	 * RESTful method to edit certain parameters of an artwork
 	 * @param artId
 	 * @param description
