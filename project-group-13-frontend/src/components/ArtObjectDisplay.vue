@@ -13,7 +13,7 @@
         :key="artwork.id"
         class="d-flex flex-wrap mx-0 mt-0 justify-content-center"
       >
-        <ArtObject :artwork="artwork"/>
+        <ArtObject :artwork="artwork" :urlForPath="urlForPath"/>
       </div>
     
   </div>
@@ -29,6 +29,10 @@ export default {
   name: 'Home',
   components: { ArtObject },
   props: {
+    urlForPath: {
+      type: String,
+      required: true
+    },
     displayHeading: {
       type: String,
       required: true

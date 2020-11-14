@@ -9,26 +9,36 @@
         <b-row>
             <div class="max-w-5xl mx-auto px-1 py-1 m-0">
     <div class="d-flex flex-wrap mx-0 mt-0 justify-content-center">
-      <ArtObject v-bind:artwork="{
-    id: 'Sculpture',
+      <ArtObject 
+    urlForPath="category"  
+    v-bind:artwork="{
+    artworkID: 'sculpture',
     title: 'Sculpture',
     price: 10,
     thumbnail: require('../assets/images/sculpture.jpg')
-  }"></ArtObject>
-   <ArtObject v-bind:artwork="{
-    id: 'Painting',
+  }
+  
+  "></ArtObject>
+   <ArtObject
+    urlForPath="category"
+    v-bind:artwork="{
+    artworkID: 'painting',
     title: 'Painting',
     price: 0,
     thumbnail: require('../assets/images/painting.jpg')
   }"></ArtObject>
-   <ArtObject v-bind:artwork="{
-    id: 'Object',
-    title: 'Object',
+   <ArtObject
+    urlForPath="category"  
+    v-bind:artwork="{
+    artworkID: 'object',
+    title: 'Objects',
     price: 0,
     thumbnail: require('../assets/images/object.jpg')
   }"></ArtObject>
-   <ArtObject v-bind:artwork="{
-    id: 'Drawing',
+   <ArtObject 
+    urlForPath="category"
+    v-bind:artwork="{
+    artworkID: 'drawing',
     title: 'Drawing',
     price: 0,
     thumbnail: require('../assets/images/drawing.jpg')

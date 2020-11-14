@@ -8,11 +8,11 @@
     </div>
     <div class="px-3 flex-1">
       <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
-      <p class="mb-3 text-lg font-bold">$ {{ artwork.price }}</p>
+      <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p>
     </div>
     <div class="px-3">
       <b-button>
-      <router-link :to="`/artwork/` + artwork.artworkID" class="text-light w-50 self-align-center">Buy</router-link>
+      <router-link :to="`/` + urlForPath + '/' + artwork.artworkID" class="text-light w-50 self-align-center">Buy</router-link>
       </b-button>
     </div>
   </div>
@@ -22,6 +22,10 @@
 export default {
   name: 'Art Object',
   props: {
+    urlForPath: {
+      type: String,
+      required: true
+    },
     artwork: {
       type: Object,
       required: true

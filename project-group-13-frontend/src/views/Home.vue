@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <ArtObjectDisplay displayHeading="Featured Artwork" :artworks="this.featuredArtworks"/>
+    <ArtObjectDisplay displayHeading="Featured Artwork" :artworks="this.featuredArtworks" urlForPath='artwork'/>
     <!-- <ArtObjectDisplay displayHeading="Featured Artists"/> -->
     <CategoryDisplay displayHeading="Other Categories"/>
 
