@@ -82,7 +82,6 @@ export default {
       Router.push({path: '/checkout' })
     },
     refreshCart: function () {
-      console.log("parent angry!")
       this.user = document.cookie.substr(6)
       AXIOS.get('/user/' + this.user + '/cart')
       .then(response => {

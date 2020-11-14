@@ -1,7 +1,7 @@
 <template>
   
     <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
-      <span class="border"><b-row>
+      <span class="border" w-100><b-row w-100>
         <b-col>
           <div class="d-block position-relative h-48 overflow-hidden">
             <img
@@ -66,7 +66,6 @@ export default {
       ///user/{username}/edit-/cart
       AXIOS.put('/user/' + document.cookie.substring(6) + '/edit-/cart' + '?artid=' + this.artwork.artworkID)
         .then((response) => {
-          console.log('removed!')
           this.$emit('removedFromCart')
         })
     }
@@ -90,5 +89,8 @@ export default {
   }
   button {
     display: fit-content;
+  }
+  b-row {
+
   }
 </style>
