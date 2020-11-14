@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'Art Object',
+  name: 'ArtObject',
   props: {
     urlForPath: {
       type: String,
