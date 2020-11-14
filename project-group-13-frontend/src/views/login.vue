@@ -129,6 +129,7 @@ export default {
 
       AXIOS.get('/user/' + this.inputUsername + '/login?password=' + this.inputPassword)
       .then((response) => {
+        console.log("successful login")
         this.error = false
         this.errorClass = ''
         // Store username of logged in user inside a cookie.

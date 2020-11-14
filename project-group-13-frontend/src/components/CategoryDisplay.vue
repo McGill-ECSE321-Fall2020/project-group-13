@@ -10,7 +10,7 @@
             <div class="max-w-5xl mx-auto px-1 py-1 m-0">
     <div class="d-flex flex-wrap mx-0 mt-0 justify-content-center">
       <ArtObject 
-    urlForPath="category"  
+    urlForPath="byCategory/category"  
     v-bind:artwork="{
     artworkID: 'sculpture',
     title: 'Sculpture',
@@ -20,7 +20,7 @@
   
   "></ArtObject>
    <ArtObject
-    urlForPath="category"
+    urlForPath="byCategory/category"
     v-bind:artwork="{
     artworkID: 'painting',
     title: 'Painting',
@@ -28,7 +28,7 @@
     thumbnail: require('../assets/images/painting.jpg')
   }"></ArtObject>
    <ArtObject
-    urlForPath="category"  
+    urlForPath="byCategory/category"  
     v-bind:artwork="{
     artworkID: 'object',
     title: 'Objects',
@@ -36,7 +36,7 @@
     thumbnail: require('../assets/images/object.jpg')
   }"></ArtObject>
    <ArtObject 
-    urlForPath="category"
+    urlForPath="byCategory/category"
     v-bind:artwork="{
     artworkID: 'drawing',
     title: 'Drawing',

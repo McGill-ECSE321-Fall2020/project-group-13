@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     gotoCheckout: function () {
-
+      Router.push({path: '/checkout' })
     },
     refreshCart: function () {
       console.log("parent angry!")
