@@ -4,10 +4,12 @@
     <img :src="user.profilePictureURL">
     <h1>{{$route.params.username}}</h1>
 
-    <h2>Bio:<em>{{user.bio}}</em></h2>
+    <h3>Bio:<em>{{user.bio}}</em></h3>
     Email: {{user.email}}
     
-    
+    <div v-if="isLoggedInAsUser() == true">
+    <router-link to='/uploadArtwork'>Add Artwork</router-link>
+    </div>
     <ArtObjectDisplay displayHeading="Artworks" :artworks="user.artworks"/>
     
     </div>
@@ -40,6 +42,7 @@ function userDto(username, email, bio,profilePictureURL){
 function artworkDto(name){
     this.name = name
 }
+
 import Navbar from '../components/Navbar'
 import ArtObjectDisplay from '../components/ArtObjectDisplay'
 
@@ -79,6 +82,21 @@ export default {
           this.errorArtwork=errorMsg
         })
         
+        },
+    methods:{
+      isLoggedInAsUser: function () {
+      console.log('Cookie' + document.cookie)
+
+      if (document.cookie == this.user.username) {
+        console.log('logged in: true')
+        return true
+      } else {
+        console.log('logged in: false')
+        return false
+      }
+    }
+
         }
+    
 }
 </script>

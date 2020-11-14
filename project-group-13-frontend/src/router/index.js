@@ -57,5 +57,6 @@ export default new Router({
       name: 'Category Display',
       component: ArtworkByCategoryResultPage
     }
+    
   ]
 })
