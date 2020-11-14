@@ -10,21 +10,25 @@
             <div class="max-w-5xl mx-auto px-1 py-1 m-0">
     <div class="d-flex flex-wrap mx-0 mt-0 justify-content-center">
       <ArtObject v-bind:artwork="{
+    id: 'Sculpture',
     title: 'Sculpture',
     price: 10,
     thumbnail: require('../assets/images/sculpture.jpg')
   }"></ArtObject>
    <ArtObject v-bind:artwork="{
+    id: 'Painting',
     title: 'Painting',
     price: 0,
     thumbnail: require('../assets/images/painting.jpg')
   }"></ArtObject>
    <ArtObject v-bind:artwork="{
-    title: 'Objects',
+    id: 'Object',
+    title: 'Object',
     price: 0,
     thumbnail: require('../assets/images/object.jpg')
   }"></ArtObject>
    <ArtObject v-bind:artwork="{
+    id: 'Drawing',
     title: 'Drawing',
     price: 0,
     thumbnail: require('../assets/images/drawing.jpg')

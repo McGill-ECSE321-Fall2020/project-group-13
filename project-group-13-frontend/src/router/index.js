@@ -8,6 +8,7 @@ import Login from '@/views/login'
 import CreateAccount from '@/views/CreateAccount'
 import UploadArtowrk from '@/views/UploadArtwork'
 import CheckoutPage from '@/views/CheckoutPage'
+import ArtworkByCategoryResultPage from '@/views/ArtworkByCategoryResultPage'
 
 
 
@@ -44,6 +45,11 @@ export default new Router({
       path: '/checkout',
       name: 'CheckoutPage',
       component: CheckoutPage
+    },
+    {
+      path: '/category/*',
+      name: 'Category Display',
+      component: ArtworkByCategoryResultPage
     }
   ]
 })
