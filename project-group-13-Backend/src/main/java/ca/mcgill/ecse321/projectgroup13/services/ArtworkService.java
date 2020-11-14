@@ -1,20 +1,20 @@
 package ca.mcgill.ecse321.projectgroup13.services;
 
 
+import java.util.Base64;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.CartRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class ArtworkService {
@@ -34,7 +34,7 @@ public class ArtworkService {
      * @param Title
      * @param usernames
      * @param worth
-     * @param url
+     * @param url	Base64 encoding of URL
      * @return
      * @throws IllegalArgumentException
      */
@@ -44,22 +44,22 @@ public class ArtworkService {
     	if(worth==null||worth==0) throw new IllegalArgumentException("invalid worth") ;
 
     	Artwork artwork = new Artwork();
-        artwork.setArtist(new HashSet<>());
+		artwork.setTitle(Title);
+		artwork.setWorth(worth);
+		artwork.setImageUrl(url);    
+		artwork.setArtist(new HashSet<>());
         Set<User> artists = artwork.getArtist();
     	for(String username : usernames){
     		User user = userRepo.findUserByUsername(username);
     		if(user==null) throw new IllegalArgumentException("invalid user");
             artists.add(user);
-    		artwork.setArtist(artists);
             System.out.println(artists);
             System.out.println("works "+artwork.getArtist());
-    		artwork.setTitle(Title);
-    		artwork.setWorth(worth);
-    		artwork.setImageUrl(url);
-    		Set<Artwork> works= user.getArtwork();
-    		works.add(artwork);
-    		artworkRepo.save(artwork);
+    		Set<Artwork> ArtistArtworks = user.getArtwork();
+    		ArtistArtworks.add(artwork);
     	}
+    	artwork.setArtist(artists);
+    	artworkRepo.save(artwork);
     	return artwork;
     }
 
