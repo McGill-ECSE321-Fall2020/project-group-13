@@ -10,7 +10,7 @@
     <div v-if="isLoggedInAsUser() == true">
     <router-link to='/uploadArtwork'>Add Artwork</router-link>
     </div>
-    <ArtObjectDisplay displayHeading="Artworks" :artworks="this.artworks" urlForPath='artwork'/>
+    <ArtObjectDisplay displayHeading="Artworks" :artworks="this.artworks" urlForPath='artwork' :isEditMode="isLoggedInAsUser()" />
     
     </div>
 </template>

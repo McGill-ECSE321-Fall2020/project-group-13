@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
+  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden" v-if="isDeleted==false">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.imageUrl"
@@ -12,15 +12,34 @@
     </div>
     <div class="px-3">
       <b-button>
-      <router-link :to="`/` + urlForPath + '/' + artwork.artworkID" class="text-light w-50 self-align-center">Buy</router-link>
+      <router-link :to="`/` + urlForPath + '/' + artwork.artworkID" class="text-light w-100 self-align-center">Buy</router-link>
+      </b-button>
+      <b-button class="btn btn-danger text-light w-10 self-align-center" v-if="isEditMode" v-on:click = "deleteArtwork">
+        Remove From system
       </b-button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
 export default {
   name: 'Art Object',
+  data () {
+      return {
+        error:'',
+        isDeleted:false
+      }
+    },
   props: {
     urlForPath: {
       type: String,
@@ -29,6 +48,25 @@ export default {
     artwork: {
       type: Object,
       required: true
+    },
+    isEditMode:{
+      type: Boolean,
+      default:false,
+      required: false
+
+    }
+  },
+  methods:{
+    deleteArtwork(){
+      AXIOS.delete('artwork/'+this.artwork.artworkID+'/delete')
+        .then(response=>{
+          this.isDeleted=true
+        })
+        .catch(e=>{
+          errorMsg=e.response.data.message
+          console.log(errorMsg)
+          this.error=errorMsg
+        })
     }
   }
 }
