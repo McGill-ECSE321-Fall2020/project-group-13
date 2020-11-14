@@ -3,8 +3,38 @@
     <Navbar />
     <b-container class="bv-example-row">
       <b-row>
-        <b-col>1 of 2</b-col>
-        <b-col>2 of 2</b-col>
+        <br><br>
+      </b-row>
+      <b-row>
+        <h2>&emsp;Cart</h2>
+      </b-row>
+      
+      <b-row>
+        <b-col cols="8" :key="refreshFlag">
+          <div
+            v-for="artwork in artworks"
+            :key="artwork.id"
+            class="d-flex flex-wrap mx-0 mt-0" 
+          >
+            <CartObject :artwork="artwork" :urlForPath="'artwork'" @removedFromCart="refreshCart"/>
+          </div>
+        </b-col>
+        <b-col>
+          <div class="sticky-top">
+            <br><br><br><br>
+            <span class="border"><b-container>
+              <b-row align-h="center">
+                <h2>Subtotal:</h2>
+              </b-row>
+              <b-row align-h="center">
+                <h3 class="mb-3 text-lg font-bold">$ {{ cart.totalCost.toFixed(2)}}</h3>
+              </b-row>
+              <b-row align-h="center">
+                <button  v-on:click = "gotoCheckout" type="submit" class="btn btn-primary">Proceed to checkout</button>
+              </b-row>
+            </b-container></span>
+          </div>
+        </b-col>
       </b-row>
     </b-container>
     </div>
@@ -14,7 +44,7 @@
 /* eslint-disable */
 
 import Navbar from '../components/Navbar'
-import ArtObjectDisplay from '../components/ArtObjectDisplay'
+import CartObject from '../components/CartObject'
 import CategoryDisplay from '../components/CategoryDisplay'
 import axios from 'axios'
 import Router from '../router'
@@ -26,26 +56,35 @@ var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-
 
 export default {
   name: 'ViewCart',
-  components: { Navbar, ArtObjectDisplay, CategoryDisplay},
+  components: { Navbar, CartObject, CategoryDisplay},
   data() {
     return {
       user: '',
-      cart
+      cart: JSON,
+      artworks: Array,
+      refreshFlag: true
     }
   },
 
-  created: function() {
+  beforeCreate: function() {
     // if (document.cookie.length <= 6) {
     //   Router.push({path: '/login?returnTo=' + window.location.href})
     // }
     this.user = document.cookie.substr(6)
-    console.log('use: ' + this.user)
     AXIOS.get('/user/' + this.user + '/cart')
     .then(response => {
-      // console.log(response.data)
       this.cart = response.data
-      console.log(this.cart)
+      this.artworks = this.cart.artwork
     })
+  },
+  methods: {
+    gotoCheckout: function () {
+
+    },
+    refreshCart: function () {
+      console.log("parent angry!")
+      this.refreshFlag = !this.refreshFlag
+    }
   }
 }
 </script>
@@ -53,5 +92,9 @@ export default {
 <style scoped>
 b-col {
   background: rgb(126, 143, 143);
+}
+span {
+  padding: 10px;
+  display: inline-block;
 }
 </style>

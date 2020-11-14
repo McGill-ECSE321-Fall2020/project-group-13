@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div>
+  <div class="sticky-top">
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand href="/">NavBar</b-navbar-brand>
 
@@ -33,13 +33,14 @@
             </template>
             <div v-if="isLoggedIn() == true">
             <b-dropdown-item :href="this.accountPath">Account</b-dropdown-item>
-            <b-dropdown-item href="#">Orders</b-dropdown-item>
+            <b-dropdown-item href="#/cart">View cart</b-dropdown-item>
+            <b-dropdown-item href="#">Past orders</b-dropdown-item>
             <b-dropdown-item href="#">Artwork</b-dropdown-item>
             <b-dropdown-item v-on:click = "logout">Sign Out</b-dropdown-item>
             <!-- <router-link to="/#/login" tag="b-dropdown-item">Sign Out</router-link> -->
             </div>
             <div v-else>
-            <b-dropdown-item v-on:click = "logout">Sign In</b-dropdown-item>
+            <b-dropdown-item v-on:click = "login">Sign In</b-dropdown-item>
             <!-- <router-link to="/#/login" tag="b-dropdown-item">Sign Out</router-link> -->
             </div>
           </b-nav-item-dropdown>
@@ -74,6 +75,9 @@ export default {
     logout: function () {
       document.cookie = 'Token=; Max-Age=-99999999;'
       Router.push({name: 'login'})
+    },
+    login: function () {
+      Router.push({path: '/login?returnTo=' + window.location.href})
     },
     searchTitle: function () {
       result = AXIOS.get('/artwork/' + this.titleSearch)
