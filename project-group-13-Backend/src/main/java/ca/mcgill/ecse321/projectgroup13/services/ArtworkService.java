@@ -1,8 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.services;
 
-
-import java.util.Base64;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +95,16 @@ public class ArtworkService {
     public Artwork getArtworkByID(int artworkID) {
         Artwork artwork = artworkRepo.findArtworkByArtworkID(artworkID);
         return artwork;
+    }
+    
+    /**
+     * service method to return all artworks
+     * @param artworkID
+     * @return
+     */
+    @Transactional
+    public Iterable<Artwork> getAllArtworks() {
+        return  artworkRepo.findAll();
     }
 
 
