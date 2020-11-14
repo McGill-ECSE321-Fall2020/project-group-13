@@ -38,6 +38,23 @@
         </div>
 
         <div class="form-group">
+          <label for="collection" class="mb-0 mt-1">Dimensions</label><br />
+          <input class='form-control' type="text" id="dimensions" v-model="dimensions" name="dimensions" multiple /><br />
+        </div>
+
+        <div class="form-group">
+          <label for="medium" class="mb-0 mt-1">Category/Medium</label><br />
+          <select v-model="medium" class='form-control' id="medium" name="medium">
+            <option disabled value="">Please select one</option>
+            <option>sculpture</option>
+            <option>painting</option>
+            <option>objects</option>
+            <option>drawing</option>
+            <option>photograph</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="onpremises" class="mb-0 mt-1">On Premises</label>
           <input class='form-control' type="checkbox" v-model="isOnPremise" id="onpremises" name="onpremises" multiple /><br />
         </div>
@@ -83,7 +100,11 @@ export default {
       isOnPremise: false,
       artists: '',
       artwork: null,
-      error: ''
+      artworkID: -1,
+      error: '',
+      dimensions:'',
+      medium:''
+
     }
   },
   created(){
@@ -131,18 +152,42 @@ export default {
         this.error='please wait until image is done uploading'
         return
       }
+      var errorMsg=''
       var optionalComma=''
       if(this.artists !=='') optionalComma=','
       AXIOS.post('artwork/new?title='+this.title+'&artist='+document.cookie.substr(6)+  optionalComma + this.artists+'&worth='+this.price+'&imageURL='+this.img1)
         .then(response=>{
           console.log(response)
           this.artwork=response.data
+          this.artworkID=response.data.artworkID
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = today.getFullYear();
+
+          today = mm + '/' + dd + '/' + yyyy;
+          AXIOS.put('artwork/'+this.artworkID+'/update?description='+this.description+'&creationDate='+today+'&OnPremise='+this.isOnPremise
+                      +'&medium='+this.medium+'&dimensions='+this.dimensions+'&collection='+this.collection)
+          
+          .then(response=>{
+            console.log(response)
+            this.artwork=response.data
+            this.artworkID=response.data.artworkID
+
+          })
+          .catch(e=>{
+            errorMsg=e.response.data.message
+            console.log(errorMsg)
+            this.error=errorMsg
+          })
         })
         .catch(e=>{
           errorMsg=e.response.data.message
           console.log(errorMsg)
           this.error=errorMsg
         })
+        
+
     
     Router.push({path: '/', name: ''})
   
