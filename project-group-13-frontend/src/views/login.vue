@@ -107,17 +107,12 @@ export default {
   },
 
   methods: {
-    sleep: function (ms) {
-      return new Promise(resolve => setTimeout(resolve, ms))
-    },
     /**
      * loginAttempt gathers the username and password input by the user and sends an authentication request to the backend.
      * Success: A cookie containing the logged-in user's username is created
      * Failure: An error message is displayed to the user notifying them that their username/password pair is invalid
      */
     loginAttempt: function () {
-      console.log('hello')
-      this.sleep(1000)
       // User needs to input a nonempty username and password to login
       if (this.inputUsername === '' || this.inputPassword === '') {
         console.log('no request')

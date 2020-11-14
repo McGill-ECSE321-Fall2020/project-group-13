@@ -62,7 +62,7 @@ export default {
       user: '',
       cart: JSON,
       artworks: Array,
-      refreshFlag: true
+      refreshFlag: 0
     }
   },
 
@@ -83,7 +83,12 @@ export default {
     },
     refreshCart: function () {
       console.log("parent angry!")
-      this.refreshFlag = !this.refreshFlag
+      this.user = document.cookie.substr(6)
+      AXIOS.get('/user/' + this.user + '/cart')
+      .then(response => {
+      this.cart = response.data
+      this.artworks = this.cart.artwork
+    })
     }
   }
 }
