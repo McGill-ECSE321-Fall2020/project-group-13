@@ -6,6 +6,7 @@
       <!-- <img src="../components/artImage.jpg" width="50" height="50"/> -->
     </b-row>
     <b-row align-h="center">
+      <span v-if="error" style="color:red">Error: {{error}} </span>
       <form>
 
         <div class="form-group">
@@ -19,42 +20,53 @@
         </div>
         <div class="form-group">
           <label for="title" class="mb-0 mt-1">Title</label><br />
-        <input class='form-control' type="text" id="title" name="title" multiple /><br />
+        <input class='form-control' type="text" v-model="title" id="title" name="title" multiple /><br />
         </div>
         <div class="form-group">
           <label for="price" class="mb-0 mt-1">Price</label><br />
-          <input class='form-control' type="number" id="price" name="price" multiple /><br />
+          <input class='form-control' type="number" v-model="price" id="price" name="price" multiple /><br />
         </div>
 
         <div class="form-group">
-          <label for="descripion" class="mb-0 mt-1">Description</label><br />
-          <textarea class='form-control' id="description" name="description" rows="5" cols="23" multiple /><br />
+          <label for="description" class="mb-0 mt-1">Description</label><br />
+          <textarea class='form-control' id="description" v-model="description" name="description" rows="5" cols="23" multiple /><br />
         </div>
 
         <div class="form-group">
           <label for="collection" class="mb-0 mt-1">Collection</label><br />
-          <input class='form-control' type="text" id="collection" name="collection" multiple /><br />
+          <input class='form-control' type="text" id="collection" v-model="collection" name="collection" multiple /><br />
         </div>
 
         <div class="form-group">
           <label for="onpremises" class="mb-0 mt-1">On Premises</label>
-          <input class='form-control' type="checkbox" id="onpremises" name="onpremises" multiple /><br />
+          <input class='form-control' type="checkbox" v-model="isOnPremise" id="onpremises" name="onpremises" multiple /><br />
         </div>
 
         <div class="form-group">
-          <label for="email" class="mb-0 mt-1">Email Address</label><br />
-          <input class='form-control' type="email" id="email" name="email" multiple /><br />
+          <label for="artists" class="mb-0 mt-1">other collaborating artists (comma separated)</label><br />
+          <input class='form-control' type="text" id="artists" v-model="artists" name="artists" multiple /><br />
         </div> 
-
-        <input type="submit" value="Upload Artwork" />
+        <span v-if="this.img1==null" style="color:red">Please wait for image upload to finish.</span>
+        <button :disabled="this.img1==null" v-on:click = "createArtwork" class="btn btn-primary">Continue</button>
       </form>
     </b-row>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+var config = require('../../config')
+
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { 'Access-Control-Allow-Origin': frontendUrl }
+})
 import Navbar from '../components/Navbar'
 import firebase from 'firebase';
+import Router from '../router'
 export default {
   
   components: { Navbar },
@@ -62,13 +74,21 @@ export default {
   data () {
     return {
       caption : '',
-      img1: '',
+      img1: null,
       imageData: null,
       title: '',
       price: -1,
       description: '',
       collection: '',
       isOnPremise: false,
+      artists: '',
+      artwork: null,
+      error: ''
+    }
+  },
+  created(){
+    if (document.cookie.length <= 6) {
+      Router.push({path: '/', name: ''})
     }
   },
  methods:{
@@ -106,6 +126,27 @@ export default {
           }      
         );
     },
+    createArtwork(){
+      if(this.img1==null){
+        this.error='please wait until image is done uploading'
+        return
+      }
+      var optionalComma=''
+      if(this.artists !=='') optionalComma=','
+      AXIOS.post('artwork/new?title='+this.title+'&artist='+document.cookie.substr(6)+  optionalComma + this.artists+'&worth='+this.price+'&imageURL='+this.img1)
+        .then(response=>{
+          console.log(response)
+          this.artwork=response.data
+        })
+        .catch(e=>{
+          errorMsg=e.response.data.message
+          console.log(errorMsg)
+          this.error=errorMsg
+        })
+    
+    Router.push({path: '/', name: ''})
+  
+    }
 
  }
  

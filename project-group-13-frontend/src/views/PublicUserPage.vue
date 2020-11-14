@@ -10,7 +10,7 @@
     <div v-if="isLoggedInAsUser() == true">
     <router-link to='/uploadArtwork'>Add Artwork</router-link>
     </div>
-    <ArtObjectDisplay displayHeading="Artworks" :artworks="user.artworks"/>
+    <ArtObjectDisplay displayHeading="Artworks" :artworks="this.artworks" urlForPath='artwork'/>
     
     </div>
 </template>
@@ -74,6 +74,7 @@ export default {
         })
         AXIOS.get('artwork/'.concat(this.$route.params.username).concat('/all'))
         .then(response=>{
+          console.log(response);
           this.artworks=response.data.slice(0, 8)
         })
         .catch(e=>{
