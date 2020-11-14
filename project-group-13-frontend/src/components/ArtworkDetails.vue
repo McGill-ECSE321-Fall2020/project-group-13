@@ -6,7 +6,7 @@
               <img :src="artwork.imageUrl" alt="No Images for Artwork" class="art-image rounded">
               <h4 style="margin-top: 2em;">Artists</h4>
               <div class="mb-4">
-                <router-link v-for="(artistn,i) in artwork.artist" v-bind:key="`artist-${i}`" :to="`/user/`+artistn.username"><b-avatar :text="artistn.username.charAt(0)"></b-avatar></router-link>
+                <router-link v-for="(artistn,i) in artwork.artist" v-bind:key="`artist-${i}`" :to="`/viewuser/`+artistn.username"><b-avatar :text="artistn.username.charAt(0)"></b-avatar></router-link>
               </div>
             </b-col>
             <b-col cols="5">

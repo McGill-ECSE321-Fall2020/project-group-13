@@ -137,8 +137,10 @@ export default {
 
         // if need to return to a page, do so
         if (this.returnTo !== 'undefined') {
+          console.log(' returnTo')
           window.location.href = this.returnTo
         } else {
+          console.log('undefined returnTo')
           Router.push({name: 'Hello'})
         }
       })

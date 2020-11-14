@@ -14,8 +14,8 @@
     v-bind:artwork="{
     artworkID: 'sculpture',
     title: 'Sculpture',
-    price: 10,
-    thumbnail: require('../assets/images/sculpture.jpg')
+    worth: 10,
+    imageUrl: require('@/assets/images/sculpture.jpg')
   }
   
   "></ArtObject>
@@ -24,24 +24,24 @@
     v-bind:artwork="{
     artworkID: 'painting',
     title: 'Painting',
-    price: 0,
-    thumbnail: require('../assets/images/painting.jpg')
+    worth: 0,
+    imageUrl: require('@/assets/images/painting.jpg')
   }"></ArtObject>
    <ArtObject
     urlForPath="byCategory/category"  
     v-bind:artwork="{
     artworkID: 'object',
     title: 'Objects',
-    price: 0,
-    thumbnail: require('../assets/images/object.jpg')
+    worth: 0,
+    imageUrl: require('@/assets/images/object.jpg')
   }"></ArtObject>
    <ArtObject 
     urlForPath="byCategory/category"
     v-bind:artwork="{
     artworkID: 'drawing',
     title: 'Drawing',
-    price: 0,
-    thumbnail: require('../assets/images/drawing.jpg')
+    worth: 0,
+    imageUrl: require('@/assets/images/drawing.jpg')
   }"></ArtObject>
     </div>
   </div>

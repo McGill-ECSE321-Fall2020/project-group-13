@@ -33,7 +33,7 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 export default {
-  name: 'Art Object',
+  name: 'ArtObject',
   data () {
       return {
         error:'',
