@@ -755,9 +755,9 @@ public class ProjectGroup13Controller {
 	} 
 	
 	/**
-	 * RESTful service that returns all the artworks that are in the gallery premises
+	 * RESTful service that returns all the artworks of a specific category
 	 */
-	@GetMapping(value = { "/artwork/category", "/artwork/category/"})
+	@GetMapping(value = { "/artwork/byCategory/{category}", "/artwork/byCategory/{category}/"})
 	public Set<ArtworkDto> getArtworkInCategory(@RequestParam(name="category") String category){
 		Set<ArtworkDto> artworksListDto = new HashSet<ArtworkDto>();
 		for(Artwork art : artworkService.getArtworkByCategory(category)) {
