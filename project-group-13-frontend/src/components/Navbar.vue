@@ -2,7 +2,7 @@
 <template>
   <div class="sticky-top">
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="/">NavBar</b-navbar-brand>
+      <b-navbar-brand href="/">ShareArt</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

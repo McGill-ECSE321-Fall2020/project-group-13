@@ -34,7 +34,7 @@
                 </b-row>
                 <b-row>
                   <b-col><p>Available</p></b-col>
-                  <b-col>{{ artwork.artworkSold }}</b-col>
+                  <b-col>{{ !(artwork.artworkSold) }}</b-col>
                 </b-row>
                 <b-row>
                   <b-col><p>On premise</p></b-col>
