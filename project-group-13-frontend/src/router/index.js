@@ -60,7 +60,8 @@ export default new Router({
     {
       path: '/cart',
       name: 'CartPage',
-      component: ViewCart
+      component: ViewCart,
+      props: true
     }
   ]
 })

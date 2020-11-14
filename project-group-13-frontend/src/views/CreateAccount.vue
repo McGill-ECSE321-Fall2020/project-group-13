@@ -110,22 +110,54 @@ export default {
     }
   },
   methods: {
-    createAccountAttempt: function () {
-      if (this.inputPassword1 !== this.inputPassword2) {
-        this.visible = true
+      sleep: function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+      },
+      loginAttempt: function () {
+      console.log('attempting to log user in using newly created account')
+      this.sleep(1000)
+     
+      AXIOS.get('/user/' + this.inputUsername + '/login?password=' + this.inputPassword1)
+      .then((response) => {
+        console.log("successful login")
+        this.error = false
+        this.errorClass = ''
+        // Store username of logged in user inside a cookie.
+        document.cookie = 'Token=' + response.data.username + ';path=/'
+
+        // if need to return to a page, do so
+        if (this.returnTo !== 'undefined') {
+          window.location.href = this.returnTo
+        } else {
+          Router.push({name: 'Hello'})
+        }
+      })
+      .catch(error => {
+        this.error = true
         this.errorClass = 'is-invalid'
-        return
-      }
-      if (this.inputPassword1.localeCompare(this.inputPassword2)) {
+        console.log(error)
+      })
+    },
+    createAccountAttempt: function () {
+      console.log('entered here')
+      if (this.inputPassword1===this.inputPassword2) {
+        console.log('/newuser/?username=' + this.inputUsername + '&password=' + this.inputPassword1 + '&email=' + this.inputEmail)
         AXIOS.post('/newuser/?username=' + this.inputUsername + '&password=' + this.inputPassword1 + '&email=' + this.inputEmail)
       .then((response) => {
         this.visible = false
-        Router.push({path: '/', name: ''})
+        console.log('here is the response')
+        console.log(response)
+        this.loginAttempt(this.inputUsername, this.inputPassword1)
       })
       .catch(error => {
         this.visible = true
         console.log(error)
       })
+      } else {
+        console.log('input password is not the same as verification password')
+        this.visible = true
+        this.errorClass = 'is-invalid'
+        return
       }
     }
   }
