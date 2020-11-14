@@ -4,11 +4,11 @@
     <img :src="user.profilePictureURL">
     <h1>{{$route.params.username}}</h1>
 
-    <h1>Bio:<em>{{user.bio}}</em></h1>
+    <h2>Bio:<em>{{user.bio}}</em></h2>
     Email: {{user.email}}
     
     
-    <ArtObjectDisplay displayHeading="Artworks"/>
+    <ArtObjectDisplay displayHeading="Artworks" :artworks="user.artworks"/>
     
     </div>
 </template>
@@ -49,8 +49,9 @@ export default {
     data () {
       return {
         user: [],
- 
+        artworks: [],
         errorUser: '',
+        errorArtwork: '',
         response: []
       }
     },
@@ -64,9 +65,18 @@ export default {
           this.user=response.data
         })
         .catch(e=>{
-          errorUser=e.response.data.message
+          errorMsg=e.response.data.message
           console.log(errorMsg)
           this.errorUser=errorMsg
+        })
+        AXIOS.get('artwork/'.concat(this.$route.params.username).concat('/all'))
+        .then(response=>{
+          this.artworks=response.data.slice(0, 8)
+        })
+        .catch(e=>{
+          errorMsg=e.response.data.message
+          console.log(errorMsg)
+          this.errorArtwork=errorMsg
         })
         
         }
