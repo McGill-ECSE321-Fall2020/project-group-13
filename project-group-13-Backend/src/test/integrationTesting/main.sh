@@ -7,8 +7,8 @@ red=$(tput setaf 1)
 powder_blue=$(tput setaf 153)
 
 #usernames used to create users during test
-username="aa"
-username2="bb"
+username="ccc"
+username2="ddd"
 url="http://localhost:8080"
 
 
@@ -46,7 +46,7 @@ curl-format "get user 1 from database using correct username and password" "-X G
 curl-format "get user 1 from database using incorrect username and password" "-X GET" "$url/user/$username/login?password=passwfh"
 
 #create artwork and store artworkID
-curl-format "create artwork and store artworkID" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7&imageURL=urlBABY" "artworkID"
+curl-format "create artwork and store artworkID" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7&imageURL=https%3A%2F%2Fimg.xcitefun.net%2Fusers%2F2013%2F09%2F333375%2Cxcitefun-beautiful-paintings-with-digital-sky-2.jpg" "artworkID"
 artworkID=$tempVar
 
 #get all artwork on premise
@@ -133,7 +133,7 @@ curl-format "get shipment of order 1" "-X GET" "$url/order/$orderID/shipment"
 curl-format "get artwork by ID" "-X GET" "$url/artwork/$artworkID"
 
 #create a second artwork
-curl-format "create a second artwork" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7&imageURL=urlBABY" "artworkID"
+curl-format "create a second artwork" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7&imageURL=https%3A%2F%2Fimg.xcitefun.net%2Fusers%2F2013%2F09%2F333375%2Cxcitefun-beautiful-paintings-with-digital-sky-2.jpg" "artworkID"
 artworkID2=$tempVar
 
 #add artwork to cart

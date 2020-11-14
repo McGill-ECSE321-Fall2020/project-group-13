@@ -2,7 +2,7 @@
   <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
-        :src="artwork.thumbnail"
+        :src="artwork.imageUrl"
         class="object-cover object-center w-100 h-100 d-block bg-secondary"
       />
     </div>
@@ -12,7 +12,7 @@
     </div>
     <div class="px-3">
       <b-button>
-      <router-link :to="`/artwork/2`" class="text-light w-50 self-align-center">Buy</router-link>
+      <router-link :to="`/artwork/` + artwork.artworkID" class="text-light w-50 self-align-center">Buy</router-link>
       </b-button>
     </div>
   </div>

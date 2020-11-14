@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
@@ -7,6 +9,10 @@ import CreateAccount from '@/views/CreateAccount'
 import UploadArtowrk from '@/views/UploadArtwork'
 import CheckoutPage from '@/views/CheckoutPage'
 import PublicUserPage from '@/views/PublicUserPage'
+import ArtworkByCategoryResultPage from '@/views/ArtworkByCategoryResultPage'
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -46,5 +52,10 @@ export default new Router({
       name: 'PublicUserPage',
       component: PublicUserPage
     },
+    {
+      path: '/category/*',
+      name: 'Category Display',
+      component: ArtworkByCategoryResultPage
+    }
   ]
 })

@@ -1,37 +1,57 @@
 <template>
   <div class="login-page">
-    <!-- <NavbarBare /> -->
+      <Navbar />
     <b-row align-h="center">
-      <h2 class="shareArt">ShareArt</h2>
+      <h2 class="shareArt"></h2>
       <!-- <img src="../components/artImage.jpg" width="50" height="50"/> -->
     </b-row>
     <b-row align-h="center">
       <form>
-        <label for="file" class="mb-0">Attachments</label><br />
-        <input type="file" name="file" id="file" multiple /><br/>
+
+        <div class="form-group">
+          <label for="file" class="mb-0">Attachments</label><br />
+          <input class='form-control' type="file" name="file" id="file" multiple /><br/>
+        </div>
+        
         <div class="form-group">
           <label for="title" class="mb-0 mt-1">Title</label><br />
         <input class='form-control' type="text" id="title" name="title" multiple /><br />
         </div>
-        <label for="price" class="mb-0 mt-1">Price</label><br />
-        <input type="number" id="price" name="price" multiple /><br />
-        <label for="descripion" class="mb-0 mt-1">Description</label><br />
-        <textarea id="description" name="description" rows="5" cols="23" multiple /><br />
-        <label for="collection" class="mb-0 mt-1">Collection</label><br />
-        <input type="text" id="collection" name="collection" multiple /><br />
-        <label for="onpremises" class="mb-0 mt-1">On Premises</label><br />
-        <input type="checkbox" id="onpremises" name="onpremises" multiple /><br />
-        <label for="email" class="mb-0 mt-1">Email Address</label><br />
-        <input type="email" id="email" name="email" multiple /><br />
+        <div class="form-group">
+          <label for="price" class="mb-0 mt-1">Price</label><br />
+          <input class='form-control' type="number" id="price" name="price" multiple /><br />
+        </div>
 
-        <input type="submit" value="Send" />
+        <div class="form-group">
+          <label for="descripion" class="mb-0 mt-1">Description</label><br />
+          <textarea class='form-control' id="description" name="description" rows="5" cols="23" multiple /><br />
+        </div>
+
+        <div class="form-group">
+          <label for="collection" class="mb-0 mt-1">Collection</label><br />
+          <input class='form-control' type="text" id="collection" name="collection" multiple /><br />
+        </div>
+
+        <div class="form-group">
+          <label for="onpremises" class="mb-0 mt-1">On Premises</label>
+          <input class='form-control' type="checkbox" id="onpremises" name="onpremises" multiple /><br />
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="mb-0 mt-1">Email Address</label><br />
+          <input class='form-control' type="email" id="email" name="email" multiple /><br />
+        </div> 
+
+        <input type="submit" value="Upload Artwork" />
       </form>
     </b-row>
   </div>
 </template>
 
 <script>
+import Navbar from '../components/Navbar'
 export default {
+  components: { Navbar },
   name: 'Login'
 }
 </script>
