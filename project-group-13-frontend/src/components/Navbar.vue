@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
@@ -29,11 +30,17 @@
             <template slot="button-content">
               <icon-base width="22" height="22" iconColor="rgba(255,255,255,100)" icon-name="user-profile"><icon-profile/></icon-base>
             </template>
+            <div v-if="isLoggedIn() == true">
             <b-dropdown-item href="#">Account</b-dropdown-item>
             <b-dropdown-item href="#">Orders</b-dropdown-item>
             <b-dropdown-item href="#">Artwork</b-dropdown-item>
             <b-dropdown-item v-on:click = "logout">Sign Out</b-dropdown-item>
             <!-- <router-link to="/#/login" tag="b-dropdown-item">Sign Out</router-link> -->
+            </div>
+            <div v-else>
+            <b-dropdown-item v-on:click = "logout">Sign In</b-dropdown-item>
+            <!-- <router-link to="/#/login" tag="b-dropdown-item">Sign Out</router-link> -->
+            </div>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -42,11 +49,11 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Router from '../router'
 
 export default {
   name: 'NavBar',
-
   methods: {
     /**
      * delete the existing cookie, which is equivalent to logging a user out.
@@ -55,6 +62,19 @@ export default {
     logout: function () {
       document.cookie = 'Token=; Max-Age=-99999999;'
       Router.push({name: 'login'})
+    },
+
+    isLoggedIn: function () {
+      
+      console.log('Cookie' + document.cookie)
+
+      if (document.cookie == '') {
+        console.log('logged in: false')
+        return false
+      } else {
+        console.log('logged in: true')
+        return true
+      }
     }
   }
 }
