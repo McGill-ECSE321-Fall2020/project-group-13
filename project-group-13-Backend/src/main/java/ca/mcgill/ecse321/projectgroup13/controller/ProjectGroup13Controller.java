@@ -698,7 +698,7 @@ public class ProjectGroup13Controller {
 	 * @return ArtworkDto
 	 * @throws IllegalArgumentException
 	 */
-	@GetMapping(value = { "/artwork/{artId}", "artwork/{artId}/" })
+	@GetMapping(value = { "/artwork/byId/{artId}", "artwork/byId/{artId}/" })
 	public ArtworkDto getArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		Artwork art = artworkService.getArtworkByID(id);
 		return convertToDto(art);
@@ -710,7 +710,7 @@ public class ProjectGroup13Controller {
      * @return Set<ArtworkDto>
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "artwork/{title}", "artwork/{title}/" })
+    @GetMapping(value = { "artwork/byTitle/{title}", "artwork/byTitle/{title}/" })
     public Set<ArtworkDto> getArtworksByTitle(@PathVariable("title") String title) throws IllegalArgumentException {
         Set<Artwork> art = artworkService.getArtworksByTitle(title);
         Set<ArtworkDto> newSet = new HashSet<ArtworkDto>();

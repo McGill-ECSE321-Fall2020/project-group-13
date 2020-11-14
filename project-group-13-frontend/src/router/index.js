@@ -10,7 +10,7 @@ import UploadArtowrk from '@/views/UploadArtwork'
 import CheckoutPage from '@/views/CheckoutPage'
 import PublicUserPage from '@/views/PublicUserPage'
 import ArtworkByCategoryResultPage from '@/views/ArtworkByCategoryResultPage'
-
+import ViewCart from '@/views/ViewCart'
 
 
 Vue.use(Router)
@@ -23,7 +23,7 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/artwork',
+      path: '/artwork*',
       name: 'ArtworkPage',
       component: ArtworkPage
     },
@@ -56,7 +56,11 @@ export default new Router({
       path: '/category/*',
       name: 'Category Display',
       component: ArtworkByCategoryResultPage
+    },
+    {
+      path: '/cart',
+      name: 'CartPage',
+      component: ViewCart
     }
-    
   ]
 })

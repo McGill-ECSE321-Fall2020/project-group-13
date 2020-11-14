@@ -35,10 +35,10 @@ function curl-format() {
 
 
 #create user 1
-curl-format "create user 1" "-X POST" "$url/newuser?username=$username&email=$username@no.com&password=passwor1dfd"
+#curl-format "create user 1" "-X POST" "$url/newuser?username=$username&email=$username@no.com&password=passwor1dfd"
 
 #create user 2
-curl-format "create user 2" "-X POST" "$url/newuser?username=$username2&email=$username2@no.com&password=passwor1dfd"
+#curl-format "create user 2" "-X POST" "$url/newuser?username=$username2&email=$username2@no.com&password=passwor1dfd"
 
 
 for i in {1..5}
@@ -48,6 +48,9 @@ do
 	artworkID=$tempVar
 	#update artwork
 	curl-format "update artwork" "-X PUT" "$url/artwork/$artworkID/update?description=A-beautiful-UPDATED-description&title=$artworkID&OnPremise=true"
+
+	#add artwork to cart of user 1
+	curl-format "add artwork to cart" "-X PUT" "$url/user/$username/edit+/cart/?artid=$artworkID"	"cartID"
 done
 
 

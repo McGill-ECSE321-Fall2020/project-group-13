@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <ArtworkDetails />
-    <ArtObjectDisplay displayHeading="Similar Artwork"/>
+    <ArtObjectDisplay displayHeading="Similar Artwork" urlForPath="artwork"/>
     
     </div>
 </template>

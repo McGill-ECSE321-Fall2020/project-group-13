@@ -71,11 +71,12 @@ export default {
     var url = window.location.href.split('/')
     const id = url[url.length - 1] // artwork id
     // Fetching artwork from backend
-    AXIOS.get('/artwork/' + id)
+    AXIOS.get('/artwork/byId/' + id)
     .then(response => {
       // JSON responses are automatically parsed.
       this.artwork = response.data
       this.artwork.imageURL = decodeURIComponent(this.artwork.imageURL)
+      console.log(this.artwork.imageURL)
       // getting cart of user
       const username = document.cookie.substring(6)
       AXIOS.get('/user/' + username + '/cart')
