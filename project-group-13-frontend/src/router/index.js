@@ -53,8 +53,8 @@ export default new Router({
       component: PublicUserPage
     },
     {
-      path: '/category/*',
-      name: 'Category Display',
+      path: '/byCategory/category*',
+      name: 'CategoryDisplay',
       component: ArtworkByCategoryResultPage
     },
     {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <ArtObjectDisplay displayHeading="Similar Artwork" :artwork="this.categoryArtworks"/>
+    <ArtObjectDisplay displayHeading="Similar Artwork" :artwork="this.categoryArtworks" urlForPath="artwork"/>
     
     </div>
 </template>
@@ -21,7 +21,7 @@ var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPo
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
 
 export default {
-  name: 'Category Artwork Display',
+  name: 'CategoryArtworkDisplay',
   components: { Navbar, ArtObjectDisplay},
   data() {
     return {
@@ -32,10 +32,10 @@ export default {
   created: function() {
     var url = window.location.href.split('/')
     const category = url[url.length - 1]
-    AXIOS.get('/artwork/' + category)
+    AXIOS.get('/artwork/onPremise')
     .then(response => {
       console.log('ResponseData' + response.data)
-      this.categoryArtworks = response.data.slice(0, 8)
+      this.categoryArtworks = response.data
     })
   }
 }
