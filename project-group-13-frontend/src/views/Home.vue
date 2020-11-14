@@ -34,7 +34,7 @@ export default {
   methods: {
     async getArtworks () {
       try {
-        const res = await fetch(`http://localhost:3000/artworks`)
+        const res = await fetch(`http://localhost:8080/artworks`)
         const json = await res.json()
         this.artworks = json
       } catch (e) {

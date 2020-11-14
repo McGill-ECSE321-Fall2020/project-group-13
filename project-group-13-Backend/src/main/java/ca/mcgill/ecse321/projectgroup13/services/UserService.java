@@ -181,6 +181,7 @@ public class UserService {
     @Transactional
     public User editEmail(String username, String newEmail) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
+        if(newEmail.equals(user.getEmail())) return user;
             if(!checkIfValidEmail(newEmail) || (userRepository.findUserByEmail(newEmail) != null)) {
                 throw new RegistrationException("invalid email");
             }

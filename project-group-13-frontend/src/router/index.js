@@ -6,7 +6,7 @@ import Login from '@/views/login'
 import CreateAccount from '@/views/CreateAccount'
 import UploadArtowrk from '@/views/UploadArtwork'
 import CheckoutPage from '@/views/CheckoutPage'
-
+import PublicUserPage from '@/views/PublicUserPage'
 Vue.use(Router)
 
 export default new Router({
@@ -42,7 +42,7 @@ export default new Router({
       component: CheckoutPage
     },
     {
-      path: '/viewuser',
+      path: '/viewuser/:username',
       name: 'PublicUserPage',
       component: PublicUserPage
     },
