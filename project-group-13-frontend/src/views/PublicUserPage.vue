@@ -5,7 +5,8 @@
     <h1>{{$route.params.username}}</h1>
 
     <h1>Bio:<em>{{user.bio}}</em></h1>
-    {{user.email}}
+    Email: {{user.email}}
+    
     
     <ArtObjectDisplay displayHeading="Artworks"/>
     
