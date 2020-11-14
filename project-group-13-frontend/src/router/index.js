@@ -8,6 +8,7 @@ import Login from '@/views/login'
 import CreateAccount from '@/views/CreateAccount'
 import UploadArtowrk from '@/views/UploadArtwork'
 import CheckoutPage from '@/views/CheckoutPage'
+import PublicUserPage from '@/views/PublicUserPage'
 import ArtworkByCategoryResultPage from '@/views/ArtworkByCategoryResultPage'
 
 
@@ -22,7 +23,7 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/artwork/*',
+      path: '/artwork',
       name: 'ArtworkPage',
       component: ArtworkPage
     },
@@ -47,9 +48,15 @@ export default new Router({
       component: CheckoutPage
     },
     {
+      path: '/viewuser/:username',
+      name: 'PublicUserPage',
+      component: PublicUserPage
+    },
+    {
       path: '/category/*',
       name: 'Category Display',
       component: ArtworkByCategoryResultPage
     }
+    
   ]
 })

@@ -142,7 +142,7 @@ public class ArtworkService {
     public Set<Artwork> getArtworksByTitle( String title) {
         Set<Artwork> artworks = artworkRepo.findAll();
         Set<Artwork> newSet = new HashSet<Artwork>();
-        newSet = artworks.stream().filter(x -> x.getTitle().toLowerCase().equals(title.toLowerCase()));
+        artworks.stream().filter(x -> x.getTitle().toLowerCase().equals(title.toLowerCase())).forEach(newSet::add);
         return newSet;
     }
 

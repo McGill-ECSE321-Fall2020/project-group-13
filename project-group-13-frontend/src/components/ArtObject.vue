@@ -45,4 +45,8 @@ export default {
   .flex-1 {
     flex: 1 1 0%;
   }
+  img {
+  max-width: 300px;
+  height: auto;
+}
 </style>
