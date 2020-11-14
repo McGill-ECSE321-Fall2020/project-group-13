@@ -14,8 +14,9 @@
               size="sm"
               class="mr-sm-2"
               placeholder="Search"
+              v-model="titleSearch"
             ></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit"
+            <b-button v-on:click = "searchTitle" size="sm" class="my-2 my-sm-0" type="submit"
               >Search</b-button
             >
           </b-nav-form>
@@ -50,10 +51,20 @@
 
 <script>
 /* eslint-disable */
+import axios from 'axios'
 import Router from '../router'
+var config = require('../../config')
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
 
 export default {
   name: 'NavBar',
+  data () {
+    return {
+      titleSearch: ''
+    }
+  },
   methods: {
     /**
      * delete the existing cookie, which is equivalent to logging a user out.
@@ -63,7 +74,10 @@ export default {
       document.cookie = 'Token=; Max-Age=-99999999;'
       Router.push({name: 'login'})
     },
-
+    searchTitle: function () {
+      result = AXIOS.get('/artwork/' + this.titleSearch)
+      console.log(result) //this is temporary, until we implement the search and show functionality
+    },
     isLoggedIn: function () {
       
       console.log('Cookie' + document.cookie)
