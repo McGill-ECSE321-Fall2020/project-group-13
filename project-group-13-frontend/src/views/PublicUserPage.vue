@@ -87,7 +87,7 @@ export default {
       isLoggedInAsUser: function () {
       console.log('Cookie' + document.cookie)
 
-      if (document.cookie == this.user.username) {
+      if (document.cookie.substr(6) == this.user.username) {
         console.log('logged in: true')
         return true
       } else {

@@ -53,6 +53,12 @@ import Navbar from '../components/Navbar'
 export default {
   components: { Navbar },
   name: 'Login'
+  title: ''
+  price: -1
+  description: ''
+  collection: ''
+  isOnPremise: false
+  
 }
 </script>
 
