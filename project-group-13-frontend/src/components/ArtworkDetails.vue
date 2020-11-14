@@ -75,7 +75,7 @@ export default {
     .then(response => {
       // JSON responses are automatically parsed.
       this.artwork = response.data
-      this.artwork.imageURL = decodeURI(this.artwork.imageURL)
+      this.artwork.imageURL = decodeURIComponent(this.artwork.imageURL)
       // getting cart of user
       const username = document.cookie.substring(6)
       AXIOS.get('/user/' + username + '/cart')
