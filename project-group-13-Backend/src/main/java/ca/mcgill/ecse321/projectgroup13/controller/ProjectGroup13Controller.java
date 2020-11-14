@@ -692,6 +692,24 @@ public class ProjectGroup13Controller {
 		return convertToDto(art);
 	}
 
+	        /**
+     * RESTful method to get all artworks with corresponding title
+     * @param title
+     * @return Set<ArtworkDto>
+     * @throws IllegalArgumentException
+     */
+    @GetMapping(value = { "artwork/{title}", "artwork/{title}/" })
+    public Set<ArtworkDto> getArtworksByTitle(@PathVariable("title") String title) throws IllegalArgumentException {
+        Set<Artwork> art = artworkService.getArtworksByTitle(title);
+        Set<ArtworkDto> newSet = new HashSet<ArtworkDto>();
+        for( Artwork artwork: art){
+            newSet.add(convertToDto(artwork));
+        } 
+        return newSet;
+    }
+
+
+
 
 	/**
 	 * RESTful method to delete an artwork

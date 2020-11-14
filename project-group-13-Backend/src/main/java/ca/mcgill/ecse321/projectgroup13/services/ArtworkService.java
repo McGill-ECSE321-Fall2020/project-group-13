@@ -124,6 +124,19 @@ public class ArtworkService {
         return artworks;
     }
 
+         /**
+     * service method to get all artworks with a given title -- it is not case sensitive
+     * @param title
+     * @return
+     */
+    @Transactional
+    public Set<Artwork> getArtworksByTitle( String title) {
+        Set<Artwork> artworks = artworkRepo.findAll();
+        Set<Artwork> newSet = new HashSet<Artwork>();
+        newSet = artworks.stream().filter(x -> x.getTitle().toLowerCase().equals(title.toLowerCase()));
+        return newSet;
+    }
+
     /**
      * service method to get all artworks that are on the gallery premises
      * @param isOnPremise
