@@ -711,9 +711,10 @@ public class ProjectGroup13Controller {
      * @return Set<ArtworkDto>
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "artwork/byTitle/title", "artwork/byTitle/title/" })
+    @GetMapping(value = { "artwork/byTitle", "artwork/byTitle/" })
     public Set<ArtworkDto> getArtworksByTitle(@RequestParam(name = "title") String title) throws IllegalArgumentException {
-        Set<Artwork> art = artworkService.getArtworksByTitle(title);
+		String title1 = title.replace("%20"," ");
+        Set<Artwork> art = artworkService.getArtworksSearchTitle(title1);
         Set<ArtworkDto> newSet = new HashSet<ArtworkDto>();
         for( Artwork artwork: art){
             newSet.add(convertToDto(artwork));

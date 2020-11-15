@@ -80,9 +80,16 @@ export default {
       Router.push({path: '/login?returnTo=' + window.location.href})
     },
     searchTitle: function () {
-      result = AXIOS.get('/artwork/' + this.titleSearch)
-      console.log(result) //this is temporary, until we implement the search and show functionality
-    },
+    console.log(this.titleSearch)
+    console.log('Go to page clicked...')
+
+    AXIOS.get('/artwork/byTitle/?title=' + this.titleSearch)
+      .then((response) => {
+        console.log('here is all artworks of category')
+        console.log(response.data)
+        Router.push({ name: 'CategoryDisplay', params: {artwork: response}})
+      })
+  },
     isLoggedIn: function () {
       
       console.log('Cookie' + document.cookie)

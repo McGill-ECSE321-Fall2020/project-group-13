@@ -139,10 +139,10 @@ public class ArtworkService {
      * @return
      */
     @Transactional
-    public Set<Artwork> getArtworksByTitle( String title) {
+    public Set<Artwork> getArtworksSearchTitle( String title) {
         Set<Artwork> artworks = artworkRepo.findAll();
         Set<Artwork> newSet = new HashSet<Artwork>();
-        artworks.stream().filter(x -> x.getTitle().toLowerCase().equals(title.toLowerCase())).forEach(newSet::add);
+        artworks.stream().filter(x -> x.getTitle().toLowerCase().contains(title.toLowerCase())).forEach(newSet::add);
         return newSet;
     }
 
