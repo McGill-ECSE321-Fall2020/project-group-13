@@ -43,7 +43,7 @@
               </b-container>
             </b-col>
             <b-col cols="2" style="margin-top: 2em;">
-              <b-button v-on:click = "addToCart" :class="buttonDisable" variant="outline-primary">{{ buttonLabel }}</b-button>
+              <b-button v-on:click = "editCartEvent" :class="buttonDisable" variant="outline-primary">{{ buttonLabel }}</b-button>
             </b-col>
           </b-row>
         </b-container>
@@ -77,25 +77,36 @@ export default {
       this.artwork = response.data
       this.artwork.imageURL = decodeURIComponent(this.artwork.imageURL)
       console.log(this.artwork.imageURL)
-      // getting cart of user
+
+      // check if user is logged in
       const username = document.cookie.substring(6)
-      AXIOS.get('/user/' + username + '/cart')
-      .then(response => {
-      // JSON responses are automatically parsed.
-        const cart = response.data
-        var i
-        // checking if artwork was already in cart
-        for (i = 0; i < cart.artwork.length; i++) {
-          if (cart.artwork[i].artworkID === parseInt(id)) {
-            console.log('equal')
-            this.buttonDisable = 'disabled'
-            this.buttonLabel = 'In Cart'
-          } // otherwise button can be clicked
-        }
-      })
+      if (username.length !== 0){
+        // getting cart of user
+        AXIOS.get('/user/' + username + '/cart')
+        .then(response => {
+        // JSON responses are automatically parsed.
+          const cart = response.data
+          var i
+          // checking if artwork was already in cart
+          for (i = 0; i < cart.artwork.length; i++) {
+            if (cart.artwork[i].artworkID === parseInt(id)) {
+              console.log('equal')
+              // this.buttonDisable = 'disabled'
+              this.buttonLabel = 'Remove from Cart'
+            } // otherwise button can be clicked
+          }
+        })
+      }
     })
   },
   methods: {
+    editCartEvent: function () {
+      if (this.buttonLabel === 'Remove from Cart') {
+        this.removeFromCart()
+      } else {
+        this.addToCart()
+      }
+    },
     addToCart: function () {
       if (document.cookie.length < 6) {
         Router.push({path: '/login?returnTo=' + window.location.href})
@@ -104,8 +115,21 @@ export default {
         const id = url[url.length - 1] // artwork id
         AXIOS.put('/user/' + document.cookie.substring(6) + '/edit+/cart' + '?artid=' + id)
         .then((response) => {
-          this.buttonDisable = 'disabled'
-          this.buttonLabel = 'In Cart'
+          // this.buttonDisable = 'disabled'
+          this.buttonLabel = 'Remove from Cart'
+        })
+      }
+    },
+    removeFromCart: function () {
+      if (document.cookie.length < 6) {
+        Router.push({path: '/login?returnTo=' + window.location.href})
+      } else {
+        var url = window.location.href.split('/')
+        const id = url[url.length - 1] // artwork id
+        AXIOS.put('/user/' + document.cookie.substring(6) + '/edit-/cart' + '?artid=' + id)
+        .then((response) => {
+          // this.buttonDisable = 'disabled'
+          this.buttonLabel = 'Add to Cart'
         })
       }
     }

@@ -1,27 +1,35 @@
 <template>
   <div id="PublicUser">
     <Navbar />
-    <img :src="user.profilePictureURL" />
-    <h1>{{ $route.params.username }}</h1>
+    <div class="d-flex flex-row justify-content-center align-items-center">
+      <div class="p-2">
+        <img :src="user.profilePictureURL" />
+      </div>
+      <div class="p-2">
+        <h1>{{ $route.params.username }}</h1>
 
-    <h3>
-      Bio:<em>{{ user.bio }}</em>
-    </h3>
-    Email: {{ user.email }}
+        <h3>
+          Bio: <em>{{ user.bio }}</em>
+        </h3>
+        Email: {{ user.email }}
 
-    <div v-if="isLoggedInAsUser() == true">
-      <router-link to="/uploadArtwork">Add Artwork</router-link><br />
-      <router-link :to="'/edituser/'+$route.params.username"
-        >Edit Profile</router-link
-      >
+        <div v-if="isLoggedInAsUser() == true">
+          <router-link to="/uploadArtwork">Add Artwork</router-link><br />
+          <router-link :to="'/edituser/'+$route.params.username"
+            >Edit Profile</router-link
+          >
+        </div>
+      </div>
     </div>
-
-    <ArtObjectDisplay
-      displayHeading="Artworks"
-      :artworks="this.artworks"
-      urlForPath="artwork"
-      :isEditMode="isLoggedInAsUser()"
-    />
+    <div class="row justify-content-center">
+      <ArtObjectDisplay
+        displayHeading="Artworks"
+        :artworks="this.artworks"
+        urlForPath="artwork"
+        :isEditMode="isLoggedInAsUser()"
+      />
+    </div>
+    <br>
   </div>
 </template>
 
@@ -102,3 +110,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+img {
+  width: 300px;
+  height: auto;
+}
+</style>
