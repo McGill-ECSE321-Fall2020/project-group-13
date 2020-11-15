@@ -185,9 +185,7 @@ export default {
     };
   },
   created() {
-    if (document.cookie.length <= 6) {
-      Router.push({ path: "/", name: "" });
-    }
+    
     AXIOS.get("artwork/byId/"+this.$route.params.artworkID)
       .then(response => {
         this.artwork = response.data;
@@ -202,7 +200,11 @@ export default {
         this.medium = this.artwork.medium;
         this.collection = this.artwork.collection;
         this.img1 = this.artwork.imageUrl;
-        
+        var artistUsernames=this.artwork.artist.map(a=>a.username)
+        if (!artistUsernames.includes(document.cookie.substr(6).split(' ')[0])) {
+          Router.push({ path: "/", name: "" });
+          alert("no permission to access page")
+        }
       })
       .catch(e => {
         

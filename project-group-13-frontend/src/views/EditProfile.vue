@@ -95,15 +95,16 @@ export default {
   data() {
     return {
       caption: "",
-      img1: null,
+      img1: '',
       imageData: null,
       bio: "",
       email: ""
     };
   },
   created() {
-    if (document.cookie.length <= 6) {
+    if (document.cookie.substr(6).split(' ')[0]!==this.$route.params.username) {
       Router.push({ path: "/", name: "" });
+      alert("no permission to access this page")
     }
 
     AXIOS.get("user/".concat(this.$route.params.username).concat("/view"))
