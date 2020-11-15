@@ -757,6 +757,20 @@ public class ProjectGroup13Controller {
 	} 
 	
 	/**
+	 * RESTful service that returns the artworks that are in the gallery premises that are NOT SOLD
+	 */
+	@GetMapping(value = { "/artwork/onPremise/available", "/artwork/onPremise/available/"})
+	public Set<ArtworkDto> getArtworkOnPremiseAndAvailable(){
+		Set<ArtworkDto> artworksOnPremiseDto = new HashSet<ArtworkDto>();
+		for(Artwork artOnPremise : artworkService.getArtworksOnPremise(true)) {
+			if (!artOnPremise.isArtworkSold()) {
+				artworksOnPremiseDto.add(convertToDto(artOnPremise));
+			}
+		}
+		return artworksOnPremiseDto;
+	} 
+	
+	/**
 	 * RESTful service that returns all the artworks of a specific category
 	 */
 	@GetMapping(value = { "/artwork/byCategory", "/artwork/byCategory/"})

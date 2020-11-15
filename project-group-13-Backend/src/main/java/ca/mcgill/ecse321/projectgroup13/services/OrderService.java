@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.PaymentRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
@@ -274,6 +275,10 @@ public class OrderService {
 	public void addPaymentToOrder(Order order, Payment payment) {
 		if (order.getOrderStatus() != OrderStatus.PaymentPending)					//must check that order hasn't been finalized
 			throw new IllegalArgumentException("Cannot alter a finalized order");
+		
+		for (Artwork artInOrder : order.getArtwork()) {
+			artInOrder.setArtworkSold(true);
+		}
 		
 		order.setPayment(payment);
 		order.setOrderStatus(OrderStatus.Placed);

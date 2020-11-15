@@ -2,7 +2,9 @@
 <div class="mt-2 pt-2">
     <b-container class="shadow-lg rounded">
         <b-row class="max-w-5xl mx-auto px-1 pt-3 m-0">
-            <div class=""><h4 class="d-inline">{{displayHeading}} | </h4><p class="d-inline"> See more &rarr;</p></div>
+            <div class=""><h4 class="d-inline">{{displayHeading}} | </h4>
+            <!-- <p class="d-inline"> See more &rarr;</p> -->
+            </div>
         </b-row>
         <b-row>
             <div class="d-flex flex-wrap justify-content-center max-w-5xl mx-auto px-1 py-1 m-0">
