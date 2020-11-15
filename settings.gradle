@@ -10,3 +10,4 @@
 rootProject.name = 'project-group-13'
 
 include ':project-group-13-Backend'
+include ':project-group-13-frontend'
