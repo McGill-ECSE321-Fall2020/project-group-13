@@ -8,7 +8,8 @@
     </div>
     <div class="px-3 flex-1">
       <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
-      <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p>
+      <br>
+      <!-- <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p> -->
     </div>
     <div class="px-3">
        <button v-on:click = "goToPage" type="submit" class="btn btn-primary">See More</button>

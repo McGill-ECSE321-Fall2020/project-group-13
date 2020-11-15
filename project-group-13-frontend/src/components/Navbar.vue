@@ -32,10 +32,9 @@
               <icon-base width="22" height="22" iconColor="rgba(255,255,255,100)" icon-name="user-profile"><icon-profile/></icon-base>
             </template>
             <div v-if="isLoggedIn() == true">
-            <b-dropdown-item :href="this.accountPath">Account</b-dropdown-item>
-            <b-dropdown-item href="#/cart">View cart</b-dropdown-item>
-            <b-dropdown-item href="#">Past orders</b-dropdown-item>
-            <b-dropdown-item href="#">Artwork</b-dropdown-item>
+            <b-dropdown-item :href="this.accountPath">My Profile</b-dropdown-item>
+            <b-dropdown-item href="#/cart">View Cart</b-dropdown-item>
+            <b-dropdown-item href="#">Past Orders</b-dropdown-item>
             <b-dropdown-item v-on:click = "logout">Sign Out</b-dropdown-item>
             <!-- <router-link to="/#/login" tag="b-dropdown-item">Sign Out</router-link> -->
             </div>

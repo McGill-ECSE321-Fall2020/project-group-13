@@ -1,27 +1,32 @@
 <template>
   <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden" v-if="isDeleted==false">
+    <b-row>
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.imageUrl"
-        class="object-cover object-center w-100 h-100 d-block bg-secondary"
+        class="object-cover object-center w-100 h-100 d-block bg-secondary zoom"
+        v-on:click = "artworkClicked"
       />
     </div>
+    </b-row>
+    <b-row>
     <div class="px-3 flex-1">
       <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
       <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p>
     </div>
+    </b-row>
+    <b-row class="align-items-end align-bottom">
     <div class="px-3">
-      <b-button>
-      <router-link :to="`/` + urlForPath + '/' + artwork.artworkID" class="text-light w-50 self-align-center">View</router-link>
-      </b-button>
       <b-button class="btn btn-danger text-light w-10 self-align-center" v-if="isEditMode" v-on:click = "deleteArtwork">Delete
       </b-button>
     </div>
+    </b-row>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Router from '../router'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -66,6 +71,9 @@ export default {
           console.log(errorMsg)
           this.error=errorMsg
         })
+    },
+    artworkClicked() {
+      Router.push({path: `/` + this.urlForPath + '/' + this.artwork.artworkID})
     }
   }
 }
@@ -85,5 +93,28 @@ export default {
   img {
   max-width: 300px;
   height: auto;
+}
+h2, p {
+  max-width: 268px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.zoom {
+  transition: transform .2s; /* Animation */
+  /* width: 200px;
+  height: 200px; */
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  transform: scale(1.3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.center-cropped {
+  height: 150px;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 </style>
