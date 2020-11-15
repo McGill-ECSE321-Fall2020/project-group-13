@@ -43,7 +43,7 @@
               </b-container>
             </b-col>
             <b-col cols="2" style="margin-top: 2em;">
-              <router-link tag="button" class="myClass" id="button" :to="this.editPath">Edit Artwork</router-link>
+              <router-link v-if="this.canEdit" tag="button" class="myClass" id="button" :to="this.editPath">Edit Artwork</router-link>
               
               <b-button v-on:click = "editCartEvent" :class="buttonDisable" variant="outline-primary">{{ buttonLabel }}</b-button>
             </b-col>
@@ -70,19 +70,27 @@ export default {
       artwork: '',
       buttonDisable: '',
       buttonLabel: 'Add to Cart',
-      editPath: ''
+      editPath: '',
+      artists:[],
+      canEdit: false
     }
   },
   created: function () {
     
     var url = window.location.href.split('/')
     const id = url[url.length - 1] // artwork id
+  
     this.editPath='/editartwork/'+id
     // Fetching artwork from backend
     AXIOS.get('/artwork/byId/' + id)
     .then(response => {
       // JSON responses are automatically parsed.
       this.artwork = response.data
+      var artistUsernames=this.artwork.artist.map(a=>a.username)
+      this.artists = artistUsernames
+      if(this.artists.includes(document.cookie.substr(6).split(' ')[0])){
+        this.canEdit=true
+      }
       this.artwork.imageURL = decodeURIComponent(this.artwork.imageURL)
       console.log(this.artwork.imageURL)
 

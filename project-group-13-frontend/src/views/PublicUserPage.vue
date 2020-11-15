@@ -72,7 +72,7 @@ export default {
     };
   },
   created: function() {
-    const p1 = new userDto("John", "fds", "ds", "gfd");
+    const p1 = new userDto("John", "This page is loading.", "Please wait", "https://placekitten.com/50/50");
     this.user = p1;
 
     AXIOS.get("user/".concat(this.$route.params.username).concat("/view"))
