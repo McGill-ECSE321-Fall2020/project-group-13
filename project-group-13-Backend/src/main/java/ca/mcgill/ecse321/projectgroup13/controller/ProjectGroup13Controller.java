@@ -710,8 +710,8 @@ public class ProjectGroup13Controller {
      * @return Set<ArtworkDto>
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "artwork/byTitle/{title}", "artwork/byTitle/{title}/" })
-    public Set<ArtworkDto> getArtworksByTitle(@PathVariable("title") String title) throws IllegalArgumentException {
+    @GetMapping(value = { "artwork/byTitle/title", "artwork/byTitle/title/" })
+    public Set<ArtworkDto> getArtworksByTitle(@RequestParam(name = "title") String title) throws IllegalArgumentException {
         Set<Artwork> art = artworkService.getArtworksByTitle(title);
         Set<ArtworkDto> newSet = new HashSet<ArtworkDto>();
         for( Artwork artwork: art){
