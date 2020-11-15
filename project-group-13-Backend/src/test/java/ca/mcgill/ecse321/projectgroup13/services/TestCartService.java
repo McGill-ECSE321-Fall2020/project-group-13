@@ -218,7 +218,7 @@ public class TestCartService {
 			}
 		});
 		
-		lenient().when(artworkRepo.findArtworkByArtist(USERNAME)).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(artworkRepo.getArtworkByArtist(USERNAME)).thenAnswer((InvocationOnMock invocation) -> {
 			User user = new User();
 			user.setUsername(USERNAME);
 			user.setEmail(USER_EMAIL);

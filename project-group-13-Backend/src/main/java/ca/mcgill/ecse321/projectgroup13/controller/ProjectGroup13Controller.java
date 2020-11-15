@@ -184,9 +184,9 @@ public class ProjectGroup13Controller {
 		}
 	}
 
-
+	
 	/**
-	 * RESTful method to update certain inputted user parameters
+	 * RESTful method to update certain inputed user parameters
 	 * @param username
 	 * @param user
 	 * @return UserDto
@@ -203,7 +203,35 @@ public class ProjectGroup13Controller {
 		return convertToDto(userService.getUserByUsername(username));
 	}
 
-
+	//getUsernameAlreadyExists
+	
+	//getEmailAlreadyExists
+	
+	//login
+	/**
+	 * RESTful method to get a user by username and password
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	@GetMapping(value = { "/user/{username}/login", "/user/{username}/login/" })
+	public UserDto getUserByUsernameAndPassword(@PathVariable("username") String username, @RequestParam(name = "password") String password) throws IllegalArgumentException {
+		User user = userService.getUserByUsernameAndPassword(username, password);
+		return convertToDto(user);
+	}
+	/**
+	 * RESTful method to get a user by username
+	 * @param username
+	 * 
+	 * @return userDto
+	 * @throws IllegalArgumentException
+	 */
+	@GetMapping(value = { "/user/{username}/view", "/user/{username}/view/" })
+	public UserDto getUserByUsername(@PathVariable("username") String username) throws IllegalArgumentException {
+		User user = userService.getUserByUsername(username);
+		return convertToDto(user);
+	}
 
 
 // ---------------------------------------------- PAYMENT CONTROLLER METHODS
@@ -658,8 +686,9 @@ public class ProjectGroup13Controller {
 	 * @throws illegalArgumentException
 	 */
 	@PostMapping(value = { "/artwork/new", "/artwork/new/" })
-	public ArtworkDto createArtwork(@RequestParam(name="title") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth ) throws illegalArgumentException{
-		Artwork art = artworkService.createArtwork(title, artists, worth);
+	public ArtworkDto createArtwork(@RequestParam(name="title") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth, @RequestParam(name="imageURL") String url ) throws illegalArgumentException{
+		if(worth<0) throw new illegalArgumentException("Price cannot be negative");
+		Artwork art = artworkService.createArtwork(title, artists, worth, url);
 		return convertToDto(art);
 	}
 
@@ -670,11 +699,30 @@ public class ProjectGroup13Controller {
 	 * @return ArtworkDto
 	 * @throws IllegalArgumentException
 	 */
-	@GetMapping(value = { "artwork/{artId}", "artwork/{artId}/" })
+	@GetMapping(value = { "/artwork/byId/{artId}", "artwork/byId/{artId}/" })
 	public ArtworkDto getArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		Artwork art = artworkService.getArtworkByID(id);
 		return convertToDto(art);
 	}
+
+	        /**
+     * RESTful method to get all artworks with corresponding title
+     * @param title
+     * @return Set<ArtworkDto>
+     * @throws IllegalArgumentException
+     */
+    @GetMapping(value = { "artwork/byTitle", "artwork/byTitle/" })
+    public Set<ArtworkDto> getArtworksByTitle(@RequestParam(name = "title") String title) throws IllegalArgumentException {
+		String title1 = title.replace("%20"," ");
+        Set<Artwork> art = artworkService.getArtworksSearchTitle(title1);
+        Set<ArtworkDto> newSet = new HashSet<ArtworkDto>();
+        for( Artwork artwork: art){
+            newSet.add(convertToDto(artwork));
+        } 
+        return newSet;
+    }
+
+
 
 
 	/**
@@ -683,7 +731,7 @@ public class ProjectGroup13Controller {
 	 * @return boolean
 	 * @throws IllegalArgumentException
 	 */
-	@DeleteMapping(value = { "artwork/{artId}/delete", "artwork/{artId}/delete/" })
+	@DeleteMapping(value = { "/artwork/{artId}/delete", "artwork/{artId}/delete/" })
 	public boolean deleteArtworkById(@PathVariable("artId") Integer id) throws IllegalArgumentException {
 		Artwork artwork = artworkService.getArtworkByID(id);
 		System.out.println(artwork.getTitle());
@@ -696,7 +744,68 @@ public class ProjectGroup13Controller {
 		}
 	}
 
-
+	/**
+	 * RESTful service that returns all the artworks that are in the gallery premises
+	 */
+	@GetMapping(value = { "/artwork/onPremise", "/artwork/onPremise/"})
+	public Set<ArtworkDto> getArtworkOnPremise(){
+		Set<ArtworkDto> artworksOnPremiseDto = new HashSet<ArtworkDto>();
+		for(Artwork artOnPremise : artworkService.getArtworksOnPremise(true)) {
+			artworksOnPremiseDto.add(convertToDto(artOnPremise));
+		}
+		return artworksOnPremiseDto;
+	} 
+	
+	/**
+	 * RESTful service that returns the artworks that are in the gallery premises that are NOT SOLD
+	 */
+	@GetMapping(value = { "/artwork/onPremise/available", "/artwork/onPremise/available/"})
+	public Set<ArtworkDto> getArtworkOnPremiseAndAvailable(){
+		Set<ArtworkDto> artworksOnPremiseDto = new HashSet<ArtworkDto>();
+		for(Artwork artOnPremise : artworkService.getArtworksOnPremise(true)) {
+			if (!artOnPremise.isArtworkSold()) {
+				artworksOnPremiseDto.add(convertToDto(artOnPremise));
+			}
+		}
+		return artworksOnPremiseDto;
+	} 
+	
+	/**
+	 * RESTful service that returns all the artworks of a specific category
+	 */
+	@GetMapping(value = { "/artwork/byCategory", "/artwork/byCategory/"})
+	public Set<ArtworkDto> getArtworkInCategory(@RequestParam(name="category") String category){
+		Set<ArtworkDto> artworksListDto = new HashSet<ArtworkDto>();
+		for(Artwork art : artworkService.getArtworkByCategory(category)) {
+			artworksListDto.add(convertToDto(art));
+		}
+		return artworksListDto;
+	}
+	
+	/**
+	 * RESTful service that returns all the artworks that are in the gallery premises
+	 */
+	@GetMapping(value = { "/artwork/{artist}/all", "/artwork/{artist}/all/"})
+	public Set<ArtworkDto> getArtworkOfArtist(@PathVariable("artist") String artist) {
+		Set<ArtworkDto> artworksOfArtistDto = new HashSet<ArtworkDto>();
+		for(Artwork art : artworkService.getArtworksOfArtist(artist)) {
+			artworksOfArtistDto.add(convertToDto(art));
+		}
+		return artworksOfArtistDto;
+	}
+	
+	/**
+	 * RESTful service that returns all the artworks
+	 */
+	@GetMapping(value = { "/artwork/all", "/artwork/all/"})
+	public Set<ArtworkDto> getAllArtwork() {
+		Set<ArtworkDto> artworksOfArtistDto = new HashSet<ArtworkDto>();
+		for(Artwork art : artworkService.getAllArtworks()) {
+			artworksOfArtistDto.add(convertToDto(art));
+		}
+		return artworksOfArtistDto;
+	}
+	
 	/**
 	 * RESTful method to edit certain parameters of an artwork
 	 * @param artId

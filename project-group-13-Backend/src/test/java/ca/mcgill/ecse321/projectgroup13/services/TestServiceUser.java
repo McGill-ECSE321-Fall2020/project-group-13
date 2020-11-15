@@ -141,7 +141,7 @@ public class TestServiceUser {
 			}
 		});
 		
-		lenient().when(artworkRepository.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(artworkRepository.getArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 			if (((User)invocation.getArgument(0)).getUsername().contentEquals(USERNAME)) {
 				User user = new User();
 				user.setUsername(USERNAME);

@@ -111,7 +111,7 @@ public class UserService {
         Set<Address> userAddresses = user.getAddress();
         Cart cart = user.getCart();
         Set<Order> orders = user.getOrder();
-        Set<Artwork> Artworks = artworkRepository.findArtworkByArtist(user);
+        Set<Artwork> Artworks = artworkRepository.getArtworkByArtist(user);
         
         if(userAddresses!=null) {
 	        for(Address address:userAddresses) {
@@ -156,6 +156,18 @@ public class UserService {
         if(user ==null) throw new IllegalArgumentException("invalid username");
         return user;
     }
+    
+    /**
+     * service method to get a user by username and password
+     * @param username
+     * @return User
+     */
+    @Transactional
+    public User getUserByUsernameAndPassword(String username, String password){
+        User user = userRepository.findUserByUsernameAndPassword(username, password);
+        if(user ==null) throw new IllegalArgumentException("invalid username or password");
+        return user;
+    }
 
 
     /**
@@ -167,6 +179,7 @@ public class UserService {
     @Transactional
     public User editEmail(String username, String newEmail) throws RegistrationException {
         User user = userRepository.findUserByUsername(username);
+        if(newEmail.equals(user.getEmail())) return user;
             if(!checkIfValidEmail(newEmail) || (userRepository.findUserByEmail(newEmail) != null)) {
                 throw new RegistrationException("invalid email");
             }

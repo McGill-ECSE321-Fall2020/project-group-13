@@ -88,7 +88,7 @@ public Cart getCart() {
 public void setCart(Cart cart) {
    this.cart = cart;
 }
-
+@Lob
 private String bio;
 
 public void setBio(String value) {

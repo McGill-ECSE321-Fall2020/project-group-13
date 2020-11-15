@@ -240,7 +240,7 @@ public class TestServicePayment {
 		
 		
 		
-		lenient().when(artworkRepo.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(artworkRepo.getArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 			Set<Artwork> set = new HashSet<Artwork>();
 			Artwork art = new Artwork();
 			art.setArtworkID(artworkID);

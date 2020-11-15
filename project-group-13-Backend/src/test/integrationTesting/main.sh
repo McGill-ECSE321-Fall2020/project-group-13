@@ -7,8 +7,8 @@ red=$(tput setaf 1)
 powder_blue=$(tput setaf 153)
 
 #usernames used to create users during test
-username="a"
-username2="b"
+username="ccc"
+username2="ddd"
 url="http://localhost:8080"
 
 
@@ -39,9 +39,21 @@ curl-format "create user 1" "-X POST" "$url/newuser?username=$username&email=$us
 #create user 2
 curl-format "create user 2" "-X POST" "$url/newuser?username=$username2&email=$username2@no.com&password=passwor1dfd"
 
+#get user 1 from database using correct username and password
+curl-format "get user 1 from database using correct username and password" "-X GET" "$url/user/$username/login?password=passwor1dfd"
+
+#get user 1 from database using incorrect username and password
+curl-format "get user 1 from database using incorrect username and password" "-X GET" "$url/user/$username/login?password=passwfh"
+
 #create artwork and store artworkID
-curl-format "create artwork and store artworkID" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
+curl-format "create artwork and store artworkID" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7&imageURL=https%3A%2F%2Fimg.xcitefun.net%2Fusers%2F2013%2F09%2F333375%2Cxcitefun-beautiful-paintings-with-digital-sky-2.jpg" "artworkID"
 artworkID=$tempVar
+
+#get all artwork on premise
+curl-format "get all artwork on premise" "-X GET" "$url/artwork/onPremise"
+
+#get all artwork of artist
+curl-format "get all artwork of artist" "-X GET" "$url/artwork/$username/all"
 
 #add artwork to cart
 curl-format "add artwork to cart" "-X PUT" "$url/user/$username/edit+/cart/?artid=$artworkID"	"cartID"
@@ -121,7 +133,7 @@ curl-format "get shipment of order 1" "-X GET" "$url/order/$orderID/shipment"
 curl-format "get artwork by ID" "-X GET" "$url/artwork/$artworkID"
 
 #create a second artwork
-curl-format "create a second artwork" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7" "artworkID"
+curl-format "create a second artwork" "-X POST" "$url/artwork/new/?title=fakeTitle&artist=$username&artist=$username2&worth=100.7&imageURL=https%3A%2F%2Fimg.xcitefun.net%2Fusers%2F2013%2F09%2F333375%2Cxcitefun-beautiful-paintings-with-digital-sky-2.jpg" "artworkID"
 artworkID2=$tempVar
 
 #add artwork to cart
