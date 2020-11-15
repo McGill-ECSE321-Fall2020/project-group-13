@@ -12,12 +12,9 @@ import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.projectgroup13.dao.*;
 import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
-import ca.mcgill.ecse321.projectgroup13.dto.LoginDto;
-import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
 import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -46,7 +43,7 @@ public class TestServiceUser {
 	private static final String CITY= "MONTREAL";
 	private static final Integer SHIPMENTID = 200;
 	private String error = "";
-	private boolean success = false;
+//	private boolean success = false;
 	@Mock
 	private UserRepository userRepository;
 	
@@ -144,7 +141,7 @@ public class TestServiceUser {
 			}
 		});
 		
-		lenient().when(artworkRepository.findArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(artworkRepository.getArtworkByArtist(any(User.class))).thenAnswer((InvocationOnMock invocation) -> {
 			if (((User)invocation.getArgument(0)).getUsername().contentEquals(USERNAME)) {
 				User user = new User();
 				user.setUsername(USERNAME);

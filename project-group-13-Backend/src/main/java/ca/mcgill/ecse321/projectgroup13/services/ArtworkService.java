@@ -1,5 +1,12 @@
 package ca.mcgill.ecse321.projectgroup13.services;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.projectgroup13.dao.ArtworkRepository;
 import ca.mcgill.ecse321.projectgroup13.dao.CartRepository;
@@ -7,14 +14,6 @@ import ca.mcgill.ecse321.projectgroup13.dao.UserRepository;
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
 import ca.mcgill.ecse321.projectgroup13.model.Cart;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class ArtworkService {
@@ -34,30 +33,33 @@ public class ArtworkService {
      * @param Title
      * @param usernames
      * @param worth
+     * @param url	Base64 encoding of URL
      * @return
      * @throws IllegalArgumentException
      */
-    public Artwork createArtwork(String Title, String[] usernames, Double worth) throws IllegalArgumentException {
+    public Artwork createArtwork(String Title, String[] usernames, Double worth, String url) throws IllegalArgumentException {
     	if( Title==null || Title.trim().contentEquals("") ) throw new IllegalArgumentException("invalid title");
     	if(usernames == null || usernames.length==0) throw new IllegalArgumentException("invalid user") ;
     	if(worth==null||worth==0) throw new IllegalArgumentException("invalid worth") ;
 
     	Artwork artwork = new Artwork();
-        artwork.setArtist(new HashSet<>());
+		artwork.setTitle(Title);
+		artwork.setWorth(worth);
+		artwork.setImageUrl(url);    
+		artwork.setArtist(new HashSet<>());
         Set<User> artists = artwork.getArtist();
     	for(String username : usernames){
     		User user = userRepo.findUserByUsername(username);
     		if(user==null) throw new IllegalArgumentException("invalid user");
             artists.add(user);
-    		artwork.setArtist(artists);
             System.out.println(artists);
             System.out.println("works "+artwork.getArtist());
-    		artwork.setTitle(Title);
-    		artwork.setWorth(worth);
-    		Set<Artwork> works= user.getArtwork();
-    		works.add(artwork);
-    		artworkRepo.save(artwork);
+    		Set<Artwork> ArtistArtworks = user.getArtwork();
+    		ArtistArtworks.add(artwork);
+    		user.setArtwork(ArtistArtworks);
     	}
+    	artwork.setArtist(artists);
+    	artworkRepo.save(artwork);
     	return artwork;
     }
 
@@ -95,10 +97,20 @@ public class ArtworkService {
         Artwork artwork = artworkRepo.findArtworkByArtworkID(artworkID);
         return artwork;
     }
+    
+    /**
+     * service method to return all artworks
+     * @param artworkID
+     * @return
+     */
+    @Transactional
+    public Iterable<Artwork> getAllArtworks() {
+        return  artworkRepo.findAll();
+    }
 
 
     /**
-     * service method to get all artworks of given user
+     * service method to get all artworks of given artist
      * @param username
      * @return
      */
@@ -107,11 +119,44 @@ public class ArtworkService {
         User user = userRepo.findUserByUsername(username);
         if (user == null)
             throw new IllegalArgumentException("Artist does not exist");
-        Set<Artwork> artworks = artworkRepo.findArtworkByArtist(user);
+        Set<Artwork> artworks = artworkRepo.getArtworkByArtist(user);
+        return artworks;
+    }
+    
+    /**
+     * service method to get all artworks of a given category
+     * @param username
+     * @return
+     */
+    @Transactional
+    public Set<Artwork> getArtworkByCategory(String category){
+        Set<Artwork> artworks = artworkRepo.getArtworkByMedium(category);
         return artworks;
     }
 
+         /**
+     * service method to get all artworks with a given title -- it is not case sensitive
+     * @param title
+     * @return
+     */
+    @Transactional
+    public Set<Artwork> getArtworksSearchTitle( String title) {
+        Set<Artwork> artworks = artworkRepo.findAll();
+        Set<Artwork> newSet = new HashSet<Artwork>();
+        artworks.stream().filter(x -> x.getTitle().toLowerCase().contains(title.toLowerCase())).forEach(newSet::add);
+        return newSet;
+    }
 
+    /**
+     * service method to get all artworks that are on the gallery premises
+     * @param isOnPremise
+     * @return
+     */
+    @Transactional
+    public Set<Artwork> getArtworksOnPremise(boolean isOnPremise){
+        Set<Artwork> artworks = artworkRepo.getArtworkByisOnPremise(isOnPremise);
+        return artworks;
+    }
 
     /**
      * service method to edit artwork description

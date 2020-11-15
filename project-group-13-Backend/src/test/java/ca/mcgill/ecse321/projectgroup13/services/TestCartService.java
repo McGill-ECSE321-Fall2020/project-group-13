@@ -11,9 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.projectgroup13.dao.*;
-import ca.mcgill.ecse321.projectgroup13.dto.UserDto;
 import ca.mcgill.ecse321.projectgroup13.model.*;
-import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,8 +32,8 @@ public class TestCartService {
 	private static final String USER_PASSWORD2= "Thatgirl123#";
 	private static final String USER_EMAIL2= "person2@gmail.com";
 	private static Integer CART_ID = 12342;
-	private boolean success = false;
-	private static final String ARTWORK_TITLE= "BEAUTY";
+//	private boolean success = false;
+//	private static final String ARTWORK_TITLE= "BEAUTY";
 	private static final String COUNTRY= "CANADA";
 	private static final String CITY= "MONTREAL";
 	private static final Integer ARTWORK_ID= 1234;
@@ -42,10 +41,10 @@ public class TestCartService {
 	private static final Integer ORDERID= 999;
 	private static final Integer ADDRESS_ID= 111;
 
-	private static final Integer SHIPMENTID = 200;
-	private static final String[] ARTISTS = {USERNAME};
-	private static final Double WORTH = 100.00;
-	private static final String TITLE = "BEAUTY";
+//	private static final Integer SHIPMENTID = 200;
+//	private static final String[] ARTISTS = {USERNAME};
+//	private static final Double WORTH = 100.00;
+//	private static final String TITLE = "BEAUTY";
 	@Mock
 	private UserRepository userRepo;
 	
@@ -219,7 +218,7 @@ public class TestCartService {
 			}
 		});
 		
-		lenient().when(artworkRepo.findArtworkByArtist(USERNAME)).thenAnswer((InvocationOnMock invocation) -> {
+		lenient().when(artworkRepo.getArtworkByArtist(USERNAME)).thenAnswer((InvocationOnMock invocation) -> {
 			User user = new User();
 			user.setUsername(USERNAME);
 			user.setEmail(USER_EMAIL);

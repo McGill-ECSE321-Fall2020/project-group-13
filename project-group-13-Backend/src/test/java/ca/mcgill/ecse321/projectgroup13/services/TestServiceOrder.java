@@ -11,20 +11,15 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import java.util.*;
 
@@ -39,7 +34,6 @@ import ca.mcgill.ecse321.projectgroup13.model.OrderStatus;
 import ca.mcgill.ecse321.projectgroup13.model.Payment;
 import ca.mcgill.ecse321.projectgroup13.model.Shipment;
 import ca.mcgill.ecse321.projectgroup13.model.User;
-import ca.mcgill.ecse321.projectgroup13.services.exception.RegistrationException;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -75,7 +69,7 @@ public class TestServiceOrder {
 	private static Integer CART_ID = 12342;
 	private static final String COUNTRY= "CANADA";
 	private static final String CITY= "MONTREAL";
-	private static final Integer SHIPMENTID = 200;
+//	private static final Integer SHIPMENTID = 200;
 	private String error = "";
 	@BeforeEach
 	public void setMockOutput() {
@@ -299,7 +293,7 @@ public class TestServiceOrder {
      */
 	@Test
 	public void testGetOrderFromUser() {
-		Order order = null;
+//		Order order = null;
 		User user = new User();
 		user.setUsername("pop");
 		
