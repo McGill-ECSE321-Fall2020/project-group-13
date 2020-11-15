@@ -244,7 +244,7 @@ export default {
         "artwork/new?title=" +
           this.title +
           "&artist=" +
-          document.cookie.substr(6) +
+          document.cookie.substr(6).split(" ")[0] +
           optionalComma +
           this.artists +
           "&worth=" +

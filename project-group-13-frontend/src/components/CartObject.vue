@@ -34,7 +34,10 @@ var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
-
+function getUsernameCookie(){
+  if(document.cookie.length<6) return null
+  else return document.cookie.substr(6).split(" ")[0]
+}
 
 export default {
   name: 'CartObject',
@@ -64,7 +67,7 @@ export default {
     removeFromCart: function () {
       
       ///user/{username}/edit-/cart
-      AXIOS.put('/user/' + document.cookie.substring(6) + '/edit-/cart' + '?artid=' + this.artwork.artworkID)
+      AXIOS.put('/user/' + getUsernameCookie()+ '/edit-/cart' + '?artid=' + this.artwork.artworkID)
         .then((response) => {
           this.$emit('removedFromCart')
         })

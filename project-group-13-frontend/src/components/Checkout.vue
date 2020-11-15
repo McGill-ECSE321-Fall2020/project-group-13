@@ -147,6 +147,10 @@
   var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
   var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
   var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
+  function getUsernameCookie(){
+  if(document.cookie.length<6) return null
+  else return document.cookie.substr(6).split(" ")[0]
+}
   export default {
     data () {
       return {
@@ -157,7 +161,7 @@
           nameOnCard: ''
         },
         addressForm: {
-          username: document.cookie.substring(6),
+          username: getUsernameCookie(),
           streetAddress1: '',
           city: '',
           province: '',
@@ -171,7 +175,7 @@
     },
     created: function () {
       // getting username from cookie
-      const username = document.cookie.substring(6)
+      const username = getUsernameCookie()
       // Fetching cart items from backend
       AXIOS.get('/user/' + username + '/cart')
       .then(response => {
@@ -184,7 +188,7 @@
         evt.preventDefault()
         // alert("Just testing")
         // alert(JSON.stringify(this.addressForm))
-        const username = document.cookie.substring(6)
+        const username = getUsernameCookie()
         AXIOS.post('/user/' + username + '/new/address', this.addressForm)
         .then(response => {
         // JSON responses are automatically parsed.
@@ -227,7 +231,7 @@
         })
       },
       hasAddresses: function () {
-        const username = document.cookie.substring(6)
+        const username = getUsernameCookie()
         AXIOS.get('/user/' + username + '/addresses')
         .then(response => {
         // JSON responses are automatically parsed.

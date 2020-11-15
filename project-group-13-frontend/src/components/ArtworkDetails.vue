@@ -43,6 +43,8 @@
               </b-container>
             </b-col>
             <b-col cols="2" style="margin-top: 2em;">
+              <router-link tag="button" class="myClass" id="button" :to="this.editPath">Edit Artwork</router-link>
+              
               <b-button v-on:click = "editCartEvent" :class="buttonDisable" variant="outline-primary">{{ buttonLabel }}</b-button>
             </b-col>
           </b-row>
@@ -57,19 +59,25 @@ var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
-
+function getUsernameCookie(){
+  if(document.cookie.length<6) return null
+  else return document.cookie.substr(6).split(" ")[0]
+}
 export default {
   name: 'ArtworkDetails',
   data () {
     return {
       artwork: '',
       buttonDisable: '',
-      buttonLabel: 'Add to Cart'
+      buttonLabel: 'Add to Cart',
+      editPath: ''
     }
   },
   created: function () {
+    
     var url = window.location.href.split('/')
     const id = url[url.length - 1] // artwork id
+    this.editPath='/editartwork/'+id
     // Fetching artwork from backend
     AXIOS.get('/artwork/byId/' + id)
     .then(response => {
@@ -79,7 +87,7 @@ export default {
       console.log(this.artwork.imageURL)
 
       // check if user is logged in
-      const username = document.cookie.substring(6)
+      const username = getUsernameCookie()
       if (username.length !== 0){
         // getting cart of user
         AXIOS.get('/user/' + username + '/cart')
@@ -108,12 +116,12 @@ export default {
       }
     },
     addToCart: function () {
-      if (document.cookie.length < 6) {
+      if (getUsernameCookie()==null) {
         Router.push({path: '/login?returnTo=' + window.location.href})
       } else {
         var url = window.location.href.split('/')
         const id = url[url.length - 1] // artwork id
-        AXIOS.put('/user/' + document.cookie.substring(6) + '/edit+/cart' + '?artid=' + id)
+        AXIOS.put('/user/' + getUsernameCookie() + '/edit+/cart' + '?artid=' + id)
         .then((response) => {
           // this.buttonDisable = 'disabled'
           this.buttonLabel = 'Remove from Cart'
