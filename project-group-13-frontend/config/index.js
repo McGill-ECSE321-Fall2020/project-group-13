@@ -20,9 +20,9 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report,
-    port: 8087,
-    host: 'eventregistration-frontend-123.herokuapp.com', //Insert project herokuAppURL HERE
-    backendHost: 'eventregistration-backend-123.herokuapp.com', //Insert project herokuAppURL HERE
+    port: 443,
+    host: 'project-group-13-frontend.herokuapp.com', //Insert project herokuAppURL HERE
+    backendHost: 'project-group-13-backend.herokuapp.com', //Insert project herokuAppURL HERE
     backendPort: 443,
   },
   dev: {
