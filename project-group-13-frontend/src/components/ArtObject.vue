@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden" v-if="isDeleted==false">
-    <b-row>
+    <div class="row align-self-start">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.imageUrl"
@@ -8,19 +8,19 @@
         v-on:click = "artworkClicked"
       />
     </div>
-    </b-row>
-    <b-row>
-    <div class="px-3 flex-1">
-      <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
-      <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p>
     </div>
-    </b-row>
-    <b-row class="align-items-end align-bottom">
-    <div class="px-3">
-      <b-button class="btn btn-danger text-light w-10 self-align-center" v-if="isEditMode" v-on:click = "deleteArtwork">Delete
-      </b-button>
+    <div class="row lowest">
+      <div class="col">
+        <div class="px-3 flex-1">
+          <h3 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h3>
+          <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p>
+        </div>
+        <div class="px-3">
+          <b-button class="btn btn-danger text-light w-10 self-align-center" v-if="isEditMode" v-on:click = "deleteArtwork">Delete
+          </b-button>
+        </div>
+      </div>
     </div>
-    </b-row>
   </div>
 </template>
 
@@ -79,6 +79,9 @@ export default {
 }
 </script>
 <style>
+.lowest {
+  margin-top: auto;
+}
   .object-cover {
     object-fit: cover;
   }
@@ -94,8 +97,8 @@ export default {
   max-width: 300px;
   height: auto;
 }
-h2, p {
-  max-width: 268px;
+h3, p {
+  max-width: 235px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
