@@ -183,7 +183,6 @@ export default {
       AXIOS.put("user/" + this.user.username + "/edit", body)
         .then(response => {
           console.log(response);
-          
         })
         .catch(e => {
           errorMsg = e.response.data.message;
@@ -191,7 +190,7 @@ export default {
           this.error = errorMsg;
         });
 
-      Router.push({ path: "/", name: "" });
+      Router.push({ path: "/viewuser/" + this.user.username });
     }
   }
 };
