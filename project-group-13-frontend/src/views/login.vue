@@ -96,7 +96,7 @@ export default {
         self.errorClass = ''
       }, false)
     })
-    this.returnTo = this.$route.query.returnTo + this.$route.hash
+    this.returnTo = this.$route.hash
   },
 
   methods: {
@@ -126,10 +126,10 @@ export default {
         document.cookie = 'Token=' + response.data.username +' '+response.data.profilePictureURL+';path=/;'
 
         // if need to return to a page, do so
-        if (this.$route.hash !== '' && this.$route.hash !== undefined) {
-          window.location.href = this.returnTo
+        if (this.$route.hash.length > 0) {
+          Router.push({path: '/' + this.$route.hash.substring(2)})
         } else {
-          Router.push({name: 'Hello'})
+          Router.push({path: '/' + this.$route.hash})
         }
       })
       .catch(error => {
