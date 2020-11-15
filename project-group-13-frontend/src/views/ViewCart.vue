@@ -15,7 +15,7 @@
           <div
             v-for="artwork in artworks"
             :key="artwork.id"
-            class="d-flex flex-wrap mx-0 mt-0" 
+            class="mx-0 mt-0" 
           >
             <CartObject :artwork="artwork" :urlForPath="'artwork'" @removedFromCart="refreshCart"/>
           </div>
