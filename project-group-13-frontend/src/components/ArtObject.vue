@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden zoom" v-if="isDeleted==false" v-on:click = "artworkClicked">
-    <div class="row align-self-start">
+  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden zoom" v-if="isDeleted==false">
+    <div class="row align-self-start" v-on:click = "artworkClicked">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.imageUrl"
@@ -8,17 +8,19 @@
       />
     </div>
     </div>
-    <div class="row bottom-of-flex">
+    <div class="row bottom-of-flex" v-on:click = "artworkClicked">
       <div class="col">
         <div class="px-3 flex-1">
           <h3 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h3>
           <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p>
         </div>
-        <div class="px-3">
-          <b-button class="btn btn-danger text-light w-10 self-align-center" v-if="isEditMode" v-on:click = "deleteArtwork">Delete
-          </b-button>
-        </div>
       </div>
+    </div>
+    <div class="px-3">
+      <b-button class="btn btn-danger text-light w-10 self-align-center" v-if="isEditMode" v-on:click = "deleteArtwork">Delete
+      </b-button>
+      <b-button class="btn text-light w-10 self-align-center" v-if="isEditMode" v-on:click = "editArtwork">Edit
+      </b-button>
     </div>
   </div>
 </template>
@@ -73,6 +75,9 @@ export default {
     },
     artworkClicked() {
       Router.push({path: `/` + this.urlForPath + '/' + this.artwork.artworkID})
+    },
+    editArtwork() {
+      Router.push({path: '/editartwork/' + this.artwork.artworkID})
     }
   }
 }
