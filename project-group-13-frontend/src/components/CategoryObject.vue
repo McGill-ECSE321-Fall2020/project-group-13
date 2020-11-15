@@ -1,17 +1,15 @@
 <template>
-  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
+  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden zoom" v-on:click = "goToPage">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.imageUrl"
         class="object-cover object-center w-100 h-100 d-block bg-secondary"
       />
     </div>
-    <div class="px-3 flex-1">
-      <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
-      <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p>
-    </div>
-    <div class="px-3">
-       <button v-on:click = "goToPage" type="submit" class="btn btn-primary">See More</button>
+    <div class="bottom-of-flex">
+      <div class="px-3 flex-1">
+        <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
+      </div>
     </div>
   </div>
 </template>
@@ -47,7 +45,23 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+  .bottom-of-flex {
+    margin-top: auto;
+  }
+  .zoom {
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+    z-index:1;
+  }
+  .zoom:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    z-index:1000;
+  }
+  img {
+    max-width: 300px;
+    height: auto;
+  }
   .object-cover {
     object-fit: cover;
   }

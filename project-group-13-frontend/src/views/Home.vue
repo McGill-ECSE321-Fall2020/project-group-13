@@ -3,9 +3,8 @@
     <Navbar />
     <ArtObjectDisplay displayHeading="Featured Artwork" :artworks="this.featuredArtworks" urlForPath='artwork'/>
     <!-- <ArtObjectDisplay displayHeading="Featured Artists"/> -->
-    <CategoryDisplay displayHeading="Other Categories"/>
-
-
+    <CategoryDisplay displayHeading="Browse by Category"/>
+    <br>
     </div>
 </template>
 
