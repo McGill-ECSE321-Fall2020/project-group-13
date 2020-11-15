@@ -3,7 +3,7 @@
     <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
       <span class="border" w-100><b-row w-100>
         <b-col>
-          <div class="d-block position-relative h-48 w-48 overflow-hidden">
+          <div class="d-block position-relative h-48 w-48 overflow-hidden clickable" v-on:click = "artworkClicked">
             <img
               :src="artwork.imageUrl"
               class="object-cover object-center w-100 h-100 d-block bg-secondary"
@@ -12,7 +12,7 @@
         </b-col>
         <b-col>
           <div class="px-3 flex-1">
-            <h2 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h2>
+            <h2 class="text-secondary font-medium mt-3 mb-0 clickable" v-on:click = "artworkClicked">{{ artwork.title }}</h2>
             <p class="mb-3 text-lg font-bold">{{ artistNameList }}</p>
           </div>
         </b-col>
@@ -29,7 +29,7 @@
 <script>
 
 import axios from 'axios'
-// import Router from '../router'
+import Router from '../router'
 var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
@@ -68,12 +68,19 @@ export default {
         .then((response) => {
           this.$emit('removedFromCart')
         })
+    },
+    artworkClicked() {
+      console.log("clicked")
+      Router.push({path: '/artwork/' + this.artwork.artworkID})
     }
   }
 }
 </script>
 
 <style scoped>
+  .clickable {
+    cursor: pointer;
+  }
   .flex-1 {
     flex: 1 1 0%;
   }
@@ -89,8 +96,5 @@ export default {
   }
   button {
     display: fit-content;
-  }
-  b-row {
-
   }
 </style>
