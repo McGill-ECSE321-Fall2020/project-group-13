@@ -13,7 +13,7 @@
         :key="artwork.id"
         class="d-flex flex-wrap mx-0 mt-0 justify-content-center"
       >
-        <ArtObject :artwork="artwork" :urlForPath="urlForPath"/>
+        <ArtObject :artwork="artwork" :urlForPath="urlForPath" :isEditMode="isEditMode"/>
       </div>
     
   </div>
@@ -40,6 +40,12 @@ export default {
     artworks: {
       type: Array,
       required: true
+    },
+    isEditMode:{
+      type: Boolean,
+      default:false,
+      required: false
+
     }
   }
 }

@@ -687,6 +687,7 @@ public class ProjectGroup13Controller {
 	 */
 	@PostMapping(value = { "/artwork/new", "/artwork/new/" })
 	public ArtworkDto createArtwork(@RequestParam(name="title") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth, @RequestParam(name="imageURL") String url ) throws illegalArgumentException{
+		if(worth<0) throw new illegalArgumentException("Price cannot be negative");
 		Artwork art = artworkService.createArtwork(title, artists, worth, url);
 		return convertToDto(art);
 	}
@@ -710,8 +711,8 @@ public class ProjectGroup13Controller {
      * @return Set<ArtworkDto>
      * @throws IllegalArgumentException
      */
-    @GetMapping(value = { "artwork/byTitle/{title}", "artwork/byTitle/{title}/" })
-    public Set<ArtworkDto> getArtworksByTitle(@PathVariable("title") String title) throws IllegalArgumentException {
+    @GetMapping(value = { "artwork/byTitle/title", "artwork/byTitle/title/" })
+    public Set<ArtworkDto> getArtworksByTitle(@RequestParam(name = "title") String title) throws IllegalArgumentException {
         Set<Artwork> art = artworkService.getArtworksByTitle(title);
         Set<ArtworkDto> newSet = new HashSet<ArtworkDto>();
         for( Artwork artwork: art){
@@ -757,7 +758,7 @@ public class ProjectGroup13Controller {
 	/**
 	 * RESTful service that returns all the artworks of a specific category
 	 */
-	@GetMapping(value = { "/artwork/byCategory/{category}", "/artwork/byCategory/{category}/"})
+	@GetMapping(value = { "/artwork/byCategory", "/artwork/byCategory/"})
 	public Set<ArtworkDto> getArtworkInCategory(@RequestParam(name="category") String category){
 		Set<ArtworkDto> artworksListDto = new HashSet<ArtworkDto>();
 		for(Artwork art : artworkService.getArtworkByCategory(category)) {
