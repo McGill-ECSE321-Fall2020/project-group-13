@@ -12,6 +12,7 @@ import PublicUserPage from '@/views/PublicUserPage'
 import ArtworkByCategoryResultPage from '@/views/ArtworkByCategoryResultPage'
 import ViewCart from '@/views/ViewCart'
 import EditProfile from '@/views/EditProfile'
+import EditArtwork from '@/views/EditArtwork'
 
 
 Vue.use(Router)
@@ -69,6 +70,11 @@ export default new Router({
       path: '/edituser/:username',
       name: 'EditProfile',
       component: EditProfile
+    },
+    {
+      path: '/editartwork/:artworkID',
+      name: 'EditArtwork',
+      component: EditArtwork
     },
   ]
 })
