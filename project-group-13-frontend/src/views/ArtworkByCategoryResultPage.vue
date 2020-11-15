@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <ArtObjectDisplay displayHeading="Similar Artwork" :artwork="this.categoryArtworks" urlForPath="artwork"/>
+    <ArtObjectDisplay displayHeading="Similar Artwork" :artwork="this.artworks" urlForPath="artwork"/>
     
     </div>
 </template>
@@ -22,7 +22,13 @@ var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-
 
 export default {
   name: 'CategoryArtworkDisplay',
-  components: { Navbar, ArtObjectDisplay},
+  components: { Navbar, ArtObjectDisplay, CategoryDisplay},
+  props: {
+    artworks: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
       categoryArtworks: [],

@@ -11,14 +11,19 @@
       <p class="mb-3 text-lg font-bold">$ {{ artwork.worth }}</p>
     </div>
     <div class="px-3">
-      <b-button>
-      <router-link :to="`/category/` + artwork.artworkID" class="text-light w-50 self-align-center">Buy</router-link>
-      </b-button>
+       <button v-on:click = "goToPage" type="submit" class="btn btn-primary">See More</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import Router from '../router'
+var config = require('../../config')
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
+
 export default {
   name: 'Art Object',
   props: {
@@ -26,6 +31,21 @@ export default {
       type: Object,
       required: true
     }
+  },
+  methods: {
+  goToPage: function () {
+    console.log(this.artwork.artworkID)
+    console.log('Go to page clicked...')
+    let newString = '/category/' + this.artwork.artworkID
+
+    AXIOS.get('/artwork/byCategory/?category=' + this.artwork.artworkID)
+      .then((response) => {
+        console.log('here is all artworks of category')
+        console.log(response)
+        Router.push({pathname: newString},
+        {artworks: response})
+      })
+  }
   }
 }
 </script>

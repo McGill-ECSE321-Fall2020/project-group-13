@@ -9,7 +9,7 @@
         <b-row>
             <div class="max-w-5xl mx-auto px-1 py-1 m-0">
     <div class="d-flex flex-wrap mx-0 mt-0 justify-content-center">
-      <ArtObject 
+      <CategoryObject
     urlForPath="byCategory/category"  
     v-bind:artwork="{
     artworkID: 'sculpture',
@@ -18,31 +18,31 @@
     imageUrl: require('@/assets/images/sculpture.jpg')
   }
   
-  "></ArtObject>
-   <ArtObject
+  "></CategoryObject>
+   <CategoryObject
     urlForPath="byCategory/category"
     v-bind:artwork="{
     artworkID: 'painting',
     title: 'Painting',
     worth: 0,
     imageUrl: require('@/assets/images/painting.jpg')
-  }"></ArtObject>
-   <ArtObject
+  }"></CategoryObject>
+   <CategoryObject
     urlForPath="byCategory/category"  
     v-bind:artwork="{
     artworkID: 'object',
     title: 'Objects',
     worth: 0,
     imageUrl: require('@/assets/images/object.jpg')
-  }"></ArtObject>
-   <ArtObject 
+  }"></CategoryObject>
+   <CategoryObject
     urlForPath="byCategory/category"
     v-bind:artwork="{
     artworkID: 'drawing',
     title: 'Drawing',
     worth: 0,
     imageUrl: require('@/assets/images/drawing.jpg')
-  }"></ArtObject>
+  }"></CategoryObject>
     </div>
   </div>
         </b-row>
@@ -56,9 +56,10 @@
 /* eslint-disable */
 
 import ArtObject from './ArtObject.vue'
+import CategoryObject from './CategoryObject.vue'
 export default {
   name: 'Home',
-  components: { ArtObject },
+  components: { ArtObject, CategoryObject },
   props: {
     displayHeading: {
       type: String,

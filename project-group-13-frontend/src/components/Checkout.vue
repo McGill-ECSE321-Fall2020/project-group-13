@@ -2,11 +2,11 @@
     <div class="root">
         <b-container class="artwork info shadow-lg p-4">
           <b-row no-gutters align-h="center">
-            <b-col cols="8">
-              <b-card header="Items in cart:" class="card w-75" style="margin-top: 1em;">
+            <b-col cols="5">
+              <b-card header="Items in cart:" class="card w-100" style="margin-top: 0em;">
                 <b-list-group>
-                  <b-list-group-item v-for="(artwork,i) in cart.artwork" v-bind:key="`artwork-${i}`">
-                    <span class="border"><b-row>
+                  <b-list-group-item v-for="(artwork,i) in cart.artwork" v-bind:key="`artwork-${i}`" height="75px">
+                    <b-row>
                       <b-col cols="3">
                         <div class="d-block position-relative h-48 overflow-hidden">
                             <img
@@ -17,71 +17,122 @@
                       </b-col>
                       <b-col>
                         <div class="px-3 flex-1">
-                          <h3 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h3>
+                          <h4 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h4>
                           <!-- <p class="mb-3 text-lg font-bold">{{ artistNameList }}</p> -->
                         </div>
                       </b-col>
                       <b-col>
                         <div class="px-3">
-                          <h3 class="mb-3 text-lg font-bold mt-3 mb-0">$ {{ artwork.worth.toFixed(2) }}</h3>
+                          <h4 class="mb-3 text-lg font-bold mt-3 mb-0">$ {{ artwork.worth.toFixed(2) }}</h4>
                         </div>
                       </b-col>
-                    </b-row></span>
+                    </b-row>
                   </b-list-group-item>
                 </b-list-group>
-                <p style="margin-top: 2em;"><strong>Subtotal: ${{ cart.totalCost.toFixed(2) }}</strong></p>
+                <h3 style="margin-top: 2em;"><strong>Subtotal: ${{ cart.totalCost.toFixed(2) }}</strong></h3>
               </b-card>
             </b-col>
 
-            <b-col cols="4">
-              <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-                <b-form-group
-                    id="input-group-1"
-                    label="Card number:"
-                    label-for="input-1"
-                >
-                    <b-form-input
-                    id="input-1"
-                    v-model="form.cardNumber"
-                    type="number"
-                    required
-                    placeholder="Enter 16-digit Card Number"
-                    ></b-form-input>
-                </b-form-group>
+            <b-col cols="7">
+              <div class="container">
+                <form>
 
-                <b-form-group id="input-group-2" label="Expiry Date:" label-for="input-2">
-                    <b-form-input
-                    id="input-2"
-                    v-model="form.expiryDate"
-                    type="date"
-                    required
-                    placeholder="Enter Date"
-                    ></b-form-input>
-                </b-form-group>
+                  <div class="row">
+                    <div class="col-50">  <!-- v-if="hasAddresses() === false" -->
+                      <h3>Shipping Address</h3>
+                      <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                      <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                      <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                      <input type="text" id="email" name="email" placeholder="john@example.com">
+                      <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                      <input type="text" id="adr" v-model="addressForm.streetAddress1" name="address" placeholder="542 W. 15th Street">
+                      <label for="city"><i class="fa fa-institution"></i> City</label>
+                      <input type="text" id="city" v-model="addressForm.city" name="city" placeholder="Montreal">
 
-                <b-form-group id="input-group-3" label="CVV:" label-for="input-3">
-                    <b-form-input
-                    id="input-3"
-                    v-model="form.cvv"
-                    type="number"
-                    required
-                    placeholder="Enter 3-digit CVV"
-                    ></b-form-input>
-                </b-form-group>
+                      <div class="row">
+                        <div class="col-50">
+                          <label for="state">Province</label>
+                          <input type="text" id="state" v-model="addressForm.province" name="state" placeholder="QC">
+                        </div>
+                        <div class="col-50">
+                          <label for="zip">Postal Code</label>
+                          <input type="text" id="zip" v-model="addressForm.postalCode"  name="zip" placeholder="10001">
+                        </div>
+                      </div>
+                    </div>
 
-                <b-form-group id="input-group-4" label="Name on Card:" label-for="input-4">
-                    <b-form-input
-                    id="input-4"
-                    v-model="form.name"
-                    required
-                    placeholder="Enter name as it appears on card"
-                    ></b-form-input>
-                </b-form-group>
+                    <!-- <div v-else>
 
-                <b-button type="submit" variant="primary">Submit</b-button>
-                <b-button type="reset" variant="danger">Reset</b-button>
-                <p>We'll never share your information with anyone else.</p>
-              </b-form>
+                    </div> -->
+
+                    <div class="col-50">
+                      <h3>Payment</h3>
+                      <label for="fname">Accepted Cards</label>
+                      <div class="icon-container">
+                        <i class="fa fa-cc-visa" style="color:navy;"></i>
+                        <i class="fa fa-cc-amex" style="color:blue;"></i>
+                        <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                        <i class="fa fa-cc-discover" style="color:orange;"></i>
+                      </div>
+                      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                        <b-form-group
+                            id="input-group-1"
+                            label="Card number:"
+                            label-for="input-1"
+                        >
+                            <b-form-input
+                            id="input-1"
+                            v-model="paymentForm.cardNumber"
+                            type="number"
+                            min="0"
+                            required
+                            placeholder="Enter 16-digit Card Number"
+                            ></b-form-input>
+                        </b-form-group> 
+
+                        <b-form-group id="input-group-2" label="Expiry Date:" label-for="input-2">
+                            <b-form-input
+                            id="input-2"
+                            v-model="paymentForm.expirationDate"
+                            type="month"
+                            required
+                            placeholder="Enter Date"
+                            ></b-form-input>
+                        </b-form-group>
+
+                        <b-form-group id="input-group-3" label="CVV:" label-for="input-3">
+                            <b-form-input
+                            id="input-3"
+                            v-model="paymentForm.cvv"
+                            type="number"
+                            required
+                            placeholder="Enter 3-digit CVV"
+                            ></b-form-input>
+                        </b-form-group>
+
+                        <b-form-group id="input-group-4" label="Name on Card:" label-for="input-4">
+                            <b-form-input
+                            id="input-4"
+                            v-model="paymentForm.nameOnCard"
+                            required
+                            placeholder="Enter name as it appears on card"
+                            ></b-form-input>
+                        </b-form-group>
+
+                        <b-button type="reset" variant="danger">Reset</b-button>
+                        <p>We'll never share your information with anyone else.</p>
+                      </b-form>
+                    </div>
+
+                  </div>
+                  <label>
+                    <input type="checkbox" checked="checked" name="sameadr"> Billing address same as shipping
+                  </label>
+                  <!-- <input type="submit" value="Continue to checkout" class="btn"> -->
+                  <b-button type="submit" variant="primary">Submit</b-button>
+                </form>
+              </div>
+
             </b-col>
           </b-row>
         </b-container>
@@ -98,14 +149,23 @@
   export default {
     data () {
       return {
-        form: {
+        paymentForm: {
           cardNumber: '',
-          expiryDate: '',
+          expirationDate: '',
           cvv: '',
-          name: ''
+          nameOnCard: ''
+        },
+        addressForm: {
+          username: document.cookie.substring(6),
+          streetAddress1: '',
+          city: '',
+          province: '',
+          country: 'Canada',
+          postalCode: ''
         },
         show: true,
-        cart: null
+        cart: null,
+        // artistNameList: "By: "
       }
     },
     created: function () {
@@ -121,7 +181,13 @@
     methods: {
       onSubmit (evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        //alert(JSON.stringify(this.addressForm))
+        // const username = document.cookie.substring(6)
+        // AXIOS.get('/user/' + username + '/new/address')
+        // .then(response => {
+        // // JSON responses are automatically parsed.
+        // })
+        alert(Router.push({path: '/Home' }))
       },
       onReset (evt) {
         evt.preventDefault()
@@ -134,6 +200,18 @@
         this.$nextTick(() => {
           this.show = true
         })
+      },
+      hasAddresses: function () {
+        const username = document.cookie.substring(6)
+        AXIOS.get('/user/' + username + '/addresses')
+        .then(response => {
+        // JSON responses are automatically parsed.
+          if (response.data == null) {
+            return false
+          } else {
+            this.addresses = response.data
+          }
+        })
       }
     }
   }
@@ -141,13 +219,89 @@
 
 <style>
   img {
-  max-width: 50px;
+  max-width: 60px;
   height: auto;
+  margin-top: 0.3em;
   }
   .flex-1 {
     flex: 1 1 0%;
   }
-  span {
-  padding: 10px;
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+  .row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    margin: 0 -16px;
+  }
+
+  .col-25 {
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+  }
+
+  .col-50 {
+    -ms-flex: 50%; /* IE10 */
+    flex: 50%;
+  }
+
+  .col-75 {
+    -ms-flex: 75%; /* IE10 */
+    flex: 75%;
+  }
+
+  .col-25,
+  .col-50,
+  .col-75 {
+    padding: 0 16px;
+  }
+
+  .container {
+    background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+  }
+
+  input[type=text] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  label {
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+  }
+  span.price {
+    float: right;
+    color: grey;
+  }
+
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+  @media (max-width: 800px) {
+    .row {
+      flex-direction: column-reverse;
+    }
+    .col-25 {
+      margin-bottom: 20px;
+    }
   }
 </style>
