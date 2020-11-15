@@ -11,6 +11,7 @@ import CheckoutPage from '@/views/CheckoutPage'
 import PublicUserPage from '@/views/PublicUserPage'
 import ArtworkByCategoryResultPage from '@/views/ArtworkByCategoryResultPage'
 import ViewCart from '@/views/ViewCart'
+import EditProfile from '@/views/EditProfile'
 
 
 Vue.use(Router)
@@ -62,6 +63,11 @@ export default new Router({
       name: 'CartPage',
       component: ViewCart,
       props: true
-    }
+    },
+    {
+      path: '/edituser/:username',
+      name: 'EditProfile',
+      component: EditProfile
+    },
   ]
 })
