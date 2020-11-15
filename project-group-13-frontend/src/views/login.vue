@@ -60,12 +60,6 @@ var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-
 
 export default {
   name: 'Login',
-  // props: {
-  //   returnTo: {
-  //     type: String,
-  //     required: false
-  //   }
-  // },
   data () {
     return {
       inputPassword: '',
@@ -103,7 +97,6 @@ export default {
       }, false)
     })
     this.returnTo = this.$route.query.returnTo + this.$route.hash
-    console.log(this.returnTo)
   },
 
   methods: {
@@ -115,7 +108,6 @@ export default {
     loginAttempt: function () {
       // User needs to input a nonempty username and password to login
       if (this.inputUsername === '' || this.inputPassword === '') {
-        console.log('no request')
         this.error = true
         this.errorClass = 'is-invalid'
         return
@@ -123,31 +115,26 @@ export default {
 
       // User needs to fix their username/password before attempting to login
       if (this.error) {
-        console.log('no request')
         return
       }
 
       AXIOS.get('/user/' + this.inputUsername + '/login?password=' + this.inputPassword)
       .then((response) => {
-        console.log("successful login")
         this.error = false
         this.errorClass = ''
         // Store username of logged in user inside a cookie.
         document.cookie = 'Token=' + response.data.username + ';path=/'
 
         // if need to return to a page, do so
-        if (this.returnTo !== 'undefined') {
-          console.log(' returnTo')
+        if (this.$route.hash !== '' && this.$route.hash !== undefined) {
           window.location.href = this.returnTo
         } else {
-          console.log('undefined returnTo')
           Router.push({name: 'Hello'})
         }
       })
       .catch(error => {
         this.error = true
         this.errorClass = 'is-invalid'
-        console.log(error)
       })
     },
 

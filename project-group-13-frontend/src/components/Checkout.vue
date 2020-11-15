@@ -242,7 +242,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   img {
   max-width: 60px;
   height: auto;
