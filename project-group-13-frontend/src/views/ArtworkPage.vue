@@ -1,9 +1,10 @@
 <template>
   <div>
     <Navbar />
+    <br>
     <ArtworkDetails />
-    <ArtObjectDisplay displayHeading="Similar Artwork" urlForPath="artwork"/>
-    
+    <!-- <ArtObjectDisplay displayHeading="Similar Artwork" urlForPath="artwork"/>
+     -->
     </div>
 </template>
 
