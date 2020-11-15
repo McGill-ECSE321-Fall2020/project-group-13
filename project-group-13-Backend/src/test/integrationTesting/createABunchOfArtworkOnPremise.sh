@@ -35,10 +35,10 @@ function curl-format() {
 
 
 #create user 1
-#curl-format "create user 1" "-X POST" "$url/newuser?username=$username&email=$username@no.com&password=passwor1dfd"
+curl-format "create user 1" "-X POST" "$url/newuser?username=$username&email=$username@no.com&password=passwor1dfd"
 
 #create user 2
-#curl-format "create user 2" "-X POST" "$url/newuser?username=$username2&email=$username2@no.com&password=passwor1dfd"
+curl-format "create user 2" "-X POST" "$url/newuser?username=$username2&email=$username2@no.com&password=passwor1dfd"
 
 
 for i in {1..5}
