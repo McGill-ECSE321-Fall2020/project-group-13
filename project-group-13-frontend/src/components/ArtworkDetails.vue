@@ -6,7 +6,15 @@
               <img :src="artwork.imageUrl" alt="No Images for Artwork" class="art-image rounded">
               <h4 style="margin-top: 2em;">Artists</h4>
               <div class="mb-4">
-                <router-link v-for="(artistn,i) in artwork.artist" v-bind:key="`artist-${i}`" :to="`/viewuser/`+artistn.username"><b-avatar :text="artistn.username.charAt(0)"></b-avatar></router-link>
+                <router-link v-for="(artistn,i) in artwork.artist" v-bind:key="`artist-${i}`" :to="`/viewuser/`+artistn.username">
+                  <b-avatar :text="artistn.username.charAt(0)" :id="`popover-1-${artistn.username}`"></b-avatar>
+                  <b-popover
+                    :target="`popover-1-${artistn.username}`"
+                    placement="bottom"
+                    triggers="hover focus"
+                    :content="`${artistn.username}`"
+                  ></b-popover>
+        </router-link>
               </div>
             </b-col>
             <b-col cols="5">
@@ -59,6 +67,7 @@ var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
+
 function getUsernameCookie(){
   if(document.cookie.length<6) return null
   else return document.cookie.substr(6).split(" ")[0]
@@ -142,7 +151,7 @@ export default {
       } else {
         var url = window.location.href.split('/')
         const id = url[url.length - 1] // artwork id
-        AXIOS.put('/user/' + document.cookie.substring(6) + '/edit-/cart' + '?artid=' + id)
+        AXIOS.put('/user/' + getUsernameCookie() + '/edit-/cart' + '?artid=' + id)
         .then((response) => {
           // this.buttonDisable = 'disabled'
           this.buttonLabel = 'Add to Cart'
