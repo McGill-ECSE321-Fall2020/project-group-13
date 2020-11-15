@@ -176,7 +176,7 @@ export default {
       const body = {
         email: this.email,
         bio:
-          this.email,
+          this.bio,
         profilePictureURL: this.img1
       };
 

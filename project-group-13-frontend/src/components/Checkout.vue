@@ -40,10 +40,10 @@
                   <div class="row">
                     <div class="col-50">  <!-- v-if="hasAddresses() === false" -->
                       <h3>Shipping Address</h3>
-                      <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                      <label for="fname" style="margin-top: 4.7em;"><i class="fa fa-user"></i> Full Name</label>
                       <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-                      <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                      <input type="text" id="email" name="email" placeholder="john@example.com">
+                      <!-- <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                      <input type="text" id="email" name="email" placeholder="john@example.com"> -->
                       <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
                       <input type="text" id="adr" v-model="addressForm.streetAddress1" name="address" placeholder="542 W. 15th Street">
                       <label for="city"><i class="fa fa-institution"></i> City</label>
@@ -57,6 +57,11 @@
                         <div class="col-50">
                           <label for="zip">Postal Code</label>
                           <input type="text" id="zip" v-model="addressForm.postalCode"  name="zip" placeholder="10001">
+                        </div>
+                        <div class="col-50">
+                          <label>
+                            <input type="checkbox" checked="checked" name="sameadr"> Billing address same as shipping
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -74,7 +79,7 @@
                         <i class="fa fa-cc-mastercard" style="color:red;"></i>
                         <i class="fa fa-cc-discover" style="color:orange;"></i>
                       </div>
-                      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                      <b-form @reset="onReset" v-if="show">
                         <b-form-group
                             id="input-group-1"
                             label="Card number:"
@@ -94,7 +99,7 @@
                             <b-form-input
                             id="input-2"
                             v-model="paymentForm.expirationDate"
-                            type="month"
+                            type="date"
                             required
                             placeholder="Enter Date"
                             ></b-form-input>
@@ -120,16 +125,12 @@
                         </b-form-group>
 
                         <b-button type="reset" variant="danger">Reset</b-button>
-                        <p>We'll never share your information with anyone else.</p>
                       </b-form>
                     </div>
 
                   </div>
-                  <label>
-                    <input type="checkbox" checked="checked" name="sameadr"> Billing address same as shipping
-                  </label>
-                  <!-- <input type="submit" value="Continue to checkout" class="btn"> -->
-                  <b-button type="submit" variant="primary">Submit</b-button>
+                  <b-button type="submit" v-on:click = "onSubmit" style="margin-top: 2em;" variant="primary">Submit Order</b-button>
+                  <p>We'll never share your information with anyone else.</p>
                 </form>
               </div>
 
@@ -181,20 +182,44 @@
     methods: {
       onSubmit (evt) {
         evt.preventDefault()
-        //alert(JSON.stringify(this.addressForm))
-        // const username = document.cookie.substring(6)
-        // AXIOS.get('/user/' + username + '/new/address')
-        // .then(response => {
-        // // JSON responses are automatically parsed.
-        // })
-        alert(Router.push({path: '/Home' }))
+        // alert("Just testing")
+        // alert(JSON.stringify(this.addressForm))
+        const username = document.cookie.substring(6)
+        AXIOS.post('/user/' + username + '/new/address', this.addressForm)
+        .then(response => {
+        // JSON responses are automatically parsed.
+          //alert("Address created")
+        }).catch(e => {
+          errorMsg = e.response.data.message;
+          console.log(errorMsg);
+        });
+
+        // creating order
+        AXIOS.post('/user/' + username + '/new/order', this.addressForm)
+        .then(response => {
+        // JSON responses are automatically parsed.
+          // paying for order
+          AXIOS.post('/order/' + response.data.orderID + '/pay', this.paymentForm)
+          .then(response => {
+          // JSON responses are automatically parsed.
+            alert("Your order has been placed!")
+          }).catch(e => {
+            errorMsg = e.response.data.message;
+            console.log(errorMsg);
+          });
+        }).catch(e => {
+          errorMsg = e.response.data.message;
+          console.log(errorMsg);
+        });
+
+        Router.push({path: '/' })
       },
       onReset (evt) {
         evt.preventDefault()
         // Reset our form values
-        this.form.cardNumber = ''
-        this.form.expiryDate = ''
-        this.form.cvv = ''
+        this.paymentForm.cardNumber = ''
+        this.paymentForm.expirationDate = ''
+        this.paymentForm.cvv = ''
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {
