@@ -34,7 +34,7 @@
             <div v-if="isLoggedIn() == true">
             <b-dropdown-item :href="this.accountPath">My Profile</b-dropdown-item>
             <b-dropdown-item href="#/cart">View Cart</b-dropdown-item>
-            <b-dropdown-item href="#">Past Orders</b-dropdown-item>
+            <b-dropdown-item href="#/orders">Past Orders</b-dropdown-item>
             <b-dropdown-item v-on:click = "logout">Sign Out</b-dropdown-item>
             <!-- <router-link to="/#/login" tag="b-dropdown-item">Sign Out</router-link> -->
             </div>
