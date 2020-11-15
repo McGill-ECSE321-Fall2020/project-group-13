@@ -31,7 +31,7 @@
                     </b-col>
                     <b-col>
                         <div class="px-3">
-                            <b-button v-on:click = "viewOrderItems" class="text-light self-align-center" style="margin-top: 1em;">View order items</b-button>
+                            <b-button v-on:click="itemsPage(order.orderID)" class="text-light self-align-center" style="margin-top: 1em;">View order items</b-button>
                         </div>
                     </b-col>
                 </b-row></span>
@@ -75,12 +75,9 @@ export default {
         })
     },
     methods: {
-        viewOrderItems: function () {
-            ///user/{username}/edit-/cart
-            AXIOS.put('/user/' + getUsernameCookie()+ '/edit-/cart' + '?artid=' + this.artwork.artworkID)
-            .then((response) => {
-            this.$emit('removedFromCart')
-            })
+        // method to reroute to order items page
+        itemsPage: function (id) {
+            Router.push({path: '/order/' + id + '/items'})
         }
     }
 

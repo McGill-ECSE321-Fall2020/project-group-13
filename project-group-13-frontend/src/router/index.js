@@ -14,7 +14,7 @@ import ViewCart from '@/views/ViewCart'
 import EditProfile from '@/views/EditProfile'
 import EditArtwork from '@/views/EditArtwork'
 import OrdersPage from '@/views/OrdersPage'
-
+import OrderItemsPage from '@/views/OrderItemsPage'
 
 Vue.use(Router)
 
@@ -81,6 +81,11 @@ export default new Router({
       path: '/orders',
       name: 'OrdersPage',
       component: OrdersPage
+    },
+    {
+      path: '/order/:orderID/items',
+      name: 'OrderItemsPage',
+      component: OrderItemsPage
     }
   ]
 })

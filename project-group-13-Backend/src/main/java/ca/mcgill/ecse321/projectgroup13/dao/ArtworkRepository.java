@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.projectgroup13.dao;
 
 import ca.mcgill.ecse321.projectgroup13.model.Artwork;
+import ca.mcgill.ecse321.projectgroup13.model.Order;
 import ca.mcgill.ecse321.projectgroup13.model.User;
 import org.springframework.data.repository.CrudRepository;
 
@@ -16,7 +17,7 @@ public interface ArtworkRepository extends CrudRepository<Artwork, Long>{
     Artwork findArtworkByArtworkID(int artworkID);
     Set<Artwork> findByArtist(User Artist);
     Set<Artwork> getArtworkByisOnPremise(boolean isOnPremise);
-    //Set<Artwork> findArtworkByArtistUsername(Set<String> artistsID);
+    Set<Artwork> findArtworkByOrder(Order order);
     void deleteArtworkByArtworkID(int artworkID);
     Set<Artwork> findAll();
 

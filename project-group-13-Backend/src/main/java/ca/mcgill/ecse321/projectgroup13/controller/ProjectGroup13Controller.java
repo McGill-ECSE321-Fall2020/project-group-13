@@ -793,6 +793,22 @@ public class ProjectGroup13Controller {
 		}
 		return artworksOfArtistDto;
 	}
+
+
+	/**
+	 * RESTful service that returns all the artworks of a placed order
+	 * @param orderId
+	 * @return
+	 */
+	@GetMapping(value = { "/order/{orderId}/items", "/order/{orderId}/items/"})
+	public Set<ArtworkDto> getArtworkOfOrder(@PathVariable("orderId") int orderId) {
+		Set<ArtworkDto> artworksOfArtistDto = new HashSet<ArtworkDto>();
+		for(Artwork art : artworkService.getArtworksOfOrder(orderId)) {
+			artworksOfArtistDto.add(convertToDto(art));
+		}
+		return artworksOfArtistDto;
+	}
+
 	
 	/**
 	 * RESTful service that returns all the artworks

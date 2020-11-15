@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ca.mcgill.ecse321.projectgroup13.dao.OrderRepository;
+import ca.mcgill.ecse321.projectgroup13.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +25,12 @@ public class ArtworkService {
     @Autowired
     private UserRepository userRepo;
     @Autowired
+    private OrderRepository orderRepo;
+    @Autowired
     private CartRepository cartRepo;
     @Autowired
     private CartService cartService;
+
 
 
     /**
@@ -122,10 +127,24 @@ public class ArtworkService {
         Set<Artwork> artworks = artworkRepo.getArtworkByArtist(user);
         return artworks;
     }
+
+    /**
+     * service method to get all artworks of an order
+     * @param orderId
+     * @return
+     */
+    @Transactional
+    public Set<Artwork> getArtworksOfOrder(int orderId){
+        Order order = orderRepo.findOrderByOrderID(orderId);
+        if (order == null)
+            throw new IllegalArgumentException("Order does not exist");
+        Set<Artwork> artworks = artworkRepo.findArtworkByOrder(order);
+        return artworks;
+    }
     
     /**
      * service method to get all artworks of a given category
-     * @param username
+     * @param category
      * @return
      */
     @Transactional
