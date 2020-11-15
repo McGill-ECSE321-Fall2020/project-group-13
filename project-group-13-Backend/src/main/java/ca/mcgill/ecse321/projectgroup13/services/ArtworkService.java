@@ -56,6 +56,7 @@ public class ArtworkService {
             System.out.println("works "+artwork.getArtist());
     		Set<Artwork> ArtistArtworks = user.getArtwork();
     		ArtistArtworks.add(artwork);
+    		user.setArtwork(ArtistArtworks);
     	}
     	artwork.setArtist(artists);
     	artworkRepo.save(artwork);
