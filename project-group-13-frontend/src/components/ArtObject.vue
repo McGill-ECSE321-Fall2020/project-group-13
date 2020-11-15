@@ -1,15 +1,14 @@
 <template>
-  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden" v-if="isDeleted==false">
+  <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden zoom" v-if="isDeleted==false" v-on:click = "artworkClicked">
     <div class="row align-self-start">
     <div class="d-block position-relative h-48 overflow-hidden">
       <img
         :src="artwork.imageUrl"
-        class="object-cover object-center w-100 h-100 d-block bg-secondary zoom"
-        v-on:click = "artworkClicked"
+        class="object-cover object-center w-100 h-100 d-block bg-secondary"
       />
     </div>
     </div>
-    <div class="row lowest">
+    <div class="row bottom-of-flex">
       <div class="col">
         <div class="px-3 flex-1">
           <h3 class="text-secondary font-medium mt-3 mb-0">{{ artwork.title }}</h3>
@@ -79,7 +78,7 @@ export default {
 }
 </script>
 <style>
-.lowest {
+.bottom-of-flex {
   margin-top: auto;
 }
   .object-cover {
@@ -104,15 +103,26 @@ h3, p {
   text-overflow: ellipsis;
   display: block;
 }
+.zoomImg {
+  transition: transform .2s; /* Animation */
+  margin: 0 auto;
+  z-index:1;
+}
+
+.zoomImg:hover {
+  transform: scale(1.3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  z-index:1000;
+}
+
 .zoom {
   transition: transform .2s; /* Animation */
-  /* width: 200px;
-  height: 200px; */
   margin: 0 auto;
+  z-index:1;
 }
 
 .zoom:hover {
-  transform: scale(1.3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  z-index:1000;
 }
 
 .center-cropped {
