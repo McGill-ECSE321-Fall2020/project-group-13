@@ -42,6 +42,7 @@
             class="form-control"
             type="number"
             min="0"
+            oninput="validity.valid||(value='');"
             v-model="price"
             id="price"
             name="price"
@@ -167,7 +168,7 @@ export default {
       img1: null,
       imageData: null,
       title: "",
-      price: -1,
+      price: 0,
       description: "",
       collection: "",
       isOnPremise: false,

@@ -115,25 +115,14 @@
           /><br />
         </div>
 
-        <div class="form-group">
-          <label for="artists" class="mb-0 mt-1"
-            >other collaborating artists (comma separated)</label
-          ><br />
-          <input
-            class="form-control"
-            type="text"
-            id="artists"
-            v-model="artists"
-            name="artists"
-            multiple
-          /><br />
-        </div>
+        
         <span v-if="this.img1 == null" style="color:red"
           >Please wait for image upload to finish.</span
         >
         <button
           :disabled="this.img1 == null"
-          v-on:click="createArtwork"
+          v-on:click="updateArtwork"
+          type="submit"
           class="btn btn-primary"
         >
           Continue
@@ -213,13 +202,12 @@ export default {
         this.medium = this.artwork.medium;
         this.collection = this.artwork.collection;
         this.img1 = this.artwork.imageUrl;
-        var artistsUsernames = this.artwork.artists.map(a => a.username)
-        this.artists = artistsUsernames;
+        
       })
       .catch(e => {
-        errorMsg = e.response.data.message;
-        console.log(errorMsg);
-        this.errorUser = errorMsg;
+        
+        console.log(e);
+        this.error = e;
       });
 
   },
@@ -270,7 +258,7 @@ export default {
         }
       );
     },
-    createArtwork() {
+    updateArtwork() {
       if (this.img1 == null) {
         this.error = "please wait until image is done uploading";
         return;
@@ -278,8 +266,9 @@ export default {
       var errorMsg = "";
       var optionalComma = "";
       if (this.artists !== "") optionalComma = ",";
-      AXIOS.post(
-        "artwork/new?title=" +
+      
+      AXIOS.put(
+        "artwork/" + this.artworkID+"/update?title="+
           this.title +
           "&artist=" +
           document.cookie.substr(6) +
@@ -288,25 +277,11 @@ export default {
           "&worth=" +
           this.price +
           "&imageURL=" +
-          this.img1
-      )
-        .then(response => {
-          console.log(response);
-          this.artwork = response.data;
-          this.artworkID = response.data.artworkID;
-          var today = new Date();
-          var dd = String(today.getDate()).padStart(2, "0");
-          var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-          var yyyy = today.getFullYear();
-
-          today = mm + "/" + dd + "/" + yyyy;
-          AXIOS.put(
-            "artwork/" +
-              this.artworkID +
-              "/update?description=" +
-              this.description +
+          this.img1+
+          "&description=" +
+          this.description +
               "&creationDate=" +
-              today +
+              this.creationDate +
               "&OnPremise=" +
               this.isOnPremise +
               "&medium=" +
@@ -315,23 +290,14 @@ export default {
               this.dimensions +
               "&collection=" +
               this.collection
-          )
-
-            .then(response => {
-              console.log(response);
-              this.artwork = response.data;
-              this.artworkID = response.data.artworkID;
-            })
-            .catch(e => {
-              errorMsg = e.response.data.message;
-              console.log(errorMsg);
-              this.error = errorMsg;
-            });
+      )
+        .then(response => {
+          console.log(response);
         })
         .catch(e => {
-          errorMsg = e.response.data.message;
-          console.log(errorMsg);
-          this.error = errorMsg;
+          ;
+          console.log(e);
+          this.error = e;
         });
 
       Router.push({ path: "/", name: "" });
