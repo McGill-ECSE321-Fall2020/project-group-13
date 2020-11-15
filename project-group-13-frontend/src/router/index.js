@@ -13,6 +13,7 @@ import ArtworkByCategoryResultPage from '@/views/ArtworkByCategoryResultPage'
 import ViewCart from '@/views/ViewCart'
 import EditProfile from '@/views/EditProfile'
 import EditArtwork from '@/views/EditArtwork'
+import OrdersPage from '@/views/OrdersPage'
 
 
 Vue.use(Router)
@@ -76,5 +77,10 @@ export default new Router({
       name: 'EditArtwork',
       component: EditArtwork
     },
+    {
+      path: '/orders',
+      name: 'OrdersPage',
+      component: OrdersPage
+    }
   ]
 })
