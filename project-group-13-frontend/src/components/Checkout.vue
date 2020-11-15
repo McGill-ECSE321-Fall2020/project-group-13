@@ -110,6 +110,8 @@
                             id="input-3"
                             v-model="paymentForm.cvv"
                             type="number"
+                            min="100"
+                            max="999"
                             required
                             placeholder="Enter 3-digit CVV"
                             ></b-form-input>
@@ -129,6 +131,7 @@
                     </div>
 
                   </div>
+                  <span v-if="error" style="color:red">{{error}} </span>
                   <b-button type="submit" v-on:click = "onSubmit" style="margin-top: 2em;" variant="primary">Submit Order</b-button>
                   <p>We'll never share your information with anyone else.</p>
                 </form>
@@ -170,12 +173,14 @@
         },
         show: true,
         cart: null,
+        error:'',
         // artistNameList: "By: "
       }
     },
     created: function () {
       // getting username from cookie
       const username = getUsernameCookie()
+      
       // Fetching cart items from backend
       AXIOS.get('/user/' + username + '/cart')
       .then(response => {
@@ -186,16 +191,37 @@
     methods: {
       onSubmit (evt) {
         evt.preventDefault()
+        if(this.paymentForm.cardNumber.toString().length !==16){
+          this.error = 'card number must be 16 digits'
+          return
+        }
+        if(this.paymentForm.cvv.toString().length !==3){
+          this.error = 'card number must be 3 digits'
+          return
+        }
+        if(!this.paymentForm.nameOnCard){
+          this.error = 'name on card not filled out'
+          return
+        }
+        console.log(new Date())
+          console.log(this.paymentForm.expirationDate)
+        if(new Date(this.paymentForm.expirationDate)<new Date()){
+          
+          this.error = 'card expiry date invalid'
+          return
+        }
         // alert("Just testing")
         // alert(JSON.stringify(this.addressForm))
+        this.error='loading...'
         const username = getUsernameCookie()
         AXIOS.post('/user/' + username + '/new/address', this.addressForm)
         .then(response => {
         // JSON responses are automatically parsed.
           //alert("Address created")
         }).catch(e => {
-          errorMsg = e.response.data.message;
-          console.log(errorMsg);
+          this.error = e;
+          console.log(error);
+          return
         });
 
         // creating order
@@ -207,16 +233,19 @@
           .then(response => {
           // JSON responses are automatically parsed.
             alert("Your order has been placed!")
+            Router.push({path: '/' })
           }).catch(e => {
-            errorMsg = e.response.data.message;
-            console.log(errorMsg);
+            this.error = e;
+            console.log(error);
+            return
           });
         }).catch(e => {
-          errorMsg = e.response.data.message;
-          console.log(errorMsg);
+          this.error = e;
+          console.log(error);
+          return
         });
 
-        Router.push({path: '/' })
+        
       },
       onReset (evt) {
         evt.preventDefault()
