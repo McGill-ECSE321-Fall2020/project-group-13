@@ -21,7 +21,7 @@ module.exports = {
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report,
     port: 443,
-    host: 'project-group-13-frontend.herokuapp.com', //Insert project herokuAppURL HERE
+    host: 'morning-fjord-92854.herokuapp.com', //Insert project herokuAppURL HERE
     backendHost: 'project-group-13-backend.herokuapp.com', //Insert project herokuAppURL HERE
     backendPort: 443,
   },
