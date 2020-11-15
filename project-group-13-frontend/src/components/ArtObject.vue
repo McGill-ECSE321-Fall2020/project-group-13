@@ -12,10 +12,9 @@
     </div>
     <div class="px-3">
       <b-button>
-      <router-link :to="`/` + urlForPath + '/' + artwork.artworkID" class="text-light w-100 self-align-center">Buy</router-link>
+      <router-link :to="`/` + urlForPath + '/' + artwork.artworkID" class="text-light w-50 self-align-center">View</router-link>
       </b-button>
       <b-button class="btn btn-danger text-light w-10 self-align-center" v-if="isEditMode" v-on:click = "deleteArtwork">
-        Remove From system
       </b-button>
     </div>
   </div>

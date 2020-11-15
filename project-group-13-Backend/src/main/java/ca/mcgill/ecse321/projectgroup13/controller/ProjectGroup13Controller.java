@@ -687,6 +687,7 @@ public class ProjectGroup13Controller {
 	 */
 	@PostMapping(value = { "/artwork/new", "/artwork/new/" })
 	public ArtworkDto createArtwork(@RequestParam(name="title") String title, @RequestParam(name="artist") String[] artists , @RequestParam(name="worth") double worth, @RequestParam(name="imageURL") String url ) throws illegalArgumentException{
+		if(worth<0) throw new illegalArgumentException("Price cannot be negative");
 		Artwork art = artworkService.createArtwork(title, artists, worth, url);
 		return convertToDto(art);
 	}
