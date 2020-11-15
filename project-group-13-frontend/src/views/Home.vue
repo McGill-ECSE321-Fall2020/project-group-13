@@ -33,7 +33,7 @@ export default {
   },
   created: function() {
     var url = window.location.href.split('/')
-    AXIOS.get('/artwork/onPremise')
+    AXIOS.get('/artwork/onPremise/available')
     .then(response => {
       console.log('ResponseData' + JSON.stringify(response.data[0]))
       this.featuredArtworks = response.data.slice(0, 8)
