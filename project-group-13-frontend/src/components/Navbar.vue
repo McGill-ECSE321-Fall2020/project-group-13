@@ -74,8 +74,13 @@ export default {
       profileURL:"https://placekitten.com/300/300"
     }
   },
-  created:function(){
+  created: function(){
     this.profileURL=getProfilePicCookie()
+    window.addEventListener( 'keydown', (e) => {
+      if (e.keyCode == 13) {
+        this.searchTitle()
+      }
+    })
   },
   methods: {
     /**
