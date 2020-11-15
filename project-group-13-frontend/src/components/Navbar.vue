@@ -11,6 +11,7 @@
         <b-navbar-nav class="ml-auto mr-auto">
           <b-nav-form>
             <b-form-input
+              v-on:keypress.native="searchTitle"
               size="sm"
               class="mr-sm-2"
               placeholder="Search"
