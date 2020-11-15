@@ -23,13 +23,13 @@
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
-          <b-button size="sm" class="my-2 my-sm-0" type="submit">
-            <icon-base width="22" height="22" iconColor="rgba(100,100,100,100)" icon-name="shopping-cart"><icon-shopping-cart/></icon-base></b-button>
+          
 
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template slot="button-content">
-              <icon-base width="22" height="22" iconColor="rgba(255,255,255,100)" icon-name="user-profile"><icon-profile/></icon-base>
+              <b-avatar :src="this.profileURL"></b-avatar>
+              
             </template>
             <div v-if="isLoggedIn() == true">
             <b-dropdown-item :href="this.accountPath">Account</b-dropdown-item>
@@ -58,14 +58,25 @@ var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
-
+function getUsernameCookie(){
+  if(document.cookie.length<6) return null
+  else return document.cookie.substr(6).split(" ")[0]
+}
+function getProfilePicCookie(){
+  if(document.cookie.length<6) return null
+  else return document.cookie.substr(6).split(" ")[1]
+}
 export default {
   name: 'NavBar',
   data () {
     return {
       titleSearch: '',
       accountPath: '/',
+      profileURL:"https://placekitten.com/300/300"
     }
+  },
+  created:function(){
+    this.profileURL=getProfilePicCookie()
   },
   methods: {
     /**
@@ -93,7 +104,7 @@ export default {
     isLoggedIn: function () {
       
       console.log('Cookie' + document.cookie)
-      this.accountPath = '#/viewuser/'.concat(document.cookie.substr(6))
+      this.accountPath = '#/viewuser/'.concat(getUsernameCookie())
       if (document.cookie == '') {
         console.log('logged in: false')
         return false

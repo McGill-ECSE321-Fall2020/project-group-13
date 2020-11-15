@@ -71,7 +71,7 @@ export default {
     if (document.cookie.length <= 6) {
       Router.push({path: '/login?returnTo=' + window.location.href})
     }
-    this.user = document.cookie.substr(6)
+    this.user = document.cookie.substr(6).split(" ")[0]
     AXIOS.get('/user/' + this.user + '/cart')
     .then(response => {
       this.cart = response.data
@@ -83,7 +83,7 @@ export default {
       Router.push({path: '/checkout' })
     },
     refreshCart: function () {
-      this.user = document.cookie.substr(6)
+      this.user = document.cookie.substr(6).split(" ")[0]
       AXIOS.get('/user/' + this.user + '/cart')
       .then(response => {
       this.cart = response.data

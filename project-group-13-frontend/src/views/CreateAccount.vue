@@ -123,7 +123,7 @@ export default {
         this.error = false
         this.errorClass = ''
         // Store username of logged in user inside a cookie.
-        document.cookie = 'Token=' + response.data.username + ';path=/'
+        document.cookie = 'Token=' + response.data.username +' '+response.data.profilePictureURL+';path=/;'
 
         // if need to return to a page, do so
         if (this.returnTo !== 'undefined') {
