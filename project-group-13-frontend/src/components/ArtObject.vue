@@ -77,7 +77,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .bottom-of-flex {
   margin-top: auto;
 }
@@ -102,16 +102,6 @@ h3, p {
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
-}
-.zoomImg {
-  transition: transform .2s; /* Animation */
-  margin: 0 auto;
-  z-index:1;
-}
-
-.zoomImg:hover {
-  transform: scale(1.3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-  z-index:1000;
 }
 
 .zoom {

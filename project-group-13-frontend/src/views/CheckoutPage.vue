@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <Checkout />
-    <ArtObjectDisplay displayName="Check out also"/>
+    <!-- <ArtObjectDisplay displayName="Check out also"/> -->
     
     </div>
 </template>
