@@ -4,7 +4,7 @@
     <ArtworkDetails />
     <ArtObjectDisplay displayHeading="Similar Artwork" urlForPath="artwork"/>
     
-    </div>
+  </div>
 </template>
 
 <script>
