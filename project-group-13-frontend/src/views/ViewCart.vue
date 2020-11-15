@@ -6,11 +6,12 @@
         <br><br>
       </b-row>
       <b-row>
-        <h2>&emsp;Cart</h2>
+        <h2 v-if="artworks.length !== 0">&emsp;Cart</h2>
+        <h2 v-if="artworks.length === 0">&emsp;Your cart is empty :(</h2>
       </b-row>
       
       <b-row>
-        <b-col cols="8" :key="refreshFlag">
+        <b-col cols="8">
           <div
             v-for="artwork in artworks"
             :key="artwork.id"
@@ -20,8 +21,8 @@
           </div>
         </b-col>
         <b-col>
-          <div class="sticky-top">
-            <br><br><br><br>
+          <div class="sticky-top" v-if="artworks.length !== 0">
+            <br><br v-if="artworks.length > 1"><br v-if="artworks.length > 1"><br v-if="artworks.length > 1">
             <span class="border"><b-container>
               <b-row align-h="center">
                 <h2>Subtotal:</h2>
@@ -67,9 +68,9 @@ export default {
   },
 
   beforeCreate: function() {
-    // if (document.cookie.length <= 6) {
-    //   Router.push({path: '/login?returnTo=' + window.location.href})
-    // }
+    if (document.cookie.length <= 6) {
+      Router.push({path: '/login?returnTo=' + window.location.href})
+    }
     this.user = document.cookie.substr(6)
     AXIOS.get('/user/' + this.user + '/cart')
     .then(response => {

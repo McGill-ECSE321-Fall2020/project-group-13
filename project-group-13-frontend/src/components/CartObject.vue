@@ -3,7 +3,7 @@
     <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
       <span class="border" w-100><b-row w-100>
         <b-col>
-          <div class="d-block position-relative h-48 overflow-hidden">
+          <div class="d-block position-relative h-48 w-48 overflow-hidden">
             <img
               :src="artwork.imageUrl"
               class="object-cover object-center w-100 h-100 d-block bg-secondary"
