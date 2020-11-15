@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <ArtObjectDisplay displayHeading="Similar Artwork" :artwork="this.artworks" urlForPath="artwork"/>
+    <ArtObjectDisplay displayHeading="Similar Artwork" :artworks="this.artwork.data" urlForPath="artwork"/>
     
     </div>
 </template>
@@ -23,8 +23,8 @@ var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-
 export default {
   name: 'CategoryArtworkDisplay',
   components: { Navbar, ArtObjectDisplay, CategoryDisplay},
-  props: {
-    artworks: {
+   props: {
+    artwork: {
       type: Array,
       required: true
     }
@@ -36,6 +36,8 @@ export default {
     }
   },
   created: function() {
+    console.log('here is the artwork data from within RESULTSPAGE !!!')
+    console.log(this.artwork.data)
     var url = window.location.href.split('/')
     const category = url[url.length - 1]
     AXIOS.get('/artwork/onPremise')

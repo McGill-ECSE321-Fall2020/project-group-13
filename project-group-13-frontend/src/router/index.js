@@ -55,7 +55,8 @@ export default new Router({
     {
       path: '/byCategory/category*',
       name: 'CategoryDisplay',
-      component: ArtworkByCategoryResultPage
+      component: ArtworkByCategoryResultPage,
+      props: true
     },
     {
       path: '/cart',

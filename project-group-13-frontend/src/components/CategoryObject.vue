@@ -36,14 +36,12 @@ export default {
   goToPage: function () {
     console.log(this.artwork.artworkID)
     console.log('Go to page clicked...')
-    let newString = '/category/' + this.artwork.artworkID
 
     AXIOS.get('/artwork/byCategory/?category=' + this.artwork.artworkID)
       .then((response) => {
         console.log('here is all artworks of category')
-        console.log(response)
-        Router.push({pathname: newString},
-        {artworks: response})
+        console.log(response.data)
+        Router.push({ name: 'CategoryDisplay', params: {artwork: response}})
       })
   }
   }
