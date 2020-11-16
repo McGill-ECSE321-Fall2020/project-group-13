@@ -258,8 +258,10 @@ export default {
           console.log(response);
           this.artwork = response.data;
           this.artworkID = response.data.artworkID;
-          
-
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, "0");
+          var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+          var yyyy = today.getFullYear();
           today = mm + "/" + dd + "/" + yyyy;
           AXIOS.put(
             "artwork/" +
@@ -284,13 +286,13 @@ export default {
               this.artworkID = response.data.artworkID;
             })
             .catch(e => {
-              errorMsg = e.response.data.message;
+              errorMsg = e;
               console.log(errorMsg);
               this.error = errorMsg;
             });
         })
         .catch(e => {
-          errorMsg = e.response.data.message;
+          errorMsg = e;
           console.log(errorMsg);
           this.error = errorMsg;
         });

@@ -112,14 +112,17 @@ export default {
         // JSON responses are automatically parsed.
           const cart = response.data
           var i
-          // checking if artwork was already in cart
-          for (i = 0; i < cart.artwork.length; i++) {
+          if(cart.artwork){
+            for (i = 0; i < cart.artwork.length; i++) {
             if (cart.artwork[i].artworkID === parseInt(id)) {
               console.log('equal')
               // this.buttonDisable = 'disabled'
               this.buttonLabel = 'Remove from Cart'
             } // otherwise button can be clicked
           }
+          }
+          // checking if artwork was already in cart
+          
         })
       }
     })
