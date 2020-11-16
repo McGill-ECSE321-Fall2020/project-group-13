@@ -30,6 +30,9 @@
                     </div>
                     </b-col>
                     <b-col>
+                      <h4 class="text-secondary font-medium" style="margin-top: 0.4em;">{{ order.isDelivery }}</h4>
+                    </b-col>
+                    <b-col>
                         <div class="px-3">
                             <b-button v-on:click="itemsPage(order.orderID)" class="text-light self-align-center" style="margin-top: 1em;">View order items</b-button>
                         </div>
