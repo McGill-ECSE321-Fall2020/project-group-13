@@ -15,7 +15,11 @@ sourceSets {
     java { srcDir 'src/main/java' }
   }
   test {
-    java { srcDir 'src/test/java/ca/mcgill/ecse321/projectgroup13/services'}
+    java { 
+    	srcDir 'src/test/java'
+    	exclude '**/dao/*'
+    }
+    
   }
 }
 
