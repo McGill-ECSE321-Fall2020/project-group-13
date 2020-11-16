@@ -203,9 +203,7 @@ public class ProjectGroup13Controller {
 		return convertToDto(userService.getUserByUsername(username));
 	}
 
-	//getUsernameAlreadyExists
 	
-	//getEmailAlreadyExists
 	
 	//login
 	/**
@@ -305,7 +303,7 @@ public class ProjectGroup13Controller {
 	}
 	
 
-	//TODO: should only be able to get payments linked to your account!
+	
 	/**
 	 * RESTful method to get a payment by id
 	 * @param id

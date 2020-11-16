@@ -1,6 +1,7 @@
 <template>
     <div>
         <Navbar /> 
+        <h2><strong>Items in order:</strong></h2>
         <b-row align-h="center">
             <b-col cols="5">
                 <div
@@ -11,7 +12,7 @@
                     <div class="bg-white shadow-sm rounded pb-2 mx-1 d-flex flex-column overflow-hidden">
                         <span class="border" w-100><b-row w-100>
                             <b-col>
-                            <div class="d-block position-relative h-48 w-48 overflow-hidden clickable" v-on:click = "artworkClicked">
+                            <div class="d-block position-relative h-48 w-48 overflow-hidden clickable" v-on:click="artworkClicked(artwork)">
                                 <img
                                 :src="artwork.imageUrl"
                                 class="object-cover object-center w-100 h-100 d-block bg-secondary"
@@ -20,7 +21,7 @@
                             </b-col>
                             <b-col>
                                 <div class="px-3 flex-1">
-                                    <h2 class="text-secondary font-medium mt-3 mb-0 clickable" v-on:click = "artworkClicked">{{ artwork.title }}</h2>
+                                    <h2 class="text-secondary font-medium mt-3 mb-0 clickable" v-on:click="artworkClicked(artwork)">{{ artwork.title }}</h2>
                                 </div>
                             </b-col>
                             <b-col>
@@ -39,6 +40,7 @@
 
 <script>
 import axios from 'axios'
+import Router from '../router'
 var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
@@ -69,9 +71,9 @@ export default {
         })
     },
     methods: {
-        artworkClicked() {
+        artworkClicked(artwork) {
             console.log("clicked")
-            Router.push({path: '/artwork/' + this.artwork.artworkID})
+            Router.push({path: '/artwork/' + artwork.artworkID})
         }
     }
 }

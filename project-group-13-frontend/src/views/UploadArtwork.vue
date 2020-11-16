@@ -191,6 +191,7 @@ export default {
         photo: this.img1,
         caption: this.caption
       };
+      //initialize firebase
       firebase
         .database()
         .ref("PhotoGallery")
@@ -208,6 +209,7 @@ export default {
       this.imageData = event.target.files[0];
       this.onUpload();
     },
+    //upload image to firebase cloud. Get URL. Code heavily adapted from firebase documentation
     onUpload() {
       this.img1 = null;
       const storageRef = firebase
@@ -239,7 +241,7 @@ export default {
       }
       var errorMsg = "";
       var optionalComma = "";
-      if (this.artists !== "") optionalComma = ",";
+      if (this.artists !== "") optionalComma = ","; //artists include current user and collaborating artists. We must put a comma between them
       AXIOS.post(
         "artwork/new?title=" +
           this.title +
@@ -256,10 +258,7 @@ export default {
           console.log(response);
           this.artwork = response.data;
           this.artworkID = response.data.artworkID;
-          var today = new Date();
-          var dd = String(today.getDate()).padStart(2, "0");
-          var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-          var yyyy = today.getFullYear();
+          
 
           today = mm + "/" + dd + "/" + yyyy;
           AXIOS.put(

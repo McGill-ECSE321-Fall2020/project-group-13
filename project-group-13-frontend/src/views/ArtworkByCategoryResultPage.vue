@@ -36,13 +36,12 @@ export default {
     }
   },
   created: function() {
-    console.log('here is the artwork data from within RESULTSPAGE !!!')
-    console.log(this.artwork.data)
+    
     var url = window.location.href.split('/')
     const category = url[url.length - 1]
     AXIOS.get('/artwork/onPremise')
     .then(response => {
-      console.log('ResponseData' + response.data)
+      
       this.categoryArtworks = response.data
     })
   }

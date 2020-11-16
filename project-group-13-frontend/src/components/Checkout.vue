@@ -38,12 +38,19 @@
                 <form>
 
                   <div class="row">
-                    <div class="col-50">  <!-- v-if="hasAddresses() === false" -->
+                    <div class="col-50" >
+                      <form method="post">
+                        <h3>Please select method of delivery:</h3>
+                        <input v-model="deliveryMethod" type="radio" id="pickup" name="method" value="pickup" style="margin-top: 4em;">
+                        <label for="pickup">Pick up</label><br>
+                        <input v-model="deliveryMethod" type="radio" id="delivery" name="method" value="delivery">
+                        <label for="delivery">Delivery</label><br>
+                      </form>
+                    </div>
+                    <div v-if="displayRadioValue() === true" class="col-50">  <!-- v-if="hasAddresses() === false" -->
                       <h3>Shipping Address</h3>
                       <label for="fname" style="margin-top: 4.7em;"><i class="fa fa-user"></i> Full Name</label>
                       <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-                      <!-- <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                      <input type="text" id="email" name="email" placeholder="john@example.com"> -->
                       <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
                       <input type="text" id="adr" v-model="addressForm.streetAddress1" name="address" placeholder="542 W. 15th Street">
                       <label for="city"><i class="fa fa-institution"></i> City</label>
@@ -60,7 +67,7 @@
                         </div>
                         <div class="col-50">
                           <label>
-                            <input type="checkbox" checked="checked" name="sameadr"> Billing address same as shipping
+                            <input type="checkbox" checked="checked" name="sameadr" style="margin-bottom: 3em;"> Billing address same as shipping
                           </label>
                         </div>
                       </div>
@@ -173,8 +180,9 @@
         },
         show: true,
         cart: null,
-        error:'',
-        // artistNameList: "By: "
+        deliveryMethod: '',
+        deliveryMethodChosen: false,
+        error:''
       }
     },
     created: function () {
@@ -192,43 +200,53 @@
       onSubmit (evt) {
         evt.preventDefault()
         if(this.paymentForm.cardNumber.toString().length !==16){
-          this.error = 'card number must be 16 digits'
+          this.error = 'Card number must be 16 digits'
           return
         }
         if(this.paymentForm.cvv.toString().length !==3){
-          this.error = 'card number must be 3 digits'
+          this.error = 'Card CVV must be 3 digits'
           return
         }
         if(!this.paymentForm.nameOnCard){
-          this.error = 'name on card not filled out'
+          this.error = 'Name on card not filled out'
           return
         }
         console.log(new Date())
           console.log(this.paymentForm.expirationDate)
         if(new Date(this.paymentForm.expirationDate)<new Date()){
           
-          this.error = 'card expiry date invalid'
+          this.error = 'Card expiry date invalid'
           return
         }
         // alert("Just testing")
         // alert(JSON.stringify(this.addressForm))
-        this.error='loading...'
+        this.error='Loading...'
         const username = getUsernameCookie()
-        AXIOS.post('/user/' + username + '/new/address', this.addressForm)
-        .then(response => {
-        // JSON responses are automatically parsed.
-          //alert("Address created")
-        }).catch(e => {
-          this.error = e;
-          console.log(error);
-          return
-        });
+        if (this.deliveryMethodChosen == true) {
+          AXIOS.post('/user/' + username + '/new/address', this.addressForm)
+          .then(response => {
+          // JSON responses are automatically parsed.
+            //alert("Address created")
+          }).catch(e => {
+            this.error = e;
+            console.log(error);
+            return
+          });
+        }
 
         // creating order
         AXIOS.post('/user/' + username + '/new/order', this.addressForm)
         .then(response => {
         // JSON responses are automatically parsed.
           // paying for order
+          if (this.deliveryMethod === "delivery") {
+            AXIOS.put('/order/' + this.response.orderID + '/delivery?delivery=true')
+            .then(response => {
+              console.log('testing')
+            }).catch(e => {
+              console.log(e + 'fail')
+            })
+          }
           AXIOS.post('/order/' + response.data.orderID + '/pay', this.paymentForm)
           .then(response => {
           // JSON responses are automatically parsed.
@@ -270,7 +288,17 @@
             this.addresses = response.data
           }
         })
-      }
+      },
+      displayRadioValue: function () { 
+        // console.log('test')
+        // console.log(this.deliveryMethod)
+        this.deliveryMethodChosen = true
+        if (this.deliveryMethod === "delivery") {
+          return true
+        } else {
+          return false
+        }
+      },
     }
   }
 </script>

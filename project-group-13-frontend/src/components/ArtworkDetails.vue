@@ -85,7 +85,7 @@ export default {
     }
   },
   created: function () {
-    
+    //from URL get ID
     var url = window.location.href.split('/')
     const id = url[url.length - 1] // artwork id
   
