@@ -13,7 +13,7 @@ ShareArt is an online artwork buy-and-sell platform targeted at local artists an
 Project Wiki: 
 * [Sprint 1 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/sprint1)
 * [Sprint 2 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/Sprint2)
-  
+* [Sprint 3 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/Sprint3)
 ## Overview Tables
 ### Deliverable 1
 | Name             | Role               | Hours |
@@ -30,6 +30,15 @@ Project Wiki:
 | Matthias Arabian | Software Developer | 27    |
 | Cesar Arnouk     | Backend Lead       | 29    |
 | David Deng       |  Testing Lead      | 28    |
+| Jake Pogharian   | Project Manager    | 27    |
+| Ibrahim Taseer   | Documentation Lead | 25    |
+
+### Deliverable 3 
+| Name             | Role               | Hours |
+|------------------|--------------------|-------|
+| Matthias Arabian | Frontend Developer | 27    |
+| Cesar Arnouk     | Backend Lead       | 29    |
+| David Deng       |  Integration Lead    | 28    |
 | Jake Pogharian   | Project Manager    | 27    |
 | Ibrahim Taseer   | Documentation Lead | 25    |
 
