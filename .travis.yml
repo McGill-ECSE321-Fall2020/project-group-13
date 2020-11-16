@@ -13,3 +13,6 @@ deploy:
     repo: McGill-ECSE321-Fall2020/project-group-13
     branch: master
   skip_cleanup: 'true'
+  
+after_deploy:
+- "./deploy_frontend.sh"
