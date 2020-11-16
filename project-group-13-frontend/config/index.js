@@ -39,7 +39,9 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
     host: '127.0.0.1',
-    backendHost: '127.0.0.1',
-    backendPort: 8080
+    // backendHost: '127.0.0.1',
+    // backendPort: 8080
+    backendHost: 'project-group-13-backend.herokuapp.com', //Insert project herokuAppURL HERE
+    backendPort: 443
   }
 }

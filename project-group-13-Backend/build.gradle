@@ -15,7 +15,11 @@ sourceSets {
     java { srcDir 'src/main/java' }
   }
   test {
-    java { srcDir 'src/test/java'}
+    java { 
+    	srcDir 'src/test/java'
+    	exclude '**/dao/*'
+    }
+    
   }
 }
 

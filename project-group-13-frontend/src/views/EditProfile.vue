@@ -71,9 +71,9 @@
 import axios from "axios";
 var config = require("../../config");
 
-var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
+var frontendUrl = 'https://' + config.build.host + ':' + config.build.port;
 var backendUrl =
-  "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
+  'https://' + config.build.backendHost + ':' + config.build.backendPort;
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
@@ -193,7 +193,8 @@ export default {
           console.log(errorMsg);
           this.error = errorMsg;
         });
-
+      //update cookie with new imageURL info
+      document.cookie = 'Token=' + document.cookie.substr(6).split(' ')[0] + ' ' + this.img1 + ';path=/;'
       Router.push({ path: "/viewuser/" + this.user.username });
     }
   }

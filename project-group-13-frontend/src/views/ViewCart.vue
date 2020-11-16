@@ -51,8 +51,8 @@ import axios from 'axios'
 import Router from '../router'
 
 var config = require('../../config')
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var frontendUrl = 'https://' + config.build.host + ':' + config.build.port
+var backendUrl = 'https://' + config.build.backendHost + ':' + config.build.backendPort
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
 
 export default {
@@ -76,6 +76,9 @@ export default {
     .then(response => {
       this.cart = response.data
       this.artworks = this.cart.artwork
+      if (this.artworks === undefined){
+        this.artworks = []
+      }
     })
   },
   methods: {
