@@ -18,8 +18,8 @@ import axios from 'axios'
 import Router from '../router'
 
 var config = require('../../config')
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+var frontendUrl = 'http://' + config.build.host + ':' + config.build.port
+var backendUrl = 'http://' + config.build.backendHost + ':' + config.build.backendPort
 var AXIOS = axios.create({baseURL: backendUrl, headers: { 'Access-Control-Allow-Origin': frontendUrl }})
 
 export default {
@@ -38,6 +38,9 @@ export default {
       console.log('ResponseData' + JSON.stringify(response.data[0]))
       this.featuredArtworks = response.data.slice(0, 8)
     })
+    .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

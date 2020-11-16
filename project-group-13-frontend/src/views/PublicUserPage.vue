@@ -74,8 +74,7 @@ export default {
   created: function() {
     const p1 = new userDto("John", "This page is loading.", "Please wait", "https://placekitten.com/50/50");
     this.user = p1;
-  },
-  mounted: function () {
+
     AXIOS.get("user/".concat(this.$route.params.username).concat("/view"))
       .then(response => {
         this.user = response.data;
@@ -95,6 +94,9 @@ export default {
         console.log(errorMsg);
         this.errorArtwork = errorMsg;
       });
+  },
+  mounted: function () {
+
   },
   methods: {
     isLoggedInAsUser: function() {

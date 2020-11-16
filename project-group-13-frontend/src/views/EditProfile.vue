@@ -190,7 +190,8 @@ export default {
           console.log(errorMsg);
           this.error = errorMsg;
         });
-
+      //update cookie with new imageURL info
+      document.cookie = 'Token=' + document.cookie.substr(6).split(' ')[0] + ' ' + this.img1 + ';path=/;'
       Router.push({ path: "/viewuser/" + this.user.username });
     }
   }
