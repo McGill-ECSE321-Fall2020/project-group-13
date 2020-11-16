@@ -480,25 +480,7 @@ public class TestServiceOrder {
 	}
 	
 	
-	/**
-     * test adding payment to a given order succesfully adds payment to order
-     */
-	@Test
-	public void testAddPaymentToOrder() {
-		
-		Order order = new Order();
-		order.setOrderStatus(OrderStatus.PaymentPending);
-		Payment pay = new Payment();
-		pay.setPaymentID(333);
-		
-		try {
-			orderService.addPaymentToOrder(order, pay);
-		}catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-		
-		assertEquals(order.getPayment(),pay);
-	}
+
 	
 	
 	/**
