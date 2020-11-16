@@ -23,7 +23,7 @@ module.exports = {
     port: 443,
     host: 'project-group-13-frontend.herokuapp.com', //Insert project herokuAppURL HERE
     backendHost: 'project-group-13-backend.herokuapp.com', //Insert project herokuAppURL HERE
-    backendPort: 8080,
+    backendPort: 443,
   },
   dev: {
     env: require('./dev.env'),
