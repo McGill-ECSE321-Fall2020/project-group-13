@@ -3,7 +3,7 @@
     <Navbar />
     <b-row align-h="center">
       <h2 class="shareArt"></h2>
-      <!-- <img src="../components/artImage.jpg" width="50" height="50"/> -->
+      
     </b-row>
     <b-row align-h="center">
       <span v-if="error" style="color:red">Error: {{ error }} </span>
@@ -102,6 +102,7 @@ export default {
     };
   },
   created() {
+    //can only edit profile if the user is logged in. The cookie contains the username of the logged in user
     if (document.cookie.substr(6).split(' ')[0]!==this.$route.params.username) {
       Router.push({ path: "/", name: "" });
       alert("no permission to access this page")
@@ -126,6 +127,7 @@ export default {
         photo: this.img1,
         caption: this.caption
       };
+      //use the firebase API to upload image to cloud. The store the URL in database
       firebase
         .database()
         .ref("PhotoGallery")
@@ -143,6 +145,7 @@ export default {
       this.imageData = event.target.files[0];
       this.onUpload();
     },
+    //this function is heavily adapted from firebase documentation
     onUpload() {
       this.img1 = null;
       const storageRef = firebase
@@ -173,7 +176,7 @@ export default {
         return;
       }
       var errorMsg = "";
-      var optionalComma = "";
+      
       const body = {
         email: this.email,
         bio:

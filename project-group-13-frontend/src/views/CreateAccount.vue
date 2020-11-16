@@ -140,6 +140,7 @@ export default {
     },
     createAccountAttempt: function () {
       console.log('entered here')
+      //compares passwords. Only successful if they are same
       if (this.inputPassword1===this.inputPassword2) {
         console.log('/newuser/?username=' + this.inputUsername + '&password=' + this.inputPassword1 + '&email=' + this.inputEmail)
         AXIOS.post('/newuser/?username=' + this.inputUsername + '&password=' + this.inputPassword1 + '&email=' + this.inputEmail)
