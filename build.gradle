@@ -30,5 +30,4 @@ dependencies {
 
 task stage () {
 	dependsOn ':project-group-13-Backend:assemble'
-    dependsOn ':project-group-13-frontend:assemble'
 }
