@@ -36,10 +36,10 @@ Project Wiki:
 ### Deliverable 3 
 | Name             | Role               | Hours |
 |------------------|--------------------|-------|
-| Matthias Arabian | Frontend Developer | 27    |
-| Cesar Arnouk     | Backend Lead       | 29    |
-| David Deng       |  Integration Lead    | 28    |
-| Jake Pogharian   | Project Manager    | 27    |
-| Ibrahim Taseer   | Documentation Lead | 25    |
+| Matthias Arabian | Frontend Developer | 36    |
+| Cesar Arnouk     | Backend Lead       | 32    |
+| David Deng       |  Integration Lead    | 36    |
+| Jake Pogharian   | Project Manager    | 30    |
+| Ibrahim Taseer   | Documentation Lead | 32    |
 
   
