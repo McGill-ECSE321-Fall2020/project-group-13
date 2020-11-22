@@ -1,0 +1,35 @@
+{
+  "cardNumber": 4606026256871414,
+  "expirationDate": "2021-02-02",
+  "nameOnCard": "Cesar Arnouk",
+  "province": "Quebec",
+  "cvv": 545
+}
+
+Address JSON:
+
+{
+"username": "cesar",
+ "streetAddress1": "Sherbrooke",
+ "city": "Montreal",
+ "province": "Quebec",
+ "country": "canada",
+ "postalCode": "HADFF"
+ }
+
+
+Payment JSON:
+
+{"cardNumber": 4606026256871414,
+ "expirationDate": "2021-02-02",
+ "nameOnCard": "Cesar Arnouk",
+ "cvv": 545}
+
+
+Shipment JSON:
+
+{
+"estimatedDateOfArrival": "2021-02-02",
+"estimatedTimeOfArrival": "09:00:00"
+}
+

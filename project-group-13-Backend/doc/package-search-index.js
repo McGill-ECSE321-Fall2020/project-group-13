@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"ca.mcgill.ecse321.projectgroup13"},{"l":"ca.mcgill.ecse321.projectgroup13.dao"},{"l":"ca.mcgill.ecse321.projectgroup13.dto"},{"l":"ca.mcgill.ecse321.projectgroup13.model"},{"l":"ca.mcgill.ecse321.projectgroup13.services"}]
