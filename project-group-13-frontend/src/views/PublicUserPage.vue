@@ -71,33 +71,41 @@ export default {
     };
   },
   created: function() {
-    const p1 = new userDto("John", "This page is loading.", "Please wait", "https://placekitten.com/50/50");
-    this.user = p1;
-
-    AXIOS.get("user/".concat(this.$route.params.username).concat("/view"))
-      .then(response => {
-        this.user = response.data;
-      })
-      .catch(e => {
-        errorMsg = e.response.data.message;
-        console.log(errorMsg);
-        this.errorUser = errorMsg;
-      });
-    AXIOS.get("artwork/".concat(this.$route.params.username).concat("/all"))
-      .then(response => {
-        console.log(response);
-        this.artworks = response.data.slice(0, 8);
-      })
-      .catch(e => {
-        errorMsg = e.response.data.message;
-        console.log(errorMsg);
-        this.errorArtwork = errorMsg;
-      });
+    this.loadPage();
   },
   mounted: function () {
 
   },
+  watch: {
+    $route () {
+      this.loadPage();
+    }
+  },
   methods: {
+    loadPage: function(){
+        const p1 = new userDto("John", "This page is loading.", "Please wait", "https://placekitten.com/50/50");
+        this.user = p1;
+
+        AXIOS.get("user/".concat(this.$route.params.username).concat("/view"))
+          .then(response => {
+            this.user = response.data;
+          })
+          .catch(e => {
+            errorMsg = e.response.data.message;
+            console.log(errorMsg);
+            this.errorUser = errorMsg;
+          });
+        AXIOS.get("artwork/".concat(this.$route.params.username).concat("/all"))
+          .then(response => {
+            console.log(response);
+            this.artworks = response.data.slice(0, 8);
+          })
+          .catch(e => {
+            errorMsg = e.response.data.message;
+            console.log(errorMsg);
+            this.errorArtwork = errorMsg;
+          });
+    },
     isLoggedInAsUser: function() {
       console.log("Cookie" + document.cookie);
 

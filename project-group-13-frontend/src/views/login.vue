@@ -36,7 +36,7 @@
                 >Username or password is incorrect</small
               >
             </div>
-            <button v-on:click = "loginAttempt" type="submit" class="btn btn-primary">Continue</button>
+            <button v-on:click = "loginAttempt" type="button" class="btn btn-primary">Continue</button>
           </form></span
       >
     </b-row>

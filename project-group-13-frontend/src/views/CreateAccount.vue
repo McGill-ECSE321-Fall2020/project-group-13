@@ -74,7 +74,7 @@
           <br />
           <button
             v-on:click="createAccountAttempt"
-            type="submit"
+            type="button"
             class="btn btn-primary"
           >
             Submit
