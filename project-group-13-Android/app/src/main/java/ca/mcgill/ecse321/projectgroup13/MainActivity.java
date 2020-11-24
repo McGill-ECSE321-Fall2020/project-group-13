@@ -76,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
     public void search(View v) {
         error = "";
         final TextView tv = (TextView) findViewById(R.id.artwork_name_field);
-        HttpUtils.post("persons/" + tv.getText().toString(), new RequestParams(), new JsonHttpResponseHandler() {
+        RequestParams params = new RequestParams();
+        params.put("title",tv.getText().toString());
+        HttpUtils.get("artwork/byTitle/", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 refreshErrorMessage();
