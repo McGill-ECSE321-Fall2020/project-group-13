@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent artDetail = new Intent(MainActivity.this, ArtworkDetail.class);
                 artDetail.putExtra("artworkID",artworkTitles.get(i).getArtworkID());
                 startActivity(artDetail);
+
             }
         });
         //System.out.println("oncreate finished");

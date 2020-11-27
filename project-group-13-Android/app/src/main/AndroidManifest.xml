@@ -19,7 +19,8 @@
         <activity
             android:name=".ArtworkDetail"
             android:label="@string/title_activity_artwork_detail"
-            android:theme="@style/Theme.Projectgroup13Android.NoActionBar"></activity>
+            android:theme="@style/Theme.Projectgroup13Android.NoActionBar"
+            android:parentActivityName=".MainActivity" ></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
