@@ -14,6 +14,7 @@ Project Wiki:
 * [Sprint 1 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/sprint1)
 * [Sprint 2 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/Sprint2)
 * [Sprint 3 Project Report](https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/Sprint3)
+* [Sprint 4 Project Report] (https://github.com/McGill-ECSE321-Fall2020/project-group-13/wiki/Sprint4)
 ## Overview Tables
 ### Deliverable 1
 | Name             | Role               | Hours |
@@ -41,5 +42,14 @@ Project Wiki:
 | David Deng       |  Integration Lead    | 36    |
 | Jake Pogharian   | Project Manager    | 30    |
 | Ibrahim Taseer   | Documentation Lead | 32    |
+
+### Deliverable 4 
+| Name             | Role               | Hours |
+|------------------|--------------------|-------|
+| Matthias Arabian | Frontend Developer | 9    |
+| Cesar Arnouk     | Backend Lead       | 9    |
+| David Deng       |  Integration Lead    | 10    |
+| Jake Pogharian   | Project Manager    | 9    |
+| Ibrahim Taseer   | Documentation Lead | 9    |
 
   
