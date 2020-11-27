@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         artworkTitles.add(art);
         searchResultAdapter = new ArtworkListAdapter(this, R.layout.artwork_view_layout, artworkTitles);
         listView.setAdapter(searchResultAdapter);
-        System.out.println("oncreate finished");
-
+        //System.out.println("oncreate finished");
+        loadFeaturedArt();
     }
 
     @Override
@@ -92,7 +92,43 @@ public class MainActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }
+    public void loadFeaturedArt(){
+        error = "";
+        final TextView tv = (TextView) findViewById(R.id.artwork_name_field);
+        RequestParams params = new RequestParams();
 
+        HttpUtils.get("artwork/onPremise", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                artworkTitles.clear();
+                for( int i = 0; i < response.length(); i++){
+                    try {
+                        String title = response.getJSONObject(i).getString("title");
+                        double price = Double.parseDouble(response.getJSONObject(i).getString("worth"));
+                        String url = response.getJSONObject(i).getString("imageUrl");
+                        Artwork art = new Artwork(title,(int) price,url);
+                        artworkTitles.add(art);
+                    } catch (Exception e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+                searchResultAdapter.notifyDataSetChanged();
+
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                    error += "!!!!";
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                    error += "!!!";
+                }
+                refreshErrorMessage();
+            }
+        });
+    }
     public void search(View v) {
         error = "";
         final TextView tv = (TextView) findViewById(R.id.artwork_name_field);
