@@ -11,4 +11,11 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_artwork_detail">ArtworkDetail</string>
+    <string name="username">Username</string>
+    <string name="inputUsername">Enter username</string>
+    <string name="password">Password</string>
+    <string name="inputPassword">Enter password</string>
+    <string name="login_button">login</string>
+    <string name="action_login_label">Login</string>
+    <string name="title_activity_login">Login</string>
 </resources>

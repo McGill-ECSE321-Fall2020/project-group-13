@@ -90,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+//        noinspection SimplifiableIfStatement
+        if (id == R.id.action_login) {
+            Intent artDetail = new Intent(MainActivity.this, Login.class);
+            //artDetail.putExtra("artworkID",artworkTitles.get(0).getArtworkID());
+            startActivity(artDetail);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
     private void refreshErrorMessage() {
