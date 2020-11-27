@@ -15,13 +15,21 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private String error = null;
+    private ArrayList<Artwork> artworkTitles = new ArrayList<Artwork>();
+    private ArtworkListAdapter searchResultAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         refreshErrorMessage();
+        ListView listView = (ListView) findViewById(R.id.listView);
+        searchResultAdapter = new ArtworkListAdapter(this, R.layout.artwork_view_layout, artworkTitles);
+        listView.setAdapter(searchResultAdapter);
+
     }
 
     @Override
@@ -88,8 +100,10 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
                     error += errorResponse.get("message").toString();
+                    error += "!!!!";
                 } catch (JSONException e) {
                     error += e.getMessage();
+                    error += "!!!";
                 }
                 refreshErrorMessage();
             }
