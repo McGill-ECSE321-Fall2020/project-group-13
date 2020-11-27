@@ -1,6 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/content_main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context="ca.mcgill.ecse321.projectgroup13.ArtworkDetail"
+tools:showIn="@layout/activity_artwork_detail">
+
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="305dp"
+            android:layout_height="160dp"
+            android:layout_weight="50" />
+
+        <Button
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:onClick="buy"
+            android:text="Buy" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="408dp"
+            android:layout_height="96dp"
+            android:gravity="center"
+            android:text="Artwork Title"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="408dp"
+            android:layout_height="54dp"
+            android:gravity="center"
+            android:text="$99.99"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/artists"
+            android:layout_width="408dp"
+            android:layout_height="54dp"
+            android:gravity="center"
+            android:text="By artist1, artist2 ..."
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/artDescription"
+            android:layout_width="408dp"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:text="This is where the description would go."
+            android:textSize="18sp" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="203dp"
+                    android:layout_height="match_parent"
+                    android:padding="3dip"
+                    android:text="Creation Date: " />
+
+                <TextView
+                    android:id="@+id/creationDate"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:text="test" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="Dimensions: " />
+
+                <TextView
+                    android:id="@+id/dimensions"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:text="test" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="Medium: " />
+
+                <TextView
+                    android:id="@+id/medium"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:text="test" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="Collection: " />
+
+                <TextView
+                    android:id="@+id/collection"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:text="test" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="Available: " />
+
+                <TextView
+                    android:id="@+id/available"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:text="test" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="On Premise: " />
+
+                <TextView
+                    android:id="@+id/onPremise"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:text="test" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
