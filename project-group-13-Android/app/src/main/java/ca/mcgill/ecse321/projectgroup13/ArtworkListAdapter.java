@@ -51,7 +51,7 @@ public class ArtworkListAdapter extends ArrayAdapter<Artwork> {
         ImageView img = (ImageView) convertView.findViewById(R.id.image);
         // Populate the data into the template view using the data object
         tvTitle.setText(artwork.getTitle());
-        tvPrice.setText(Integer.toString(artwork.getPrice()));
+        tvPrice.setText("Price: $"+Integer.toString(artwork.getPrice()));
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         int artIfLoadFailed = context.getResources().getIdentifier("@drawable/art_if_load_failed",null,context.getPackageName());

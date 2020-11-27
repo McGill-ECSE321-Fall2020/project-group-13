@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.projectgroup13;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -52,10 +54,19 @@ public class MainActivity extends AppCompatActivity {
         String title = "initialized";
         double price = 60.0;
         String url = "https://placekitten.com/200/300";
-        Artwork art = new Artwork(title,(int) price,url);
+        int artworkID = 1;
+        Artwork art = new Artwork(title,(int) price,url,artworkID);
         artworkTitles.add(art);
         searchResultAdapter = new ArtworkListAdapter(this, R.layout.artwork_view_layout, artworkTitles);
         listView.setAdapter(searchResultAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent artDetail = new Intent(MainActivity.this, ArtworkDetail.class);
+                artDetail.putExtra("artworkID",artworkTitles.get(i).getArtworkID());
+                startActivity(artDetail);
+            }
+        });
         //System.out.println("oncreate finished");
         loadFeaturedArt();
     }
@@ -106,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
                         String title = response.getJSONObject(i).getString("title");
                         double price = Double.parseDouble(response.getJSONObject(i).getString("worth"));
                         String url = response.getJSONObject(i).getString("imageUrl");
-                        Artwork art = new Artwork(title,(int) price,url);
+                        int artworkID = Integer.parseInt(response.getJSONObject(i).getString("artworkID"));
+                        Artwork art = new Artwork(title,(int) price,url,artworkID);
                         artworkTitles.add(art);
                     } catch (Exception e) {
                         error += e.getMessage();
@@ -143,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
                         String title = response.getJSONObject(i).getString("title");
                         double price = Double.parseDouble(response.getJSONObject(i).getString("worth"));
                         String url = response.getJSONObject(i).getString("imageUrl");
-                        Artwork art = new Artwork(title,(int) price,url);
+                        int artworkID = Integer.parseInt(response.getJSONObject(i).getString("artworkID"));
+                        Artwork art = new Artwork(title,(int) price,url,artworkID);
                         artworkTitles.add(art);
                     } catch (Exception e) {
                         error += e.getMessage();
