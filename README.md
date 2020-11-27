@@ -51,5 +51,5 @@ Project Wiki:
 | David Deng       |  Integration Lead    | 10    |
 | Jake Pogharian   | Project Manager    | 9    |
 | Ibrahim Taseer   | Documentation Lead | 9    |
-
+* For this deliverable, the roles are not particularly important, for each is working on an Android frontend component. 
   
