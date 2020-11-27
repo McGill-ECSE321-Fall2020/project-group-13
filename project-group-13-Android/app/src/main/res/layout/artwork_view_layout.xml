@@ -40,16 +40,10 @@
             android:gravity="center"
             android:text="artPrice"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             android:id="@+id/artPrice"/>
 
-        <TextView
-            android:gravity="center"
-            android:text="TextView3"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/textView2"/>
+
     </LinearLayout>
 
 </LinearLayout>
