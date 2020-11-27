@@ -20,8 +20,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +49,14 @@ public class MainActivity extends AppCompatActivity {
         });
         refreshErrorMessage();
         ListView listView = (ListView) findViewById(R.id.listView);
+        String title = "initialized";
+        double price = 60.0;
+        String url = "https://placekitten.com/200/300";
+        Artwork art = new Artwork(title,(int) price,url);
+        artworkTitles.add(art);
         searchResultAdapter = new ArtworkListAdapter(this, R.layout.artwork_view_layout, artworkTitles);
         listView.setAdapter(searchResultAdapter);
+        System.out.println("oncreate finished");
 
     }
 
@@ -92,9 +100,22 @@ public class MainActivity extends AppCompatActivity {
         params.put("title",tv.getText().toString());
         HttpUtils.get("artwork/byTitle/", params, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                refreshErrorMessage();
-                tv.setText("");
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                artworkTitles.clear();
+                for( int i = 0; i < response.length(); i++){
+                    try {
+                        String title = response.getJSONObject(i).getString("title");
+                        double price = Double.parseDouble(response.getJSONObject(i).getString("worth"));
+                        String url = response.getJSONObject(i).getString("imageUrl");
+                        Artwork art = new Artwork(title,(int) price,url);
+                        artworkTitles.add(art);
+                    } catch (Exception e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+                searchResultAdapter.notifyDataSetChanged();
+
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
