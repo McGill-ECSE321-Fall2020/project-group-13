@@ -11,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectgroup13Android">
+        <activity android:name=".Checkout"></activity>
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/Theme.Projectgroup13Android.NoActionBar" />
         <activity
             android:name=".ArtworkDetail"
             android:label="@string/title_activity_artwork_detail"
@@ -30,5 +35,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
+
+        <!--Put form controls here-->
+        <TextView
+            android:id="@+id/TextViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:text="CHECKOUT PAGE"
+            android:textSize="20pt"></TextView>
+
+
+        <TextView
+            android:id="@+id/TextViewCardNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Card Number"
+            android:textSize="10pt">
+        </TextView>
+
+        <EditText
+            android:id="@+id/EditTextCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter 16-digit Card Number"
+            android:inputType="textPersonName"></EditText>
+
+        <TextView
+            android:id="@+id/TextViewExpiryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expiry Date"
+            android:textSize="10pt">
+        </TextView>
+
+        <EditText
+            android:id="@+id/EditTextExpiryDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="mm/dd/yyyy"
+            android:inputType="textPersonName"></EditText>
+
+        <TextView
+            android:id="@+id/TextViewCVV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CVV"
+            android:textSize="10pt">
+        </TextView>
+
+        <EditText
+            android:id="@+id/EditTextCVV"
+            android:layout_width="464dp"
+            android:layout_height="72dp"
+            android:hint="Enter 3-digit CVV"
+            android:inputType="textPersonName"></EditText>
+
+        <TextView
+            android:id="@+id/TextViewNameOnCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name on Card"
+            android:textSize="10pt">
+        </TextView>
+
+        <EditText
+            android:id="@+id/EditTextNameOnCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter name as it appears on card"
+            android:inputType="textPersonName"></EditText>
+
+        <TextView
+            android:id="@+id/TextViewDelivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Method"
+            android:textSize="10pt">
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/CheckBoxDelivery"
+            android:layout_height="wrap_content"
+            android:text="Delivery"
+            android:layout_width="fill_parent">
+        </CheckBox>
+
+        <Button
+            android:id="@+id/ButtonSendFeedback"
+            android:layout_height="wrap_content"
+            android:text="Submit Order"
+            android:onClick="sendFeedback"
+            android:layout_width="fill_parent">
+        </Button>
+    </LinearLayout>
+</ScrollView>
