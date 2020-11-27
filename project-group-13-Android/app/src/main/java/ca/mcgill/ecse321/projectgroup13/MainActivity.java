@@ -103,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }
+    public void loadFeaturedArt(View v){
+        loadFeaturedArt();
+    }
     public void loadFeaturedArt(){
         error = "";
         final TextView tv = (TextView) findViewById(R.id.artwork_name_field);
