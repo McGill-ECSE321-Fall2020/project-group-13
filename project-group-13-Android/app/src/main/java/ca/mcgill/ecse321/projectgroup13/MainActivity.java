@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.projectgroup13;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private String error = null;
     private ArrayList<Artwork> artworkTitles = new ArrayList<Artwork>();
     private ArtworkListAdapter searchResultAdapter;
+    private MenuItem loginButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +73,26 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println("oncreate finished");
         loadFeaturedArt();
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        //check whether user is logged in. If so, change menu button to logout
+        MenuItem item = menu.findItem(R.id.action_login);
+        String user = isLoggedIn();
+        if (user.isEmpty()) {
+            item.setTitle("Login");
+        }
+        else{
+            item.setTitle("Logout");
+        }
         return true;
     }
 
@@ -92,9 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        noinspection SimplifiableIfStatement
         if (id == R.id.action_login) {
-            Intent artDetail = new Intent(MainActivity.this, Login.class);
-            //artDetail.putExtra("artworkID",artworkTitles.get(0).getArtworkID());
-            startActivity(artDetail);
+            Intent loginPage = new Intent(MainActivity.this, Login.class);
+            startActivity(loginPage);
             return true;
         }
 
@@ -190,5 +207,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private String isLoggedIn(){
+        for (File file: this.getFilesDir().listFiles()) {
+            if (file.getName().contains("token")){
+                return file.getName().substring(5);
+            }
+        }
+        return "";
+    }
+
 
 }
