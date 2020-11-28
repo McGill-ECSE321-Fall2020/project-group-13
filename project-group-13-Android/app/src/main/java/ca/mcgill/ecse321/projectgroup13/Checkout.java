@@ -34,6 +34,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import static java.lang.Integer.parseInt;
 
@@ -80,11 +81,21 @@ public class Checkout extends AppCompatActivity {
         orderParams.put("nameOnCard", nameOnCard.getText().toString());
 
         //Get passed in ArtID
-        String username = getIntent().getStringExtra("username");
-        String artID = getIntent().getStringExtra("artID");
+        String username = this.isLoggedIn();
+        Integer artID = getIntent().getIntExtra("artworkID", 0);
         String artPrice = getIntent().getStringExtra("artPrice");
-        cartParams.put("artid",  parseInt(artID));
+        cartParams.put("artworkID",  artID);
+        //this doesn't work
+        if(nameOnCard.getText()==null||cardNumber.getText()==null||expiryDate.getText()==null||expiryDate.getText()==null||cvv.getText()==null||nameOnCard.getText().toString().isEmpty() || cardNumber.getText().toString().isEmpty() || expiryDate.getText().toString().isEmpty() || cvv.getText().toString().isEmpty()){
+            //put up label instructing to fill in the required fields
+            String error = "fill in the required fields";
+            Toast t = Toast.makeText(this, error, Toast.LENGTH_SHORT);
+            t.show();
+            return;
 
+        }
+
+        System.err.println("START THE PARTY \n\n\n\n\n\n\n\n\n\n\nWE AINT EXITED BROTHER ): \n\n\n\n\n\n\n\n\n");
 
         //Creating a cart for the user
         HttpUtils.put("/user/" + username + "/edit+/cart", cartParams, new JsonHttpResponseHandler() {
@@ -153,6 +164,19 @@ public class Checkout extends AppCompatActivity {
 
 
 
-        //ORDER PUT
+//        //ORDER Put
+//        HttpUtils.put("/order/" + username + "/new/order", orderParams, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//
+//            }
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//
+//            }
+//        });
+
+
+
     }
 }

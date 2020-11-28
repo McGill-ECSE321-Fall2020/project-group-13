@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ScrollView01"
     android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
-    android:scrollbars="vertical">
+    android:scrollbars="vertical"
+    tools:context="ca.mcgill.ecse321.projectgroup13.Checkout">
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
@@ -98,7 +102,7 @@
             android:id="@+id/ButtonSendFeedback"
             android:layout_height="wrap_content"
             android:text="Submit Order"
-            android:onClick="sendFeedback"
+            android:onClick="submit"
             android:layout_width="fill_parent">
         </Button>
     </LinearLayout>
