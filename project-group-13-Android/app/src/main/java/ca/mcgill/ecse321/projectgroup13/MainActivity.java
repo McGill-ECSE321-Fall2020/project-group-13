@@ -72,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         invalidateOptionsMenu();
     }
-
+    /*
+    depending on the suer status, will set the menu accordingly - ie: depending on whether or not logged in
+    @param menu: this is the base menu which is then tailored to user status
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -89,7 +92,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
+    /*
+       re-routes user depending on selected item -- on click action will bring user to page depending on menu item
+       @param item: selected menu item
+        */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -214,7 +220,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    /*
+       This method is a helper method used to get the username of the user which is currently logged in
+       @return String username of logged in user
+       */
     private String isLoggedIn(){
         for (File file: this.getFilesDir().listFiles()) {
             if (file.getName().contains("token")){
