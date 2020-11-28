@@ -184,5 +184,4 @@ public class ArtworkDetail extends AppCompatActivity {
         }
         return "";
     }
-
 }
