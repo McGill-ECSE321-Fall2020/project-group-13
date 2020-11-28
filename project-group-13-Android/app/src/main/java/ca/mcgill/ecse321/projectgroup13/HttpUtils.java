@@ -16,11 +16,18 @@ public class HttpUtils {
     static {
         baseUrl = DEFAULT_BASE_URL;
     }
-
+    /*
+        puropose is to retrieve and return baseurl
+        @return baseurl
+        */
     public static String getBaseUrl() {
         return baseUrl;
     }
-
+    /*
+          setter for the baseurl
+           @param baseurl
+          @return baseurl
+          */
     public static void setBaseUrl(String baseUrl) {
         HttpUtils.baseUrl = baseUrl;
     }

@@ -25,7 +25,9 @@ import org.json.JSONObject;
 import java.io.File;
 
 import cz.msebera.android.httpclient.Header;
-
+/*
+         page displaying artwork details to user subsequent to click on buy
+*/
 public class ArtworkDetail extends AppCompatActivity {
     private String error = null;
     private Context context;
@@ -39,14 +41,18 @@ public class ArtworkDetail extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
+
+        //create intent in order to pass on to the checkout page
         artId = intent.getIntExtra("artworkID", 0);
         System.out.println("The artid issss: " + artId);
 
+        //in order to know the specified artwork and which detail page to display
         RequestParams params = new RequestParams();
         String artworkUrl = "artwork/byId/" + artId;
         HttpUtils.get(artworkUrl, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //if successful must set necessary contents, otherwise if not handled will cause failure
                 try {
                     String title = response.getString("title");
                     TextView tvTitle = (TextView) findViewById(R.id.title);
@@ -56,19 +62,18 @@ public class ArtworkDetail extends AppCompatActivity {
                     ImageView img = (ImageView) findViewById(R.id.image);
 
                     ImageLoader imageLoader = ImageLoader.getInstance();
-                    //int artIfLoadFailed = context.getResources().getIdentifier("@drawable/art_if_load_failed",null,context.getPackageName());
+
                     DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
                             .cacheOnDisc(true).resetViewBeforeLoading(true).build();
-//                            .showImageForEmptyUri(artIfLoadFailed)
-//                            .showImageOnFail(artIfLoadFailed)
-//                            .showImageOnLoading(artIfLoadFailed).build();
 
                     imageLoader.displayImage(image, img, options);
 
+                    //for the price of the artwork to display, retrieve it from the backend response
                     String price = response.getString("worth");
                     TextView tvPrice = (TextView) findViewById(R.id.price);
                     tvPrice.setText("$" + price);
 
+                    //for the artists of the artwork to display, retrieve it from the backend response
                     JSONArray artists = response.getJSONArray("artist");
                     TextView tvArtists = (TextView) findViewById(R.id.artists);
                     String by = "By ";
@@ -85,7 +90,7 @@ public class ArtworkDetail extends AppCompatActivity {
                     } else {
                         tvDescription.setText(description);
                     }
-
+                    //for each of the artwork parameters to display, retrieve it from the backend response
                     String creationDate = response.getString("creationDate");
                     TextView tvCreationDate = (TextView) findViewById(R.id.creationDate);
                     tvCreationDate.setText(creationDate);
@@ -102,6 +107,7 @@ public class ArtworkDetail extends AppCompatActivity {
                     TextView tvCollection = (TextView) findViewById(R.id.collection);
                     tvCollection.setText(collection);
 
+                    //if sold change the availability as necessary
                     Boolean available = response.getBoolean("artworkSold");
                     TextView tvAvailable = (TextView) findViewById(R.id.available);
                     if (available == true) {
@@ -109,6 +115,7 @@ public class ArtworkDetail extends AppCompatActivity {
                     }else{
                         tvAvailable.setText("Yes");
                     }
+
 
                     Boolean onPremise = response.getBoolean("isOnPremise");
                     TextView tvOnPremise = (TextView) findViewById(R.id.onPremise);
@@ -136,7 +143,9 @@ public class ArtworkDetail extends AppCompatActivity {
         });
 
     }
-
+    /*
+    In case of failure, set a visible error message for ease of user
+     */
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
@@ -149,6 +158,10 @@ public class ArtworkDetail extends AppCompatActivity {
         }
     }
 
+    /*
+       method to handle the buy action click of the user, will show him more details on the painting
+       @param View v: this is the view to which to show to the user
+    */
     public void buy(View v){
         String username = isLoggedIn();
         if(username == ""){
@@ -160,7 +173,10 @@ public class ArtworkDetail extends AppCompatActivity {
             startActivity(checkout);
         }
     }
-
+    /*
+      This method is a helper method used to get the username of the user which is currently logged in
+      @return String username of logged in user
+      */
     private String isLoggedIn(){
         for (File file: this.getFilesDir().listFiles()) {
             if (file.getName().contains("token")){
