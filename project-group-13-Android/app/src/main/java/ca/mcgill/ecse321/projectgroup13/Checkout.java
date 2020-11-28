@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
@@ -45,7 +46,14 @@ public class Checkout extends AppCompatActivity {
 
 
     }
-
+    private String isLoggedIn(){
+        for (File file: this.getFilesDir().listFiles()) {
+            if (file.getName().contains("token")){
+                return file.getName().substring(5);
+            }
+        }
+        return "";
+    }
     public void submit(View v) {
 
         //Getting views from layout
