@@ -1,29 +1,17 @@
 package ca.mcgill.ecse321.projectgroup13;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import cz.msebera.android.httpclient.Header;
 
 import android.view.View;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,12 +19,7 @@ import org.json.JSONObject;
 
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import android.os.Bundle;
 import android.widget.Toast;
-
-import static java.lang.Integer.parseInt;
 
 public class Checkout extends AppCompatActivity {
 

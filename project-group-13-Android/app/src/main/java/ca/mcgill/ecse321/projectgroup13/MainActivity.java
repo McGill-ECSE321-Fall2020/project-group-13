@@ -1,11 +1,9 @@
 package ca.mcgill.ecse321.projectgroup13;
 
-import android.content.ClipData;
+
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -18,9 +16,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -30,7 +26,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This is the home page logic.
@@ -39,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private String error = null;
     private ArrayList<Artwork> artworkTitles = new ArrayList<Artwork>(); //a list of artworks displayed on home screen (either featured artworks or search results)
     private ArtworkListAdapter searchResultAdapter; //adapter for the list view of artworks
-    private MenuItem loginButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //System.out.println("oncreate finished");
         loadFeaturedArt();
     }
     @Override
@@ -102,11 +96,6 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
 //        noinspection SimplifiableIfStatement
         if (id == R.id.action_login) {
