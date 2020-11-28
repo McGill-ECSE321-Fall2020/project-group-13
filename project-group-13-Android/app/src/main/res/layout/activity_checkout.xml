@@ -12,7 +12,7 @@
 
         <!--Put form controls here-->
         <TextView
-            android:id="@+id/TextViewCardNumber"
+            android:id="@+id/TextViewTitle"
             android:layout_width="match_parent"
             android:layout_height="85dp"
             android:text="CHECKOUT PAGE"
@@ -88,7 +88,7 @@
         </TextView>
 
         <CheckBox
-            android:id="@+id/CheckBoxResponse"
+            android:id="@+id/CheckBoxDelivery"
             android:layout_height="wrap_content"
             android:text="Delivery"
             android:layout_width="fill_parent">
