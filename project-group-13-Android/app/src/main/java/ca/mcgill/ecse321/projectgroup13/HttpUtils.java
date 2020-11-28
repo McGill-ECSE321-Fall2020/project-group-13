@@ -4,6 +4,9 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+/**
+ * This class provides HTTP utilities such as GET, POST
+ */
 public class HttpUtils {
     public static final String DEFAULT_BASE_URL = "https://project-group-13-backend.herokuapp.com/";
 

@@ -30,10 +30,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is the home page logic.
+ */
 public class MainActivity extends AppCompatActivity {
     private String error = null;
-    private ArrayList<Artwork> artworkTitles = new ArrayList<Artwork>();
-    private ArtworkListAdapter searchResultAdapter;
+    private ArrayList<Artwork> artworkTitles = new ArrayList<Artwork>(); //a list of artworks displayed on home screen (either featured artworks or search results)
+    private ArtworkListAdapter searchResultAdapter; //adapter for the list view of artworks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,24 +44,20 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         refreshErrorMessage();
         ListView listView = (ListView) findViewById(R.id.listView);
-        String title = "initialized";
+
+        //filler artwork when nothing is loaded
+        String title = "sample artwork";
         double price = 60.0;
         String url = "https://placekitten.com/200/300";
         int artworkID = 1;
         Artwork art = new Artwork(title,(int) price,url,artworkID);
         artworkTitles.add(art);
+
         searchResultAdapter = new ArtworkListAdapter(this, R.layout.artwork_view_layout, artworkTitles);
         listView.setAdapter(searchResultAdapter);
+        //for each artwork displayed, link to artworkDetail page if clicked
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,8 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * display the error message, if any, in red text at top of screen
+     */
     private void refreshErrorMessage() {
-        // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
         tvError.setText(error);
 
@@ -104,9 +106,18 @@ public class MainActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }
+
+    /**
+     * This encapsulates loadFeaturedArt() so that it is callable from .xml layout files
+     * @param v
+     */
     public void loadFeaturedArt(View v){
         loadFeaturedArt();
     }
+
+    /**
+     * This loads featured artworks from the backend
+     */
     public void loadFeaturedArt(){
         error = "";
         final TextView tv = (TextView) findViewById(R.id.artwork_name_field);
@@ -116,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 artworkTitles.clear();
+                //get a list of JSON objects, parse them as list of artworks
                 for( int i = 0; i < response.length(); i++){
                     try {
                         String title = response.getJSONObject(i).getString("title");
@@ -145,6 +157,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * This performs a search query through backend and modifies artworkTitles array.
+     * @param v
+     */
     public void search(View v) {
         error = "";
         final TextView tv = (TextView) findViewById(R.id.artwork_name_field);

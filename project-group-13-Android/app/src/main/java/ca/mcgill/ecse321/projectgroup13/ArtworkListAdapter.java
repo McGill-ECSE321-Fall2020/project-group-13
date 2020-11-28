@@ -19,40 +19,48 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 
+/**
+ * This class configures the listView in the home page. Think of it like a manager. It automatically updates the listView based on the
+ * content of the array "artworks"
+ */
 public class ArtworkListAdapter extends ArrayAdapter<Artwork> {
     private Context context;
     private int resource;
 
-    private static class ViewHolder{
-        TextView title;
-        TextView price;
-        ImageView img;
 
-    }
     public ArtworkListAdapter(Context context, int resource, ArrayList<Artwork> artworks){
         super(context,resource,artworks);
         this.context=context;
         this.resource=resource;
     }
+
+    /**
+     * This is a override of the default getView() of arrayAdapter class. It loads the view according to the item in position.
+     * @param position of the item in listView
+     * @param convertView view in question
+     * @param parent parent group
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         setUpImageLoader();
         Artwork artwork=getItem(position);
-        ViewHolder holder;
-        // Check if an existing view is being reused, otherwise inflate the view
+        // If no external view is used, inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(resource, parent, false);
 
         }
-        // Lookup view for data population
+        // find the views to update
         TextView tvTitle = (TextView) convertView.findViewById(R.id.artTitle);
         TextView tvPrice = (TextView) convertView.findViewById(R.id.artPrice);
         ImageView img = (ImageView) convertView.findViewById(R.id.image);
-        // Populate the data into the template view using the data object
+        // update the views
         tvTitle.setText(artwork.getTitle());
         tvPrice.setText("Price: $"+Integer.toString(artwork.getPrice()));
 
+        //here, I am using an external library to help with loading images. The code below is adapted from a related blog
+        // From https://github.com/nostra13/Android-Universal-Image-Loader
         ImageLoader imageLoader = ImageLoader.getInstance();
         int artIfLoadFailed = context.getResources().getIdentifier("@drawable/art_if_load_failed",null,context.getPackageName());
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
@@ -66,8 +74,9 @@ public class ArtworkListAdapter extends ArrayAdapter<Artwork> {
         return convertView;
 
     }
+    /*configure image loader before loading images. For more information, see https://github.com/nostra13/Android-Universal-Image-Loader*/
     private void setUpImageLoader(){
-        // UNIVERSAL IMAGE LOADER SETUP
+
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
@@ -80,7 +89,7 @@ public class ArtworkListAdapter extends ArrayAdapter<Artwork> {
                 .discCacheSize(100 * 1024 * 1024).build();
 
         ImageLoader.getInstance().init(config);
-        // END - UNIVERSAL IMAGE LOADER SETUP
+
 
     }
 }

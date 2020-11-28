@@ -1,5 +1,8 @@
 package ca.mcgill.ecse321.projectgroup13;
 
+/**
+ * This class encapsulates information about an artwork. It is used by listView of artworks.
+ */
 public class Artwork {
     private String title;
     private int price;
