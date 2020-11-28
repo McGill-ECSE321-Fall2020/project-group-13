@@ -95,8 +95,6 @@ public class Checkout extends AppCompatActivity {
 
         }
 
-        System.err.println("START THE PARTY \n\n\n\n\n\n\n\n\n\n\nWE AINT EXITED BROTHER ): \n\n\n\n\n\n\n\n\n");
-
         //Creating a cart for the user
         HttpUtils.put("/user/" + username + "/edit+/cart", cartParams, new JsonHttpResponseHandler() {
             @Override
@@ -153,30 +151,9 @@ public class Checkout extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
         //Putting information from editTexts into params
 
-
-
-
-//        //ORDER Put
-//        HttpUtils.put("/order/" + username + "/new/order", orderParams, new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//
-//            }
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//
-//            }
-//        });
-
-
+        finish();
 
     }
 }
