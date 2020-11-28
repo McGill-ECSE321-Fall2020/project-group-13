@@ -40,6 +40,9 @@ import static java.lang.Integer.parseInt;
 
 public class Checkout extends AppCompatActivity {
 
+    /*
+  This method's purpose is to set the necessary contents to the page
+  */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,10 @@ public class Checkout extends AppCompatActivity {
 
 
     }
+    /*
+   This method is a helper method used to get the username of the user which is currently logged in
+   @return String username of logged in user
+   */
     private String isLoggedIn(){
         for (File file: this.getFilesDir().listFiles()) {
             if (file.getName().contains("token")){
@@ -55,6 +62,12 @@ public class Checkout extends AppCompatActivity {
         }
         return "";
     }
+
+    /*
+    This method is called when the submit order button is pressed. In order to make the necessary post/get requests
+    and place the order
+    @param view v takes its own view as parameter
+    */
     public void submit(View v) {
 
         //Getting views from layout
@@ -85,7 +98,6 @@ public class Checkout extends AppCompatActivity {
         Integer artID = getIntent().getIntExtra("artworkID", 0);
         String artPrice = getIntent().getStringExtra("artPrice");
         cartParams.put("artworkID",  artID);
-        //this doesn't work
         if(nameOnCard.getText()==null||cardNumber.getText()==null||expiryDate.getText()==null||expiryDate.getText()==null||cvv.getText()==null||nameOnCard.getText().toString().isEmpty() || cardNumber.getText().toString().isEmpty() || expiryDate.getText().toString().isEmpty() || cvv.getText().toString().isEmpty()){
             //put up label instructing to fill in the required fields
             String error = "fill in the required fields";
@@ -151,8 +163,8 @@ public class Checkout extends AppCompatActivity {
             }
         });
 
-        //Putting information from editTexts into params
 
+        //to go back to the previous page
         finish();
 
     }
